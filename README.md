@@ -36,20 +36,24 @@ será disponibilizada a funcionalidades de CRUD de clientes.
 #### NOTES:
 
 Classes:
-- Cliente
-- Administrador
-- Utilizador
+- Cliente (pode ter um utilizador ou não)
+- Utilizador (administrador é um tipo de utilizador)
 - Frota
 - Viatura
-    - Tipos de viatura
+    - Tipo de viatura
 - Localizacao
 - Reserva
+
+O email é único.
 
 ### RF2 – GESTÃO DE LOCALIZAÇÕES
 
 As localizações da empresa são os locais em que é possível recolher ou entregar carros, e tendo em
 conta a possibilidade de abertura ou fecho de localizações as mesmas devem ser parametrizáveis e
 geridas pelos utilizadores com perfil de administração.
+
+#### NOTES:
+Login -> different views for regular vs admin utilizadors.
 
 ### RF3 – GESTÃO DE FROTA
 
@@ -63,6 +67,10 @@ pretendido, tais como e não só:
 • Combustível
 • Número de malas que consegue transportar
 • Viatura conhecida similar à mesma (Renault Clio)
+
+#### NOTES:
+
+2 frotas? São Miguel vs. Santa Maria?
 
 ### RF4 – RESERVAS
 
@@ -103,11 +111,13 @@ A interface web de qualquer aplicação é apenas isto, uma interface, e como ta
 requisitos e toda a lógica de forma independente da interface, por exemplo, o processo de registo de cliente deve ser implementado recebendo os dados, validando os mesmos, e posteriormente guardar
 em base de dados. A interface web, deve invocar este procedimento fornecendo os dados recebidos do
 formulário e nada mais.
+
 A vantagem desta metodologia de desenvolvimento é separar as responsabilidades da interface e da
 lógica aplicacional, de forma que a interface possa ser completamente alterada sem qualquer
 necessidade de mexer na camada aplicacional, e vice-versa.
 Assim sendo deve implementar os scripts PHP relevantes para a interface e para a lógica aplicacional em
 pastas diferentes, assim como a base de dados.
+
 Toda a aplicação deve utilizar namespaces e autoloading.
 
 ## AVALIAÇÃO E ENTREGA
