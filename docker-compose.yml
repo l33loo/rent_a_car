@@ -8,7 +8,6 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./src:/var/www/html
-
     depends_on:
       - mysql
   mysql:
@@ -17,7 +16,7 @@ services:
       - rent-a-car-mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: todos
+      MYSQL_DATABASE: carrentals
 
 volumes:
   rent-a-car-mysql-data:
