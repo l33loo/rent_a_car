@@ -2,7 +2,9 @@ version: "3"
 name: rentacar
 services:
   app:
-    image: php:8.3-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 8080:80
     working_dir: /var/www/html
@@ -14,6 +16,7 @@ services:
     image: mysql:8.0
     volumes:
       - rent-a-car-mysql-data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d/:ro
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: carrentals
