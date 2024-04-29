@@ -1,7 +1,6 @@
 <?php 
 require_once './html/components/header.php';
 require_once './html/components//nav.php';
-require_once './html/components//footer.php';
 
 echo getHeader();
 ?>
