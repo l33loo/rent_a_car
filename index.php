@@ -1,13 +1,11 @@
 <?php 
 require_once './html/components/header.php';
-require_once './html/components//nav.php';
 
 echo getHeader();
 ?>
 <style>
 .bg-image {
     position: relative;
-    /* Add position relative to make absolute positioning work */
     background-image: url(./img/homepage.jpg);
     background-size: cover;
     background-position: center;
@@ -31,7 +29,41 @@ echo getHeader();
 </style>
 
 <body>
-    <?php echo getNav(); ?>
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php">Superstar Rental Car</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Superstar Rent Car</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        </li>
+                        <li class=" nav-item">
+                            <a class="nav-link" href="./html/fleet.php">Fleet</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./html/about.php">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./html/login.php" class="nav-link"> <button class="btn btn-primary"
+                                    type="submit">Login</button></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
     <div class="bg-image" style="position: relative;">
         <div class="gradient-overlay"></div>
         <div class="container">
@@ -136,8 +168,7 @@ echo getHeader();
         <h2 style="position:relative; top: -100px;">Our Fleet</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">
             <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(16px 16px 20px);
-">
+                <div class="card h-100" style="    filter: drop-shadow(16px 16px 20px);">
                     <img src="./img/car.jpg" class="card-img-top" alt="car">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Regular</h5>
@@ -150,8 +181,7 @@ echo getHeader();
                 </div>
             </div>
             <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);
-">
+                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
                     <img src="./img/moto.jpg" class="card-img-top" alt="moto">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Motorcycle</h5>
@@ -164,8 +194,7 @@ echo getHeader();
                 </div>
             </div>
             <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);
-">
+                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
                     <img src="./img/suv.jpg" class="card-img-top" alt="suv">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Suv</h5>

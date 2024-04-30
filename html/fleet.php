@@ -1,25 +1,57 @@
 <?php 
 require_once './components/header.php';
-require_once './components/nav.php';
 
 echo getHeader();
 ?>
 
 <body>
-    <?php echo getNav();?>
-
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.php">Superstar Rental Car</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Superstar Rent Car</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./html/fleet.php">Fleet</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./about.php">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./html/login.php" class="nav-link"> <button class="btn btn-primary"
+                                    type="submit">Login</button></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
     <div class="container">
-        <div class="text-content" style="position: relative; top:150px;">
-            <h1>Fleet</h1>
+        <div class="text-content">
+            <h1 style="padding-top: 150px;">Fleet</h1>
         </div>
     </div>
-    <div class="container" style="position: relative; top:200px;">
+    <div class="container" style="position: relative; top:100px;">
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="height:400px;">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style="filter: drop-shadow(20px 20px 20px);">
                         <div class="carousel-item active" data-bs-interval="10000">
-                            <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
+                            <div class="card h-100">
                                 <img src=" ../img/car.jpg" class="card-img-top" alt="suv">
                                 <div class="card-body text-center"
                                     style="background-color: rgba(25, 135, 84, 0.7); color: white;">
@@ -30,7 +62,7 @@ echo getHeader();
                             </div>
                         </div>
                         <div class="carousel-item" data-bs-interval="2000">
-                            <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
+                            <div class="card h-100">
                                 <img src="../img/car2.jpg" class="card-img-top" alt="suv">
                                 <div class="card-body text-center"
                                     style="background-color: rgba(25, 135, 84, 0.7); color: white;">
@@ -41,7 +73,7 @@ echo getHeader();
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
+                            <div class="card h-100">
                                 <img src="../img/car3.jpg" class="card-img-top" alt="suv">
                                 <div class="card-body text-center"
                                     style="background-color: rgba(25, 135, 84, 0.7); color: white;">
@@ -66,9 +98,9 @@ echo getHeader();
             </div>
             <div class="col-md-3">
                 <div id="carouselExampleInterval2" class="carousel slide" data-bs-ride="carousel" style="height:400px;">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style="filter: drop-shadow(20px 20px 20px);">
                         <div class="carousel-item active" data-bs-interval="10000">
-                            <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
+                            <div class="card h-100">
                                 <img src="../img/moto.jpg" class="card-img-top" alt="suv">
                                 <div class="card-body text-center"
                                     style="background-color: rgba(25, 135, 84, 0.7); color: white;">
@@ -79,7 +111,7 @@ echo getHeader();
                             </div>
                         </div>
                         <div class="carousel-item" data-bs-interval="2000">
-                            <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
+                            <div class="card h-100">
                                 <img src="../img/moto2.jpg" class="card-img-top" alt="suv">
                                 <div class="card-body text-center"
                                     style="background-color: rgba(25, 135, 84, 0.7); color: white;">
@@ -90,7 +122,7 @@ echo getHeader();
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
+                            <div class="card h-100">
                                 <img src="../img/moto3.jpg" class="card-img-top" alt="suv">
                                 <div class="card-body text-center"
                                     style="background-color: rgba(25, 135, 84, 0.7); color: white;">
@@ -115,9 +147,9 @@ echo getHeader();
             </div>
             <div class="col-md-3">
                 <div id="carouselExampleInterval3" class="carousel slide" data-bs-ride="carousel" style="height:400px;">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style="filter: drop-shadow(20px 20px 20px);">
                         <div class="carousel-item active" data-bs-interval="10000">
-                            <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
+                            <div class="card h-100">
                                 <img src="../img/suv.jpg" class="card-img-top" alt="suv">
                                 <div class="card-body text-center"
                                     style="background-color: rgba(25, 135, 84, 0.7); color: white;">
@@ -128,7 +160,7 @@ echo getHeader();
                             </div>
                         </div>
                         <div class="carousel-item" data-bs-interval="2000">
-                            <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
+                            <div class="card h-100">
                                 <img src="../img/suv2.jpg" class="card-img-top" alt="suv">
                                 <div class="card-body text-center"
                                     style="background-color: rgba(25, 135, 84, 0.7); color: white;">
@@ -139,7 +171,7 @@ echo getHeader();
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
+                            <div class="card h-100">
                                 <img src="../img/suv3.jpg" class="card-img-top" alt="suv">
                                 <div class="card-body text-center"
                                     style="background-color: rgba(25, 135, 84, 0.7); color: white;">
