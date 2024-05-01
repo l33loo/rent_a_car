@@ -42,9 +42,24 @@ echo getHeader();
     </nav>
     <div class="container">
         <div class="text-content">
-            <h1 class="text-center">Login</h1>
+            <h1 class="text-center" style="margin-top: 100px;">Login</h1>
+            <span>
+                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px;">
+                Email:
+            </span>
+            <input type="text" style="border: none; border-bottom: 2px solid;">
         </div>
     </div>
+    <div class="container">
+        <div class="text-content">
+            <span>
+                <img src="../img/password.svg" alt="Password" style="height: 20px; width:20px;">
+                Password
+            </span>
+            <input type="text" style="border: none; border-bottom: 2px solid;">
+        </div>
+    </div>
+
     <script type="text/javascript">
     </script>
 </body>
