@@ -84,7 +84,7 @@ echo getHeader();
                         Pick-up Location
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
+                        <li><a class="dropdown-item">Ribeira Grande</a></li>
                         <li><a class="dropdown-item">Ponta Delgada</a></li>
                         <li><a class="dropdown-item">Lagoa</a></li>
                         <li><a class="dropdown-item">Nordeste</a></li>
@@ -96,7 +96,7 @@ echo getHeader();
                         Drop-Off Location
                     </button>
                     <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
+                        <li><a class="dropdown-item">Ribeira Grande</a></li>
                         <li><a class="dropdown-item">Ponta Delgada</a></li>
                         <li><a class="dropdown-item">Lagoa</a></li>
                         <li><a class="dropdown-item">Nordeste</a></li>
@@ -111,7 +111,7 @@ echo getHeader();
                         Pick-up Date
                     </button>
                     <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
+                        <li><a class="dropdown-item">Ribeira Grande</a></li>
                         <li><a class="dropdown-item">Ponta Delgada</a></li>
                         <li><a class="dropdown-item">Lagoa</a></li>
                         <li><a class="dropdown-item">Nordeste</a></li>
@@ -124,7 +124,7 @@ echo getHeader();
                         Drop-off Date
                     </button>
                     <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
+                        <li><a class="dropdown-item">Ribeira Grande</a></li>
                         <li><a class="dropdown-item">Ponta Delgada</a></li>
                         <li><a class="dropdown-item">Lagoa</a></li>
                         <li><a class="dropdown-item">Nordeste</a></li>
@@ -138,10 +138,18 @@ echo getHeader();
                         Pick-up Time
                     </button>
                     <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
+                        <li><a class="dropdown-item">10:30</a></li>
+                        <li><a class="dropdown-item">11:00</a></li>
+                        <li><a class="dropdown-item">11:30</a></li>
+                        <li><a class="dropdown-item">12:30</a></li>
+                        <li><a class="dropdown-item">13:30</a></li>
+                        <li><a class="dropdown-item">14:00</a></li>
+                        <li><a class="dropdown-item">14:30</a></li>
+                        <li><a class="dropdown-item">15:00</a></li>
+                        <li><a class="dropdown-item">15:30</a></li>
+                        <li><a class="dropdown-item">16:00</a></li>
+                        <li><a class="dropdown-item">16:30</a></li>
+                        <li><a class="dropdown-item">17:00</a></li>
                     </ul>
                 </div>
                 <div class="dropdown" style="margin-top: 15px;">
@@ -151,15 +159,24 @@ echo getHeader();
                         Drop-Off Time
                     </button>
                     <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
+                        <li><a class="dropdown-item">10:30</a></li>
+                        <li><a class="dropdown-item">11:00</a></li>
+                        <li><a class="dropdown-item">11:30</a></li>
+                        <li><a class="dropdown-item">12:30</a></li>
+                        <li><a class="dropdown-item">13:30</a></li>
+                        <li><a class="dropdown-item">14:00</a></li>
+                        <li><a class="dropdown-item">14:30</a></li>
+                        <li><a class="dropdown-item">15:00</a></li>
+                        <li><a class="dropdown-item">15:30</a></li>
+                        <li><a class="dropdown-item">16:00</a></li>
+                        <li><a class="dropdown-item">16:30</a></li>
+                        <li><a class="dropdown-item">17:00</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-1 d-flex justify-content-center align-items-center">
-                <button type="button" class="btn btn-outline-dark btn-lg" style="margin-left: 40px;">Search</button>
+                <a href="./html/book.php"><button type="button" class="btn btn-outline-dark btn-lg"
+                        style="margin-left: 40px;">Search</button></a>
             </div>
         </div>
     </div>
@@ -175,8 +192,8 @@ echo getHeader();
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
                             non
                             urna tincidunt consectetur. Nulla facilisi.</p>
-                        <button type="button" class="btn btn-outline-dark"
-                            style="border-radius: 15px;">Categories</button>
+                        <a href="./html/fleet.php"><button type="button" class="btn btn-outline-dark"
+                                style="border-radius: 15px;">Categories</button></a>
                     </div>
                 </div>
             </div>
@@ -188,8 +205,8 @@ echo getHeader();
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
                             non
                             urna tincidunt consectetur. Nulla facilisi.</p>
-                        <button type="button" class="btn btn-outline-dark "
-                            style="border-radius: 15px;">Categories</button>
+                        <a href="./html/fleet.php"><button type="button" class="btn btn-outline-dark"
+                                style="border-radius: 15px;">Categories</button></a>
                     </div>
                 </div>
             </div>
@@ -202,8 +219,8 @@ echo getHeader();
                             non
                             urna tincidunt consectetur. Nulla facilisi.
                         </p>
-                        <button type="button" class="btn btn-outline-dark"
-                            style="border-radius: 15px;">Categories</button>
+                        <a href="./html/fleet.php"><button type="button" class="btn btn-outline-dark"
+                                style="border-radius: 15px;">Categories</button></a>
                     </div>
                 </div>
             </div>

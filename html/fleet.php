@@ -58,6 +58,8 @@ echo getHeader();
                                     <h5 class="card-title">Regular</h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
                                         ut sapien non urna tincidunt consectetur. Nulla facilisi.</p>
+                                    <span style="font-size: 15px;">Price/day:</span><span
+                                        style="font-size: 20px; margin-left:5px; padding-top:15px; font-weight:bold;">25.00€</span>
                                 </div>
                             </div>
                         </div>
@@ -69,6 +71,8 @@ echo getHeader();
                                     <h5 class="card-title">Regular</h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
                                         ut sapien non urna tincidunt consectetur. Nulla facilisi.</p>
+                                    <span style="font-size: 15px;">Price/day:</span><span
+                                        style="font-size: 20px; margin-left:5px; padding-top:15px; font-weight:bold;">25.00€</span>
                                 </div>
                             </div>
                         </div>
@@ -80,6 +84,8 @@ echo getHeader();
                                     <h5 class="card-title">Regular</h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
                                         ut sapien non urna tincidunt consectetur. Nulla facilisi.</p>
+                                    <span style="font-size: 15px;">Price/day:</span><span
+                                        style="font-size: 20px; margin-left:5px; padding-top:15px; font-weight:bold;">25.00€</span>
                                 </div>
                             </div>
                         </div>
@@ -107,6 +113,8 @@ echo getHeader();
                                     <h5 class="card-title">Motorcycle</h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
                                         ut sapien non urna tincidunt consectetur. Nulla facilisi.</p>
+                                    <span style="font-size: 15px;">Price/day:</span><span
+                                        style="font-size: 20px; margin-left:5px; padding-top:15px; font-weight:bold;">20.00€</span>
                                 </div>
                             </div>
                         </div>
@@ -118,6 +126,8 @@ echo getHeader();
                                     <h5 class="card-title">Motorcycle</h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
                                         ut sapien non urna tincidunt consectetur. Nulla facilisi.</p>
+                                    <span style="font-size: 15px;">Price/day:</span><span
+                                        style="font-size: 20px; margin-left:5px; padding-top:15px; font-weight:bold;">20.00€</span>
                                 </div>
                             </div>
                         </div>
@@ -129,6 +139,8 @@ echo getHeader();
                                     <h5 class="card-title">Motorcycle</h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
                                         ut sapien non urna tincidunt consectetur. Nulla facilisi.</p>
+                                    <span style="font-size: 15px;">Price/day:</span><span
+                                        style="font-size: 20px; margin-left:5px; padding-top:15px; font-weight:bold;">20.00€</span>
                                 </div>
                             </div>
                         </div>
@@ -156,6 +168,8 @@ echo getHeader();
                                     <h5 class="card-title">Suv</h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
                                         ut sapien non urna tincidunt consectetur. Nulla facilisi.</p>
+                                    <span style="font-size: 15px;">Price/day:</span><span
+                                        style="font-size: 20px; margin-left:5px; padding-top:15px; font-weight:bold;">30.00€</span>
                                 </div>
                             </div>
                         </div>
@@ -167,6 +181,8 @@ echo getHeader();
                                     <h5 class="card-title">Suv</h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
                                         ut sapien non urna tincidunt consectetur. Nulla facilisi.</p>
+                                    <span style="font-size: 15px;">Price/day:</span><span
+                                        style="font-size: 20px; margin-left:5px; padding-top:15px; font-weight:bold;">30.00€</span>
                                 </div>
                             </div>
                         </div>
@@ -178,6 +194,8 @@ echo getHeader();
                                     <h5 class="card-title">Suv</h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
                                         ut sapien non urna tincidunt consectetur. Nulla facilisi.</p>
+                                    <span style="font-size: 15px;">Price/day:</span><span
+                                        style="font-size: 20px; margin-left:5px; padding-top:15px; font-weight:bold;">30.00€</span>
                                 </div>
                             </div>
                         </div>
