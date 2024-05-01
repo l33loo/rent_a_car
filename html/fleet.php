@@ -26,13 +26,13 @@ echo getHeader();
                             <a class="nav-link active" aria-current="page" href="../index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./html/fleet.php">Fleet</a>
+                            <a class="nav-link" href="./fleet.php">Fleet</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./about.php">About</a>
                         </li>
                         <li class="nav-item">
-                            <a href="./html/login.php" class="nav-link"> <button class="btn btn-primary"
+                            <a href="./login.php" class="nav-link"> <button class="btn btn-primary"
                                     type="submit">Login</button></a>
                         </li>
                     </ul>
