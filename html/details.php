@@ -1,6 +1,5 @@
 <?php 
 require_once '../html/components/header.php';
-
 echo getHeader();
 ?>
 <style>

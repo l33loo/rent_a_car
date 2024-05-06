@@ -60,10 +60,8 @@ echo getHeader();
             </div>
         </div>
     </nav>
-    <div class="bg-image">
+    <div class="bg-image" style="position: relative;">
         <div class="gradient-overlay"></div>
-        <div class="container">
-        </div>
     </div>
     <div class="container">
         <div class="text-content">

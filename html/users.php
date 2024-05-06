@@ -3,6 +3,12 @@ require_once '../html/components/header.php';
 
 echo getHeader();
 ?>
+<style>
+.text-content {
+    position: absolute;
+    color: white;
+}
+</style>
 
 <body>
     <nav class="navbar navbar-dark bg-dark fixed-top">

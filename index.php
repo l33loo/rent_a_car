@@ -175,11 +175,10 @@ echo getHeader();
                 </div>
             </div>
             <div class="col-md-1 d-flex justify-content-center align-items-center">
-                <a href="./html/book.php"><button type="button" class="btn btn-outline-dark btn-lg"
+                <a href="./html/selectVehicle.php"><button type="button" class="btn btn-outline-dark btn-lg"
                         style="margin-left: 40px;">Search</button></a>
             </div>
         </div>
-    </div>
     </div>
     <div class="container">
         <h2 style="position:relative; top: -100px;">Our Fleet</h2>

@@ -5,6 +5,12 @@ echo getHeader();?>
 
 <!DOCTYPE html>
 <html lang="en">
+<style>
+.text-content {
+    position: absolute;
+    color: white;
+}
+</style>
 
 <body>
     <nav class="navbar navbar-dark bg-dark fixed-top">
