@@ -1,8 +1,10 @@
-<?php 
-require_once './components/header.php';
+<?php
+require_once '../html/components/header.php';
 
-echo getHeader();
-?>
+echo getHeader();?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <body>
     <nav class="navbar navbar-dark bg-dark fixed-top">
@@ -40,6 +42,26 @@ echo getHeader();
             </div>
         </div>
     </nav>
+    <div class="container">
+        <div class="text-content">
+            <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Cars</h1>
+        </div>
+    </div>
+    <div class="container">
+        <table id="my_table_id" data-url="data/url.json" data-id-field="id"
+            data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
+            <thead>
+                <tr>
+                    <th class="col-md-1" data-field="id" data-sortable="true" data-align="center">#</th>
+                    <th class="col-md-4" data-field="name" data-editable="true">Name</th>
+                    <th class="col-md-7" data-field="description" data-editable="true"
+                        data-editable-emptytext="Custom empty text.">Description</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <script type="text/javascript">
+    </script>
 </body>
 
 </html>

@@ -235,7 +235,6 @@ echo getHeader();
             <small class="text-white-50">© All rights reserved.</small>
         </div>
     </footer>
-
     <script type="text/javascript">
     </script>
 </body>

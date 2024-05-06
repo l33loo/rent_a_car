@@ -1,5 +1,5 @@
 <?php 
-require_once './components/header.php';
+require_once '../html/components/header.php';
 
 echo getHeader();
 ?>
@@ -39,6 +39,8 @@ echo getHeader();
                 </div>
             </div>
         </div>
+        <script src="text/javascript">
+        </script>
     </nav>
 </body>
 
