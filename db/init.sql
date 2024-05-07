@@ -6,15 +6,9 @@ USE carrentals;
 CREATE TABLE IF NOT EXISTS country (
     countryId INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
-    code VARCHAR(3) NOT NULL,
+    code VARCHAR(6) NOT NULL,
     PRIMARY KEY (countryId)
 );
-
-INSERT INTO TABLE country (countryId, name, code) VALUES
-    (1, "Portugal", "PRT"),
-    (2, "Canada", "CAN"),
-    (3, "Angola", "AGO"),
-    (4, "Brazil", "BRA");
 
 -- ADDRESS
 CREATE TABLE IF NOT EXISTS address (
@@ -31,6 +25,245 @@ CREATE TABLE IF NOT EXISTS address (
         FOREIGN KEY (country_id)
         REFERENCES country(countryId)
 );
+
+-- ISLAND
+CREATE TABLE IF NOT EXISTS island (
+    islandId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(45) NOT NULL
+);
+
+-- LOCATION
+CREATE TABLE location (
+    locationId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    address_id INT UNSIGNED NOT NULL,
+    island_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (locationId),
+    CONSTRAINT fk_location_address
+        FOREIGN KEY (address_id)
+        REFERENCES address(addressId),
+    CONSTRAINT fk_location_island
+        FOREIGN KEY (island_id)
+        REFERENCES island(islandId)
+);
+
+-- PROPERTY
+CREATE TABLE IF NOT EXISTS property (
+    propertyId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(45) NOT NULL
+);
+
+-- CATEGORY
+CREATE TABLE IF NOT EXISTS category (
+    categoryId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(45) NOT NULL,
+    description VARCHAR(90) NOT NULL,
+    dailyRate FLOAT(2) NOT NULL
+);
+
+-- VEHICLE
+CREATE TABLE IF NOT EXISTS vehicle (
+    vehicleId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    plate VARCHAR(15) NOT NULL,
+    category_id INT UNSIGNED NOT NULL,
+    rentable BOOLEAN NOT NULL,
+    island_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (vehicleId),
+    CONSTRAINT fk_vehicle_category
+        FOREIGN KEY (category_id)
+        REFERENCES category(categoryId),
+    CONSTRAINT fk_vehicle_island
+        FOREIGN KEY (island_id)
+        REFERENCES island(islandId)
+);
+
+-- VEHICLE PROPERTIES
+CREATE TABLE IF NOT EXISTS vehicle_property (
+    vehicle_id INT UNSIGNED NOT NULL,
+    property_id INT UNSIGNED NOT NULL,
+    value VARCHAR(45) NOT NULL,
+    PRIMARY KEY (vehicle_id, property_id),
+    CONSTRAINT fk_vehicle_property_vehicle
+        FOREIGN KEY (vehicle_id)
+        REFERENCES vehicle(vehicleId),
+    CONSTRAINT fk_vehicle_property_property
+        FOREIGN KEY (property_id)
+        REFERENCES property(propertyId)
+);
+
+-- CATEGORY PROPERTIES
+CREATE TABLE IF NOT EXISTS category_property (
+    category_id INT UNSIGNED NOT NULL,
+    property_id INT UNSIGNED NOT NULL,
+    value VARCHAR(45) NOT NULL,
+    PRIMARY KEY (category_id, property_id),
+    CONSTRAINT fk_category_property_category
+        FOREIGN KEY (category_id)
+        REFERENCES category(categoryId),
+    CONSTRAINT fk_category_property_property
+        FOREIGN KEY (property_id)
+        REFERENCES property(propertyId)
+);
+
+-- USER
+CREATE TABLE IF NOT EXISTS user (
+    userId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    email VARCHAR(90) NOT NULL,
+    passwordHash VARCHAR(200) NOT NULL,
+    name VARCHAR(90) NOT NULL,
+    dateOfBirth DATE NOT NULL,
+    address_id INT UNSIGNED NOT NULL,
+    phone VARCHAR(25) NOT NULL,
+    isAdmin BOOLEAN NOT NULL DEFAULT FALSE,
+    isArchived BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY(userId),
+    CONSTRAINT fk_user_address
+        FOREIGN KEY (address_id)
+        REFERENCES address(addressId)
+);
+
+-- CREDIT CARD
+CREATE TABLE IF NOT EXISTS creditCard (
+    ccId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ccNumber VARCHAR(16) NOT NULL,
+    ccExpiry DATE NOT NULL,
+    ccCVV VARCHAR(3) NOT NULL,
+    PRIMARY KEY (ccId)
+);
+
+-- CUSTOMER
+CREATE TABLE IF NOT EXISTS customer (
+    customerId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(90) NOT NULL,
+    email VARCHAR(90) NOT NULL,
+    dateOfBirth DATE NOT NULL,
+    address_id INT UNSIGNED NOT NULL,
+    phone VARCHAR(25) NOT NULL,
+    driversLicense VARCHAR(90) NOT NULL,
+    creditCard_id INT UNSIGNED NOT NULL,
+    taxNumber VARCHAR(20) NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    isArchived BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY(customerId),
+    CONSTRAINT fk_customer_address
+        FOREIGN KEY (address_id)
+        REFERENCES address(addressId),
+    CONSTRAINT fk_customer_user
+        FOREIGN KEY (user_id)
+        REFERENCES user(userId),
+    CONSTRAINT fk_customer_creditCard
+        FOREIGN KEY (creditCard_id)
+        REFERENCES creditCard(ccId)
+);
+
+-- STATUS (OF RESERVATION)
+CREATE TABLE IF NOT EXISTS status (
+    statusId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    statusName VARCHAR(45) NOT NULL,
+    PRIMARY KEY (statusId)
+);
+
+-- RESERVATION
+CREATE TABLE IF NOT EXISTS reservation (
+    reservationId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    category_id INT UNSIGNED NOT NULL,
+    customer_id INT UNSIGNED NOT NULL,
+    status_id INT UNSIGNED NOT NULL,
+    pickupLocation_id INT UNSIGNED NOT NULL,
+    dropoffLocation_id INT UNSIGNED NOT NULL,
+    pickupDate DATE NOT NULL,
+    dropoffDate DATE NOT NULL,
+    pickupTime TIME NOT NULL,
+    dropoffTime TIME NOT NULL,
+    vehicle_id INT UNSIGNED NOT NULL,
+    reservedByUser_id INT UNSIGNED NOT NULL,
+    reservedDate DATE NOT NULL DEFAULT (CURRENT_DATE),
+    dateReturned DATE NOT NULL,
+    timeReturned TIME NOT NULL,
+    returnedLocation_id INT UNSIGNED NOT NULL,
+    collectedByUser_id INT UNSIGNED NOT NULL,
+    billingAddress_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (reservationId),
+    CONSTRAINT fk_reservation_category
+        FOREIGN KEY (category_id)
+        REFERENCES category(categoryId),
+    CONSTRAINT fk_reservation_customer
+        FOREIGN KEY (customer_id)
+        REFERENCES customer(customerId),
+    CONSTRAINT fk_reservation_status
+        FOREIGN KEY (status_id)
+        REFERENCES status(statusId),
+    CONSTRAINT fk_reservation_pickupLocation
+        FOREIGN KEY (pickupLocation_id)
+        REFERENCES location(locationId),
+    CONSTRAINT fk_reservation_dropoffLocation
+        FOREIGN KEY (dropoffLocation_id)
+        REFERENCES location(locationId),
+    CONSTRAINT fk_reservation_vehicle
+        FOREIGN KEY (vehicle_id)
+        REFERENCES vehicle(vehicleId),
+    CONSTRAINT fk_reservation_user
+        FOREIGN KEY (reservedByUser_id)
+        REFERENCES user(userId),
+    CONSTRAINT fk_reservation_returnedLocation
+        FOREIGN KEY (returnedLocation_id)
+        REFERENCES location(locationId),
+    CONSTRAINT fk_reservation_collectedByUser
+        FOREIGN KEY (collectedByUser_id)
+        REFERENCES user(userId),
+    CONSTRAINT fk_reservation_billingAddress
+        FOREIGN KEY (billingAddress_id)
+        REFERENCES address(addressId)
+);
+
+-- REVISION (OF RESERVATION)
+CREATE TABLE IF NOT EXISTS revision (
+    revisionId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    reservation_id INT UNSIGNED NOT NULL,
+    category_id INT UNSIGNED NOT NULL,
+    customer_id INT UNSIGNED NOT NULL,
+    status_id INT UNSIGNED NOT NULL,
+    pickupLocation_id INT UNSIGNED NOT NULL,
+    dropoffLocation_id INT UNSIGNED NOT NULL,
+    pickupDate DATE NOT NULL,
+    dropoffDate DATE NOT NULL,
+    pickupTime TIME NOT NULL,
+    dropoffTime TIME NOT NULL,
+    vehicle_id INT UNSIGNED NOT NULL,
+    revisionByUser_id INT UNSIGNED NOT NULL,
+    revisionDate DATE NOT NULL DEFAULT (CURRENT_DATE),
+    PRIMARY KEY (revisionId),
+    CONSTRAINT fk_revision_reservation
+        FOREIGN KEY (reservation_id)
+        REFERENCES reservation(reservationId),
+    CONSTRAINT fk_revision_category
+        FOREIGN KEY (category_id)
+        REFERENCES category(categoryId),
+    CONSTRAINT fk_revision_customer
+        FOREIGN KEY (customer_id)
+        REFERENCES customer(customerId),
+    CONSTRAINT fk_revision_status
+        FOREIGN KEY (status_id)
+        REFERENCES status(statusId),
+    CONSTRAINT fk_revision_pickupLocation
+        FOREIGN KEY (pickupLocation_id)
+        REFERENCES location(locationId),
+    CONSTRAINT fk_revision_dropoffLocation
+        FOREIGN KEY (dropoffLocation_id)
+        REFERENCES location(locationId),
+    CONSTRAINT fk_revision_vehicle
+        FOREIGN KEY (vehicle_id)
+        REFERENCES vehicle(vehicleId),
+    CONSTRAINT fk_revision_user
+        FOREIGN KEY (revisionByUser_id)
+        REFERENCES user(userId)
+);
+
+-- POPULATE COUNTRY
+INSERT INTO country (countryId, name, code) VALUES
+    (1, "Portugal", "PRT"),
+    (2, "Canada", "CAN"),
+    (3, "Angola", "AGO"),
+    (4, "Brazil", "BRA");
 
 INSERT INTO address (
     addressId,
@@ -106,12 +339,6 @@ INSERT INTO address (
     1
 );
 
--- ISLAND
-CREATE TABLE IF NOT EXISTS island (
-    islandId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(45) NOT NULL
-);
-
 INSERT INTO island (
     islandId,
     name
@@ -121,20 +348,6 @@ INSERT INTO island (
 ), (
     2,
     "Santa Maria"
-);
-
--- LOCATION
-CREATE TABLE location (
-    locationId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    address_id INT UNSIGNED NOT NULL,
-    island_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (locationId),
-    CONSTRAINT fk_location_address
-        FOREIGN KEY (address_id)
-        REFERENCES address(addressId),
-    CONSTRAINT fk_location_island
-        FOREIGN KEY (island_id)
-        REFERENCES address(islandId)
 );
 
 INSERT INTO location (
@@ -149,12 +362,6 @@ INSERT INTO location (
     4, 4, 2
 ), (
     5, 5, 2
-);
-
--- PROPERTY
-CREATE TABLE IF NOT EXISTS property (
-    propertyId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(45) NOT NULL
 );
 
 INSERT INTO property (
@@ -183,16 +390,8 @@ INSERT INTO property (
     10, "trunkSize"
 );
 
--- CATEGORY
-CREATE TABLE IF NOT EXISTS category (
-    idCategory INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(45) NOT NULL,
-    description VARCHAR(90) NOT NULL,
-    dailyRate FLOAT(2) NOT NULL
-);
-
 INSERT INTO category (
-    idCategory,
+    categoryId,
     name,
     description,
     dailyRate
@@ -231,22 +430,6 @@ INSERT INTO category (
     "Electric",
     "Our electric cars",
     40.00
-);
-
--- VEHICLE
-CREATE TABLE IF NOT EXISTS vehicle (
-    vehicleId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    plate VARCHAR(10) NOT NULL,
-    category_id INT UNSIGNED NOT NULL,
-    rentable BOOLEAN NOT NULL,
-    island_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (vehicleId),
-    CONSTRAINT fk_vehicle_category
-        FOREIGN KEY (category_id)
-        REFERENCES category(categoryId),
-    CONSTRAINT fk_vehicle_island
-        FOREIGN KEY (island_id)
-        REFERENCES island(islandId)
 );
 
 INSERT INTO vehicle (plate, category_id, rentable, island_id)
@@ -321,21 +504,7 @@ INSERT INTO vehicle (plate, category_id, rentable, island_id)
     ("SMa-YZ12-AB", 7, TRUE, 2),
     ("SMa-CD34-EF", 7, TRUE, 2);
 
--- VEHICLE PROPERTIES
-CREATE TABLE IF NOT EXISTS vehicle_property (
-    vehicle_id INT UNSIGNED NOT NULL,
-    property_id INT UNSIGNED NOT NULL,
-    value VARCHAR(45) NOT NULL,
-    PRIMARY KEY (vehicle_id, property_id),
-    CONSTRAINT fk_vehicle_property_vehicle
-        FOREIGN KEY (vehicle_id)
-        REFERENCES vehicle(vehicleId),
-    CONSTRAINT fk_vehicle_property_property
-        FOREIGN KEY (property_id)
-        REFERENCES property(propertyId)
-);
-
-INSERT INTO vehicle_property (vehicle_id, property_id, value, similarModel)
+INSERT INTO vehicle_property (vehicle_id, property_id, value)
 VALUES
 -- Economy Cars - São Miguel
 (1, 1, "Renault"),
@@ -361,7 +530,7 @@ VALUES
 (4, 2, "500"),
 (4, 3, "Yellow"),
 (4, 4, "2022"),
-(5, 5, "Honda Fit"),
+(4, 5, "Honda Fit"),
 
 (5, 1, "Toyota"),
 (5, 2, "Yaris"),
@@ -603,20 +772,6 @@ VALUES
 (42, 4, "2022"),
 (42, 5, "Tesla Model 3");
 
--- CATEGORY PROPERTIES
-CREATE TABLE IF NOT EXISTS category_property (
-    category_id INT UNSIGNED NOT NULL,
-    property_id INT UNSIGNED NOT NULL,
-    value VARCHAR(45) NOT NULL,
-    PRIMARY KEY (category_id, property_id),
-    CONSTRAINT fk_category_property_category
-        FOREIGN KEY (category_id)
-        REFERENCES category(categoryId),
-    CONSTRAINT fk_category_property_property
-        FOREIGN KEY (property_id)
-        REFERENCES property(propertyId)
-);
-
 INSERT INTO category_property(category_id, property_id, value)
     VALUES
     -- ECONOMY
@@ -668,23 +823,6 @@ INSERT INTO category_property(category_id, property_id, value)
     (7, 9, "5"),
     (7, 10, "4");
 
--- USER
-CREATE TABLE IF NOT EXISTS user (
-    userId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    email VARCHAR(90) NOT NULL,
-    passwordHash VARCHAR(200) NOT NULL,
-    name VARCHAR(90) NOT NULL,
-    dateOfBirth DATE NOT NULL,
-    address_id INT UNSIGNED NOT NULL,
-    phone VARCHAR(25) NOT NULL,
-    isAdmin BOOLEAN NOT NULL DEFAULT FALSE,
-    isArchived BOOLEAN NOT NULL DEFAULT FALSE,
-    PRIMARY KEY(userId),
-    CONSTRAINT fk_user_address
-        FOREIGN KEY (address_id)
-        REFERENCES address(addressId)
-);
-
 -- password = pass123
 INSERT INTO user (userId, email, passwordHash, name, dateOfBirth, address_id, phone, isAdmin)
 VALUES
@@ -708,43 +846,9 @@ VALUES
     FALSE
 );
 
--- CREDIT CARD
-CREATE TABLE IF NOT EXISTS creditCard (
-    ccId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    ccNumber VARCHAR(16) NOT NULL,
-    ccExpiry DATE NOT NULL,
-    ccCVV VARCHAR(3) NOT NULL,
-    PRIMARY KEY (ccId)
-);
-
 INSERT INTO creditCard (ccId, ccNumber, ccExpiry, ccCVV)
 VALUES (
     1, "123456789", "2026-01-01", "666"
-);
-
--- CUSTOMER
-CREATE TABLE IF NOT EXISTS customer (
-    customerId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(90) NOT NULL,
-    email VARCHAR(90) NOT NULL,
-    dateOfBirth DATE NOT NULL,
-    address_id INT UNSIGNED NOT NULL,
-    phone VARCHAR(25) NOT NULL,
-    driversLicense VARCHAR(90) NOT NULL,
-    creditCard_id INT UNSIGNED NOT NULL,
-    taxNumber VARCHAR(20) NOT NULL,
-    user_id INT UNSIGNED NOT NULL,
-    isArchived BOOLEAN NOT NULL DEFAULT FALSE,
-    PRIMARY KEY(customerId),
-    CONSTRAINT fk_customer_address
-        FOREIGN KEY (address_id)
-        REFERENCES address(addressId),
-    CONSTRAINT fk_customer_user
-        FOREIGN KEY (user_id)
-        REFERENCES user(userId),
-    CONSTRAINT fk_customer_creditCard
-        FOREIGN KEY (creditCard_id)
-        REFERENCES creditCard(ccId)
 );
 
 INSERT INTO customer (
@@ -769,112 +873,9 @@ INSERT INTO customer (
     2
 );
 
--- STATUS (OF RESERVATION)
-CREATE TABLE IF NOT EXISTS status {
-    statusId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    statusName VARCHAR(45) NOT NULL,
-    PRIMARY KEY (statusId)
-};
-
 INSERT INTO status (statusId, statusName)
 VALUES
 (1, "Booked"),
 (2, "Confirmed"),
 (3, "Cancelled"),
 (4, "Void");
-
--- RESERVATION
-CREATE TABLE IF NOT EXISTS reservation (
-    reservationId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    category_id INT UNSIGNED NOT NULL,
-    customer_id INT UNSIGNED NOT NULL,
-    status_id INT UNSIGNED NOT NULL,
-    pickupLocation_id INT UNSIGNED NOT NULL,
-    dropoffLocation_id INT UNSIGNED NOT NULL,
-    pickupDate DATE NOT NULL,
-    dropoffDate DATE NOT NULL,
-    pickupTime TIME NOT NULL,
-    dropoffTime TIME NOT NULL,
-    vehicle_id INT UNSIGNED NOT NULL,
-    reservedByUser_id INT UNSIGNED NOT NULL,
-    reservedDate DATE NOT NULL DEFAULT CURDATE(),
-    dateReturned DATE NOT NULL,
-    timeReturned TIME NOT NULL,
-    returnedLocation_id INT UNSIGNED NOT NULL,
-    collectedByUser_id INT UNSIGNED NOT NULL,
-    billingAddress_id IN UNSIGNED NOT NULL,
-    PRIMARY KEY (reservationId),
-    CONSTRAINT fk_reservation_category
-        FOREIGN KEY (category_id)
-        REFERENCES category(categoryId),
-    CONSTRAINT fk_reservation_customer
-        FOREIGN KEY (customer_id)
-        REFERENCES customer(customerId),
-    CONSTRAINT fk_reservation_status
-        FOREIGN KEY (status_id)
-        REFERENCES status(statusId),
-    CONSTRAINT fk_reservation_pickupLocation
-        FOREIGN KEY (pickupLocation_id)
-        REFERENCES location(locationId),
-    CONSTRAINT fk_reservation_dropoffLocation
-        FOREIGN KEY (droppoffLocation_id)
-        REFERENCES location(locationId),
-    CONSTRAINT fk_reservation_vehicle
-        FOREIGN KEY (vehicle_id)
-        REFERENCES vehicle(vehicleId),
-    CONSTRAINT fk_reservation_user
-        FOREIGN KEY (reservedByUser_id)
-        REFERENCES user(userId),
-    CONSTRAINT fk_reservation_returnedLocation
-        FOREIGN KEY (returnedLocation_id)
-        REFERENCES location(locationId),
-    CONSTRAINT fk_reservation_collectedByUser
-        FOREIGN KEY (collectedByUser_id)
-        REFERENCES user(userId),
-    CONSTRAINT fk_reservation_billingAddress
-        FOREIGN KEY (billingAddress_id)
-        REFERENCES address(addressId)
-);
-
--- REVISION (OF RESERVATION)
-CREATE TABLE IF NOT EXISTS revision (
-    revisionId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    reservation_id INT UNSIGNED NOT NULL,
-    category_id INT UNSIGNED NOT NULL,
-    customer_id INT UNSIGNED NOT NULL,
-    status_id INT UNSIGNED NOT NULL,
-    pickupLocation_id INT UNSIGNED NOT NULL,
-    dropoffLocation_id INT UNSIGNED NOT NULL,
-    pickupDate DATE NOT NULL,
-    dropoffDate DATE NOT NULL,
-    pickupTime TIME NOT NULL,
-    dropoffTime TIME NOT NULL,
-    vehicle_id INT UNSIGNED NOT NULL,
-    revisionByUser_id INT UNSIGNED NOT NULL,
-    revisionDate DATE NOT NULL DEFAULT CURDATE(),
-    PRIMARY KEY (modificationId),
-    CONSTRAINT fk_modification_reservation
-        FOREIGN KEY (reservation_id)
-        REFERENCES reservation(reservationId),
-    CONSTRAINT fk_modification_category
-        FOREIGN KEY (category_id)
-        REFERENCES category(categoryId),
-    CONSTRAINT fk_modification_customer
-        FOREIGN KEY (customer_id)
-        REFERENCES customer(customerId),
-    CONSTRAINT fk_modification_status
-        FOREIGN KEY (status_id)
-        REFERENCES status(statusId),
-    CONSTRAINT fk_modification_pickupLocation
-        FOREIGN KEY (pickupLocation_id)
-        REFERENCES location(locationId),
-    CONSTRAINT fk_modification_dropoffLocation
-        FOREIGN KEY (droppoffLocation_id)
-        REFERENCES location(locationId),
-    CONSTRAINT fk_modification_vehicle
-        FOREIGN KEY (vehicle_id)
-        REFERENCES vehicle(vehicleId),
-    CONSTRAINT fk_modification_user
-        FOREIGN KEY (reservedByUser_id)
-        REFERENCES user(userId)
-);
