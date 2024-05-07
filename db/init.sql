@@ -39,7 +39,7 @@ INSERT INTO address (
     apartmentNr,
     city,
     district,
-    postalCode
+    postalCode,
     country_id
 ) VALUES (
     1,
@@ -85,6 +85,24 @@ INSERT INTO address (
     "Vila do Porto",
     "Santa Maria",
     "9580-486",
+    1
+), (
+    6,
+    "Rua Diego Mota",
+    "1",
+    "103",
+    "Ponta Delgada",
+    "São Miguel",
+    "9500-123",
+    1
+), (
+    7,
+    "Rua Colonel Marcelo Cordeiro",
+    "25",
+    NULL,
+    "Ribeira Grande",
+    "São Miguel",
+    "9600-999",
     1
 );
 
@@ -139,7 +157,6 @@ CREATE TABLE IF NOT EXISTS property (
     name VARCHAR(45) NOT NULL
 );
 
--- TODO: FIX SIMILAR MODEL
 INSERT INTO property (
     propertyId, name
 ) VALUES (
@@ -223,7 +240,6 @@ CREATE TABLE IF NOT EXISTS vehicle (
     category_id INT UNSIGNED NOT NULL,
     rentable BOOLEAN NOT NULL,
     island_id INT UNSIGNED NOT NULL,
-    exampleModel VARCHAR(45) NOT NULL,
     PRIMARY KEY (vehicleId),
     CONSTRAINT fk_vehicle_category
         FOREIGN KEY (category_id)
@@ -233,77 +249,77 @@ CREATE TABLE IF NOT EXISTS vehicle (
         REFERENCES island(islandId)
 );
 
-INSERT INTO vehicle (plate, category_id, rentable, island_id, exampleModel)
+INSERT INTO vehicle (plate, category_id, rentable, island_id)
     VALUES
     -- Economy Cars - São Miguel
-    ("SM-AB12-CD", 1, TRUE, 1, "Renault Clio"),
-    ("SM-EF34-GH", 1, TRUE, 1, "Volkswagen Polo"),
-    ("SM-IJ56-KL", 1, TRUE, 1, "Ford Fiesta"),
+    ("SM-AB12-CD", 1, TRUE, 1),
+    ("SM-EF34-GH", 1, TRUE, 1),
+    ("SM-IJ56-KL", 1, TRUE, 1),
 
     -- Small Cars - São Miguel
-    ("SM-MN78-OP", 2, TRUE, 1, "Fiat 500"),
-    ("SM-QR90-ST", 2, TRUE, 1, "Toyota Yaris"),
-    ("SM-UV12-WX", 2, TRUE, 1, "Honda Fit"),
+    ("SM-MN78-OP", 2, TRUE, 1),
+    ("SM-QR90-ST", 2, TRUE, 1),
+    ("SM-UV12-WX", 2, TRUE, 1),
 
     -- Sedan Cars - São Miguel
-    ("SM-YZ34-AB", 3, TRUE, 1, "Toyota Corolla"),
-    ("SM-CD56-EF", 3, TRUE, 1, "Honda Civic"),
-    ("SM-GH78-IJ", 3, TRUE, 1, "Nissan Sentra"),
+    ("SM-YZ34-AB", 3, TRUE, 1),
+    ("SM-CD56-EF", 3, TRUE, 1),
+    ("SM-GH78-IJ", 3, TRUE, 1),
 
     -- SUV Cars - São Miguel
-    ("SM-KL90-MN", 4, TRUE, 1, "Toyota RAV4"),
-    ("SM-OP12-QR", 4, TRUE, 1, "Nissan Rogue"),
-    ("SM-ST34-UV", 4, TRUE, 1, "Ford Escape"),
+    ("SM-KL90-MN", 4, TRUE, 1),
+    ("SM-OP12-QR", 4, TRUE, 1),
+    ("SM-ST34-UV", 4, TRUE, 1),
 
     -- Sedan Premium Cars - São Miguel
-    ("SM-WX56-YZ", 5, TRUE, 1, "BMW 3 Series"),
-    ("SM-AB78-CD", 5, TRUE, 1, "Mercedes-Benz C-Class"),
-    ("SM-EF90-GH", 5, TRUE, 1, "Audi A4"),
+    ("SM-WX56-YZ", 5, TRUE, 1),
+    ("SM-AB78-CD", 5, TRUE, 1),
+    ("SM-EF90-GH", 5, TRUE, 1),
 
     -- SUV Premium Cars - São Miguel
-    ("SM-IJ12-KL", 6, TRUE, 1, "Range Rover Sport"),
-    ("SM-MN34-OP", 6, TRUE, 1, "Porsche Cayenne"),
-    ("SM-QR56-ST", 6, TRUE, 1, "BMW X5"),
+    ("SM-IJ12-KL", 6, TRUE, 1),
+    ("SM-MN34-OP", 6, TRUE, 1),
+    ("SM-QR56-ST", 6, TRUE, 1),
 
     -- Electric Cars - São Miguel
-    ("SM-UV78-WX", 7, TRUE, 1, "Tesla Model 3"),
-    ("SM-YZ90-AB", 7, TRUE, 1, "Nissan Leaf"),
-    ("SM-CD12-EF", 7, TRUE, 1, "Chevrolet Bolt"),
+    ("SM-UV78-WX", 7, TRUE, 1),
+    ("SM-YZ90-AB", 7, TRUE, 1),
+    ("SM-CD12-EF", 7, TRUE, 1),
 
     -- Economy Cars - Santa Maria
-    ("SMa-AB34-CD", 1, TRUE, 2, "Renault Clio"),
-    ("SMa-EF56-GH", 1, TRUE, 2, "Volkswagen Polo"),
-    ("SMa-IJ78-KL", 1, TRUE, 2, "Ford Fiesta"),
+    ("SMa-AB34-CD", 1, TRUE, 2),
+    ("SMa-EF56-GH", 1, TRUE, 2),
+    ("SMa-IJ78-KL", 1, TRUE, 2),
 
     -- Small Cars - Santa Maria
-    ("SMa-MN90-OP", 2, TRUE, 2, "Fiat 500"),
-    ("SMa-QR12-ST", 2, TRUE, 2, "Toyota Yaris"),
-    ("SMa-UV34-WX", 2, TRUE, 2, "Honda Fit"),
+    ("SMa-MN90-OP", 2, TRUE, 2),
+    ("SMa-QR12-ST", 2, TRUE, 2),
+    ("SMa-UV34-WX", 2, TRUE, 2),
 
     -- Sedan Cars - Santa Maria 
-    ("SMa-YZ56-AB", 3, TRUE, 2, "Toyota Corolla"),
-    ("SMa-CD78-EF", 3, TRUE, 2, "Honda Civic"),
-    ("SMa-GH90-IJ", 3, TRUE, 2, "Nissan Sentra"),
+    ("SMa-YZ56-AB", 3, TRUE, 2),
+    ("SMa-CD78-EF", 3, TRUE, 2),
+    ("SMa-GH90-IJ", 3, TRUE, 2),
 
     -- SUV Cars - Santa Maria
-    ("SMa-KL12-MN", 4, TRUE, 2, "Toyota RAV4"),
-    ("SMa-OP34-QR", 4, TRUE, 2, "Nissan Rogue"),
-    ("SMa-ST56-UV", 4, TRUE, 2, "Ford Escape"),
+    ("SMa-KL12-MN", 4, TRUE, 2),
+    ("SMa-OP34-QR", 4, TRUE, 2),
+    ("SMa-ST56-UV", 4, TRUE, 2),
 
     -- Sedan Premium Cars - Santa Maria
-    ("SMa-WX78-YZ", 5, TRUE, 2, "BMW 3 Series"),
-    ("SMa-AB90-CD", 5, TRUE, 2, "Mercedes-Benz C-Class"),
-    ("SMa-EF12-GH", 5, TRUE, 2, "Audi A4"),
+    ("SMa-WX78-YZ", 5, TRUE, 2),
+    ("SMa-AB90-CD", 5, TRUE, 2),
+    ("SMa-EF12-GH", 5, TRUE, 2),
 
     -- SUV Premium Cars - Santa Maria
-    ("SMa-IJ34-KL", 6, TRUE, 2, "Range Rover Sport"),
-    ("SMa-MN56-OP", 6, TRUE, 2, "Porsche Cayenne"),
-    ("SMa-QR78-ST", 6, TRUE, 2, "BMW X5"),
+    ("SMa-IJ34-KL", 6, TRUE, 2),
+    ("SMa-MN56-OP", 6, TRUE, 2),
+    ("SMa-QR78-ST", 6, TRUE, 2),
 
     -- Electric Cars - Santa Maria
-    ("SMa-UV90-WX", 7, TRUE, 2, "Tesla Model 3"),
-    ("SMa-YZ12-AB", 7, TRUE, 2, "Nissan Leaf"),
-    ("SMa-CD34-EF", 7, TRUE, 2, "Chevrolet Bolt");
+    ("SMa-UV90-WX", 7, TRUE, 2),
+    ("SMa-YZ12-AB", 7, TRUE, 2),
+    ("SMa-CD34-EF", 7, TRUE, 2);
 
 -- VEHICLE PROPERTIES
 CREATE TABLE IF NOT EXISTS vehicle_property (
@@ -655,13 +671,12 @@ INSERT INTO category_property(category_id, property_id, value)
 -- USER
 CREATE TABLE IF NOT EXISTS user (
     userId INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(90) NOT NULL,
     email VARCHAR(90) NOT NULL,
+    passwordHash VARCHAR(200) NOT NULL,
+    name VARCHAR(90) NOT NULL,
     dateOfBirth DATE NOT NULL,
     address_id INT UNSIGNED NOT NULL,
     phone VARCHAR(25) NOT NULL,
-    username VARCHAR(90) NOT NULL,
-    passwordHash VARCHAR(200) NOT NULL,
     isAdmin BOOLEAN NOT NULL DEFAULT FALSE,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY(userId),
@@ -670,8 +685,42 @@ CREATE TABLE IF NOT EXISTS user (
         REFERENCES address(addressId)
 );
 
--- TODO: CREATE DEFAULT ADMIN USER
+-- password = pass123
+INSERT INTO user (userId, email, passwordHash, name, dateOfBirth, address_id, phone, isAdmin)
+VALUES
+(
+    1,
+    "admin@superstar.pt",
+    "$2y$10$XDDBRgYpxH5LfW5qf3FKpe2ZgJNoeY3a3JZOx6fzf3AlERmADnvEq",
+    "Jane Doe",
+    "1990-01-01",
+    6,
+    "916111222",
+    TRUE
+), (
+    2,
+    "user@email.pt",
+    "$2y$10$XDDBRgYpxH5LfW5qf3FKpe2ZgJNoeY3a3JZOx6fzf3AlERmADnvEq",
+    "Davide Soares",
+    "1960-05-26",
+    7,
+    "999123321",
+    FALSE
+);
 
+-- CREDIT CARD
+CREATE TABLE IF NOT EXISTS creditCard (
+    ccId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ccNumber VARCHAR(16) NOT NULL,
+    ccExpiry DATE NOT NULL,
+    ccCVV VARCHAR(3) NOT NULL,
+    PRIMARY KEY (ccId)
+);
+
+INSERT INTO creditCard (ccId, ccNumber, ccExpiry, ccCVV)
+VALUES (
+    1, "123456789", "2026-01-01", "666"
+);
 
 -- CUSTOMER
 CREATE TABLE IF NOT EXISTS customer (
@@ -682,12 +731,9 @@ CREATE TABLE IF NOT EXISTS customer (
     address_id INT UNSIGNED NOT NULL,
     phone VARCHAR(25) NOT NULL,
     driversLicense VARCHAR(90) NOT NULL,
-    creditCard VARCHAR(20) NOT NULL,
-    ccExpiry DATE NOT NULL,
-    ccCVV VARCHAR(3) NOT NULL,
+    creditCard_id INT UNSIGNED NOT NULL,
     taxNumber VARCHAR(20) NOT NULL,
     user_id INT UNSIGNED NOT NULL,
-    isAdmin BOOLEAN NOT NULL DEFAULT FALSE,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY(customerId),
     CONSTRAINT fk_customer_address
@@ -695,7 +741,32 @@ CREATE TABLE IF NOT EXISTS customer (
         REFERENCES address(addressId),
     CONSTRAINT fk_customer_user
         FOREIGN KEY (user_id)
-        REFERENCES user(userId)
+        REFERENCES user(userId),
+    CONSTRAINT fk_customer_creditCard
+        FOREIGN KEY (creditCard_id)
+        REFERENCES creditCard(ccId)
+);
+
+INSERT INTO customer (
+    name,
+    email,
+    dateOfBirth,
+    address_id,
+    phone,
+    driversLicense,
+    creditCard_id,
+    taxNumber,
+    user_id
+) VALUES (
+    "Empresa Vila Real",
+    "davide@vilareal.pt",
+    "1960-05-26",
+    7,
+    "123123123",
+    "PT123999000",
+    1,
+    "222123123",
+    2
 );
 
 -- STATUS (OF RESERVATION)
@@ -731,6 +802,7 @@ CREATE TABLE IF NOT EXISTS reservation (
     timeReturned TIME NOT NULL,
     returnedLocation_id INT UNSIGNED NOT NULL,
     collectedByUser_id INT UNSIGNED NOT NULL,
+    billingAddress_id IN UNSIGNED NOT NULL,
     PRIMARY KEY (reservationId),
     CONSTRAINT fk_reservation_category
         FOREIGN KEY (category_id)
@@ -758,12 +830,15 @@ CREATE TABLE IF NOT EXISTS reservation (
         REFERENCES location(locationId),
     CONSTRAINT fk_reservation_collectedByUser
         FOREIGN KEY (collectedByUser_id)
-        REFERENCES user(userId)
+        REFERENCES user(userId),
+    CONSTRAINT fk_reservation_billingAddress
+        FOREIGN KEY (billingAddress_id)
+        REFERENCES address(addressId)
 );
 
--- MODIFICATION (OF RESERVATION)
-CREATE TABLE IF NOT EXISTS modification (
-    modificationId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+-- REVISION (OF RESERVATION)
+CREATE TABLE IF NOT EXISTS revision (
+    revisionId INT UNSIGNED NOT NULL AUTO_INCREMENT,
     reservation_id INT UNSIGNED NOT NULL,
     category_id INT UNSIGNED NOT NULL,
     customer_id INT UNSIGNED NOT NULL,
@@ -775,8 +850,8 @@ CREATE TABLE IF NOT EXISTS modification (
     pickupTime TIME NOT NULL,
     dropoffTime TIME NOT NULL,
     vehicle_id INT UNSIGNED NOT NULL,
-    modifiedByUser_id INT UNSIGNED NOT NULL,
-    modifiedDate DATE NOT NULL DEFAULT CURDATE(),
+    revisionByUser_id INT UNSIGNED NOT NULL,
+    revisionDate DATE NOT NULL DEFAULT CURDATE(),
     PRIMARY KEY (modificationId),
     CONSTRAINT fk_modification_reservation
         FOREIGN KEY (reservation_id)
@@ -803,6 +878,3 @@ CREATE TABLE IF NOT EXISTS modification (
         FOREIGN KEY (reservedByUser_id)
         REFERENCES user(userId)
 );
-
--- CREATE TABLE distritos (iddistrito INT UNSIGNED NOT NULL AUTO_INCREMENT, nomedistrito
--- VARCHAR(45) NOT NULL, PRIMARY KEY(iddistrito));
