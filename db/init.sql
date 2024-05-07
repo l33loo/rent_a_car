@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS reservation (
     dropoffTime TIME NOT NULL,
     vehicle_id INT UNSIGNED NOT NULL,
     reservedByUser_id INT UNSIGNED NOT NULL,
-    reservedDate DATE NOT NULL DEFAULT (CURRENT_DATE),
+    reservedTimestamp TIMESTAMP,
     dateReturned DATE NOT NULL,
     timeReturned TIME NOT NULL,
     returnedLocation_id INT UNSIGNED NOT NULL,
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS revision (
     dropoffTime TIME NOT NULL,
     vehicle_id INT UNSIGNED NOT NULL,
     revisionByUser_id INT UNSIGNED NOT NULL,
-    revisionDate DATE NOT NULL DEFAULT (CURRENT_DATE),
+    revisionTimestamp TIMESTAMP,
     PRIMARY KEY (revisionId),
     CONSTRAINT fk_revision_reservation
         FOREIGN KEY (reservation_id)
