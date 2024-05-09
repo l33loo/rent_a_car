@@ -1,4 +1,4 @@
-CREATE DATABASE carrentals;
+-- CREATE DATABASE carrentals;
 
 USE carrentals;
 
