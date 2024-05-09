@@ -3,12 +3,6 @@ require_once './components/header.php';
 
 echo getHeader();
 ?>
-<style>
-.text-content {
-    position: absolute;
-    color: white;
-}
-</style>
 
 <body>
     <nav class="navbar navbar-dark bg-dark fixed-top">
@@ -93,7 +87,7 @@ echo getHeader();
                             <h3 class="h4" style="padding-top: 15px;">Reservations</h3>
                         </div>
                         <img src="../img/grid.svg" alt="Car Icon"
-                            style="height: 40px; width:40px; position:relative; left:50%; transform:translate(-50%); filter:invert(1)">
+                            style="height: 40px; width:40px; position:relative; left:50%; transform:translate(-50%); margin-top:5px;">
                         <a href=""> <img src="../img/arrowDown.svg" alt="Arrow Down" style="width:30px;
                         position:relative; top:50px; left:65px;" ;></a>
                     </div>
