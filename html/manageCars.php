@@ -3,15 +3,6 @@ require_once '../html/components/header.php';
 
 echo getHeader();?>
 
-<!DOCTYPE html>
-<html lang="en">
-<style>
-.text-content {
-    position: absolute;
-    color: white;
-}
-</style>
-
 <body>
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
@@ -58,10 +49,13 @@ echo getHeader();?>
             data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
             <thead>
                 <tr>
-                    <th class="col-md-1" data-field="id" data-sortable="true" data-align="center">#</th>
-                    <th class="col-md-4" data-field="name" data-editable="true">Name</th>
+                    <th class="col-md-1" data-field="id" data-sortable="true" data-align="center">Cars</th>
+                    <th class="col-md-4" data-field="name" data-editable="true">Brand</th>
                     <th class="col-md-7" data-field="description" data-editable="true"
-                        data-editable-emptytext="Custom empty text.">Description</th>
+                        data-editable-emptytext="Custom empty text.">Model</th>
+                    <th class="col-md-7" data-field="description" data-editable="true"
+                        data-editable-emptytext="Custom empty text.">Plate</th>
+
                 </tr>
             </thead>
         </table>
