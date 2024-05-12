@@ -10,10 +10,29 @@ abstract class Profile {
     protected string $phone;
     protected boolean $isArchived;
 
+    public function __construct(
+        int $id,
+        string $name,
+        string $email,
+        // TODO: Carbon type
+        string $dateOfBirth,
+        string $address,
+        string $phone,
+        boolean $isArchived
+    ) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->email = $email;
+        $this->dateOfBirth = $dateOfBirth;
+        $this->address = $address;
+        $this->phone = $phone;
+        $this->isArchived = $isArchived;
+    }
+
     /**
      * Get the value of id
      */ 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -23,7 +42,7 @@ abstract class Profile {
      *
      * @return  self
      */ 
-    public function setId($id)
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -33,7 +52,7 @@ abstract class Profile {
     /**
      * Get the value of name
      */ 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -43,7 +62,7 @@ abstract class Profile {
      *
      * @return  self
      */ 
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -53,7 +72,7 @@ abstract class Profile {
     /**
      * Get the value of email
      */ 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -63,7 +82,7 @@ abstract class Profile {
      *
      * @return  self
      */ 
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -72,8 +91,9 @@ abstract class Profile {
 
     /**
      * Get the value of dateOfBirth
+     * TODO: Carbon type
      */ 
-    public function getDateOfBirth()
+    public function getDateOfBirth(): string
     {
         return $this->dateOfBirth;
     }
@@ -83,7 +103,7 @@ abstract class Profile {
      *
      * @return  self
      */ 
-    public function setDateOfBirth($dateOfBirth)
+    public function setDateOfBirth(string $dateOfBirth): self
     {
         $this->dateOfBirth = $dateOfBirth;
 
@@ -93,7 +113,7 @@ abstract class Profile {
     /**
      * Get the value of address
      */ 
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
@@ -103,7 +123,7 @@ abstract class Profile {
      *
      * @return  self
      */ 
-    public function setAddress($address)
+    public function setAddress(string $address): self
     {
         $this->address = $address;
 
@@ -113,7 +133,7 @@ abstract class Profile {
     /**
      * Get the value of phone
      */ 
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -123,7 +143,7 @@ abstract class Profile {
      *
      * @return  self
      */ 
-    public function setPhone($phone)
+    public function setPhone(string $phone): self
     {
         $this->phone = $phone;
 
@@ -133,7 +153,7 @@ abstract class Profile {
     /**
      * Get the value of isArchived
      */ 
-    public function getIsArchived()
+    public function getIsArchived(): boolean
     {
         return $this->isArchived;
     }
@@ -143,7 +163,7 @@ abstract class Profile {
      *
      * @return  self
      */ 
-    public function setIsArchived($isArchived)
+    public function setIsArchived(boolean $isArchived): self
     {
         $this->isArchived = $isArchived;
 

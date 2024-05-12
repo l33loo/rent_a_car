@@ -8,10 +8,40 @@ class Customer extends Profile {
     protected string $taxNumber;
     protected User $user;
 
+    public function __construct(
+        int $id,
+        string $name,
+        string $email,
+        // TODO: Carbon type
+        string $dateOfBirth,
+        \locality\Address $address,
+        string $phone,
+        boolean $isArchived,
+        string $driversLicense,
+        string $creditCard,
+        string $taxNumber,
+        User $user
+    ) {
+        parent::__construct(
+            $id,
+            $name,
+            $email,
+            $dateOfBirth,
+            $address,
+            $phone,
+            $isArchived
+        );
+
+        $this->driversLicense = $driversLicense;
+        $this->creditCard = $creditCard;
+        $this->taxNumber = $taxNumber;
+        $this->user = $user;
+    }
+
     /**
      * Get the value of driversLicense
      */ 
-    public function getDriversLicense()
+    public function getDriversLicense(): string
     {
         return $this->driversLicense;
     }
@@ -21,7 +51,7 @@ class Customer extends Profile {
      *
      * @return  self
      */ 
-    public function setDriversLicense($driversLicense)
+    public function setDriversLicense(string $driversLicense): self
     {
         $this->driversLicense = $driversLicense;
 
@@ -30,8 +60,9 @@ class Customer extends Profile {
 
     /**
      * Get the value of creditCard
+     * TODO: make credit card type
      */ 
-    public function getCreditCard()
+    public function getCreditCard(): string
     {
         return $this->creditCard;
     }
@@ -40,8 +71,9 @@ class Customer extends Profile {
      * Set the value of creditCard
      *
      * @return  self
+     * TODO: CreditCard type
      */ 
-    public function setCreditCard($creditCard)
+    public function setCreditCard(string $creditCard): self
     {
         $this->creditCard = $creditCard;
 
@@ -51,7 +83,7 @@ class Customer extends Profile {
     /**
      * Get the value of taxNumber
      */ 
-    public function getTaxNumber()
+    public function getTaxNumber(): string
     {
         return $this->taxNumber;
     }
@@ -61,7 +93,7 @@ class Customer extends Profile {
      *
      * @return  self
      */ 
-    public function setTaxNumber($taxNumber)
+    public function setTaxNumber(string $taxNumber): self
     {
         $this->taxNumber = $taxNumber;
 
@@ -71,7 +103,7 @@ class Customer extends Profile {
     /**
      * Get the value of user
      */ 
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -81,7 +113,7 @@ class Customer extends Profile {
      *
      * @return  self
      */ 
-    public function setUser($user)
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
@@ -91,7 +123,7 @@ class Customer extends Profile {
     /**
      * Get the value of email
      */ 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -101,7 +133,7 @@ class Customer extends Profile {
      *
      * @return  self
      */ 
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
