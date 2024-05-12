@@ -1,16 +1,19 @@
 <?php 
-namespace RENTAL\SRC;
+namespace RentACar;
 
-require_once 'vendor/autoload.php';
+require_once '/var/www/html/vendor/autoload.php';
 
 use Car;
 use Carbon\Carbon;
 
 abstract class Profile {
-protected int $id;
+// protected int $id;
+protected ?int $id = null;
 protected string $name;
 protected string $email;
-protected Carbon $dateOfBirth;
+// TODO: Fix db issue with having dateOfBirth being a string
+// protected Carbon $dateOfBirth;
+protected string $dateOfBirth;
 protected Address $address;
 protected string $phone;
 protected bool $isArchived;
@@ -19,7 +22,7 @@ public function __construct(
 int $id,
 string $name,
 string $email,
-Carbon $dateOfBirth,
+string $dateOfBirth,
 string $address,
 string $phone,
 bool $isArchived
@@ -97,7 +100,7 @@ return $this;
 * Get the value of dateOfBirth
 *
 */
-public function getDateOfBirth(): Carbon
+public function getDateOfBirth(): string
 {
 return $this->dateOfBirth;
 }
@@ -107,7 +110,7 @@ return $this->dateOfBirth;
 *
 * @return self
 */
-public function setDateOfBirth(Carbon $dateOfBirth)
+public function setDateOfBirth(string $dateOfBirth)
 {
 $this->dateOfBirth = $dateOfBirth;
 

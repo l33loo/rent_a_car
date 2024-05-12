@@ -1,6 +1,6 @@
 <?php
 
-namespace RENTAL\SRC;
+namespace RentACar;
 
 class MyConnect
 {
@@ -11,7 +11,7 @@ class MyConnect
     {
         $config = parse_ini_file('db.ini');
 
-        $dbh = "mysql:host={$config['DBHOST']};dbname={$config['DBNAME']};port={$config['DBPORT']};charset=utf8mb4";
+        $dbh = "mysql:host={$config['DBHOST']};dbname={$config['DBNAME']}";
 
         try {
             $this->connection = new \PDO($dbh, $config['DBUSER'], $config['DBPASS']);

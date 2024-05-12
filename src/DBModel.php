@@ -1,6 +1,9 @@
 <?php
 
-namespace RENTAL\SRC;
+namespace RentACar;
+require_once('/var/www/html/MyConnect.php');
+
+use RentACar\MyConnect;
 
 trait DBModel
 {
@@ -10,7 +13,7 @@ trait DBModel
     /**
      * Get the value of id
      */ 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -68,7 +71,7 @@ trait DBModel
             $class_parts = explode('\\', static::class);
             $tableName = end($class_parts);
             $tableName = self::camelToSnake($tableName);
-            $tableName = self::pluralize(2, $tableName);
+            // $tableName = self::pluralize(2, $tableName);
         }
 
         $sql = "SELECT * FROM " . $tableName . " WHERE id = ?";
@@ -101,7 +104,7 @@ trait DBModel
             $class_parts = explode('\\', static::class);
             $tableName = end($class_parts);
             $tableName = self::camelToSnake($tableName);
-            $tableName = self::pluralize(2, $tableName);
+            // $tableName = self::pluralize(2, $tableName);
         }
 
         $sql = "SELECT * FROM " . $tableName;
@@ -126,6 +129,7 @@ trait DBModel
 
         $results = [];
         while($row = $stmt->fetchObject(static::class)) {
+            print_r($row);
             $results[] = $row;
         }
 
@@ -148,29 +152,29 @@ trait DBModel
         return ltrim($result, '_');
     }
 
-    public static function pluralize($quantity, $singular, $plural=null) {
-        if ($quantity==1 || !strlen($singular)) {
-            return $singular;
-        }
+    // public static function pluralize($quantity, $singular, $plural=null) {
+    //     if ($quantity==1 || !strlen($singular)) {
+    //         return $singular;
+    //     }
 
-        if ($plural!==null) {
-            return $plural;
-        }
+    //     if ($plural!==null) {
+    //         return $plural;
+    //     }
     
-        $last_letter = strtolower($singular[strlen($singular)-1]);
-        switch($last_letter) {
-            case 'a':
-                return $singular.'s';
-            case 'e':
-                return $singular.'s';
-            case 'i':
-                return $singular.'s';
-            case 'o':
-                return $singular.'s';
-            case 'u':
-                return $singular.'s';
-            default:
-                return $singular.'es';
-        }
-    }
+    //     $last_letter = strtolower($singular[strlen($singular)-1]);
+    //     switch($last_letter) {
+    //         case 'a':
+    //             return $singular.'s';
+    //         case 'e':
+    //             return $singular.'s';
+    //         case 'i':
+    //             return $singular.'s';
+    //         case 'o':
+    //             return $singular.'s';
+    //         case 'u':
+    //             return $singular.'s';
+    //         default:
+    //             return $singular.'es';
+    //     }
+    // }
 }

@@ -1,5 +1,6 @@
 <?php 
 require_once './components/header.php';
+require_once '../validalogin.php';
 
 echo getHeader();
 ?>
@@ -43,9 +44,10 @@ echo getHeader();
     <div class="container">
         <div class="text-content">
             <h1 class="text-center" style="margin-top: 100px;">Login</h1>
+            <h2>YOOO: <?php echo $msg; ?></h2>
         </div>
     </div>
-    <form action="../validalogin.php" method="post">
+    <form action="" method="post">
         <div class="container mt-5 d-flex justify-content-center" style="padding-right:15px;">
             <div class="text-content">
                 <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:3px;">
@@ -70,8 +72,8 @@ echo getHeader();
             </div>
         </div>
         <div class="container d-flex justify-content-center mt-4">
-            <button type="button" class="btn btn-outline-success" style="border-radius: 15px; width:100px"
-                name="login">Login</button>
+            <input type="submit" class="btn btn-outline-success" style="border-radius: 15px; width:100px"
+                name="login">Login</input>
         </div>
     </form>
     <footer class="bg-dark py-5 mt-5" style="position: relative; top:150px">
