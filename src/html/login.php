@@ -2,7 +2,6 @@
 require_once './components/header.php';
 
 echo getHeader();
-
 ?>
 
 <body>
@@ -43,40 +42,38 @@ echo getHeader();
     </nav>
     <div class="container">
         <div class="text-content">
-            <h1 class="text-center" style="margin-top: 100px;">Sign Up</h1>
+            <h1 class="text-center" style="margin-top: 100px;">Login</h1>
         </div>
     </div>
-    <div class="container mt-5  d-flex justify-content-center">
-        <div class=" text-content">
-            <img src="../img/profile.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
-            <span>
-                Username:
-            </span>
-            <input type="text" style="border: none; border-bottom: 2px solid;">
+    <form action="../validalogin.php" method="post">
+        <div class="container mt-5 d-flex justify-content-center" style="padding-right:15px;">
+            <div class="text-content">
+                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:3px;">
+                <span>
+                    Email:
+                </span>
+                <input type="text" style="border: none; border-bottom: 2px solid; width:212px" name="email">
+            </div>
         </div>
-    </div>
-    <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
-        <div class="text-content">
-            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
-            <span>
-                Email:
-            </span>
-            <input type="text" style="border: none; border-bottom: 2px solid; width:210px">
+        <div class="container mt-4  d-flex justify-content-center">
+            <div class=" text-content">
+                <img src="../img/password.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:5px;">
+                <span>
+                    Password:
+                </span>
+                <input type="text" style="border: none; border-bottom: 2px solid;" name="password">
+            </div>
         </div>
-    </div>
-    <div class="container mt-4  d-flex justify-content-center">
-        <div class=" text-content">
-            <img src="../img/password.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
-            <span>
-                Password:
-            </span>
-            <input type="text" style="border: none; border-bottom: 2px solid;">
+        <div class="container d-flex justify-content-center mt-3" style="font-size: small;">
+            <div class="text-content">
+                <span class="text-muted">Don't have an account? <a href="signup.php">Create one!</a></span>
+            </div>
         </div>
-    </div>
-    <div class="container d-flex justify-content-center mt-4">
-        <a href="login.php"><button type="button" class="btn btn-outline-success"
-                style="border-radius: 15px; width:100px">Sign Up</button></a>
-    </div>
+        <div class="container d-flex justify-content-center mt-4">
+            <button type="button" class="btn btn-outline-success" style="border-radius: 15px; width:100px"
+                name="login">Login</button>
+        </div>
+    </form>
     <footer class="bg-dark py-5 mt-5" style="position: relative; top:150px">
         <div class="container text-light text-center">
             <p class="display-6 mb-3">

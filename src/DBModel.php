@@ -17,70 +17,70 @@ trait DBModel
 
     public function save()
     {
-        $connection = MyConnect::getInstance();
+        $connection = MyConnect::getInstance()->getConnection();
 
-        $properties = get_class_vars(get_class($this));
+        $properties = get_object_vars($this);
         unset($properties['tableName']);
         unset($properties['id']);
-        $properties = array_keys($properties);
 
         if (empty($this->id)) {
-            $sql = "insert into " . $this->tableName . " (".implode(",", $properties).") values(";
-            foreach ($properties as $pos => $property) {
+            $sql = "INSERT INTO " . $this->tableName . " (".implode(",", array_keys($properties)).") VALUES(";
+            $params = [];
+            foreach ($properties as $property => $value) {
+                $sql .= "?";
+
+                $params[] = $value;
                 
-                $sql .= "'" . $this->{$property} . "'";
-
-                if ($pos == (count($properties) - 1)) {
-                    $sql .= ");";
-                } else {
+                if (next($properties) !== false) {
                     $sql .= ", ";
                 }
             }
+            $sql .= ");";
 
-            $connection->query($sql);
-            $this->id = $connection->getLastInsertId();
+            $stmt = $connection->prepare($sql);
+            $stmt->execute($params);
+            $this->id = $connection->lastInsertId();
         } else {
-            $sql = "update " . $this->tableName . " set ";
-            foreach ($properties as $pos => $property) {
-                $sql .= $property . " = '" . $this->{$property} . "' ";
+            $sql = "UPDATE " . $this->tableName . " SET ";
+            $params = [];
+            foreach ($properties as $property => $value) {
+                $sql .= $property . " = ?";
 
-                if ($pos == (count($properties) - 1)) {
-                    $sql .= " where id = " . $this->id . ";";
-                } else {
+                $params[] = $value;
+                
+                if (next($properties) !== false) {
                     $sql .= ", ";
                 }
             }
+            $sql .= " WHERE id = ?;";
+            $params[] = $this->id;
 
-            
-            $connection->query($sql);
+            $stmt = $connection->prepare($sql);
+            $stmt->execute($params);
         }
     }
 
     public static function find(int $id, string $tableName = ''): self
     {
-        $connection = MyConnect::getInstance();
-    
+        $connection = MyConnect::getInstance()->getConnection();
+
         if ($tableName == '') {
-            $class_parts = explode('\\', get_class());
+            $class_parts = explode('\\', static::class);
             $tableName = end($class_parts);
             $tableName = self::camelToSnake($tableName);
             $tableName = self::pluralize(2, $tableName);
         }
 
-        $sql = "select * from " . $tableName . " where id = " . $id;
-        $result = $connection->query($sql);
-        if ($result->num_rows != 1) {
+        $sql = "SELECT * FROM " . $tableName . " WHERE id = ?";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetchObject(static::class);
+
+        if (!$result) {
             throw new \Exception('Erro a obter registo. Número de registos diferente de 1');
         }
-        $row = $result->fetch_assoc();
 
-        $className = get_class();
-        $object = new $className();
-        foreach ($row as $column => $value) {
-            $object->{$column} = (string) $value;
-        }
-
-        return $object;
+        return $result;
     }
 
     public function delete()
@@ -89,48 +89,44 @@ trait DBModel
             return;
         }
 
-        $connection = MyConnect::getInstance();
-        $sql = "delete from " . $this->tableName . " where id = " . $this->id;
-        $connection->query($sql);
+        $connection = MyConnect::getInstance()->getConnection();
+        $sql = "DELETE FROM " . $this->tableName . " WHERE id = ?";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$this->id]);
     }
 
     public static function search(array $filters, string $tableName = ''): array
     {
         if ($tableName == '') {
-            $class_parts = explode('\\', get_class());
+            $class_parts = explode('\\', static::class);
             $tableName = end($class_parts);
             $tableName = self::camelToSnake($tableName);
             $tableName = self::pluralize(2, $tableName);
         }
 
-        $sql = "select * from "
-            . $tableName;
+        $sql = "SELECT * FROM " . $tableName;
 
         if (!empty($filters)) {
-            $sql .= " where ";
+            $sql .= " WHERE ";
 
             foreach ($filters as $pos => $filter) {
                 if ($pos != 0) {
-                    $sql .= ' and ';
+                    $sql .= ' AND ';
                 }
 
-                $sql .= $filter['column'] . ' ' . $filter['operator'] . ' ' 
-                    . "'" . $filter['value'] . "'";    
+                $sql .= $filter['column'] . ' ' . $filter['operator'] . ' ?';
             }
         }
-            
-        $connection = MyConnect::getInstance();
-        $dbResult = $connection->query($sql);
+
+        $connection = MyConnect::getInstance()->getConnection();
+        $stmt = $connection->prepare($sql);
+        
+        $params = array_column($filters, 'value');
+        $stmt->execute($params);
 
         $results = [];
-        while($row = $dbResult->fetch_assoc()) {
-            $className = get_class();
-            $object = new $className();
-            foreach ($row as $column => $value) {
-                $object->{$column} = (string) $value;
-            }
-
-            $results[] = $object;
+        while($row = $stmt->fetchObject(static::class)) {
+            $results[] = $row;
         }
 
         return $results;

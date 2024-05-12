@@ -2,6 +2,7 @@
 require_once './components/header.php';
 
 echo getHeader();
+
 ?>
 
 <body>
@@ -42,35 +43,66 @@ echo getHeader();
     </nav>
     <div class="container">
         <div class="text-content">
-            <h1 class="text-center" style="margin-top: 100px;">Login</h1>
+            <h1 class="text-center" style="margin-top: 100px;">Sign Up</h1>
         </div>
     </div>
-    <div class="container mt-5 d-flex justify-content-center" style="padding-right:15px;">
+    <div class="container mt-5  d-flex justify-content-center">
+        <div class=" text-content">
+            <img src="../img/profile.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
+            <span>
+                Name:
+            </span>
+            <input type="text" style="border: none; border-bottom: 2px solid;" name="name">
+        </div>
+    </div>
+    <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
         <div class="text-content">
-            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:3px;">
+            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
             <span>
                 Email:
             </span>
-            <input type="text" style="border: none; border-bottom: 2px solid; width:212px">
+            <input type="email" style="border: none; border-bottom: 2px solid; width:210px" name="email">
         </div>
     </div>
     <div class="container mt-4  d-flex justify-content-center">
         <div class=" text-content">
-            <img src="../img/password.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:5px;">
+            <img src="../img/password.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
             <span>
                 Password:
             </span>
-            <input type="text" style="border: none; border-bottom: 2px solid;">
+            <input type="password" style="border: none; border-bottom: 2px solid;" name="pwd">
         </div>
     </div>
-    <div class="container d-flex justify-content-center mt-3" style="font-size: small;">
+    <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
         <div class="text-content">
-            <span class="text-muted">Don't have an account? <a href="signup.php">Create one!</a></span>
+            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
+            <span>
+                Birthdate:
+            </span>
+            <input type="date" style="border: none; border-bottom: 2px solid; width:210px" name="dateOfBirth">
+        </div>
+    </div>
+    <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
+        <div class="text-content">
+            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
+            <span>
+                Address:
+            </span>
+            <input type="text" style="border: none; border-bottom: 2px solid; width:210px" name="address">
+        </div>
+    </div>
+    <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
+        <div class="text-content">
+            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
+            <span>
+                Phone:
+            </span>
+            <input type="text" style="border: none; border-bottom: 2px solid; width:210px" name="phone">
         </div>
     </div>
     <div class="container d-flex justify-content-center mt-4">
-        <a href="./html/fleet.php"><button type="button" class="btn btn-outline-success"
-                style="border-radius: 15px; width:100px">Login</button></a>
+        <button type="button" class="btn btn-outline-success" style="border-radius: 15px; width:100px"
+            name="signup">Sign Up</button>
     </div>
     <footer class="bg-dark py-5 mt-5" style="position: relative; top:150px">
         <div class="container text-light text-center">

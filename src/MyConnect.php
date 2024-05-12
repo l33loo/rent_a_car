@@ -11,13 +11,24 @@ class MyConnect
     {
         $config = parse_ini_file('db.ini');
 
-        $this->connection = new \mysqli(
-            $config['DBHOST'],
-            $config['DBUSER'],
-            $config['DBPASS'],
-            $config['DBNAME'],
-            $config['DBPORT']
-        );
+        $dbh = "mysql:host={$config['DBHOST']};dbname={$config['DBNAME']};port={$config['DBPORT']};charset=utf8mb4";
+
+        try {
+            $this->connection = new \PDO($dbh, $config['DBUSER'], $config['DBPASS']);
+
+            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+            // Testa a conexão executando uma consulta de teste
+            $result = $this->connection->query('SELECT 1');
+            if ($result === false) {
+                throw new \PDOException('Erro ao executar a consulta no banco de dados.');
+            }
+
+            echo "Conexão com o banco de dados está funcionando corretamente!";
+        } catch (\PDOException $e) {
+            // Em caso de erro na conexão
+            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+        }
     }
 
     public static function getInstance(): self
@@ -29,6 +40,11 @@ class MyConnect
         return self::$instance;
     }
 
+    public function getConnection(): \PDO
+    {
+        return $this->connection;
+    }
+
     public function query(string $sql)
     {
         return $this->connection->query($sql);
@@ -36,12 +52,12 @@ class MyConnect
 
     public function insert($sql)
     {
-        $this->connection->query($sql);
-        return $this->connection->insert_id;
+        $this->connection->exec($sql);
+        return $this->connection->lastInsertId();
     }
 
     public function getLastInsertId()
     {
-        return $this->connection->insert_id;
+        return $this->connection->lastInsertId();
     }
 }
