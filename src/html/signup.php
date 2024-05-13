@@ -15,55 +15,55 @@ echo getHeader();
     <form>
         <div class="container mt-5  d-flex justify-content-center">
             <div class=" text-content">
-                <img src="../img/profile.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
-                <span>
+                <img src="../img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
+                <label for="name">
                     Name:
-                </span>
+                </label>
                 <input type="text" style="border: none; border-bottom: 2px solid;" name="name">
             </div>
         </div>
         <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
             <div class="text-content">
-                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
-                <span>
+                <img src="../img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                <label for="email">
                     Email:
-                </span>
+                </label>
                 <input type="email" style="border: none; border-bottom: 2px solid; width:210px" name="email">
             </div>
         </div>
         <div class="container mt-4  d-flex justify-content-center">
             <div class=" text-content">
-                <img src="../img/password.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
-                <span>
+                <img src="../img/password.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
+                <label for="password">
                     Password:
-                </span>
+                </label>
                 <input type="password" style="border: none; border-bottom: 2px solid;" name="pwd">
             </div>
         </div>
         <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
             <div class="text-content">
-                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
-                <span>
+                <img src="../img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                <label for="dateOfBirth">
                     Birthdate:
-                </span>
+                </label>
                 <input type="date" style="border: none; border-bottom: 2px solid; width:210px" name="dateOfBirth">
             </div>
         </div>
         <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
             <div class="text-content">
-                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
-                <span>
+                <img src="../img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                <label for="address">
                     Address:
-                </span>
+                </label>
                 <input type="text" style="border: none; border-bottom: 2px solid; width:210px" name="address">
             </div>
         </div>
         <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
             <div class="text-content">
-                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
-                <span>
+                <img src="../img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                <label for="phone">
                     Phone:
-                </span>
+                </label>
                 <input type="text" style="border: none; border-bottom: 2px solid; width:210px" name="phone">
             </div>
         </div>
