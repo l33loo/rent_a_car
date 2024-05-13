@@ -3,7 +3,6 @@ namespace RentACar;
 
 require_once '/var/www/html/vendor/autoload.php';
 
-use Car;
 use Carbon\Carbon;
 
 abstract class Profile {
