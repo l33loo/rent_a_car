@@ -34,7 +34,7 @@ if (count($users) !== 1) {
 }
 
 if ($users[0]->checkPassword($_POST['password'])) {
-    $_SESSION['loginError'] = "Password good";
+    unset($_SESSION['loginError']);
     $_SESSION['logged_id'] = true;
     $_SESSION['name'] = $users[0]->getName();
     // TODO: send admins to admin dashboard, and non-admins to index.php
