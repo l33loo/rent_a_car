@@ -7,12 +7,13 @@ use RentACar\User;
 
 session_start();
 
+// TODO: redirect to ../index.php if user already logged in
+
 $wrongCredsMsg = 'Wrong email or password';
 
 // $dbh = new PDO('mysql:host=mysql;dbname=carrentals', 'root', 'secret');
 if (empty($_POST)) {
-    $_SESSION['loginError'] = 'empty POST';
-    redirectToLoginPage();
+    redirectToLoginPage('empty POST');
     exit;
 }
 
@@ -27,9 +28,8 @@ $users = User::search([
 // print_r($users);
 
 if (count($users) !== 1) {
-    $_SESSION['loginError'] = $wrongCredsMsg;
     // echo "Email or Password wrong";
-    redirectToLoginPage();
+    redirectToLoginPage($wrongCredsMsg);
     exit;
 }
 
@@ -40,13 +40,13 @@ if ($users[0]->checkPassword($_POST['password'])) {
     // TODO: send admins to admin dashboard, and non-admins to index.php
     header('Location: ../index.php');
 } else {
-    $_SESSION['loginError'] = $wrongCredsMsg;
     // echo "Wrong email or Password";
-    redirectToLoginPage();
+    redirectToLoginPage($wrongCredsMsg);
     exit;
 }
 
-function redirectToLoginPage() {
+function redirectToLoginPage(string $errorMsg): void {
+    $_SESSION['loginError'] = $errorMsg;
     header('Location: html/login.php');
 }
 
