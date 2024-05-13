@@ -67,7 +67,7 @@ trait DBModel
     {
         $connection = MyConnect::getInstance()->getConnection();
 
-        if ($tableName == '') {
+        if ($tableName === '') {
             $class_parts = explode('\\', static::class);
             $tableName = end($class_parts);
             $tableName = self::camelToSnake($tableName);
@@ -100,7 +100,7 @@ trait DBModel
 
     public static function search(array $filters, string $tableName = ''): array
     {
-        if ($tableName == '') {
+        if ($tableName === '') {
             $class_parts = explode('\\', static::class);
             $tableName = end($class_parts);
             $tableName = self::camelToSnake($tableName);
@@ -113,7 +113,7 @@ trait DBModel
             $sql .= " WHERE ";
 
             foreach ($filters as $pos => $filter) {
-                if ($pos != 0) {
+                if ($pos !== 0) {
                     $sql .= ' AND ';
                 }
 
