@@ -5,7 +5,7 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include 'components/navbar.php'; ?>
+    <?php include 'components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
             <h1 class="text-center" style="margin-top: 100px;">Dashboard</h1>

@@ -6,70 +6,77 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include 'components/navbar.php'; ?>
+    <?php include 'components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
             <h1 class="text-center" style="margin-top: 100px;">Sign Up</h1>
         </div>
     </div>
-    <div class="container mt-5  d-flex justify-content-center">
-        <div class=" text-content">
-            <img src="../img/profile.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
-            <span>
-                Name:
-            </span>
-            <input type="text" style="border: none; border-bottom: 2px solid;" name="name">
+    <form>
+        <div class="container mt-5  d-flex justify-content-center">
+            <div class=" text-content">
+                <img src="../img/profile.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
+                <span>
+                    Name:
+                </span>
+                <input type="text" style="border: none; border-bottom: 2px solid;" name="name">
+            </div>
         </div>
-    </div>
-    <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
-        <div class="text-content">
-            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
-            <span>
-                Email:
-            </span>
-            <input type="email" style="border: none; border-bottom: 2px solid; width:210px" name="email">
+        <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
+            <div class="text-content">
+                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
+                <span>
+                    Email:
+                </span>
+                <input type="email" style="border: none; border-bottom: 2px solid; width:210px" name="email">
+            </div>
         </div>
-    </div>
-    <div class="container mt-4  d-flex justify-content-center">
-        <div class=" text-content">
-            <img src="../img/password.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
-            <span>
-                Password:
-            </span>
-            <input type="password" style="border: none; border-bottom: 2px solid;" name="pwd">
+        <div class="container mt-4  d-flex justify-content-center">
+            <div class=" text-content">
+                <img src="../img/password.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:10px;">
+                <span>
+                    Password:
+                </span>
+                <input type="password" style="border: none; border-bottom: 2px solid;" name="pwd">
+            </div>
         </div>
-    </div>
-    <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
-        <div class="text-content">
-            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
-            <span>
-                Birthdate:
-            </span>
-            <input type="date" style="border: none; border-bottom: 2px solid; width:210px" name="dateOfBirth">
+        <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
+            <div class="text-content">
+                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
+                <span>
+                    Birthdate:
+                </span>
+                <input type="date" style="border: none; border-bottom: 2px solid; width:210px" name="dateOfBirth">
+            </div>
         </div>
-    </div>
-    <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
-        <div class="text-content">
-            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
-            <span>
-                Address:
-            </span>
-            <input type="text" style="border: none; border-bottom: 2px solid; width:210px" name="address">
+        <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
+            <div class="text-content">
+                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
+                <span>
+                    Address:
+                </span>
+                <input type="text" style="border: none; border-bottom: 2px solid; width:210px" name="address">
+            </div>
         </div>
-    </div>
-    <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
-        <div class="text-content">
-            <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
-            <span>
-                Phone:
-            </span>
-            <input type="text" style="border: none; border-bottom: 2px solid; width:210px" name="phone">
+        <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">
+            <div class="text-content">
+                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:5px;">
+                <span>
+                    Phone:
+                </span>
+                <input type="text" style="border: none; border-bottom: 2px solid; width:210px" name="phone">
+            </div>
         </div>
-    </div>
-    <div class="container d-flex justify-content-center mt-4">
-        <button type="button" class="btn btn-outline-success" style="border-radius: 15px; width:100px"
-            name="signup">Sign Up</button>
-    </div>
+        <div class="container d-flex justify-content-center mt-4">
+            <input
+                type="submit"
+                class="btn btn-outline-success"
+                style="border-radius: 15px; width:100px"
+                name="signup"
+                value="Sign Up"
+            />
+        </div>
+    </form>
     <footer class="bg-dark py-5 mt-5" style="position: relative; top:150px">
         <div class="container text-light text-center">
             <p class="display-6 mb-3">

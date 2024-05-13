@@ -24,7 +24,7 @@ echo getHeader();
 </style>
 
 <body>
-    <?php include 'components/navbar.php'; ?>
+    <?php include 'components/navbar.inc.php'; ?>
     <div class="bg-image" style="position: relative;">
         <div class="gradient-overlay"></div>
     </div>
