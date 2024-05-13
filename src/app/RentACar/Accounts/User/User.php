@@ -12,15 +12,20 @@ class User extends Profile
 {
     use DBModel;
 
-    protected string $password;
+    protected string $passwordHash;
+    protected bool $isAdmin;
+    protected int $address_id;
     
     
-    public function __construct(string $password = '', string $email = '')
+    public function __construct()
     {
         $this->tableName = 'user';
         
-        $this->password = password_hash($password, PASSWORD_BCRYPT);
-        $this->email = $email;
+        // $this->passwordHash = $passwordHash;
+        // // $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
+        // $this->email = $email;
+
+        print_r($this);
     }
 
     /**
@@ -30,7 +35,8 @@ class User extends Profile
      */ 
     public function setPassword($password): self
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT);
+        $this->passwordHash = $password;
+        // $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
         return $this;
     }
@@ -38,7 +44,7 @@ class User extends Profile
     public function checkPassword(string $password): bool
     {
         echo "<br>Password: $password<br>";
-        echo "this->password: $this->password<br>";
-        return password_verify($password, $this->password);
+        echo "this->passwordHash: $this->passwordHash<br>";
+        return password_verify($password, $this->passwordHash);
     }
 }
