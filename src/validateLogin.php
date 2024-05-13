@@ -5,43 +5,42 @@
 include '/var/www/html/app/RentACar/Accounts/User/User.php';
 use RentACar\User;
 
-$msg = '';
+session_start();
 
 // $dbh = new PDO('mysql:host=mysql;dbname=carrentals', 'root', 'secret');
-// if (empty($_POST)) {
-//     $msg = 'empty POST';
-//     header('Location: login.php');
-//     exit;
-// }
+if (empty($_POST)) {
+    $_SESSION['loginError'] = 'empty POST';
+    header('Location: html/login.php');
+    exit;
+}
 
-if (!empty($_POST)) {
-    $users = User::search([
-        [
-            'column' => 'email',
-            'operator' => '=',
-            'value' => $_POST['email']
-        ]
-    ]);
+$users = User::search([
+    [
+        'column' => 'email',
+        'operator' => '=',
+        'value' => $_POST['email']
+    ]
+]);
 
-    // print_r($users);
-    
-    if (count($users) !== 1) {
-        $msg = "Email or Password wrong";
-        echo "Email or Password wrong";
-        exit;
-    }
-    
-    if ($users[0]->checkPassword($_POST['password'])) {
-        $msg = "Password good";
-        session_start();
-        $_SESSION['logged_id'] = true;
-        $_SESSION['name'] = $users[0]->getName();
-        header('Location: ../index.php');
-    } else {
-        $msg = "Wrong email or Password";
-        echo "Wrong email or Password";
-        exit;
-    }
+// print_r($users);
+
+if (count($users) !== 1) {
+    $_SESSION['loginError'] = "Email or Password wrong";
+    // echo "Email or Password wrong";
+    header('Location: html/login.php');
+    exit;
+}
+
+if ($users[0]->checkPassword($_POST['password'])) {
+    $_SESSION['loginError'] = "Password good";
+    $_SESSION['logged_id'] = true;
+    $_SESSION['name'] = $users[0]->getName();
+    header('Location: ../index.php');
+} else {
+    $_SESSION['loginError'] = "Wrong email or Password";
+    // echo "Wrong email or Password";
+    header('Location: html/login.php');
+    exit;
 }
 
 // if ($_SERVER["REQUEST_METHOD"] == "POST") {

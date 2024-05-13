@@ -1,6 +1,7 @@
 <?php 
 require_once './components/header.php';
-require_once '../validalogin.php';
+
+session_start();
 
 echo getHeader();
 ?>
@@ -44,10 +45,12 @@ echo getHeader();
     <div class="container">
         <div class="text-content">
             <h1 class="text-center" style="margin-top: 100px;">Login</h1>
-            <h2>YOOO: <?php echo $msg; ?></h2>
+            <?php if (!empty($_SESSION['loginError'])) { ?>
+                <h2>YOOO: <?php echo $_SESSION['loginError']; ?></h2>
+            <?php } ?>
         </div>
     </div>
-    <form action="" method="post">
+    <form action="../validateLogin.php" method="post">
         <div class="container mt-5 d-flex justify-content-center" style="padding-right:15px;">
             <div class="text-content">
                 <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:3px;">
