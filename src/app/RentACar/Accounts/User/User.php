@@ -47,4 +47,12 @@ class User extends Profile
         // echo "this->passwordHash: $this->passwordHash<br>";
         return password_verify($password, $this->passwordHash);
     }
+
+    /**
+     * Get the value of isAdmin
+     */ 
+    public function getIsAdmin(): bool
+    {
+        return $this->isAdmin;
+    }
 }
