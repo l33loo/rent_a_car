@@ -25,7 +25,7 @@ if (!empty($_POST)) {
 
     // print_r($users);
     
-    if (count($users) != 1) {
+    if (count($users) !== 1) {
         $msg = "Email or Password wrong";
         echo "Email or Password wrong";
         exit;
