@@ -14,7 +14,7 @@ class Customer extends Profile {
         string $email,
         // TODO: Carbon type
         string $dateOfBirth,
-        \locality\Address $address,
+        \RentACar\Address $address,
         string $phone,
         bool $isArchived,
         string $driversLicense,
