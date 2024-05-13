@@ -7,7 +7,7 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include 'components/navbar.php'; ?>
+    <?php include 'components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
             <h1 class="text-center" style="margin-top: 100px;">Login</h1>
@@ -41,8 +41,13 @@ echo getHeader();
             </div>
         </div>
         <div class="container d-flex justify-content-center mt-4">
-            <input type="submit" class="btn btn-outline-success" style="border-radius: 15px; width:100px"
-                name="login">Login</input>
+            <input
+                type="submit"
+                class="btn btn-outline-success"
+                style="border-radius: 15px; width:100px"
+                name="login"
+                value="Login"
+            />
         </div>
     </form>
     <footer class="bg-dark py-5 mt-5" style="position: relative; top:150px">

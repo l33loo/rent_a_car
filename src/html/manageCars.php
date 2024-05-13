@@ -4,7 +4,7 @@ require_once '../html/components/header.php';
 echo getHeader();?>
 
 <body>
-    <?php include 'components/navbar.php'; ?>
+    <?php include 'components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
             <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Cars</h1>

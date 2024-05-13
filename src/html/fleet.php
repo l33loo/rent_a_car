@@ -5,7 +5,7 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include 'components/navbar.php'; ?>
+    <?php include 'components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
             <h1 style="padding-top: 150px;">Fleet</h1>
