@@ -1,6 +1,6 @@
 <?php
 // TODO: make property names match db columns
-namespace reservation;
+namespace RentACar;
 
 class Reservation {
     protected int $id;

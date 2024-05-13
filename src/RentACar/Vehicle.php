@@ -1,5 +1,5 @@
 <?php
-namespace fleet;
+namespace RentACar;
 
 class Vehicle {
     protected int $id;
