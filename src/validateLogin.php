@@ -7,10 +7,12 @@ use RentACar\User;
 
 session_start();
 
+$wrongCredsMsg = 'Wrong email or password';
+
 // $dbh = new PDO('mysql:host=mysql;dbname=carrentals', 'root', 'secret');
 if (empty($_POST)) {
     $_SESSION['loginError'] = 'empty POST';
-    header('Location: html/login.php');
+    redirectToLoginPage();
     exit;
 }
 
@@ -25,9 +27,9 @@ $users = User::search([
 // print_r($users);
 
 if (count($users) !== 1) {
-    $_SESSION['loginError'] = "Email or Password wrong";
+    $_SESSION['loginError'] = $wrongCredsMsg;
     // echo "Email or Password wrong";
-    header('Location: html/login.php');
+    redirectToLoginPage();
     exit;
 }
 
@@ -35,12 +37,17 @@ if ($users[0]->checkPassword($_POST['password'])) {
     $_SESSION['loginError'] = "Password good";
     $_SESSION['logged_id'] = true;
     $_SESSION['name'] = $users[0]->getName();
+    // TODO: send admins to admin dashboard, and non-admins to index.php
     header('Location: ../index.php');
 } else {
-    $_SESSION['loginError'] = "Wrong email or Password";
+    $_SESSION['loginError'] = $wrongCredsMsg;
     // echo "Wrong email or Password";
-    header('Location: html/login.php');
+    redirectToLoginPage();
     exit;
+}
+
+function redirectToLoginPage() {
+    header('Location: html/login.php');
 }
 
 // if ($_SERVER["REQUEST_METHOD"] == "POST") {
