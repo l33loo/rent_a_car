@@ -23,7 +23,7 @@ if (!empty($_POST)) {
         ]
     ]);
 
-    print_r($users);
+    // print_r($users);
     
     if (count($users) != 1) {
         $msg = "Email or Password wrong";
@@ -36,7 +36,7 @@ if (!empty($_POST)) {
         session_start();
         $_SESSION['logged_id'] = true;
         $_SESSION['name'] = $users[0]->getName();
-        header('Location: index.php');
+        header('Location: ../index.php');
     } else {
         $msg = "Wrong email or Password";
         echo "Wrong email or Password";

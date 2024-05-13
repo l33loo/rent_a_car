@@ -129,7 +129,7 @@ trait DBModel
 
         $results = [];
         while($row = $stmt->fetchObject(static::class)) {
-            print_r($row);
+            // print_r($row);
             $results[] = $row;
         }
 

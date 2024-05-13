@@ -25,7 +25,7 @@ class User extends Profile
         // // $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
         // $this->email = $email;
 
-        print_r($this);
+        // print_r($this);
     }
 
     /**
@@ -43,8 +43,8 @@ class User extends Profile
 
     public function checkPassword(string $password): bool
     {
-        echo "<br>Password: $password<br>";
-        echo "this->passwordHash: $this->passwordHash<br>";
+        // echo "<br>Password: $password<br>";
+        // echo "this->passwordHash: $this->passwordHash<br>";
         return password_verify($password, $this->passwordHash);
     }
 }

@@ -24,7 +24,7 @@ class MyConnect
                 throw new \PDOException('Erro ao executar a consulta no banco de dados.');
             }
 
-            echo "Conexão com o banco de dados está funcionando corretamente!";
+            // echo "Conexão com o banco de dados está funcionando corretamente!";
         } catch (\PDOException $e) {
             // Em caso de erro na conexão
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
