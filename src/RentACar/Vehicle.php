@@ -6,7 +6,7 @@ class Vehicle {
     protected string $plate;
     protected Category $category;
     protected array $properties;
-    protected boolean $rentable;
+    protected bool $rentable;
     protected locality\Island $island;
     protected float $dailyRate;
 
@@ -15,7 +15,7 @@ class Vehicle {
         string $plate,
         Category $category,
         array $properties,
-        boolean $rentable,
+        bool $rentable,
         locality\Island $island,
         float $dailyRate
     ) {
@@ -63,7 +63,7 @@ class Vehicle {
     /**
      * Get the value of rentable
      */ 
-    public function getRentable(): boolean
+    public function getRentable(): bool
     {
         return $this->rentable;
     }
@@ -73,7 +73,7 @@ class Vehicle {
      *
      * @return  self
      */ 
-    public function setRentable(boolean $rentable): self
+    public function setRentable(bool $rentable): self
     {
         $this->rentable = $rentable;
 
