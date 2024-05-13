@@ -2,7 +2,7 @@
 namespace RentACar;
 
 require_once '/var/www/html/vendor/autoload.php';
-require_once '/var/www/html/app/RentACar/Accounts/Profile/Profile.php';
+require_once '/var/www/html/RentACar/Profile.php';
 require_once '/var/www/html/DBModel.php';
 
 use Carbon\Carbon;

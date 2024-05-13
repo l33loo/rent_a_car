@@ -50,7 +50,7 @@ echo getHeader();
             <?php } ?>
         </div>
     </div>
-    <form action="../validateLogin.php" method="post">
+    <form action="../app/validateLogin.php" method="post">
         <div class="container mt-5 d-flex justify-content-center" style="padding-right:15px;">
             <div class="text-content">
                 <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:3px;">

@@ -2,7 +2,7 @@
 
 // include ('autoload.php');
 
-include '/var/www/html/app/RentACar/Accounts/User/User.php';
+include '/var/www/html/RentACar/User.php';
 use RentACar\User;
 
 session_start();
@@ -47,7 +47,7 @@ if ($users[0]->checkPassword($_POST['password'])) {
 
 function redirectToLoginPage(string $errorMsg): void {
     $_SESSION['loginError'] = $errorMsg;
-    header('Location: html/login.php');
+    header('Location: ../html/login.php');
 }
 
 // if ($_SERVER["REQUEST_METHOD"] == "POST") {
