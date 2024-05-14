@@ -1,7 +1,7 @@
 <?php 
 namespace RentACar;
 
-require_once '/var/www/html/vendor/autoload.php';
+// require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use Carbon\Carbon;
 

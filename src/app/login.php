@@ -2,7 +2,7 @@
 
 // include ('autoload.php');
 
-include '/var/www/html/RentACar/User.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 use RentACar\User;
 
 session_start();

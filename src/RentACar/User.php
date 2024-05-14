@@ -1,9 +1,10 @@
 <?php
 namespace RentACar;
 
-require_once '/var/www/html/vendor/autoload.php';
-require_once '/var/www/html/RentACar/Profile.php';
-require_once '/var/www/html/RentACar/DBModel.php';
+// TODO: fix autoload
+// require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Profile.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 use Carbon\Carbon;
 use RentACar\Profile;
