@@ -2,7 +2,7 @@
 
 // include ('autoload.php');
 
-include '/var/www/html/RentACar/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 use RentACar\User;
 
 session_start();
@@ -39,7 +39,11 @@ if ($users[0]->checkPassword($_POST['password'])) {
     $_SESSION['name'] = $users[0]->getName();
     $_SESSION['isAdmin'] = $users[0]->getIsAdmin();
     // TODO: send admins to admin dashboard, and non-admins to index.php
-    header('Location: ../index.php');
+    if ($users[0]->getIsAdmin()) {
+        header('Location: ../html/admin/dashboard.php');
+    } else {
+        header('Location: ../index.php');
+    }
 } else {
     // echo "Wrong email or Password";
     redirectToLoginPage($wrongCredsMsg);

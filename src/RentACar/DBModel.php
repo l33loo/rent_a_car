@@ -1,7 +1,7 @@
 <?php
 
 namespace RentACar;
-require_once('/var/www/html/RentACar/MyConnect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/RentACar/MyConnect.php');
 
 use RentACar\MyConnect;
 
