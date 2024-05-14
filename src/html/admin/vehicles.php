@@ -8,7 +8,7 @@ echo getHeader();?>
     <?php include '../components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
-            <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Cars</h1>
+            <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Vehicles</h1>
         </div>
     </div>
     <div class="container">
