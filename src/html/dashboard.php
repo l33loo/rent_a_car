@@ -61,6 +61,7 @@ echo getHeader();
             </div>
         </div>
     </div>
+    <?php include 'components/footer.inc.php'; ?>
 </body>
 
 </html>

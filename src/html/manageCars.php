@@ -26,8 +26,7 @@ echo getHeader();?>
             </thead>
         </table>
     </div>
-    <script type="text/javascript">
-    </script>
+    <?php include 'components/footer.inc.php'; ?>
 </body>
 
 </html>

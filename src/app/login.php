@@ -37,6 +37,7 @@ if ($users[0]->checkPassword($_POST['password'])) {
     unset($_SESSION['loginError']);
     $_SESSION['logged_id'] = true;
     $_SESSION['name'] = $users[0]->getName();
+    $_SESSION['isAdmin'] = $users[0]->getIsAdmin();
     // TODO: send admins to admin dashboard, and non-admins to index.php
     header('Location: ../index.php');
 } else {
