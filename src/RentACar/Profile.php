@@ -6,8 +6,6 @@ require_once '/var/www/html/vendor/autoload.php';
 use Carbon\Carbon;
 
 abstract class Profile {
-    // protected int $id;
-    // protected ?int $id = null;
     protected ?string $name = null;
     protected ?string $email = null;
     // TODO: Fix db issue with having dateOfBirth being a string
@@ -20,21 +18,44 @@ abstract class Profile {
     protected ?int $address_id = null;
 
     public function __construct(
-        int $id,
-        string $name,
-        string $email,
-        string $dateOfBirth,
-        string $address,
-        string $phone,
-        bool $isArchived
+        ?int $id,
+        ?string $name,
+        ?string $email,
+        ?string $dateOfBirth,
+        // string $address,
+        ?string $phone,
+        bool $isArchived = false
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
-        $this->dateOfBirth = $dateOfBirth;
-        $this->address = $address;
-        $this->phone = $phone;
-        $this->isArchived = $isArchived;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        
+        if ($name !== null) {
+            $this->name = $name;
+        }
+
+        if ($email !== null) {
+            $this->email = $email;
+        }
+        
+        if ($dateOfBirth !== null) {
+            $this->dateOfBirth = $dateOfBirth;
+        }
+        
+        if ($phone !== null) {
+            $this->phone = $phone;
+        }
+
+        if ($isArchived !== null) {
+            $this->isArchived = $isArchived;
+        }
+        // $this->id = $id;
+        // $this->name = $name;
+        // $this->email = $email;
+        // $this->dateOfBirth = $dateOfBirth;
+        // // $this->address = $address;
+        // $this->phone = $phone;
+        // $this->isArchived = $isArchived;
     }
 
     /**
