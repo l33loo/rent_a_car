@@ -32,12 +32,9 @@ trait DBModel
             foreach ($properties as $property => $value) {
                 $sql .= "?,";
 
+                // PDO does not accept booleans, so they need to be converted
+                // to their int equivalent.
                 $params[] = is_bool($value) ? (int)$value: $value;
-
-                echo $property;
-                echo $value;
-
-                // $params[] = $value;
                 
                 // // This function may return Boolean false, but may also return a
                 // // non-Boolean value which evaluates to false. Use the === operator
@@ -47,11 +44,9 @@ trait DBModel
                 // }
             }
 
-            // next() doesn't work because its return values conflict and gives error.
+            // next() doesn't work because its return values conflict and this gives error.
             $sql = rtrim($sql, ',');
             $sql .= ");";
-
-            echo $sql;
 
             $stmt = $connection->prepare($sql);
             $stmt->execute($params);

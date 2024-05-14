@@ -38,13 +38,6 @@ class User extends Profile
         if ($address_id !== null) {
             $this->address_id = $address_id;
         }
-
-        print_r($this);
-
-        // print_r($this);ignup.php
-        
-        // $this->passwordHash = $passwordHash;
-        // // $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
     }
 
     /**

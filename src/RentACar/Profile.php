@@ -6,8 +6,7 @@ require_once '/var/www/html/vendor/autoload.php';
 use Carbon\Carbon;
 
 abstract class Profile {
-    // protected int $id;
-    // protected ?int $id = null;
+    protected ?int $id = null;
     protected ?string $name = null;
     protected ?string $email = null;
     // TODO: Fix db issue with having dateOfBirth being a string
