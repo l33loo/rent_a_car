@@ -1,13 +1,15 @@
 <?php
-namespace locality;
+namespace reservation;
 
-class Island {
+// TODO: update UML and SQL Schema to add Status
+
+class Status {
     protected int $id;
     protected string $name;
 
     public function __construct(int $id, string $name) {
-        $this->id;
-        $this->name;
+        $this->id = $id;
+        $this->name = $name;
     }
 
     /**

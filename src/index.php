@@ -1,5 +1,18 @@
 <?php 
+require_once "MyConnect.php";
+
+use RENTAL\SRC\MyConnect;
+
 require_once './html/components/header.php';
+$pdo = MyConnect::getInstance()->getConnection();
+function getLocation() {
+    $pdo = MyConnect::getConnection();
+    $sql = "SELECT * FROM location";
+    $stmt = $pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+$locations = getLocation();
 
 echo getHeader();
 ?>
@@ -80,96 +93,121 @@ echo getHeader();
         </div>
     </div>
 
-    <div class="container my-5 w-50"
-        style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
-        <div class="row" style="text-align: center; ">
-            <div class="col-md-4" style="padding-left: 40px;">
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style="padding-right: 22px; background-color: rgba(0,0,0,0.7); color:white">
-                        Pick-up Location
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+    <form action="" method="post">
+        <div class="container my-5 w-50"
+            style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
+            <div class="row" style="text-align: center; ">
+                <div class="col-md-4" style="padding-left: 40px;">
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" name="pickupBtn"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="padding-right: 22px; background-color: rgba(0,0,0,0.7); color:white">
+                            Pick-up Location
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <?php foreach ($locations as $location): ?>
+                            <li><a class="dropdown-item" href="#"><?= $location['locationId'] ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <div class="dropdown" style="margin-top: 15px;">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background-color: rgba(0,0,0,0.7); color:white">
+                            Drop-Off Location
+                        </button>
+                        <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                            <?php foreach ($locations as $location): ?>
+                            <li><a class="dropdown-item" href="#"><?= $location['locationId'] ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
                 </div>
-                <div class="dropdown" style="margin-top: 15px;">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
-                        aria-expanded="false" style="background-color: rgba(0,0,0,0.7); color:white">
-                        Drop-Off Location
-                    </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+                <div class="col-md-2" style="padding-right: 25px;">
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="padding-left: 20px; background-color: rgba(0,0,0,0.7); color:white">
+                            Pick-up Date
+                        </button>
+                        <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item"><input type="date" name="pickDate"></a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown" style="margin-top: 15px;">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background-color: rgba(0,0,0,0.7); color:white">
+                            Drop-off Date
+                        </button>
+                        <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item"><input type="date" name="dropDate"></a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2" style="padding-right: 25px;">
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style="padding-left: 20px; background-color: rgba(0,0,0,0.7); color:white">
-                        Pick-up Date
-                    </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+                <div class="col-md-4" style="padding-left:60px;">
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="padding-left: 20px;background-color: rgba(0,0,0,0.7); color:white">
+                            Pick-up Time
+                        </button>
+                        <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item">9:30</a></li>
+                            <li><a class="dropdown-item">9:30</a></li>
+                            <li><a class="dropdown-item">10:00</a></li>
+                            <li><a class="dropdown-item">10:30</a></li>
+                            <li><a class="dropdown-item">11:00</a></li>
+                            <li><a class="dropdown-item">11:30</a></li>
+                            <li><a class="dropdown-item">12:00</a></li>
+                            <li><a class="dropdown-item">12:30</a></li>
+                            <li><a class="dropdown-item">13:00</a></li>
+                            <li><a class="dropdown-item">13:30</a></li>
+                            <li><a class="dropdown-item">14:00</a></li>
+                            <li><a class="dropdown-item">14:30</a></li>
+                            <li><a class="dropdown-item">15:00</a></li>
+                            <li><a class="dropdown-item">15:30</a></li>
+                            <li><a class="dropdown-item">16:00</a></li>
+                            <li><a class="dropdown-item">16:30</a></li>
+                            <li><a class="dropdown-item">17:00</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown" style="margin-top: 15px;">
+                        <button class=" btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background-color: rgba(0,0,0,0.7); color:white">
+                            Drop-Off Time
+                        </button>
+                        <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item"></a></li>
+                            <li><a class="dropdown-item">9:30</a></li>
+                            <li><a class="dropdown-item">10:00</a></li>
+                            <li><a class="dropdown-item">10:30</a></li>
+                            <li><a class="dropdown-item">11:00</a></li>
+                            <li><a class="dropdown-item">11:30</a></li>
+                            <li><a class="dropdown-item">12:00</a></li>
+                            <li><a class="dropdown-item">12:30</a></li>
+                            <li><a class="dropdown-item">13:00</a></li>
+                            <li><a class="dropdown-item">13:30</a></li>
+                            <li><a class="dropdown-item">14:00</a></li>
+                            <li><a class="dropdown-item">14:30</a></li>
+                            <li><a class="dropdown-item">15:00</a></li>
+                            <li><a class="dropdown-item">15:30</a></li>
+                            <li><a class="dropdown-item">16:00</a></li>
+                            <li><a class="dropdown-item">16:30</a></li>
+                            <li><a class="dropdown-item">17:00</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="dropdown" style="margin-top: 15px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false"
-                        style="background-color: rgba(0,0,0,0.7); color:white">
-                        Drop-off Date
-                    </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+                <div class="col-md-1 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-outline-dark btn-lg" style="margin-left: 40px;">Search</button>
                 </div>
-            </div>
-            <div class="col-md-4" style="padding-left:60px;">
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                        aria-expanded="false" style="padding-left: 20px;background-color: rgba(0,0,0,0.7); color:white">
-                        Pick-up Time
-                    </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown" style="margin-top: 15px;">
-                    <button class=" btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false"
-                        style="background-color: rgba(0,0,0,0.7); color:white">
-                        Drop-Off Time
-                    </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-1 d-flex justify-content-center align-items-center">
-                <button type="button" class="btn btn-outline-dark btn-lg" style="margin-left: 40px;">Search</button>
             </div>
         </div>
+    </form>
     </div>
+    </div>
+    </form>
     <div class="container">
         <h2 style="position:relative; top: -100px;">Our Fleet</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">

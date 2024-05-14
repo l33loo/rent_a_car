@@ -18,7 +18,6 @@ class MyConnect
 
             $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-            // Testa a conexão executando uma consulta de teste
             $result = $this->connection->query('SELECT 1');
             if ($result === false) {
                 throw new \PDOException('Erro ao executar a consulta no banco de dados.');
@@ -26,7 +25,6 @@ class MyConnect
 
             echo "Conexão com o banco de dados está funcionando corretamente!";
         } catch (\PDOException $e) {
-            // Em caso de erro na conexão
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
