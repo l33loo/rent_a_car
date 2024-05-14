@@ -7,15 +7,17 @@ use Carbon\Carbon;
 
 abstract class Profile {
     // protected int $id;
-    protected ?int $id = null;
-    protected string $name;
-    protected string $email;
+    // protected ?int $id = null;
+    protected ?string $name = null;
+    protected ?string $email = null;
     // TODO: Fix db issue with having dateOfBirth being a string
     // protected Carbon $dateOfBirth;
-    protected string $dateOfBirth;
-    protected Address $address;
-    protected string $phone;
-    protected bool $isArchived;
+    protected ?string $dateOfBirth = null;
+    // protected ?Address $address = null;
+    protected ?string $phone = null;
+    protected bool $isArchived = false;
+    // TODO: fix issue with address
+    protected ?int $address_id = null;
 
     public function __construct(
         int $id,
