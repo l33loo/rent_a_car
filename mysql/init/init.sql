@@ -4,15 +4,15 @@ USE carrentals;
 
 -- COUNTRY
 CREATE TABLE IF NOT EXISTS country (
-    countryId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
     code VARCHAR(6) NOT NULL,
-    PRIMARY KEY (countryId)
+    PRIMARY KEY (id)
 );
 
 -- ADDRESS
 CREATE TABLE IF NOT EXISTS address (
-    addressId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     street VARCHAR(90) NOT NULL,
     doorNumber VARCHAR(10),
     apartmentNr VARCHAR(10),
@@ -20,41 +20,41 @@ CREATE TABLE IF NOT EXISTS address (
     district VARCHAR(45) NOT NULL,
     postalCode VARCHAR(15) NOT NULL,
     country_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (addressId),
+    PRIMARY KEY (id),
     CONSTRAINT fk_address_country
         FOREIGN KEY (country_id)
-        REFERENCES country(countryId)
+        REFERENCES country(id)
 );
 
 -- ISLAND
 CREATE TABLE IF NOT EXISTS island (
-    islandId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(45) NOT NULL
 );
 
 -- LOCATION
 CREATE TABLE location (
-    locationId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     address_id INT UNSIGNED NOT NULL,
     island_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (locationId),
+    PRIMARY KEY (id),
     CONSTRAINT fk_location_address
         FOREIGN KEY (address_id)
-        REFERENCES address(addressId),
+        REFERENCES address(id),
     CONSTRAINT fk_location_island
         FOREIGN KEY (island_id)
-        REFERENCES island(islandId)
+        REFERENCES island(id)
 );
 
 -- PROPERTY
 CREATE TABLE IF NOT EXISTS property (
-    propertyId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(45) NOT NULL
 );
 
 -- CATEGORY
 CREATE TABLE IF NOT EXISTS category (
-    categoryId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(45) NOT NULL,
     description VARCHAR(90) NOT NULL,
     dailyRate FLOAT(2) NOT NULL
@@ -62,18 +62,18 @@ CREATE TABLE IF NOT EXISTS category (
 
 -- VEHICLE
 CREATE TABLE IF NOT EXISTS vehicle (
-    vehicleId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     plate VARCHAR(15) NOT NULL,
     category_id INT UNSIGNED NOT NULL,
     rentable BOOLEAN NOT NULL,
     island_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (vehicleId),
+    PRIMARY KEY (id),
     CONSTRAINT fk_vehicle_category
         FOREIGN KEY (category_id)
-        REFERENCES category(categoryId),
+        REFERENCES category(id),
     CONSTRAINT fk_vehicle_island
         FOREIGN KEY (island_id)
-        REFERENCES island(islandId)
+        REFERENCES island(id)
 );
 
 -- VEHICLE PROPERTIES
@@ -84,10 +84,10 @@ CREATE TABLE IF NOT EXISTS vehicle_property (
     PRIMARY KEY (vehicle_id, property_id),
     CONSTRAINT fk_vehicle_property_vehicle
         FOREIGN KEY (vehicle_id)
-        REFERENCES vehicle(vehicleId),
+        REFERENCES vehicle(id),
     CONSTRAINT fk_vehicle_property_property
         FOREIGN KEY (property_id)
-        REFERENCES property(propertyId)
+        REFERENCES property(id)
 );
 
 -- CATEGORY PROPERTIES
@@ -98,15 +98,15 @@ CREATE TABLE IF NOT EXISTS category_property (
     PRIMARY KEY (category_id, property_id),
     CONSTRAINT fk_category_property_category
         FOREIGN KEY (category_id)
-        REFERENCES category(categoryId),
+        REFERENCES category(id),
     CONSTRAINT fk_category_property_property
         FOREIGN KEY (property_id)
-        REFERENCES property(propertyId)
+        REFERENCES property(id)
 );
 
 -- USER
 CREATE TABLE IF NOT EXISTS user (
-    userId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(90) NOT NULL,
     passwordHash VARCHAR(200) NOT NULL,
     name VARCHAR(90) NOT NULL,
@@ -115,24 +115,24 @@ CREATE TABLE IF NOT EXISTS user (
     phone VARCHAR(25) NOT NULL,
     isAdmin BOOLEAN NOT NULL DEFAULT FALSE,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE,
-    PRIMARY KEY(userId),
+    PRIMARY KEY(id),
     CONSTRAINT fk_user_address
         FOREIGN KEY (address_id)
-        REFERENCES address(addressId)
+        REFERENCES address(id)
 );
 
 -- CREDIT CARD
 CREATE TABLE IF NOT EXISTS creditCard (
-    ccId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     ccNumber VARCHAR(16) NOT NULL,
     ccExpiry DATE NOT NULL,
     ccCVV VARCHAR(3) NOT NULL,
-    PRIMARY KEY (ccId)
+    PRIMARY KEY (id)
 );
 
 -- CUSTOMER
 CREATE TABLE IF NOT EXISTS customer (
-    customerId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(90) NOT NULL,
     email VARCHAR(90) NOT NULL,
     dateOfBirth DATE NOT NULL,
@@ -143,28 +143,28 @@ CREATE TABLE IF NOT EXISTS customer (
     taxNumber VARCHAR(20) NOT NULL,
     user_id INT UNSIGNED NOT NULL,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE,
-    PRIMARY KEY(customerId),
+    PRIMARY KEY(id),
     CONSTRAINT fk_customer_address
         FOREIGN KEY (address_id)
-        REFERENCES address(addressId),
+        REFERENCES address(id),
     CONSTRAINT fk_customer_user
         FOREIGN KEY (user_id)
-        REFERENCES user(userId),
+        REFERENCES user(id),
     CONSTRAINT fk_customer_creditCard
         FOREIGN KEY (creditCard_id)
-        REFERENCES creditCard(ccId)
+        REFERENCES creditCard(id)
 );
 
 -- STATUS (OF RESERVATION)
 CREATE TABLE IF NOT EXISTS status (
-    statusId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     statusName VARCHAR(45) NOT NULL,
-    PRIMARY KEY (statusId)
+    PRIMARY KEY (id)
 );
 
 -- RESERVATION
 CREATE TABLE IF NOT EXISTS reservation (
-    reservationId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     category_id INT UNSIGNED NOT NULL,
     customer_id INT UNSIGNED NOT NULL,
     status_id INT UNSIGNED NOT NULL,
@@ -182,42 +182,42 @@ CREATE TABLE IF NOT EXISTS reservation (
     returnedLocation_id INT UNSIGNED NOT NULL,
     collectedByUser_id INT UNSIGNED NOT NULL,
     billingAddress_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (reservationId),
+    PRIMARY KEY (id),
     CONSTRAINT fk_reservation_category
         FOREIGN KEY (category_id)
-        REFERENCES category(categoryId),
+        REFERENCES category(id),
     CONSTRAINT fk_reservation_customer
         FOREIGN KEY (customer_id)
-        REFERENCES customer(customerId),
+        REFERENCES customer(id),
     CONSTRAINT fk_reservation_status
         FOREIGN KEY (status_id)
-        REFERENCES status(statusId),
+        REFERENCES status(id),
     CONSTRAINT fk_reservation_pickupLocation
         FOREIGN KEY (pickupLocation_id)
-        REFERENCES location(locationId),
+        REFERENCES location(id),
     CONSTRAINT fk_reservation_dropoffLocation
         FOREIGN KEY (dropoffLocation_id)
-        REFERENCES location(locationId),
+        REFERENCES location(id),
     CONSTRAINT fk_reservation_vehicle
         FOREIGN KEY (vehicle_id)
-        REFERENCES vehicle(vehicleId),
+        REFERENCES vehicle(id),
     CONSTRAINT fk_reservation_user
         FOREIGN KEY (reservedByUser_id)
-        REFERENCES user(userId),
+        REFERENCES user(id),
     CONSTRAINT fk_reservation_returnedLocation
         FOREIGN KEY (returnedLocation_id)
-        REFERENCES location(locationId),
+        REFERENCES location(id),
     CONSTRAINT fk_reservation_collectedByUser
         FOREIGN KEY (collectedByUser_id)
-        REFERENCES user(userId),
+        REFERENCES user(id),
     CONSTRAINT fk_reservation_billingAddress
         FOREIGN KEY (billingAddress_id)
-        REFERENCES address(addressId)
+        REFERENCES address(id)
 );
 
 -- REVISION (OF RESERVATION)
 CREATE TABLE IF NOT EXISTS revision (
-    revisionId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     reservation_id INT UNSIGNED NOT NULL,
     category_id INT UNSIGNED NOT NULL,
     customer_id INT UNSIGNED NOT NULL,
@@ -231,42 +231,42 @@ CREATE TABLE IF NOT EXISTS revision (
     vehicle_id INT UNSIGNED NOT NULL,
     revisionByUser_id INT UNSIGNED NOT NULL,
     revisionTimestamp TIMESTAMP,
-    PRIMARY KEY (revisionId),
+    PRIMARY KEY (id),
     CONSTRAINT fk_revision_reservation
         FOREIGN KEY (reservation_id)
-        REFERENCES reservation(reservationId),
+        REFERENCES reservation(id),
     CONSTRAINT fk_revision_category
         FOREIGN KEY (category_id)
-        REFERENCES category(categoryId),
+        REFERENCES category(id),
     CONSTRAINT fk_revision_customer
         FOREIGN KEY (customer_id)
-        REFERENCES customer(customerId),
+        REFERENCES customer(id),
     CONSTRAINT fk_revision_status
         FOREIGN KEY (status_id)
-        REFERENCES status(statusId),
+        REFERENCES status(id),
     CONSTRAINT fk_revision_pickupLocation
         FOREIGN KEY (pickupLocation_id)
-        REFERENCES location(locationId),
+        REFERENCES location(id),
     CONSTRAINT fk_revision_dropoffLocation
         FOREIGN KEY (dropoffLocation_id)
-        REFERENCES location(locationId),
+        REFERENCES location(id),
     CONSTRAINT fk_revision_vehicle
         FOREIGN KEY (vehicle_id)
-        REFERENCES vehicle(vehicleId),
+        REFERENCES vehicle(id),
     CONSTRAINT fk_revision_user
         FOREIGN KEY (revisionByUser_id)
-        REFERENCES user(userId)
+        REFERENCES user(id)
 );
 
 -- POPULATE COUNTRY
-INSERT INTO country (countryId, name, code) VALUES
+INSERT INTO country (id, name, code) VALUES
     (1, "Portugal", "PRT"),
     (2, "Canada", "CAN"),
     (3, "Angola", "AGO"),
     (4, "Brazil", "BRA");
 
 INSERT INTO address (
-    addressId,
+    id,
     street,
     doorNumber,
     apartmentNr,
@@ -340,7 +340,7 @@ INSERT INTO address (
 );
 
 INSERT INTO island (
-    islandId,
+    id,
     name
 ) VALUES (
     1,
@@ -351,7 +351,7 @@ INSERT INTO island (
 );
 
 INSERT INTO location (
-    locationId, address_id, island_id
+    id, address_id, island_id
 ) VALUES (
     1, 1, 1
 ), (
@@ -365,7 +365,7 @@ INSERT INTO location (
 );
 
 INSERT INTO property (
-    propertyId, name
+    id, name
 ) VALUES (
     -- CAR PROPERTIES
     1, "brand"
@@ -391,7 +391,7 @@ INSERT INTO property (
 );
 
 INSERT INTO category (
-    categoryId,
+    id,
     name,
     description,
     dailyRate
@@ -824,7 +824,7 @@ INSERT INTO category_property(category_id, property_id, value)
     (7, 10, "4");
 
 -- password = pass123
-INSERT INTO user (userId, email, passwordHash, name, dateOfBirth, address_id, phone, isAdmin)
+INSERT INTO user (id, email, passwordHash, name, dateOfBirth, address_id, phone, isAdmin)
 VALUES
 (
     1,
@@ -846,7 +846,7 @@ VALUES
     FALSE
 );
 
-INSERT INTO creditCard (ccId, ccNumber, ccExpiry, ccCVV)
+INSERT INTO creditCard (id, ccNumber, ccExpiry, ccCVV)
 VALUES (
     1, "123456789", "2026-01-01", "666"
 );
@@ -873,7 +873,7 @@ INSERT INTO customer (
     2
 );
 
-INSERT INTO status (statusId, statusName)
+INSERT INTO status (id, statusName)
 VALUES
 (1, "Booked"),
 (2, "Confirmed"),

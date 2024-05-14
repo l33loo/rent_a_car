@@ -1,5 +1,5 @@
 <?php
-namespace accounts;
+namespace RentACar;
 
 class Customer extends Profile {
     protected string $driversLicense;
@@ -14,9 +14,9 @@ class Customer extends Profile {
         string $email,
         // TODO: Carbon type
         string $dateOfBirth,
-        \locality\Address $address,
+        \RentACar\Address $address,
         string $phone,
-        boolean $isArchived,
+        bool $isArchived,
         string $driversLicense,
         string $creditCard,
         string $taxNumber,

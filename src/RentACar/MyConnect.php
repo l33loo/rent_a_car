@@ -1,6 +1,6 @@
 <?php
 
-namespace RENTAL\SRC;
+namespace RentACar;
 
 class MyConnect
 {
@@ -11,7 +11,7 @@ class MyConnect
     {
         $config = parse_ini_file('db.ini');
 
-        $dbh = "mysql:host={$config['DBHOST']};dbname={$config['DBNAME']};port={$config['DBPORT']};charset=utf8mb4";
+        $dbh = "mysql:host={$config['DBHOST']};dbname={$config['DBNAME']}";
 
         try {
             $this->connection = new \PDO($dbh, $config['DBUSER'], $config['DBPASS']);
@@ -23,7 +23,7 @@ class MyConnect
                 throw new \PDOException('Erro ao executar a consulta no banco de dados.');
             }
 
-            echo "Conexão com o banco de dados está funcionando corretamente!";
+            // echo "Conexão com o banco de dados está funcionando corretamente!";
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }

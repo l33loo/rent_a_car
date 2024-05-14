@@ -1,22 +1,21 @@
-<?php 
-require_once "MyConnect.php";
+<?php  
+use RentACar\MyConnect;
+use RentACar\Location;
+session_start();
+require_once "./RentACar/MyConnect.php";
+require_once "./html/components/header.php";
+require_once "./RentACar/Location.php";
+echo getHeader();
 
-use RENTAL\SRC\MyConnect;
-
-require_once './html/components/header.php';
-$pdo = MyConnect::getInstance()->getConnection();
 function getLocation() {
-    $pdo = MyConnect::getConnection();
+    $pdo = MyConnect::getInstance()->getConnection();   
     $sql = "SELECT * FROM location";
     $stmt = $pdo->query($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 $locations = getLocation();
-
-echo getHeader();
-?>
-<style>
+?> <style>
 .bg-image {
     position: relative;
     background-image: url(./img/homepage.jpg);
@@ -49,41 +48,7 @@ echo getHeader();
 </style>
 
 <body>
-    <nav class="navbar navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">Superstar Rental Car</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
-                aria-labelledby="offcanvasDarkNavbarLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Superstar Rent Car</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-                        </li>
-                        <li class=" nav-item">
-                            <a class="nav-link" href="./html/fleet.php">Fleet</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./html/about.php">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./html/login.php" class="nav-link"> <button class="btn btn-primary"
-                                    type="submit">Login</button></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php include 'html/components/navbar.inc.php'; ?>
     <div class="bg-image" style="position: relative;">
         <div class="gradient-overlay"></div>
         <div class="container">
@@ -104,11 +69,11 @@ echo getHeader();
                             style="padding-right: 22px; background-color: rgba(0,0,0,0.7); color:white">
                             Pick-up Location
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <select class=" dropdown-menu" aria-labelledby="dropdownMenuButton2">
                             <?php foreach ($locations as $location): ?>
-                            <li><a class="dropdown-item" href="#"><?= $location['locationId'] ?></a></li>
+                            <option class="dropdown-item"><?= $location['id'] ?></option>
                             <?php endforeach; ?>
-                        </ul>
+                        </select>
                     </div>
                     <div class="dropdown" style="margin-top: 15px;">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2"
@@ -116,11 +81,11 @@ echo getHeader();
                             style="background-color: rgba(0,0,0,0.7); color:white">
                             Drop-Off Location
                         </button>
-                        <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                        <select class=" dropdown-menu" aria-labelledby="dropdownMenuButton2">
                             <?php foreach ($locations as $location): ?>
-                            <li><a class="dropdown-item" href="#"><?= $location['locationId'] ?></a></li>
+                            <option class="dropdown-item"><?= $location['id'] ?></option>
                             <?php endforeach; ?>
-                        </ul>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-2" style="padding-right: 25px;">

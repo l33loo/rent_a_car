@@ -1,5 +1,5 @@
 <?php
-namespace locality;
+namespace RentACar;
 
 class Address {
     protected int $id;

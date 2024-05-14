@@ -1,5 +1,5 @@
 <?php
-namespace reservation;
+namespace RentACar;
 
 // TODO: update UML and SQL Schema to add Status
 
