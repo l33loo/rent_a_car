@@ -2,7 +2,7 @@
 
 // include ('autoload.php');
 
-include $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 use RentACar\User;
 
 session_start();

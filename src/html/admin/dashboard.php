@@ -20,7 +20,7 @@ echo getHeader();
                     </div>
                     <img src="../../img/carIcon.svg" alt="Car Icon"
                         style="height: 40px; width:40px; position:relative; left:50%; transform:translate(-50%);">
-                    <a href="./manageCars.php"> <img src="../../img/arrowDown.svg" alt="Arrow Down" style="width:30px;
+                    <a href="./vehicles.php"> <img src="../../img/arrowDown.svg" alt="Arrow Down" style="width:30px;
                     position:relative; top:50px; left:65px;" ;></a>
                 </div>
                 <div class="mt-4">
