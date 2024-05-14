@@ -29,29 +29,7 @@ class User extends Profile
     ) {
         $this->tableName = 'user';
 
-        if ($id !== null) {
-            $this->id = $id;
-        }
-        
-        if ($name !== null) {
-            $this->name = $name;
-        }
-
-        if ($email !== null) {
-            $this->email = $email;
-        }
-        
-        if ($dateOfBirth !== null) {
-            $this->dateOfBirth = $dateOfBirth;
-        }
-        
-        if ($phone !== null) {
-            $this->phone = $phone;
-        }
-
-        if ($isArchived !== null) {
-            $this->isArchived = $isArchived;
-        }
+        parent::__construct($id, $name, $email, $dateOfBirth, /*$address, */$phone, $isArchived);
 
         if ($password !== null) {
             $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
@@ -60,6 +38,8 @@ class User extends Profile
         if ($address_id !== null) {
             $this->address_id = $address_id;
         }
+
+        print_r($this);
 
         // print_r($this);ignup.php
         
