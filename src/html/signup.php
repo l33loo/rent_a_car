@@ -12,7 +12,7 @@ echo getHeader();
             <h1 class="text-center" style="margin-top: 100px;">Sign Up</h1>
         </div>
     </div>
-    <form>
+    <form action="../app/signup.php" method="post">
         <div class="container mt-5  d-flex justify-content-center">
             <div class=" text-content">
                 <img src="../img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
@@ -37,7 +37,7 @@ echo getHeader();
                 <label for="password">
                     Password:
                 </label>
-                <input type="password" style="border: none; border-bottom: 2px solid;" name="pwd">
+                <input type="password" style="border: none; border-bottom: 2px solid;" name="password">
             </div>
         </div>
         <div class="container mt-4 d-flex justify-content-center" style="padding-right:15px;">

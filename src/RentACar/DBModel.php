@@ -1,7 +1,7 @@
 <?php
 
 namespace RentACar;
-require_once('/var/www/html/MyConnect.php');
+require_once('/var/www/html/RentACar/MyConnect.php');
 
 use RentACar\MyConnect;
 
@@ -27,18 +27,31 @@ trait DBModel
         unset($properties['id']);
 
         if (empty($this->id)) {
-            $sql = "INSERT INTO " . $this->tableName . " (".implode(",", array_keys($properties)).") VALUES(";
+            $sql = "INSERT INTO " . $this->tableName . " (" . implode(",", array_keys($properties)).") VALUES(";
             $params = [];
             foreach ($properties as $property => $value) {
-                $sql .= "?";
+                $sql .= "?,";
 
-                $params[] = $value;
+                $params[] = is_bool($value) ? (int)$value: $value;
+
+                echo $property;
+                echo $value;
+
+                // $params[] = $value;
                 
-                if (next($properties) !== false) {
-                    $sql .= ", ";
-                }
+                // // This function may return Boolean false, but may also return a
+                // // non-Boolean value which evaluates to false. Use the === operator
+                // // for testing the return value of this function.
+                // if (next($properties) !== false) {
+                //     $sql .= ", ";
+                // }
             }
+
+            // next() doesn't work because its return values conflict and gives error.
+            $sql = rtrim($sql, ',');
             $sql .= ");";
+
+            echo $sql;
 
             $stmt = $connection->prepare($sql);
             $stmt->execute($params);

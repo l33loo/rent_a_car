@@ -3,7 +3,7 @@ namespace RentACar;
 
 require_once '/var/www/html/vendor/autoload.php';
 require_once '/var/www/html/RentACar/Profile.php';
-require_once '/var/www/html/DBModel.php';
+require_once '/var/www/html/RentACar/DBModel.php';
 
 use Carbon\Carbon;
 use RentACar\Profile;
@@ -12,20 +12,59 @@ class User extends Profile
 {
     use DBModel;
 
-    protected string $passwordHash;
-    protected bool $isAdmin;
-    protected int $address_id;
-    
-    
-    public function __construct()
-    {
+    protected ?string $passwordHash = null;
+    protected bool $isAdmin = false;
+
+    public function __construct(
+        ?string $name = null,
+        ?string $email = null,
+        ?string $dateOfBirth = null,
+        // ?string $address = null,
+        ?string $phone = null,
+        bool $isArchived = false,
+        ?string $password = null,
+        bool $isAdmin = false,
+        ?int $address_id = 1,
+        ?int $id = null
+    ) {
         $this->tableName = 'user';
+
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        
+        if ($name !== null) {
+            $this->name = $name;
+        }
+
+        if ($email !== null) {
+            $this->email = $email;
+        }
+        
+        if ($dateOfBirth !== null) {
+            $this->dateOfBirth = $dateOfBirth;
+        }
+        
+        if ($phone !== null) {
+            $this->phone = $phone;
+        }
+
+        if ($isArchived !== null) {
+            $this->isArchived = $isArchived;
+        }
+
+        if ($password !== null) {
+            $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
+        }
+
+        if ($address_id !== null) {
+            $this->address_id = $address_id;
+        }
+
+        // print_r($this);ignup.php
         
         // $this->passwordHash = $passwordHash;
         // // $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
-        // $this->email = $email;
-
-        // print_r($this);
     }
 
     /**
