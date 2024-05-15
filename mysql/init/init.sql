@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS island (
 -- LOCATION
 CREATE TABLE location (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    
     address_id INT UNSIGNED NOT NULL,
     island_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id),
@@ -107,6 +108,7 @@ CREATE TABLE IF NOT EXISTS category_property (
 -- USER
 CREATE TABLE IF NOT EXISTS user (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    -- TODO: make email unique
     email VARCHAR(90) NOT NULL,
     passwordHash VARCHAR(200) NOT NULL,
     name VARCHAR(90) NOT NULL,

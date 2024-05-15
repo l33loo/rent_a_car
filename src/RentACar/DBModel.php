@@ -1,7 +1,7 @@
 <?php
 
 namespace RentACar;
-require_once('MyConnect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/RentACar/MyConnect.php');
 
 use RentACar\MyConnect;
 
@@ -27,17 +27,25 @@ trait DBModel
         unset($properties['id']);
 
         if (empty($this->id)) {
-            $sql = "INSERT INTO " . $this->tableName . " (".implode(",", array_keys($properties)).") VALUES(";
+            $sql = "INSERT INTO " . $this->tableName . " (" . implode(",", array_keys($properties)).") VALUES(";
             $params = [];
             foreach ($properties as $property => $value) {
-                $sql .= "?";
+                $sql .= "?,";
 
-                $params[] = $value;
+                // PDO does not accept booleans, so they need to be converted
+                // to their int equivalent.
+                $params[] = is_bool($value) ? (int)$value: $value;
                 
-                if (next($properties) !== false) {
-                    $sql .= ", ";
-                }
+                // // This function may return Boolean false, but may also return a
+                // // non-Boolean value which evaluates to false. Use the === operator
+                // // for testing the return value of this function.
+                // if (next($properties) !== false) {
+                //     $sql .= ", ";
+                // }
             }
+
+            // next() doesn't work because its return values conflict and this gives error.
+            $sql = rtrim($sql, ',');
             $sql .= ");";
 
             $stmt = $connection->prepare($sql);

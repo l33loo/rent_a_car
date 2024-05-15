@@ -1,31 +1,46 @@
 <?php
 namespace RentACar;
 
-require_once '/var/www/html/vendor/autoload.php';
-require_once '/var/www/html/RentACar/Profile.php';
-require_once '/var/www/html/DBModel.php';
-
-use Carbon\Carbon;
+use RentACar\MyConnect;
+use RentACar\DBModel;
 use RentACar\Profile;
+
+require_once "Profile.php";
+require_once "MyConnect.php";
+require_once 'DBModel.php';
 
 class User extends Profile
 {
     use DBModel;
 
-    protected string $passwordHash;
-    protected bool $isAdmin;
-    protected int $address_id;
-    
-    
-    public function __construct()
-    {
-        $this->tableName = 'user';
-        
-        // $this->passwordHash = $passwordHash;
-        // // $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
-        // $this->email = $email;
+    protected ?string $passwordHash = null;
+    protected bool $isAdmin = false;
+    protected ?int $address_id = null;
 
-        // print_r($this);
+    public function __construct(
+        ?string $name = null,
+        ?string $email = null,
+        ?string $dateOfBirth = null,
+        ?string $phone = null,
+        bool $isArchived = false,
+        ?string $password = null,
+        bool $isAdmin = false,
+        ?int $address_id = null,
+        ?int $id = null
+    ) {
+        $this->tableName = 'user';
+
+        parent::__construct($id, $name, $email, $dateOfBirth, $phone, $isArchived);
+
+        if ($password !== null) {
+            $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
+        }
+
+        // Set the value of $address_id directly
+        $this->address_id = $address_id;
+
+        // Set the value of $isAdmin
+        $this->isAdmin = $isAdmin;
     }
 
     /**
@@ -43,8 +58,6 @@ class User extends Profile
 
     public function checkPassword(string $password): bool
     {
-        // echo "<br>Password: $password<br>";
-        // echo "this->passwordHash: $this->passwordHash<br>";
         return password_verify($password, $this->passwordHash);
     }
 

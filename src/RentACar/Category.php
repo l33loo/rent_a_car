@@ -6,17 +6,20 @@ class Category {
     protected string $name;
     protected string $description;
     protected array $properties;
+    protected float $dailyRate;
 
     public function __construct(
         int $id,
         string $name,
         string $description,
-        array $properties
+        array $properties,
+        float $dailyRate
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->properties = $properties;
+        $this->dailyRate = $dailyRate;
     }
 
     /**

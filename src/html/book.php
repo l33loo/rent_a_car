@@ -60,7 +60,7 @@ echo getHeader();
 
     <small class="text-white-50">© All rights reserved.</small>
     </div>
-    </footer>
+    <?php include 'components/footer.inc.php'; ?>
 </body>
 
 </html>

@@ -1,38 +1,61 @@
 <?php 
 namespace RentACar;
 
-require_once '/var/www/html/vendor/autoload.php';
+// require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use Carbon\Carbon;
 
 abstract class Profile {
-    // protected int $id;
-    protected ?int $id = null;
-    protected string $name;
-    protected string $email;
+    protected ?string $name = null;
+    protected ?string $email = null;
     // TODO: Fix db issue with having dateOfBirth being a string
     // protected Carbon $dateOfBirth;
-    protected string $dateOfBirth;
-    protected Address $address;
-    protected string $phone;
-    protected bool $isArchived;
+    protected ?string $dateOfBirth = null;
+    // protected ?Address $address = null;
+    protected ?string $phone = null;
+    protected bool $isArchived = false;
+    // TODO: fix issue with address
+    protected ?int $address_id = null;
 
     public function __construct(
-        int $id,
-        string $name,
-        string $email,
-        string $dateOfBirth,
-        string $address,
-        string $phone,
-        bool $isArchived
+        ?int $id,
+        ?string $name,
+        ?string $email,
+        ?string $dateOfBirth,
+        // string $address,
+        ?string $phone,
+        bool $isArchived = false
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
-        $this->dateOfBirth = $dateOfBirth;
-        $this->address = $address;
-        $this->phone = $phone;
-        $this->isArchived = $isArchived;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        
+        if ($name !== null) {
+            $this->name = $name;
+        }
+
+        if ($email !== null) {
+            $this->email = $email;
+        }
+        
+        if ($dateOfBirth !== null) {
+            $this->dateOfBirth = $dateOfBirth;
+        }
+        
+        if ($phone !== null) {
+            $this->phone = $phone;
+        }
+
+        if ($isArchived !== null) {
+            $this->isArchived = $isArchived;
+        }
+        // $this->id = $id;
+        // $this->name = $name;
+        // $this->email = $email;
+        // $this->dateOfBirth = $dateOfBirth;
+        // // $this->address = $address;
+        // $this->phone = $phone;
+        // $this->isArchived = $isArchived;
     }
 
     /**

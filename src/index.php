@@ -1,21 +1,17 @@
 <?php  
 use RentACar\MyConnect;
-use RentACar\Location;
+use RentACar\Address;
 session_start();
 require_once "./RentACar/MyConnect.php";
 require_once "./html/components/header.php";
-require_once "./RentACar/Location.php";
+require "./RentACar/Address.php";
 echo getHeader();
 
-function getLocation() {
-    $pdo = MyConnect::getInstance()->getConnection();   
-    $sql = "SELECT * FROM location";
-    $stmt = $pdo->query($sql);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+// Obter localizações usando a classe Location
+$cityNames = Address::search([]);
+?>
 
-$locations = getLocation();
-?> <style>
+<style>
 .bg-image {
     position: relative;
     background-image: url(./img/homepage.jpg);
@@ -69,25 +65,15 @@ $locations = getLocation();
                             style="padding-right: 22px; background-color: rgba(0,0,0,0.7); color:white">
                             Pick-up Location
                         </button>
-                        <select class=" dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                            <?php foreach ($locations as $location): ?>
-                            <option class="dropdown-item"><?= $location['id'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="dropdown" style="margin-top: 15px;">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background-color: rgba(0,0,0,0.7); color:white">
-                            Drop-Off Location
-                        </button>
-                        <select class=" dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                            <?php foreach ($locations as $location): ?>
-                            <option class="dropdown-item"><?= $location['id'] ?></option>
+                        <select name="city">
+                            <?php foreach ($cityNames as $cityName) : ?>
+                            <option>
+                                <?php echo ($cityName); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
+
                 <div class="col-md-2" style="padding-right: 25px;">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -170,9 +156,7 @@ $locations = getLocation();
             </div>
         </div>
     </form>
-    </div>
-    </div>
-    </form>
+
     <div class="container">
         <h2 style="position:relative; top: -100px;">Our Fleet</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">
@@ -218,28 +202,8 @@ $locations = getLocation();
             </div>
         </div>
     </div>
-    <footer class="bg-dark py-5 mt-5">
-        <div class="container text-light text-center">
-            <p class="display-6 mb-3">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-md-2">
-                    <img src="./img/whatsapp.svg" alt=""
-                        style="width: 36px; height:36px; color:white; filter:invert(1); margin-right:-150px;">
-                </div>
-                <div class="col-md-2">
-                    <img src="./img/facebook.svg" alt="" style="width: 36px; height:36px; filter:invert(1);">
-                </div>
-                <div class="col-md-2">
-                    <img src="./img/email.svg" alt=""
-                        style="width: 36px; height:36px; filter:invert(1); margin-right:150px;">
-                </div>
-            </div>
-            </p>
-            <small class="text-white-50">© All rights reserved.</small>
-        </div>
-    </footer>
-    <script type="text/javascript">
-    </script>
+
+    <?php include 'html/components/footer.inc.php'; ?>
 </body>
 
 </html>

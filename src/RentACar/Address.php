@@ -94,4 +94,18 @@ class Address {
     {
         return $this->country;
     }
+
+    public static function search(): array
+{
+    $connection = MyConnect::getInstance()->getConnection();
+
+    $sql = "SELECT DISTINCT city FROM address";
+
+    $stmt = $connection->prepare($sql);
+    $stmt->execute();
+
+    $cityNames = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+
+    return $cityNames;
+}
 }

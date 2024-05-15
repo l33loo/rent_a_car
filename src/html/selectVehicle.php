@@ -53,8 +53,7 @@ echo getHeader();
             <h1 style="padding-top:90px">Select a Vehicle</h1>
         </div>
     </div>
-    <script src="text/javascript">
-    </script>
+    <?php include 'components/footer.inc.php'; ?>
 </body>
 
 </html>
