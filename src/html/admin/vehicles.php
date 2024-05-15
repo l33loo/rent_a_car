@@ -2,7 +2,10 @@
 require_once '../components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/vehicles.inc.php';
 
-echo getHeader();?>
+session_start();
+
+echo getHeader();
+?>
 
 <body>
     <?php include '../components/navbar.inc.php'; ?>
@@ -52,9 +55,12 @@ echo getHeader();?>
                         <td><?php echo $vehicle->getRentable(); ?></td>
                         <td>TODO: Others...</td>
                         <td>
-                            <a href="vehicle.php?id=<?php echo $vehicle->getId(); ?>" class="btn btn-primary">View</a>
-                            <a href="" class="btn btn-secondary">Edit</a>
-                            <a href="" class="btn btn-danger">Delete</a>
+                            <a href="vehicle.php?id=<?php echo $vehicle->getId(); ?>" class="btn btn-primary">
+                                View
+                            </a>
+                            <a href="" class="btn btn-secondary">
+                                Edit
+                            </a>
                         </td>
                     </tr>
                 <?php } ?>
