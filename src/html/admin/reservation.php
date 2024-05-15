@@ -1,6 +1,6 @@
 <?php
-require_once '../components/header.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/reservation.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 
 session_start();
 
