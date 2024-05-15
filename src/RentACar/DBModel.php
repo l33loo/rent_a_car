@@ -100,10 +100,12 @@ trait DBModel
             return;
         }
 
+        $params = [];
+        $params[] = $this->id;
         $connection = MyConnect::getInstance()->getConnection();
         $sql = "DELETE FROM " . $this->tableName . " WHERE id = ?";
         $stmt = $connection->prepare($sql);
-        $stmt->execute([$this->id]);
+        $stmt->execute($params);
     }
 
     public static function search(array $filters, string $tableName = ''): array
@@ -142,6 +144,12 @@ trait DBModel
         }
 
         return $results;
+    }
+
+    public static function customQuery(string $query, array $params) {
+        $connection = MyConnect::getInstance()->getConnection();
+        $stmt = $connection->prepare($query);
+        $stmt->execute($params);
     }
 
     public static function camelToSnake($camelCase) {
