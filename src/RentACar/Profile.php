@@ -13,7 +13,7 @@ abstract class Profile {
     protected ?string $dateOfBirth = null;
     // protected ?Address $address = null;
     protected ?string $phone = null;
-    protected bool $isArchived = false;
+    protected ?bool $isArchived = null;
     // TODO: fix issue with address
     protected ?int $address_id = null;
 
@@ -24,7 +24,7 @@ abstract class Profile {
         ?string $dateOfBirth,
         // string $address,
         ?string $phone,
-        bool $isArchived = false
+        ?bool $isArchived = null
     ) {
         if ($id !== null) {
             $this->id = $id;

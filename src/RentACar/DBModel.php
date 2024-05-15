@@ -27,43 +27,35 @@ trait DBModel
         unset($properties['id']);
 
         if (empty($this->id)) {
-            $sql = "INSERT INTO " . $this->tableName . " (" . implode(",", array_keys($properties)).") VALUES(";
+            $sql = 'INSERT INTO ' . $this->tableName . ' (' . implode(',', array_keys($properties)).') VALUES(';
             $params = [];
             foreach ($properties as $property => $value) {
-                $sql .= "?,";
+                $sql .= '?,';
 
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.
                 $params[] = is_bool($value) ? (int)$value: $value;
-                
-                // // This function may return Boolean false, but may also return a
-                // // non-Boolean value which evaluates to false. Use the === operator
-                // // for testing the return value of this function.
-                // if (next($properties) !== false) {
-                //     $sql .= ", ";
-                // }
             }
 
-            // next() doesn't work because its return values conflict and this gives error.
             $sql = rtrim($sql, ',');
-            $sql .= ");";
+            $sql .= ');';
 
             $stmt = $connection->prepare($sql);
             $stmt->execute($params);
             $this->id = $connection->lastInsertId();
         } else {
-            $sql = "UPDATE " . $this->tableName . " SET ";
+            $sql = 'UPDATE ' . $this->tableName . ' SET ';
             $params = [];
             foreach ($properties as $property => $value) {
-                $sql .= $property . " = ?";
+                $sql .= $property . ' = ?,';
 
-                $params[] = $value;
-                
-                if (next($properties) !== false) {
-                    $sql .= ", ";
-                }
+                // PDO does not accept booleans, so they need to be converted
+                // to their int equivalent.
+                $params[] = is_bool($value) ? (int)$value: $value;
             }
-            $sql .= " WHERE id = ?;";
+
+            $sql = rtrim($sql, ',');
+            $sql .= ' WHERE id = ?;';
             $params[] = $this->id;
 
             $stmt = $connection->prepare($sql);
@@ -100,10 +92,12 @@ trait DBModel
             return;
         }
 
+        $params = [];
+        $params[] = $this->id;
         $connection = MyConnect::getInstance()->getConnection();
         $sql = "DELETE FROM " . $this->tableName . " WHERE id = ?";
         $stmt = $connection->prepare($sql);
-        $stmt->execute([$this->id]);
+        $stmt->execute($params);
     }
 
     public static function search(array $filters, string $tableName = ''): array
@@ -142,6 +136,12 @@ trait DBModel
         }
 
         return $results;
+    }
+
+    public static function customQuery(string $query, array $params) {
+        $connection = MyConnect::getInstance()->getConnection();
+        $stmt = $connection->prepare($query);
+        $stmt->execute($params);
     }
 
     public static function camelToSnake($camelCase) {
