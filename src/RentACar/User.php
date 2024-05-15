@@ -14,7 +14,7 @@ class User extends Profile
     use DBModel;
 
     protected ?string $passwordHash = null;
-    protected bool $isAdmin = false;
+    protected ?bool $isAdmin = null;
 
     public function __construct(
         ?string $name = null,
@@ -22,9 +22,9 @@ class User extends Profile
         ?string $dateOfBirth = null,
         // ?string $address = null,
         ?string $phone = null,
-        bool $isArchived = false,
+        ?bool $isArchived = null,
         ?string $password = null,
-        bool $isAdmin = false,
+        ?bool $isAdmin = null,
         ?int $address_id = 1,
         ?int $id = null
     ) {

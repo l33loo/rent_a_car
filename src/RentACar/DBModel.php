@@ -47,14 +47,14 @@ trait DBModel
             $sql = 'UPDATE ' . $this->tableName . ' SET ';
             $params = [];
             foreach ($properties as $property => $value) {
-                $sql .= $property . " = ?";
+                $sql .= $property . ' = ?,';
 
-                $params[] = $value;
-                
-                if (next($properties) !== false) {
-                    $sql .= ', ';
-                }
+                // PDO does not accept booleans, so they need to be converted
+                // to their int equivalent.
+                $params[] = is_bool($value) ? (int)$value: $value;
             }
+
+            $sql = rtrim($sql, ',');
             $sql .= ' WHERE id = ?;';
             $params[] = $this->id;
 
