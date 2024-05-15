@@ -1,6 +1,6 @@
 <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="../index.php">Superstar Rental Car</a>
+        <a class="navbar-brand" href="/index.php">Superstar Rental Car</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
             aria-label="Toggle navigation">
@@ -16,17 +16,17 @@
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../index.php">
+                        <a class="nav-link active" aria-current="page" href="/index.php">
                             Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./fleet.php">
+                        <a class="nav-link" href="/html/fleet.php">
                             Fleet
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./about.php">
+                        <a class="nav-link" href="/html/about.php">
                             About
                         </a>
                     </li>
