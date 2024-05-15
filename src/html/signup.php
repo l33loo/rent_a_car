@@ -2,8 +2,14 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/countries.inc.php';
 
-echo getHeader();
+session_start();
 
+if (isset($_SESSION['logged_id']) && $_SESSION['logged_id'] === true) {
+    header('Location: /index.php');
+    exit;
+}
+
+echo getHeader();
 ?>
 
 <body>

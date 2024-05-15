@@ -2,10 +2,9 @@
 
 // include ('autoload.php');
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 use RentACar\User;
-
-session_start();
 
 // TODO: redirect to ../index.php if user already logged in
 
@@ -40,9 +39,9 @@ if ($users[0]->checkPassword($_POST['password'])) {
     $_SESSION['isAdmin'] = $users[0]->getIsAdmin();
     // TODO: send admins to admin dashboard, and non-admins to index.php
     if ($users[0]->getIsAdmin()) {
-        header('Location: ../html/admin/dashboard.php');
+        header('Location: /html/admin/dashboard.php');
     } else {
-        header('Location: ../index.php');
+        header('Location: /index.php');
     }
 } else {
     // echo "Wrong email or Password";
@@ -52,7 +51,7 @@ if ($users[0]->checkPassword($_POST['password'])) {
 
 function redirectToLoginPage(string $errorMsg): void {
     $_SESSION['loginError'] = $errorMsg;
-    header('Location: ../html/login.php');
+    header('Location: /html/login.php');
 }
 
 // if ($_SERVER["REQUEST_METHOD"] == "POST") {

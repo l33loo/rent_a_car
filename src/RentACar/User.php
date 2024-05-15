@@ -18,29 +18,42 @@ class User extends Profile
     protected ?string $passwordHash = null;
     protected ?bool $isAdmin = null;
 
-    // protected ?string $street = null;
-    // protected ?string $doorNumber = null;
-    // protected ?string $apartmentNr = null;
-    // protected ?string $city = null;
-    // protected ?string $district = null;
-    // protected ?string $postalCode = null;
-    // protected ?Country $country = null;
-
     public function __construct(
         ?string $name = null,
         ?string $email = null,
         ?string $dateOfBirth = null,
-        ?Address $address = null,
         ?string $phone = null,
         ?bool $isArchived = null,
         ?string $password = null,
         ?bool $isAdmin = null,
-
+        ?string $street = null,
+        ?string $doorNumber = null,
+        ?string $apartmentNr = null,
+        ?string $city = null,
+        ?string $district = null,
+        ?string $postalCode = null,
+        ?Country $country = null,
+        ?int $addressId = null,
         ?int $id = null
     ) {
         $this->tableName = 'user';
 
-        parent::__construct($name, $email, $dateOfBirth, $address, $phone, $isArchived, $id);
+        parent::__construct(
+            $name,
+            $email,
+            $dateOfBirth,
+            $phone,
+            $isArchived,
+            $street,
+            $doorNumber,
+            $apartmentNr,
+            $city,
+            $district,
+            $postalCode,
+            $country,
+            $addressId,
+            $id
+        );
 
         if ($password !== null) {
             $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);

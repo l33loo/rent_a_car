@@ -3,11 +3,14 @@ namespace RentACar;
 
 // require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 use Carbon\Carbon;
 use RentACar\Address;
+use RentACar\DBModel;
 
 abstract class Profile {
+    use DBModel; 
     protected ?string $name = null;
     protected ?string $email = null;
     // TODO: Fix db issue with having dateOfBirth being a string
@@ -23,9 +26,16 @@ abstract class Profile {
         ?string $name,
         ?string $email,
         ?string $dateOfBirth,
-        ?Address $address,
         ?string $phone,
         ?bool $isArchived,
+        ?string $street,
+        ?string $doorNumber,
+        ?string $apartmentNr,
+        ?string $city,
+        ?string $district,
+        ?string $postalCode,
+        ?Country $country,
+        ?int $addressId,
         ?int $id,
     ) {
         if ($id !== null) {
@@ -43,10 +53,6 @@ abstract class Profile {
         if ($dateOfBirth !== null) {
             $this->dateOfBirth = $dateOfBirth;
         }
-
-        if ($address !== null) {
-            $this->address = $address;
-        }
         
         if ($phone !== null) {
             $this->phone = $phone;
@@ -55,13 +61,19 @@ abstract class Profile {
         if ($isArchived !== null) {
             $this->isArchived = $isArchived;
         }
-        // $this->id = $id;
-        // $this->name = $name;
-        // $this->email = $email;
-        // $this->dateOfBirth = $dateOfBirth;
-        // // $this->address = $address;
-        // $this->phone = $phone;
-        // $this->isArchived = $isArchived;
+        
+        // TODO: validate none of the address fields are null
+        $address = new Address(
+            $street,
+            $doorNumber,
+            $apartmentNr,
+            $city,
+            $district,
+            $postalCode,
+            $country
+        );
+        $address->save();
+        $this->address = $address;
     }
 
     /**
