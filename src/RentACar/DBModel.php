@@ -27,10 +27,10 @@ trait DBModel
         unset($properties['id']);
 
         if (empty($this->id)) {
-            $sql = "INSERT INTO " . $this->tableName . " (" . implode(",", array_keys($properties)).") VALUES(";
+            $sql = 'INSERT INTO ' . $this->tableName . ' (' . implode(',', array_keys($properties)).') VALUES(';
             $params = [];
             foreach ($properties as $property => $value) {
-                $sql .= "?,";
+                $sql .= '?,';
 
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.
@@ -38,13 +38,13 @@ trait DBModel
             }
 
             $sql = rtrim($sql, ',');
-            $sql .= ");";
+            $sql .= ');';
 
             $stmt = $connection->prepare($sql);
             $stmt->execute($params);
             $this->id = $connection->lastInsertId();
         } else {
-            $sql = "UPDATE " . $this->tableName . " SET ";
+            $sql = 'UPDATE ' . $this->tableName . ' SET ';
             $params = [];
             foreach ($properties as $property => $value) {
                 $sql .= $property . " = ?";
@@ -52,10 +52,10 @@ trait DBModel
                 $params[] = $value;
                 
                 if (next($properties) !== false) {
-                    $sql .= ", ";
+                    $sql .= ', ';
                 }
             }
-            $sql .= " WHERE id = ?;";
+            $sql .= ' WHERE id = ?;';
             $params[] = $this->id;
 
             $stmt = $connection->prepare($sql);
