@@ -2,7 +2,10 @@
 require_once '../components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/user.inc.php';
 
-echo getHeader();?>
+session_start();
+
+echo getHeader();
+?>
 
 <body?>
     <?php include '../components/navbar.inc.php'; ?>

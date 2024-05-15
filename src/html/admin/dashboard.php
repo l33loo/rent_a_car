@@ -1,6 +1,8 @@
 <?php 
 require_once '../components/header.php';
 
+session_start();
+
 echo getHeader();
 ?>
 
