@@ -1,8 +1,11 @@
 <?php
-require_once '../components/header.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/reservation.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 
-echo getHeader();?>
+session_start();
+
+echo getHeader();
+?>
 
 <body?>
     <?php include '../components/navbar.inc.php'; ?>

@@ -1,8 +1,10 @@
 <?php
-require_once '../components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/users.inc.php';
 
-echo getHeader();?>
+echo getHeader();
+?>
 
 <body>
     <?php include '../components/navbar.inc.php'; ?>
@@ -98,7 +100,7 @@ echo getHeader();?>
                         <td><?php echo $user->getDateOfBirth(); ?></td>
                         <!-- <td><?php // echo $user->getAddress(); ?></td> -->
                         <td><?php echo $user->getPhone(); ?></td>
-                        <td><?php echo $user->getIsAdmin(); ?></td>
+                        <td><?php echo $user->getIsAdmin() ? 'Yes' : 'No'; ?></td>
                         <td class="d-flex flex-wrap justify-content-evenly">
                             <a href="user.php?id=<?php echo $user->getId(); ?>" class="btn btn-primary">View</a>
                             <a href="" class="btn btn-secondary">Edit</a>
