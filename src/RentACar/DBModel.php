@@ -26,6 +26,14 @@ trait DBModel
         unset($properties['tableName']);
         unset($properties['id']);
 
+        // Convert object properties into foreign keys
+        foreach ($properties as $property => $value) {
+            if (is_object($value)) {
+                $properties[$property . '_id'] = $value->getId();
+                unset($properties[$property]);
+            }
+        }
+
         if (empty($this->id)) {
             $sql = 'INSERT INTO ' . $this->tableName . ' (' . implode(',', array_keys($properties)).') VALUES(';
             $params = [];
@@ -131,7 +139,6 @@ trait DBModel
 
         $results = [];
         while($row = $stmt->fetchObject(static::class)) {
-            // print_r($row);
             $results[] = $row;
         }
 

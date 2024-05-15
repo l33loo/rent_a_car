@@ -3,10 +3,12 @@ namespace RentACar;
 
 // TODO: fix autoload
 // require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Profile.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 use Carbon\Carbon;
+use RentACar\Address;
 use RentACar\Profile;
 
 class User extends Profile
@@ -16,28 +18,36 @@ class User extends Profile
     protected ?string $passwordHash = null;
     protected ?bool $isAdmin = null;
 
+    // protected ?string $street = null;
+    // protected ?string $doorNumber = null;
+    // protected ?string $apartmentNr = null;
+    // protected ?string $city = null;
+    // protected ?string $district = null;
+    // protected ?string $postalCode = null;
+    // protected ?Country $country = null;
+
     public function __construct(
         ?string $name = null,
         ?string $email = null,
         ?string $dateOfBirth = null,
-        // ?string $address = null,
+        ?Address $address = null,
         ?string $phone = null,
         ?bool $isArchived = null,
         ?string $password = null,
         ?bool $isAdmin = null,
-        ?int $address_id = 1,
+
         ?int $id = null
     ) {
         $this->tableName = 'user';
 
-        parent::__construct($id, $name, $email, $dateOfBirth, /*$address, */$phone, $isArchived);
+        parent::__construct($name, $email, $dateOfBirth, $address, $phone, $isArchived, $id);
 
         if ($password !== null) {
             $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
         }
 
-        if ($address_id !== null) {
-            $this->address_id = $address_id;
+        if ($isAdmin !== null) {
+            $this->isAdmin = $isAdmin;
         }
     }
 

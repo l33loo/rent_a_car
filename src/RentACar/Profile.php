@@ -2,8 +2,10 @@
 namespace RentACar;
 
 // require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 
 use Carbon\Carbon;
+use RentACar\Address;
 
 abstract class Profile {
     protected ?string $name = null;
@@ -11,20 +13,20 @@ abstract class Profile {
     // TODO: Fix db issue with having dateOfBirth being a string
     // protected Carbon $dateOfBirth;
     protected ?string $dateOfBirth = null;
-    // protected ?Address $address = null;
+    protected ?Address $address = null;
     protected ?string $phone = null;
     protected ?bool $isArchived = null;
     // TODO: fix issue with address
-    protected ?int $address_id = null;
+    // protected ?int $address_id = null;
 
     public function __construct(
-        ?int $id,
         ?string $name,
         ?string $email,
         ?string $dateOfBirth,
-        // string $address,
+        ?Address $address,
         ?string $phone,
-        ?bool $isArchived = null
+        ?bool $isArchived,
+        ?int $id,
     ) {
         if ($id !== null) {
             $this->id = $id;
@@ -40,6 +42,10 @@ abstract class Profile {
         
         if ($dateOfBirth !== null) {
             $this->dateOfBirth = $dateOfBirth;
+        }
+
+        if ($address !== null) {
+            $this->address = $address;
         }
         
         if ($phone !== null) {
