@@ -31,13 +31,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <?php if (!empty($_SESSION['logged_id']) && $_SESSION['logged_id'] === true) { ?>
-                            <a class="btn btn-secondary" href="../app/logout.php" class="nav-link">
-                                Logout
+                        <?php if (empty($_SESSION['logged_id'])) { ?>
+                            <a class="btn btn-primary" href="/app/login.php" class="nav-link">
+                                Login
                             </a>
                         <?php } else { ?>
-                            <a class="btn btn-primary" href="../login.php" class="nav-link">
-                                Login
+                            <a class="btn btn-secondary" href="/app/logout.php" class="nav-link">
+                                Logout
                             </a>
                         <?php } ?>
                     </li>
