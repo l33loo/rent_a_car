@@ -35,16 +35,8 @@ trait DBModel
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.
                 $params[] = is_bool($value) ? (int)$value: $value;
-                
-                // // This function may return Boolean false, but may also return a
-                // // non-Boolean value which evaluates to false. Use the === operator
-                // // for testing the return value of this function.
-                // if (next($properties) !== false) {
-                //     $sql .= ", ";
-                // }
             }
 
-            // next() doesn't work because its return values conflict and this gives error.
             $sql = rtrim($sql, ',');
             $sql .= ");";
 
