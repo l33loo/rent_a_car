@@ -4,6 +4,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/vehicles.inc.php';
 
 echo getHeader();
+
+print_r($vehicles);
 ?>
 
 <body>
