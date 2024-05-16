@@ -1,12 +1,6 @@
-<?php
+<?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
-
-use RentACar\User;
-
-// TODO: error handling
-$users = User::search([], 'user');
 
 echo getHeader();
 ?>
@@ -15,7 +9,7 @@ echo getHeader();
     <?php include '../components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
-            <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Users</h1>
+            <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Locations</h1>
         </div>
     </div>
     <div class="container">
@@ -45,6 +39,7 @@ echo getHeader();
                     >
                         Date of birth
                     </th>
+                    <!-- TODO: get string of address??
                     <th
                         class="col"
                         data-field="description"
@@ -52,7 +47,7 @@ echo getHeader();
                         data-editable-emptytext="Custom empty text."
                     >
                         Address
-                    </th>
+                    </th> -->
                     <th
                         class="col"
                         data-field="description"
@@ -80,11 +75,7 @@ echo getHeader();
                 </tr>
             </thead>
             <tbody>
-                <!-- TODO: error handling -->
                 <?php foreach ($users as $user) {
-                    $user->loadRelation('address');
-                    $address = $user->getAddress();
-                    $address->loadRelation('country');
                     $userId = $user->getId();
                     $userIsArchived = $user->getIsArchived();
                 ?>
@@ -95,19 +86,23 @@ echo getHeader();
                         <td><?php echo $user->getName(); ?></td>
                         <td><?php echo $user->getEmail(); ?></td>
                         <td><?php echo $user->getDateOfBirth(); ?></td>
-                        <td><?php echo $address->getAddressToString(); ?></td>
+                        <!-- <td><?php // echo $user->getAddress(); ?></td> -->
                         <td><?php echo $user->getPhone(); ?></td>
                         <td><?php echo $user->getIsAdmin() ? 'Yes' : 'No'; ?></td>
                         <td class="d-flex flex-wrap justify-content-evenly">
                             <a href="user.php?id=<?php echo $user->getId(); ?>" class="btn btn-primary">View</a>
                             <a href="" class="btn btn-secondary">Edit</a>
                             <?php if ($userIsArchived) { ?>
-                                <form action="/app/admin/userEdit.php" method="POST">
+                                <form action="" method="POST">
                                     <input type="submit" name="unarchiveUser" class="btn btn-success" value="Unarchive" />
                                     <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
+                                    <?php if (isset($_POST['unarchiveUser']) && !empty($_POST['userId']) && $_POST['userId'] === "$userId") {
+                                        $user->setIsArchived(false)->save();
+                                    }
+                                    ?>
                                 </form>
                             <?php } else { ?>
-                                <form action="/app/admin/userEdit.php" method="POST">
+                                <form action="" method="POST">
                                     <input type="submit" name="archiveUser" class="btn btn-danger" value="Archive" />
                                     <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
                                     <?php if (isset($_POST['archiveUser']) && !empty($_POST['userId']) && $_POST['userId'] === "$userId") {
