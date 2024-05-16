@@ -3,8 +3,6 @@ namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
-use RentACar\DBModel;
-
 class Country {
     use DBModel;
 

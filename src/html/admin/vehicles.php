@@ -7,7 +7,7 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include '../components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
             <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Vehicles</h1>
