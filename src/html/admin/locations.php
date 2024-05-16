@@ -96,19 +96,11 @@ echo getHeader();
                                 <form action="" method="POST">
                                     <input type="submit" name="unarchiveUser" class="btn btn-success" value="Unarchive" />
                                     <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
-                                    <?php if (isset($_POST['unarchiveUser']) && !empty($_POST['userId']) && $_POST['userId'] === "$userId") {
-                                        $user->setIsArchived(false)->save();
-                                    }
-                                    ?>
                                 </form>
                             <?php } else { ?>
                                 <form action="" method="POST">
                                     <input type="submit" name="archiveUser" class="btn btn-danger" value="Archive" />
                                     <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
-                                    <?php if (isset($_POST['archiveUser']) && !empty($_POST['userId']) && $_POST['userId'] === "$userId") {
-                                        $user->setIsArchived(true)->save();
-                                    }
-                                    ?>
                                 </form>
                             <?php } ?>
                         </td>
