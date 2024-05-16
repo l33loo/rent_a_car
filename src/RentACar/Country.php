@@ -8,8 +8,8 @@ use RentACar\DBModel;
 class Country {
     use DBModel;
 
-    public ?string $name = null;
-    public ?string $code = null;
+    protected ?string $name = null;
+    protected ?string $code = null;
 
     public function __construct(?string $name = null, ?string $code = null, ?int $id = null) {
         $this->tableName = 'country';

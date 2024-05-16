@@ -11,8 +11,8 @@ use RentACar\Profile;
 
 class User extends Profile
 {
-    public ?string $passwordHash = null;
-    public ?bool $isAdmin = null;
+    protected ?string $passwordHash = null;
+    protected ?bool $isAdmin = null;
 
     public function __construct(
         ?string $name = null,

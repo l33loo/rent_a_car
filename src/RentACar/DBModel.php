@@ -9,7 +9,7 @@ use RentACar\MyConnect;
 trait DBModel
 {
     protected $tableName = '';
-    public ?int $id = null;
+    protected ?int $id = null;
 
     /**
      * Get the value of id
