@@ -33,7 +33,7 @@ class User extends Profile
         ?string $district = null,
         ?string $postalCode = null,
         ?Country $country = null,
-        ?int $addressId = null,
+        ?int $address_id = null,
         ?int $id = null
     ) {
         $this->tableName = 'user';
@@ -51,7 +51,7 @@ class User extends Profile
             $district,
             $postalCode,
             $country,
-            $addressId,
+            $address_id,
             $id
         );
 
@@ -62,6 +62,8 @@ class User extends Profile
         if ($isAdmin !== null) {
             $this->isAdmin = $isAdmin;
         }
+
+        // print_r($this);
     }
 
     /**

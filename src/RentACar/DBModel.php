@@ -1,10 +1,14 @@
 <?php
 
 namespace RentACar;
+// require_once($_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/RentACar/MyConnect.php');
 
+// use RentACar\Address;
 use RentACar\MyConnect;
+// use AllowDynamicProperties;
 
+// #[AllowDynamicProperties]
 trait DBModel
 {
     protected $tableName = '';
@@ -26,9 +30,11 @@ trait DBModel
         unset($properties['tableName']);
         unset($properties['id']);
 
+        // TODO: needs to be recursive
         // Convert object properties into foreign keys
         foreach ($properties as $property => $value) {
             if (is_object($value)) {
+                $value->save();
                 $properties[$property . '_id'] = $value->getId();
                 unset($properties[$property]);
             }
@@ -71,7 +77,7 @@ trait DBModel
         }
     }
 
-    public static function find(int $id, string $tableName = ''): self
+    public static function find(int $id, string $tableName = '')
     {
         $connection = MyConnect::getInstance()->getConnection();
 
@@ -84,14 +90,35 @@ trait DBModel
 
         $sql = "SELECT * FROM " . $tableName . " WHERE id = ?";
         $stmt = $connection->prepare($sql);
-        $stmt->execute([$id]);
-        $result = $stmt->fetchObject(static::class);
+        $params = [];
+        $params[] = $id;
+        $stmt->execute($params);
+        $results = [];
+        // $result = $stmt->fetchObject(static::class);
 
-        if (!$result) {
+        // if (!$result) {
+        //     throw new \Exception('Erro a obter registo. Número de registos diferente de 1');
+        // }
+
+        // return $result;
+        while($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $className = 'RentACar\\' . ucfirst($tableName);
+            // print_r(get_called_class());
+            $object = new $className();
+            $properties = get_object_vars($object);
+            foreach ($row as $column => $value) {
+                self::recurseResults($object, $properties, $column, $value);
+            }
+
+            $results[] = $object;
+        }
+
+        if (count($results) !== 1) {
             throw new \Exception('Erro a obter registo. Número de registos diferente de 1');
         }
 
-        return $result;
+        // print_r($results[0]);
+        return $results[0];
     }
 
     public function delete()
@@ -138,11 +165,59 @@ trait DBModel
         $stmt->execute($params);
 
         $results = [];
-        while($row = $stmt->fetchObject(static::class)) {
-            $results[] = $row;
+        while($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $className = 'RentACar\\' . $tableName;
+            $object = new $className();
+            $properties = get_object_vars($object);
+            foreach ($row as $column => $value) {
+                self::recurseResults($object, $properties, $column, $value);
+            }
+
+            $results[] = $object;
         }
 
         return $results;
+    }
+
+    private static function recurseResults($object, $properties, $columnOrProperty, $value) {
+        // Exlude foreign key columns because they don't exist on their respective classes
+        if (!str_ends_with($columnOrProperty, '_id') && array_key_exists($columnOrProperty, $properties)) {
+            $object->{$columnOrProperty} = $value;
+            return;
+        }
+
+        // In case it's a foreign key column
+        $childTableName = rtrim($columnOrProperty, '_id');
+        $childClassName = ucfirst($childTableName);
+
+        // // For properties used in composition
+        // if (array_key_exists($columnOrProperty, $properties)) {
+        //     $childObject = self::find($value, $childTableName);
+        //     $childProperties = get_object_vars($childObject);
+        //     foreach ($childProperties as $childProperty => $childValue) {
+        //         self::recurseResults($childObject, $childProperties, $childProperty, $childValue);
+        //     }
+        //     $object->{$childTableName}->$childObject;
+        //     return;
+        // }
+
+        // // For properties used in association
+        if (array_key_exists($childTableName, $properties)) {
+            // echo $value . '<br>';
+            // echo $childTableName . '<br>';
+            // $value is address_id
+            $childObject = self::find($value, $childTableName);
+            // print_r($childObject);
+            $childProperties = get_object_vars($childObject);
+            foreach ($childProperties as $childProperty => $childValue) {
+                self::recurseResults($childObject, $childProperties, $childProperty, $childValue);
+            }
+            // echo $childTableName . '<br>';
+            // print_r($childObject);
+            // $obj = $childObject->{$childTableName};
+            // print_r($obj);
+            $object->{$childTableName} = $childObject;
+        }
     }
 
     public static function customQuery(string $query, array $params) {

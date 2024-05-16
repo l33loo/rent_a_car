@@ -35,7 +35,7 @@ abstract class Profile {
         ?string $district,
         ?string $postalCode,
         ?Country $country,
-        ?int $addressId,
+        ?int $address_id,
         ?int $id,
     ) {
         if ($id !== null) {
@@ -72,7 +72,6 @@ abstract class Profile {
             $postalCode,
             $country
         );
-        $address->save();
         $this->address = $address;
     }
 
