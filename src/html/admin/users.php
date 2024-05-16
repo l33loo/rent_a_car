@@ -99,8 +99,8 @@ echo getHeader();
                         <td><?php echo $user->getPhone(); ?></td>
                         <td><?php echo $user->getIsAdmin() ? 'Yes' : 'No'; ?></td>
                         <td class="d-flex flex-wrap justify-content-evenly">
-                            <a href="user.php?id=<?php echo $user->getId(); ?>" class="btn btn-primary">View</a>
-                            <a href="userEdit.php" class="btn btn-secondary">Edit</a>
+                            <a href="/html/admin/user.php?id=<?php echo $userId; ?>" class="btn btn-primary">View</a>
+                            <a href="/html/admin/userEdit.php?id=<?php echo $userId; ?>" class="btn btn-secondary">Edit</a>
                             <?php if ($userIsArchived) { ?>
                                 <form action="/app/admin/userEdit.php" method="POST">
                                     <input type="submit" name="unarchiveUser" class="btn btn-success" value="Unarchive" />

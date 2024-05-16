@@ -7,11 +7,19 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 
 use RentACar\User;
 
-$user = User::find($_SESSION['logged_id']);
+$userId;
+
+if (!empty($_GET['id'])) {
+    $userId = $_GET['id'];
+} else {
+    $userId = $_SESSION['logged_id'];
+}
+
+// TODO: try catch + error
+$user = User::find($userId);
 $user->loadRelation('address');
 $address = $user->getAddress();
 $address->loadRelation('country');
-$userId = $user->getId();
 
 echo getHeader();
 ?>
@@ -26,7 +34,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Profile</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/userEdit.php" method="post">
+                        <form action="/app/admin/userEdit.php" method="post">
                             <div class="row mb-3">
                                 <div class="col">
                                     <img src="/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
@@ -60,6 +68,7 @@ echo getHeader();
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
+                                <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
                                 <input
                                     type="submit"
                                     class="btn btn-primary"
@@ -80,7 +89,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Address</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/userEdit.php" method="post">
+                        <form action="/app/admin/userEdit.php" method="post">
                             <fieldset class="mb-3">
                                 <legend class>
                                     <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
@@ -128,6 +137,7 @@ echo getHeader();
                                 </div>
                             </fieldset>
                             <div class="d-flex justify-content-center">
+                                <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
                                 <input
                                     type="submit"
                                     class="btn btn-primary"
