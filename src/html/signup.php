@@ -65,12 +65,6 @@ echo getHeader();
                     <input type="date" class="form-control" name="dateOfBirth">
                 </div>
             </div>
-            
-            <!-- 
-                protected string $city;form-group 
-                protected string $district;
-                protected string $postalCode;
-                protected Country $country; -->
             <fieldset class="mb-3">
                 <legend class>
                     <img src="../img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
@@ -97,7 +91,6 @@ echo getHeader();
                     </div>
                     <div class="col">
                         <label for="district">District</label>
-                        <!-- TODO: make dynamic select -->
                         <input type="text" class="form-control" name="district">
                     </div>
                 </div>
