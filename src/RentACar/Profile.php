@@ -200,4 +200,24 @@ abstract class Profile {
 
         return $this;
     }
+
+    /**
+     * Get the value of address_id
+     */ 
+    public function getAddress_id()
+    {
+        return $this->address_id;
+    }
+
+    /**
+     * Set the value of address_id
+     *
+     * @return  self
+     */ 
+    public function setAddress_id($address_id)
+    {
+        $this->address_id = $address_id;
+
+        return $this;
+    }
 }

@@ -76,7 +76,7 @@ trait DBModel
         }
     }
 
-    public static function find(int $id, string $tableName = '')
+    public static function find(int $id, string $tableName = ''): self
     {
         $connection = MyConnect::getInstance()->getConnection();
 
@@ -89,33 +89,14 @@ trait DBModel
 
         $sql = "SELECT * FROM " . $tableName . " WHERE id = ?";
         $stmt = $connection->prepare($sql);
-        $params = [];
-        $params[] = $id;
-        $stmt->execute($params);
-        $results = [];
+        $stmt->execute([$id]);
+        $result = $stmt->fetchObject(static::class);
 
-        while($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $className = 'RentACar\\' . ucfirst($tableName);
-            $object = new $className();
-            foreach ($row as $column => $value) {
-                if (!str_ends_with($column, '_id')) {
-                    $object->{$column} = $value;
-                    continue;
-                }
-
-                $childTableName = rtrim($column, '_id');
-                $childObject = self::find($value, $childTableName);
-                $object->{$childTableName} = $childObject;
-            }
-
-            $results[] = $object;
-        }
-
-        if (count($results) !== 1) {
+        if (!$result) {
             throw new \Exception('Erro a obter registo. Número de registos diferente de 1');
         }
 
-        return $results[0];
+        return $result;
     }
 
     public function delete()
@@ -163,7 +144,6 @@ trait DBModel
 
         $results = [];
         while($row = $stmt->fetchObject(static::class)) {
-            // print_r($row);
             $results[] = $row;
         }
 

@@ -10,13 +10,14 @@ use RentACar\DBModel;
 class Address {
     use DBModel;
 
-    public ?string $street = null;
-    public ?string $doorNumber = null;
-    public ?string $apartmentNr = null;
-    public ?string $city = null;
-    public ?string $district = null;
-    public ?string $postalCode = null;
-    public ?Country $country = null;
+    protected ?string $street = null;
+    protected ?string $doorNumber = null;
+    protected ?string $apartmentNr = null;
+    protected ?string $city = null;
+    protected ?string $district = null;
+    protected ?string $postalCode = null;
+    protected ?int $country_id = null;
+    protected ?Country $country = null;
 
     public function __construct(
         ?string $street = null,
@@ -121,10 +122,42 @@ class Address {
     }
 
     /**
+     * Get the value of country_id
+     */ 
+    public function getCountry_id()
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * Set the value of country_id
+     *
+     * @return  self
+     */ 
+    public function setCountry_id($country_id)
+    {
+        $this->country_id = $country_id;
+
+        return $this;
+    }
+
+    /**
      * Get the value of country
      */ 
-    public function getCountry(): Country
+    public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Set the value of country
+     *
+     * @return  self
+     */ 
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
     }
 }
