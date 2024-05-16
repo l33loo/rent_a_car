@@ -1,6 +1,7 @@
 <?php
 
 namespace RentACar;
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/RentACar/MyConnect.php');
 
 use RentACar\MyConnect;
@@ -25,6 +26,14 @@ trait DBModel
         $properties = get_object_vars($this);
         unset($properties['tableName']);
         unset($properties['id']);
+
+        $propertyKeys = array_keys($properties);
+        $foreignKeys = preg_grep('/_id$/', $propertyKeys);
+
+        foreach ($foreignKeys as $foreignKey) {
+            $objectProperty = rtrim($foreignKey, "_id");
+            unset($properties[$objectProperty]);
+        }
 
         if (empty($this->id)) {
             $sql = 'INSERT INTO ' . $this->tableName . ' (' . implode(',', array_keys($properties)).') VALUES(';
@@ -131,20 +140,27 @@ trait DBModel
 
         $results = [];
         while($row = $stmt->fetchObject(static::class)) {
-            // print_r($row);
             $results[] = $row;
         }
 
         return $results;
     }
 
-    public static function customQuery(string $query, array $params) {
-        $connection = MyConnect::getInstance()->getConnection();
-        $stmt = $connection->prepare($query);
-        $stmt->execute($params);
+    public function loadRelation(string $relationName, string $tableName = ''): void
+    {
+        $className = 'RentACar\\' . self::snakeToCamel($relationName);
+        
+        $this->{$relationName} = $className::find($this->{$relationName . '_id'}, $tableName);
     }
 
-    public static function camelToSnake($camelCase) {
+    public static function rawSQL(string $query, array $params)
+    {
+        $connection = MyConnect::getInstance();
+        return $connection->query($sql);
+    }
+
+    public static function camelToSnake($camelCase): string
+    {
         $result = '';
       
         for ($i = 0; $i < strlen($camelCase); $i++) {
@@ -158,6 +174,18 @@ trait DBModel
         }
       
         return ltrim($result, '_');
+    }
+
+    public static function snakeToCamel($string, $capitalizeFirstCharacter = true): string
+    {
+
+        $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
+
+        if (!$capitalizeFirstCharacter) {
+            $str[0] = strtolower($str[0]);
+        }
+    
+        return $str;
     }
 
     // public static function pluralize($quantity, $singular, $plural=null) {

@@ -2,29 +2,34 @@
 namespace RentACar;
 
 // require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 use Carbon\Carbon;
+use RentACar\Address;
+use RentACar\DBModel;
 
 abstract class Profile {
+    use DBModel; 
     protected ?string $name = null;
     protected ?string $email = null;
     // TODO: Fix db issue with having dateOfBirth being a string
     // protected Carbon $dateOfBirth;
     protected ?string $dateOfBirth = null;
-    // protected ?Address $address = null;
     protected ?string $phone = null;
     protected ?bool $isArchived = null;
-    // TODO: fix issue with address
     protected ?int $address_id = null;
+    protected ?Address $address = null;
 
     public function __construct(
-        ?int $id,
         ?string $name,
         ?string $email,
         ?string $dateOfBirth,
-        // string $address,
         ?string $phone,
-        ?bool $isArchived = null
+        ?bool $isArchived,
+        ?int $address_id,
+        ?int $id,
+        ?Address $address
     ) {
         if ($id !== null) {
             $this->id = $id;
@@ -49,13 +54,14 @@ abstract class Profile {
         if ($isArchived !== null) {
             $this->isArchived = $isArchived;
         }
-        // $this->id = $id;
-        // $this->name = $name;
-        // $this->email = $email;
-        // $this->dateOfBirth = $dateOfBirth;
-        // // $this->address = $address;
-        // $this->phone = $phone;
-        // $this->isArchived = $isArchived;
+
+        if ($address_id !== null) {
+            $this->address_id = $address_id;
+        }
+
+        if ($address !== null) {
+            $this->address = $address;
+        }
     }
 
     /**
@@ -195,6 +201,26 @@ abstract class Profile {
     public function setIsArchived(bool $isArchived): self
     {
         $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of address_id
+     */ 
+    public function getAddress_id()
+    {
+        return $this->address_id;
+    }
+
+    /**
+     * Set the value of address_id
+     *
+     * @return  self
+     */ 
+    public function setAddress_id($address_id)
+    {
+        $this->address_id = $address_id;
 
         return $this;
     }

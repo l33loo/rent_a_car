@@ -6,4 +6,6 @@ use RentACar\User;
 
 $userId = $_GET['id'];
 
-$user = User::find($userId, 'user');
+$user = User::find($userId);
+$user->loadRelation('address', );
+$user->getAddress()->loadRelation('country');
