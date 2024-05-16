@@ -19,7 +19,7 @@ echo getHeader();
     <?php include 'components/navbar.inc.php'; ?>
     <div class="container">
         <h1 class="text-center" style="margin-top: 100px;">Edit Profile</h1>
-        <form action="/app/signup.php" method="post">
+        <form action="/app/userPasswordEdit.php" method="post">
             <div class="row mb-3">
                 <div class="col">
                     <img src="/img/password.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">

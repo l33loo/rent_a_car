@@ -18,7 +18,7 @@ echo getHeader();
     <?php include 'components/navbar.inc.php'; ?>
     <div class="container">
         <h1 class="text-center mb-3" style="margin-top: 100px;">Edit Address</h1>
-        <form action="/app/signup.php" method="post">
+        <form action="/app/userAddressEdit.php" method="post">
             <fieldset class="mb-3">
                 <legend class>
                     <img src="../img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">

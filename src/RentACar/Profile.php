@@ -161,6 +161,7 @@ abstract class Profile {
     public function setAddress(Address $address): self
     {
         $this->address = $address;
+        // $this->address_id = $address->getId();
 
         return $this;
     }

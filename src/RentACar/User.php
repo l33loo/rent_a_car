@@ -53,10 +53,22 @@ class User extends Profile
      *
      * @return  self
      */ 
+    public function setPasswordHash($passwordHash): self
+    {
+        
+        $this->passwordHash = $passwordHash;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @return  self
+     */ 
     public function setPassword($password): self
     {
-        $this->passwordHash = $password;
-        // $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
+        $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
         return $this;
     }

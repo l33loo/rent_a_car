@@ -29,7 +29,7 @@ if (count($users) !== 1) {
 
 if ($users[0]->checkPassword($_POST['password'])) {
     unset($_SESSION['loginError']);
-    $_SESSION['logged_id'] = $users[0]->getIds();
+    $_SESSION['logged_id'] = $users[0]->getId();
     $_SESSION['name'] = $users[0]->getName();
     $_SESSION['isAdmin'] = $users[0]->getIsAdmin();
 

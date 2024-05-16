@@ -1,7 +1,9 @@
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/sessionGuest.inc.php';
+// require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/sessionGuest.inc.php';
+clearstatcache();
+session_start();
 
 use RentACar\User;
 
@@ -9,7 +11,6 @@ $user = User::find($_SESSION['logged_id']);
 $user->loadRelation('address');
 $user->getAddress()->loadRelation('country');
 $address = $user->getAddress();
-$properties = get_object_vars($user);
 
 echo getHeader();
 ?>
