@@ -3,7 +3,7 @@
 // TODO: fix
 // include ('autoload.php');
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/session.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/sessionUser.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 use RentACar\User;
 
@@ -29,7 +29,7 @@ if (count($users) !== 1) {
 
 if ($users[0]->checkPassword($_POST['password'])) {
     unset($_SESSION['loginError']);
-    $_SESSION['logged_id'] = true;
+    $_SESSION['logged_id'] = $users[0]->getId();
     $_SESSION['name'] = $users[0]->getName();
     $_SESSION['isAdmin'] = $users[0]->getIsAdmin();
 

@@ -1,13 +1,8 @@
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/countries.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/sessionUser.inc.php';
 
-session_start();
-
-if (isset($_SESSION['logged_id']) && $_SESSION['logged_id'] === true) {
-    header('Location: /index.php');
-    exit;
-}
 
 echo getHeader();
 ?>
@@ -15,7 +10,7 @@ echo getHeader();
 <body>
     <?php include 'components/navbar.inc.php'; ?>
     <div class="container">
-        <h1 class="text-center" style="margin-top: 100px;">Sign Up</h1>
+        <h1 class="text-center mb-5" style="margin-top: 100px;">Sign Up</h1>
         <form action="/app/signup.php" method="post">
             <div class="row mb-3">
                 <div class="col">

@@ -163,4 +163,17 @@ class Address {
 
         return $this;
     }
+
+    public function getAddressToString() : string
+    {
+        $addressString = $this->doorNumber . ' ' . $this->street;
+
+        if ($this->apartmentNr !== null) {
+            $addressString .= ', apt ' . $this->apartmentNr;
+        }
+
+        $addressString .= ', ' . $this->city . ', ' . $this->district . ', ' . $this->postalCode . ', ' . $this->getCountry()->getName();
+
+        return $addressString;
+    }
 }
