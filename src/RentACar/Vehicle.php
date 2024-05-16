@@ -13,36 +13,55 @@ class Vehicle {
     use DBModel;
 
     protected ?string $plate = null;
-    // protected ?Category $category = null;
+    protected ?Category $category = null;
     protected ?int $category_id = null;
-    // protected ?array $properties = null;
-    protected bool $rentable = false;
-    // protected ?Island $island = null;
+    protected ?array $properties = null;
+    protected ?bool $rentable = null;
+    protected ?Island $island = null;
     protected ?int $island_id = null;
     protected ?float $dailyRate = null;
 
 
     public function __construct(
         ?string $plate = null,
-        // ?Category $category = null,
-        // ?array $properties = null,
+        ?float $dailyRate = null,
         ?bool $rentable = null,
-        // ?Island $island = null,
         ?int $island_id = null,
-        ?float $dailyRate = null
+        ?int $category_id = null,
+        ?Island $island = null,
+        ?Category $category = null,
+        ?array $properties = null,
     ) {
-        // $this->id = $id;
         if ($plate !== null ) {
             $this->plate = $plate;
         }
-        // $this->category = $category;
-        // $this->properties = $properties;
-        if ($rentable !== null) {
-            $this->rentable = $rentable;
-        }
-        // $this->island = $island;
+
         if ($dailyRate !== null) {
             $this->dailyRate = $dailyRate;
+        }
+
+        if ($rentable !== null) {
+            $this->rentable = $rentable;
+        }    
+
+        if ($category !== null) {
+            $this->category = $category;
+        }
+
+        if ($category_id !== null) {
+            $this->category_id = $category_id;
+        }
+
+        if ($island !== null) {
+            $this->island = $island;
+        }
+
+        if ($island_id !== null) {
+            $this->island_id = $island_id;
+        }
+        
+        if ($properties !== null) {
+            $this->properties = $properties;
         }
     }
 
