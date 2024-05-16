@@ -25,9 +25,9 @@ try {
         $_POST['email'],
         $_POST['dateOfBirth'],
         $_POST['phone'],
-        false, // isArchived
+        null, // isArchived
         $_POST['password'],
-        false, // isAdmin
+        null, // isAdmin
         $address->getId()
     );
 

@@ -18,7 +18,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/html/user.php">
+            <a class="nav-link" href="/html/userView.php">
                 My Account
             </a>
         </li>
