@@ -7,18 +7,38 @@ class Location {
     use DBModel;
 
     protected ?Address $address = null;
+    protected ?int $address_id = null;
     protected ?Island $island = null;
+    protected ?int $island_id = null;
 
     public function __construct(
+        ?int $address_id = null,
+        ?int $island_id = null,
         ?Address $address = null,
         ?Island $island = null,
         ?int $id = null
     ) {
         $this->tableName = 'location';
 
-        $this->id = $id;
-        $this->address = $address;
-        $this->island = $island;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        
+        if ($address !== null) {
+            $this->address = $address;
+        }
+        
+        if ($island !== null) {
+            $this->island = $island;
+        }
+
+        if ($address_id !== null) {
+            $this->address_id = $address_id;
+        }
+        
+        if ($island_id !== null) {
+            $this->island_id = $island_id;
+        }
     }
 
     /**
@@ -65,6 +85,46 @@ class Location {
     public function setIsland(Island $island): self
     {
         $this->island = $island;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of address_id
+     */ 
+    public function getAddress_id()
+    {
+            return $this->address_id;
+    }
+
+    /**
+     * Set the value of address_id
+     *
+     * @return  self
+     */ 
+    public function setAddress_id($address_id)
+    {
+            $this->address_id = $address_id;
+
+            return $this;
+    }
+
+    /**
+     * Get the value of island_id
+     */ 
+    public function getIsland_id()
+    {
+        return $this->island_id;
+    }
+
+    /**
+     * Set the value of island_id
+     *
+     * @return  self
+     */ 
+    public function setIsland_id($island_id)
+    {
+        $this->island_id = $island_id;
 
         return $this;
     }
