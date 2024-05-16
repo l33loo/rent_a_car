@@ -108,7 +108,7 @@ echo getHeader();
                     </div>
                     <div class="col">
                         <label for="country">Country</label>
-                        <select class="form-control" name="country">
+                        <select class="form-control" name="countryId">
                             <?php foreach($countries as $country) { ?>
                                 <option value="<?php echo $country->getId(); ?>">
                                     <?php echo $country->getName(); ?>

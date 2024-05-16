@@ -27,16 +27,12 @@ trait DBModel
         unset($properties['tableName']);
         unset($properties['id']);
 
-        foreach ($properties as $property => $value) {
-            if (!is_object($value)) {
-                continue;
-            }
+        $propertyKeys = array_keys($properties);
+        $foreignKeys = preg_grep('/_id$/', $propertyKeys);
 
-            $value->save();
-
-            // Convert properties that are objects into foreign keys
-            $properties[$property . '_id'] = $value->getId();
-            unset($properties[$property]);
+        foreach ($foreignKeys as $foreignKey) {
+            $objectProperty = rtrim($foreignKey, "_id");
+            unset($properties[$objectProperty]);
         }
 
         if (empty($this->id)) {

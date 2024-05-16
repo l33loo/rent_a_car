@@ -55,6 +55,10 @@ abstract class Profile {
             $this->isArchived = $isArchived;
         }
 
+        if ($address_id !== null) {
+            $this->address_id = $address_id;
+        }
+
         if ($address !== null) {
             $this->address = $address;
         }

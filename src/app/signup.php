@@ -1,13 +1,25 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/session.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Country.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 
-use RentACar\Country;
+use RentACar\Address;
 use RentACar\User;
 
-$country = Country::find($_POST['country'], 'country');
+$address = new Address(
+    $_POST['street'],
+    $_POST['door'],
+    $_POST['apartment'],
+    $_POST['city'],
+    $_POST['district'],
+    $_POST['postalCode'],
+    $_POST['countryId']
+);
+
+$address->save();
+
+echo 'address <3: ' . $address->getId() . '<br>';
 
 try {
     $user = new User(
@@ -15,16 +27,10 @@ try {
         $_POST['email'],
         $_POST['dateOfBirth'],
         $_POST['phone'],
-        false,
+        false, // isArchived
         $_POST['password'],
-        false,
-        $_POST['street'],
-        $_POST['door'],
-        $_POST['apartment'],
-        $_POST['city'],
-        $_POST['district'],
-        $_POST['postalCode'],
-        $country
+        false, // isAdmin
+        $address->getId()
     );
 
     $user->save();

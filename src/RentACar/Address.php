@@ -26,8 +26,8 @@ class Address {
         ?string $city = null,
         ?string $district = null,
         ?string $postalCode = null,
-        ?int $id = null,
         ?int $country_id = null,
+        ?int $id = null,
         ?Country $country = null,
     ) {
         $this->tableName = 'address';
@@ -58,6 +58,10 @@ class Address {
 
         if ($postalCode !== null) {
             $this->postalCode = $postalCode;
+        }
+
+        if ($country_id !== null) {
+            $this->country_id = $country_id;
         }
 
         if ($country !== null) {
