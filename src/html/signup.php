@@ -62,7 +62,7 @@ echo getHeader();
             </div>
             <fieldset class="mb-3">
                 <legend class>
-                    <img src="../img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                    <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                     Address
                 </legend>
                 <div class="row mb-4">

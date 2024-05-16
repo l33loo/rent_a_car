@@ -22,7 +22,7 @@ $users = User::search([
     ]
 ]);
 
-if (count($users) !== 1) {
+if (count($users) !== 1 || $user[0]->getIsArchived() === true) {
     redirectToLoginPage($wrongCredsMsg);
     exit;
 }

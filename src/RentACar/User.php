@@ -87,4 +87,16 @@ class User extends Profile
     {
         return $this->isAdmin;
     }
+
+    /**
+     * Set the value of isAdmin
+     *
+     * @return  self
+     */ 
+    public function setIsAdmin(bool $isAdmin): self
+    {
+            $this->isAdmin = $isAdmin;
+
+            return $this;
+    }
 }

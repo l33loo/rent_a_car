@@ -7,9 +7,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 use RentACar\Address;
 use RentACar\User;
 
+// TODO: try catch + error
+$user = User::find($_SESSION['logged_id']);
+
 if (isset($_POST['userEditProfile'])) {
     try {
-        $user = User::find($_SESSION['logged_id']);
         $user->setName($_POST['name']);
         $user->setEmail($_POST['email']);
         $user->setDateOfBirth($_POST['dateOfBirth']);
@@ -24,6 +26,7 @@ if (isset($_POST['userEditProfile'])) {
         // TODO: make sure this is upon success
         header('Location: /html/userView.php');
     }
+    exit;
 }
 
 if (isset($_POST['userEditAddress'])) {
@@ -37,14 +40,9 @@ if (isset($_POST['userEditAddress'])) {
             $_POST['postalCode'],
             $_POST['countryId']
         );
-        
         $newAddress->save();
-    
-        $user = User::find($_SESSION['logged_id']);
         $user->setAddress_id($newAddress->getId());
-    
         $user->save();
-        
     } catch(e) {
         // TODO: error message
         echo 'ERROR SIGNING UP :(';
@@ -55,6 +53,7 @@ if (isset($_POST['userEditAddress'])) {
         // TODO: make sure this is upon success
         header('Location: /html/userView.php');
     }
+    exit;
 }
 
 if (isset($_POST['userEditPassword'])) {
@@ -80,8 +79,7 @@ if (isset($_POST['userEditPassword'])) {
             header('Location: /html/userEdit.php');
             exit;
         }
-    
-        $user = User::find($_SESSION['logged_id']);
+
         $user->setPassword($_POST['password']);
         $user->save();
     } catch(e) {
@@ -100,4 +98,5 @@ if (isset($_POST['userEditPassword'])) {
     setcookie('user_name', '', time() - 3600, '/');
     
     header("Location: /html/login.php");
+    exit;
 }

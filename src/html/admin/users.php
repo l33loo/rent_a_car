@@ -99,8 +99,8 @@ echo getHeader();
                         <td><?php echo $user->getPhone(); ?></td>
                         <td><?php echo $user->getIsAdmin() ? 'Yes' : 'No'; ?></td>
                         <td class="d-flex flex-wrap justify-content-evenly">
-                            <a href="user.php?id=<?php echo $user->getId(); ?>" class="btn btn-primary">View</a>
-                            <a href="" class="btn btn-secondary">Edit</a>
+                            <a href="/html/admin/user.php?id=<?php echo $userId; ?>" class="btn btn-primary">View</a>
+                            <a href="/html/admin/userEdit.php?id=<?php echo $userId; ?>" class="btn btn-secondary">Edit</a>
                             <?php if ($userIsArchived) { ?>
                                 <form action="/app/admin/userEdit.php" method="POST">
                                     <input type="submit" name="unarchiveUser" class="btn btn-success" value="Unarchive" />
@@ -110,10 +110,6 @@ echo getHeader();
                                 <form action="/app/admin/userEdit.php" method="POST">
                                     <input type="submit" name="archiveUser" class="btn btn-danger" value="Archive" />
                                     <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
-                                    <?php if (isset($_POST['archiveUser']) && !empty($_POST['userId']) && $_POST['userId'] === "$userId") {
-                                        $user->setIsArchived(true)->save();
-                                    }
-                                    ?>
                                 </form>
                             <?php } ?>
                         </td>
