@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (isset($_SESSION['logged_id']) && $_SESSION['logged_id'] === true) {
+if (!empty($_SESSION['logged_id'])) {
     header('Location: /index.php');
     exit;
 }
