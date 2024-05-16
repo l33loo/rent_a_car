@@ -5,7 +5,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Country.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 use RentACar\Country;
-use RentACar\DBModel;
 
 class Address {
     use DBModel;

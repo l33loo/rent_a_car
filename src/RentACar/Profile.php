@@ -7,10 +7,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 use Carbon\Carbon;
 use RentACar\Address;
-use RentACar\DBModel;
 
 abstract class Profile {
     use DBModel; 
+
     protected ?string $name = null;
     protected ?string $email = null;
     // TODO: Fix db issue with having dateOfBirth being a string

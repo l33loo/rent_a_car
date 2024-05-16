@@ -9,6 +9,7 @@ use RentACar\Vehicle;
 $vehicles = Vehicle::search([], 'vehicle');
 
 foreach ($vehicles as $vehicle) {
+    print_r($vehicle);
     $vehicle->loadRelation('category');
     $vehicle->loadRelation('island');
 

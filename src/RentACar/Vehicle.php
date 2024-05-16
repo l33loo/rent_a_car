@@ -6,20 +6,19 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 
 use RentACar\Category;
-use RentACar\DBModel;
 use RentACar\Island;
 
 class Vehicle {
     use DBModel;
 
-    protected ?string $plate = null;
-    protected ?Category $category = null;
-    protected ?int $category_id = null;
-    protected ?array $properties = null;
-    protected ?bool $rentable = null;
-    protected ?Island $island = null;
-    protected ?int $island_id = null;
     protected ?float $dailyRate = null;
+    protected ?string $plate = null;
+    protected ?bool $rentable = null;
+    protected ?int $island_id = null;
+    protected ?int $category_id = null;
+    protected ?Island $island = null;
+    protected ?Category $category = null;
+    protected ?array $properties = null;
 
 
     public function __construct(
@@ -32,6 +31,8 @@ class Vehicle {
         ?Category $category = null,
         ?array $properties = null,
     ) {
+        $this->tableName = 'vehicle';
+
         if ($plate !== null ) {
             $this->plate = $plate;
         }

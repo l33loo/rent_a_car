@@ -1,15 +1,24 @@
 <?php
-namespace locality;
+namespace RentACar;
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 class Location {
-    protected int $id;
-    protected Address $address;
-    protected Island $island;
+    use DBModel;
 
-    public function __construct(int $id, Address $address, Island $island) {
-        $this->id;
-        $this->$address;
-        $this->$island;
+    protected ?Address $address = null;
+    protected ?Island $island = null;
+
+    public function __construct(
+        ?Address $address = null,
+        ?Island $island = null,
+        ?int $id = null
+    ) {
+        $this->tableName = 'location';
+
+        $this->id = $id;
+        $this->address = $address;
+        $this->island = $island;
     }
 
     /**
