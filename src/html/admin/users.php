@@ -17,18 +17,6 @@ echo getHeader();
         <table class="table table-bordered" id="my_table_id" data-url="data/url.json" data-id-field="id"
             data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
             <thead>
-                <?php /*
-                    ?string $name = null,
-                    ?string $email = null,
-                    ?string $dateOfBirth = null,
-                    // ?string $address = null,
-                    ?string $phone = null,
-                    bool $isArchived = false,
-                    ?string $password = null,
-                    bool $isAdmin = false,
-                    ?int $address_id = 1,
-                    ?int $id = null
-                */ ?>
                 <tr>
                     <th class="col" data-field="id" data-sortable="true" data-align="center">
                         ID
@@ -52,7 +40,8 @@ echo getHeader();
                     >
                         Date of birth
                     </th>
-                    <!-- <th
+                    <!-- TODO: get string of address??
+                    <th
                         class="col"
                         data-field="description"
                         data-editable="true"
