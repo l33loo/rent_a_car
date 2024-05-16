@@ -19,8 +19,6 @@ $address = new Address(
 
 $address->save();
 
-echo 'address <3: ' . $address->getId() . '<br>';
-
 try {
     $user = new User(
         $_POST['name'],
