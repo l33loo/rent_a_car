@@ -88,9 +88,10 @@ echo getHeader();
                     $userId = $user->getId();
                     $userIsArchived = $user->getIsArchived();
                 ?>
-                    <tr <?php if ($userIsArchived) {
+                <tr>
+                    <?php if ($userIsArchived) {
                         echo 'class="table-active"';
-                    } ?>>
+                    } ?>
                         <th><?php echo $userId; ?></th>
                         <td><?php echo $user->getName(); ?></td>
                         <td><?php echo $user->getEmail(); ?></td>

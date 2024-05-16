@@ -1,6 +1,16 @@
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
+
+use RentACar\Address;
+use RentACar\Island;
+use RentACar\Location;
+
+// TODO try catch + errors
+$locations = Location::search([]);
 
 echo getHeader();
 ?>
@@ -26,35 +36,7 @@ echo getHeader();
                         data-editable="true"
                         data-editable-emptytext="Custom empty text."
                     >
-                        Name
-                    </th>
-                    <th class="col" data-field="name" data-editable="true">
-                        Email
-                    </th>
-                    <th
-                        class="col"
-                        data-field="description"
-                        data-editable="true"
-                        data-editable-emptytext="Custom empty text."
-                    >
-                        Date of birth
-                    </th>
-                    <!-- TODO: get string of address??
-                    <th
-                        class="col"
-                        data-field="description"
-                        data-editable="true"
-                        data-editable-emptytext="Custom empty text."
-                    >
                         Address
-                    </th> -->
-                    <th
-                        class="col"
-                        data-field="description"
-                        data-editable="true"
-                        data-editable-emptytext="Custom empty text."
-                    >
-                        Phone
                     </th>
                     <th
                         class="col"
@@ -62,7 +44,7 @@ echo getHeader();
                         data-editable="true"
                         data-editable-emptytext="Custom empty text."
                     >
-                        Is Admin
+                        Island
                     </th>
                     <th
                         class="col"
@@ -75,34 +57,24 @@ echo getHeader();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $user) {
-                    $userId = $user->getId();
-                    $userIsArchived = $user->getIsArchived();
-                ?>
-                    <tr <?php if ($userIsArchived) {
-                        echo 'class="table-active"';
-                    } ?>>
-                        <th><?php echo $userId; ?></th>
-                        <td><?php echo $user->getName(); ?></td>
-                        <td><?php echo $user->getEmail(); ?></td>
-                        <td><?php echo $user->getDateOfBirth(); ?></td>
-                        <!-- <td><?php // echo $user->getAddress(); ?></td> -->
-                        <td><?php echo $user->getPhone(); ?></td>
-                        <td><?php echo $user->getIsAdmin() ? 'Yes' : 'No'; ?></td>
+                <tr>
+                    <?php foreach ($locations as $location) {
+                        $location->loadRelation('island');
+                        $location->loadRelation('address');
+                        $address = $location->getAddress();
+                        $address->loadRelation('country');
+                        $locationId = $location->getId();
+                    ?>
+                        <th><?php echo $locationId; ?></th>
+                        <td><?php echo $address->getAddressToString(); ?></td>
+                        <td><?php echo $location->getIsland()->getName(); ?></td>
                         <td class="d-flex flex-wrap justify-content-evenly">
-                            <a href="user.php?id=<?php echo $user->getId(); ?>" class="btn btn-primary">View</a>
+                            <a href="locationView.php?id=<?php echo $locationId ?>" class="btn btn-primary">View</a>
                             <a href="" class="btn btn-secondary">Edit</a>
-                            <?php if ($userIsArchived) { ?>
-                                <form action="" method="POST">
-                                    <input type="submit" name="unarchiveUser" class="btn btn-success" value="Unarchive" />
-                                    <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
-                                </form>
-                            <?php } else { ?>
-                                <form action="" method="POST">
-                                    <input type="submit" name="archiveUser" class="btn btn-danger" value="Archive" />
-                                    <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
-                                </form>
-                            <?php } ?>
+                            <form action="" method="POST">
+                                <input type="submit" name="deleteLocation" class="btn btn-danger" value="Delete" />
+                                <input type="hidden" name="locationId" value="<?php echo $locationId; ?>" />
+                            </form>
                         </td>
                     </tr>
                 <?php } ?>
