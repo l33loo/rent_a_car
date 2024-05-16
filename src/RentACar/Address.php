@@ -10,13 +10,13 @@ use RentACar\DBModel;
 class Address {
     use DBModel;
 
-    protected ?string $street = null;
-    protected ?string $doorNumber = null;
-    protected ?string $apartmentNr = null;
-    protected ?string $city = null;
-    protected ?string $district = null;
-    protected ?string $postalCode = null;
-    protected ?Country $country = null;
+    public ?string $street = null;
+    public ?string $doorNumber = null;
+    public ?string $apartmentNr = null;
+    public ?string $city = null;
+    public ?string $district = null;
+    public ?string $postalCode = null;
+    public ?Country $country = null;
 
     public function __construct(
         ?string $street = null,

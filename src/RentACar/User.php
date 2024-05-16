@@ -15,8 +15,8 @@ class User extends Profile
 {
     use DBModel;
 
-    protected ?string $passwordHash = null;
-    protected ?bool $isAdmin = null;
+    public ?string $passwordHash = null;
+    public ?bool $isAdmin = null;
 
     public function __construct(
         ?string $name = null,
