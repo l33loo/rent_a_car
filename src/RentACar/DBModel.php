@@ -30,14 +30,16 @@ trait DBModel
         unset($properties['tableName']);
         unset($properties['id']);
 
-        // TODO: needs to be recursive
-        // Convert object properties into foreign keys
         foreach ($properties as $property => $value) {
-            if (is_object($value)) {
-                $value->save();
-                $properties[$property . '_id'] = $value->getId();
-                unset($properties[$property]);
+            if (!is_object($value)) {
+                continue;
             }
+
+            $value->save();
+
+            // Convert properties that are objects into foreign keys
+            $properties[$property . '_id'] = $value->getId();
+            unset($properties[$property]);
         }
 
         if (empty($this->id)) {
