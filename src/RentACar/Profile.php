@@ -16,11 +16,10 @@ abstract class Profile {
     // TODO: Fix db issue with having dateOfBirth being a string
     // protected Carbon $dateOfBirth;
     protected ?string $dateOfBirth = null;
-    protected ?Address $address = null;
     protected ?string $phone = null;
     protected ?bool $isArchived = null;
-    // TODO: fix issue with address
-    // protected ?int $address_id = null;
+    protected ?int $address_id = null;
+    protected ?Address $address = null;
 
     public function __construct(
         ?string $name,
@@ -28,15 +27,9 @@ abstract class Profile {
         ?string $dateOfBirth,
         ?string $phone,
         ?bool $isArchived,
-        ?string $street,
-        ?string $doorNumber,
-        ?string $apartmentNr,
-        ?string $city,
-        ?string $district,
-        ?string $postalCode,
-        ?Country $country,
         ?int $address_id,
         ?int $id,
+        ?Address $address
     ) {
         if ($id !== null) {
             $this->id = $id;
@@ -61,18 +54,10 @@ abstract class Profile {
         if ($isArchived !== null) {
             $this->isArchived = $isArchived;
         }
-        
-        // TODO: validate none of the address fields are null
-        $address = new Address(
-            $street,
-            $doorNumber,
-            $apartmentNr,
-            $city,
-            $district,
-            $postalCode,
-            $country
-        );
-        $this->address = $address;
+
+        if ($address !== null) {
+            $this->address = $address;
+        }
     }
 
     /**

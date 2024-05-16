@@ -1,11 +1,9 @@
 <?php
 namespace RentACar;
 
-// TODO: fix autoload
-// require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Profile.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 use Carbon\Carbon;
 use RentACar\Address;
@@ -13,8 +11,6 @@ use RentACar\Profile;
 
 class User extends Profile
 {
-    use DBModel;
-
     public ?string $passwordHash = null;
     public ?bool $isAdmin = null;
 
@@ -26,15 +22,9 @@ class User extends Profile
         ?bool $isArchived = null,
         ?string $password = null,
         ?bool $isAdmin = null,
-        ?string $street = null,
-        ?string $doorNumber = null,
-        ?string $apartmentNr = null,
-        ?string $city = null,
-        ?string $district = null,
-        ?string $postalCode = null,
-        ?Country $country = null,
         ?int $address_id = null,
-        ?int $id = null
+        ?int $id = null,
+        ?Address $address = null
     ) {
         $this->tableName = 'user';
 
@@ -44,15 +34,9 @@ class User extends Profile
             $dateOfBirth,
             $phone,
             $isArchived,
-            $street,
-            $doorNumber,
-            $apartmentNr,
-            $city,
-            $district,
-            $postalCode,
-            $country,
             $address_id,
-            $id
+            $id,
+            $address,
         );
 
         if ($password !== null) {
@@ -62,8 +46,6 @@ class User extends Profile
         if ($isAdmin !== null) {
             $this->isAdmin = $isAdmin;
         }
-
-        // print_r($this);
     }
 
     /**

@@ -25,8 +25,9 @@ class Address {
         ?string $city = null,
         ?string $district = null,
         ?string $postalCode = null,
+        ?int $id = null,
+        ?int $country_id = null,
         ?Country $country = null,
-        ?int $id = null
     ) {
         $this->tableName = 'address';
         

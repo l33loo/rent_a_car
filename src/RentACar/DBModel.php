@@ -162,22 +162,9 @@ trait DBModel
         $stmt->execute($params);
 
         $results = [];
-        while($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $className = 'RentACar\\' . $tableName;
-            $object = new $className();
-            $properties = get_object_vars($object);
-            foreach ($row as $column => $value) {
-                if (!str_ends_with($column, '_id')) {
-                    $object->{$column} = $value;
-                    continue;
-                }
-
-                $childTableName = rtrim($column, '_id');
-                $childObject = self::find($value, $childTableName);
-                $object->{$childTableName} = $childObject;
-            }
-
-            $results[] = $object;
+        while($row = $stmt->fetchObject(static::class)) {
+            // print_r($row);
+            $results[] = $row;
         }
 
         return $results;
