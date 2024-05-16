@@ -23,10 +23,9 @@ echo getHeader();
                 <h1 class="my-5">My Account</h1>
             </div>
         </div>
-        <div class="row mb-4">
+        <div class="row mb-2">
             <div class="col">
                 <div class="card mb-4">
-                    <h2 class="card-header">Profile</h2>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
@@ -57,29 +56,6 @@ echo getHeader();
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Date of Birth</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0"><?php echo $user->getDateOfBirth(); ?></p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col">
-                                <a href="userProfileEdit.php" class="btn btn-primary">Edit Profile</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="card mb-4">
-                    <h2 class="card-header">Address</h2>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
                                 <p class="mb-0">Address</p>
                             </div>
                             <div class="col-sm-9">
@@ -88,8 +64,11 @@ echo getHeader();
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col">
-                                <a href="userAddressEdit.php" class="btn btn-primary">Edit Address</a>
+                            <div class="col-sm-3">
+                                <p class="mb-0">Date of Birth</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0"><?php echo $user->getDateOfBirth(); ?></p>
                             </div>
                         </div>
                     </div>
@@ -98,25 +77,7 @@ echo getHeader();
         </div>
         <div class="row">
             <div class="col">
-                <div class="card mb-4">
-                    <h2 class="card-header">Credentials</h2>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Password</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">**********</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col">
-                                <a href="userPasswordEdit.php" class="btn btn-primary">Edit Password</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <a href="userEdit.php" class="btn btn-primary">Edit Account</a>
             </div>
         </div>
     </div>
