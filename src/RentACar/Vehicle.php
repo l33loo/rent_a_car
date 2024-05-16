@@ -11,7 +11,6 @@ use RentACar\Island;
 class Vehicle {
     use DBModel;
 
-    protected ?float $dailyRate = null;
     protected ?string $plate = null;
     protected ?bool $rentable = null;
     protected ?int $island_id = null;
@@ -23,7 +22,6 @@ class Vehicle {
 
     public function __construct(
         ?string $plate = null,
-        ?float $dailyRate = null,
         ?bool $rentable = null,
         ?int $island_id = null,
         ?int $category_id = null,
@@ -35,10 +33,6 @@ class Vehicle {
 
         if ($plate !== null ) {
             $this->plate = $plate;
-        }
-
-        if ($dailyRate !== null) {
-            $this->dailyRate = $dailyRate;
         }
 
         if ($rentable !== null) {
@@ -124,25 +118,5 @@ class Vehicle {
     public function getIsland(): Island
     {
         return $this->island;
-    }
-
-    /**
-     * Get the value of dailyRate
-     */ 
-    public function getDailyRate(): float
-    {
-        return $this->dailyRate;
-    }
-
-    /**
-     * Set the value of dailyRate
-     *
-     * @return  self
-     */ 
-    public function setDailyRate(float $dailyRate): self
-    {
-        $this->dailyRate = $dailyRate;
-
-        return $this;
     }
 }
