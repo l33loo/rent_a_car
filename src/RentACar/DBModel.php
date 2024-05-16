@@ -183,11 +183,9 @@ trait DBModel
         return $results;
     }
 
-    // TODO: delete if not in use
-    public static function customQuery(string $query, array $params) {
-        $connection = MyConnect::getInstance()->getConnection();
-        $stmt = $connection->prepare($query);
-        $stmt->execute($params);
+    public static function rawSQL(string $query, array $params) {
+        $connection = MyConnect::getInstance();
+        return $connection->query($sql);
     }
 
     public static function camelToSnake($camelCase) {
