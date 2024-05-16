@@ -146,12 +146,21 @@ trait DBModel
         return $results;
     }
 
-    public static function rawSQL(string $query, array $params) {
+    public function loadRelation(string $relationName, string $tableName = ''): void
+    {
+        $className = 'RentACar\\' . self::snakeToCamel($relationName);
+        
+        $this->{$relationName} = $className::find($this->{$relationName . '_id'}, $tableName);
+    }
+
+    public static function rawSQL(string $query, array $params)
+    {
         $connection = MyConnect::getInstance();
         return $connection->query($sql);
     }
 
-    public static function camelToSnake($camelCase) {
+    public static function camelToSnake($camelCase): string
+    {
         $result = '';
       
         for ($i = 0; $i < strlen($camelCase); $i++) {
@@ -165,6 +174,18 @@ trait DBModel
         }
       
         return ltrim($result, '_');
+    }
+
+    public static function snakeToCamel($string, $capitalizeFirstCharacter = true): string
+    {
+
+        $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
+
+        if (!$capitalizeFirstCharacter) {
+            $str[0] = strtolower($str[0]);
+        }
+    
+        return $str;
     }
 
     // public static function pluralize($quantity, $singular, $plural=null) {
