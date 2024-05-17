@@ -38,6 +38,7 @@ CREATE TABLE location (
     name VARCHAR(90) NOT NULL,
     address_id INT UNSIGNED NOT NULL,
     island_id INT UNSIGNED NOT NULL,
+    isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
     CONSTRAINT fk_location_address
         FOREIGN KEY (address_id)

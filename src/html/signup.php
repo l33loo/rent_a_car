@@ -1,14 +1,12 @@
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/countries.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/sessionUser.inc.php';
-
 
 echo getHeader();
 ?>
 
 <body>
-    <?php include 'components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
     <div class="container">
         <h1 class="text-center mb-5" style="margin-top: 100px;">Sign Up</h1>
         <form action="/app/signup.php" method="post">
@@ -60,52 +58,7 @@ echo getHeader();
                     <input type="date" class="form-control" name="dateOfBirth">
                 </div>
             </div>
-            <fieldset class="mb-3">
-                <legend class>
-                    <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
-                    Address
-                </legend>
-                <div class="row mb-4">
-                    <div class="col-8">
-                        <label for="street">Street</label>
-                        <input type="text" class="form-control" name="street">
-                    </div>
-                    <div class="col">
-                        <label for="door">Door</label>
-                        <input type="text" class="form-control" name="door">
-                    </div>
-                    <div class="col">
-                        <label for="apartment">Apartment</label>
-                        <input type="text" class="form-control" name="apartment">
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <label for="city">City</label>
-                        <input type="text" class="form-control" name="city">
-                    </div>
-                    <div class="col">
-                        <label for="district">District</label>
-                        <input type="text" class="form-control" name="district">
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <label for="postalCode">Postal Code</label>
-                        <input type="text" class="form-control" name="postalCode">
-                    </div>
-                    <div class="col">
-                        <label for="country">Country</label>
-                        <select class="form-control" name="countryId">
-                            <?php foreach($countries as $country) { ?>
-                                <option value="<?php echo $country->getId(); ?>">
-                                    <?php echo $country->getName(); ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>
-            </fieldset>
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formAddress.inc.php'; ?>
             <div class="d-flex justify-content-center">
                 <input
                     type="submit"
@@ -116,7 +69,7 @@ echo getHeader();
             </div>
         </form>
     </div>
-    <?php include 'components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
     <script type="text/javascript">
     </script>
 </body>
