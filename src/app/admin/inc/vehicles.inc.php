@@ -13,7 +13,8 @@ foreach ($vehicles as $vehicle) {
     $vehicle->loadRelation('category');
     $vehicle->loadRelation('island');
 
-    // TODO: do this for vehicle view
+    // TODO: loca vehicle's properties
+    // do this for vehicle view
     // $propertiesFilter = [
     //     'vehicle_id' => $vehicle->getId()
     // ];
