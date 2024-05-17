@@ -78,7 +78,9 @@ echo getHeader();
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($vehicles as $vehicle) { ?>
+                                    <?php foreach ($vehicles as $vehicle) {
+                                        $vehicle->loadProperties();
+                                    ?>
                                         <tr>
                                             <td><?php echo $vehicle->getId(); ?></td>
                                             <td><?php echo $vehicle->getPlate(); ?></td>

@@ -2,12 +2,12 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
-// require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Vehicle.php';
 
 use RentACar\Category;
 use RentACar\Island;
-// use RentACar\Property;
+use RentACar\Property;
 use RentACar\Vehicle;
 
 try {
