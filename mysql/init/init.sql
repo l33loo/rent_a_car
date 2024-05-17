@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS category (
 CREATE TABLE IF NOT EXISTS vehicle (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     plate VARCHAR(15) NOT NULL,
-    category_id INT UNSIGNED NOT NULL,
+    category_id INT UNSIGNED,
     rentable BOOLEAN NOT NULL,
     island_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id),
