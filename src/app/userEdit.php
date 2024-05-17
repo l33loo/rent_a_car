@@ -13,7 +13,7 @@ $user = User::find($_SESSION['logged_id']);
 if (isset($_POST['userEditProfile'])) {
     try {
         $user->setName($_POST['name']);
-        $user->setEmail($_POST['email']);
+        $user->setEmail(trim($_POST['email']));
         $user->setDateOfBirth($_POST['dateOfBirth']);
         $user->setPhone($_POST['phone']);
         $user->save();
@@ -58,7 +58,7 @@ if (isset($_POST['userEditAddress'])) {
 
 if (isset($_POST['userEditPassword'])) {
     try {
-        if (empty($_POST['password'])) {
+        if (empty(trim($_POST['password']))) {
             // TODO: error
             header('Location: /html/userEdit.php');
             exit;
@@ -74,13 +74,13 @@ if (isset($_POST['userEditPassword'])) {
     
         // TODO: clear errors
     
-        if ($_POST['password'] !== $_POST['confirmPassword']) {
+        if (trim($_POST['password']) !== $_POST['confirmPassword']) {
             // TODO: error
             header('Location: /html/userEdit.php');
             exit;
         }
 
-        $user->setPassword($_POST['password']);
+        $user->setPassword(trim($_POST['password']));
         $user->save();
     } catch(e) {
         // TODO: error messages

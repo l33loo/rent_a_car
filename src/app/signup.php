@@ -22,11 +22,11 @@ $address->save();
 try {
     $user = new User(
         $_POST['name'],
-        $_POST['email'],
+        trim($_POST['email']),
         $_POST['dateOfBirth'],
         $_POST['phone'],
         false, // isArchived
-        $_POST['password'],
+        trim($_POST['password']),
         false, // isAdmin
         $address->getId()
     );

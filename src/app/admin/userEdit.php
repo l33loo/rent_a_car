@@ -26,7 +26,7 @@ $user = User::find($userId);
 if (isset($_POST['userEditProfile'])) {
     try {
         $user->setName($_POST['name']);
-        $user->setEmail($_POST['email']);
+        $user->setEmail(trim($_POST['email']));
         $user->setDateOfBirth($_POST['dateOfBirth']);
         $user->setPhone($_POST['phone']);
         $user->save();
