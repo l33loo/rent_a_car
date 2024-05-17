@@ -8,7 +8,7 @@ echo getHeader();
 <body?>
     <?php include '../components/navbar.inc.php'; ?>
     <div>
-        <?php print_r($vehicle); ?>
+        <?php print_r($reservation); ?>
     </div>
     <?php // TODO: uncomment => include '../components/footer.inc.php'; ?>
 </body>

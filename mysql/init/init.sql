@@ -35,9 +35,10 @@ CREATE TABLE IF NOT EXISTS island (
 -- LOCATION
 CREATE TABLE location (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    
+    name VARCHAR(90) NOT NULL,
     address_id INT UNSIGNED NOT NULL,
     island_id INT UNSIGNED NOT NULL,
+    isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
     CONSTRAINT fk_location_address
         FOREIGN KEY (address_id)
@@ -68,13 +69,18 @@ CREATE TABLE IF NOT EXISTS vehicle (
     category_id INT UNSIGNED NOT NULL,
     rentable BOOLEAN NOT NULL,
     island_id INT UNSIGNED NOT NULL,
+    location_id INT UNSIGNED,
     PRIMARY KEY (id),
     CONSTRAINT fk_vehicle_category
         FOREIGN KEY (category_id)
         REFERENCES category(id),
     CONSTRAINT fk_vehicle_island
         FOREIGN KEY (island_id)
-        REFERENCES island(id)
+        REFERENCES island(id),
+    CONSTRAINT fk_vehicle_location
+        FOREIGN KEY (location_id)
+        REFERENCES location(id),
+    CONSTRAINT UNIQUE (plate)
 );
 
 -- VEHICLE PROPERTIES
@@ -120,7 +126,8 @@ CREATE TABLE IF NOT EXISTS user (
     PRIMARY KEY(id),
     CONSTRAINT fk_user_address
         FOREIGN KEY (address_id)
-        REFERENCES address(id)
+        REFERENCES address(id),
+    CONSTRAINT UNIQUE (email)
 );
 
 -- CREDIT CARD
@@ -353,17 +360,17 @@ INSERT INTO island (
 );
 
 INSERT INTO location (
-    id, address_id, island_id
+    id, name, address_id, island_id
 ) VALUES (
-    1, 1, 1
+    1, "Ponta Delgada - Aeroporto", 1, 1
 ), (
-    2, 2, 1
+    2, "Ponta Delgada - Centro", 2, 1
 ), (
-    3, 3, 1
+    3, "Ribeira Grande - Centro", 3, 1
 ), (
-    4, 4, 2
+    4, "Vila do Porto - Aeroporto", 4, 2
 ), (
-    5, 5, 2
+    5, "Vila do Porto - Centro", 5, 2
 );
 
 INSERT INTO property (
@@ -434,77 +441,77 @@ INSERT INTO category (
     40.00
 );
 
-INSERT INTO vehicle (plate, category_id, rentable, island_id)
+INSERT INTO vehicle (plate, category_id, rentable, island_id, location_id)
     VALUES
     -- Economy Cars - São Miguel
-    ("SM-AB12-CD", 1, TRUE, 1),
-    ("SM-EF34-GH", 1, TRUE, 1),
-    ("SM-IJ56-KL", 1, TRUE, 1),
+    ("SM-AB12-CD", 1, TRUE, 1, 1),
+    ("SM-EF34-GH", 1, TRUE, 1, 2),
+    ("SM-IJ56-KL", 1, TRUE, 1, 3),
 
     -- Small Cars - São Miguel
-    ("SM-MN78-OP", 2, TRUE, 1),
-    ("SM-QR90-ST", 2, TRUE, 1),
-    ("SM-UV12-WX", 2, TRUE, 1),
+    ("SM-MN78-OP", 2, TRUE, 1, 1),
+    ("SM-QR90-ST", 2, TRUE, 1, 2),
+    ("SM-UV12-WX", 2, TRUE, 1, 3),
 
     -- Sedan Cars - São Miguel
-    ("SM-YZ34-AB", 3, TRUE, 1),
-    ("SM-CD56-EF", 3, TRUE, 1),
-    ("SM-GH78-IJ", 3, TRUE, 1),
+    ("SM-YZ34-AB", 3, TRUE, 1, 1),
+    ("SM-CD56-EF", 3, TRUE, 1, 2),
+    ("SM-GH78-IJ", 3, TRUE, 1, 3),
 
     -- SUV Cars - São Miguel
-    ("SM-KL90-MN", 4, TRUE, 1),
-    ("SM-OP12-QR", 4, TRUE, 1),
-    ("SM-ST34-UV", 4, TRUE, 1),
+    ("SM-KL90-MN", 4, TRUE, 1, 1),
+    ("SM-OP12-QR", 4, TRUE, 1, 2),
+    ("SM-ST34-UV", 4, TRUE, 1, 3),
 
     -- Sedan Premium Cars - São Miguel
-    ("SM-WX56-YZ", 5, TRUE, 1),
-    ("SM-AB78-CD", 5, TRUE, 1),
-    ("SM-EF90-GH", 5, TRUE, 1),
+    ("SM-WX56-YZ", 5, TRUE, 1, 1),
+    ("SM-AB78-CD", 5, TRUE, 1, 2),
+    ("SM-EF90-GH", 5, TRUE, 1, 3),
 
     -- SUV Premium Cars - São Miguel
-    ("SM-IJ12-KL", 6, TRUE, 1),
-    ("SM-MN34-OP", 6, TRUE, 1),
-    ("SM-QR56-ST", 6, TRUE, 1),
+    ("SM-IJ12-KL", 6, TRUE, 1, 1),
+    ("SM-MN34-OP", 6, TRUE, 1, 2),
+    ("SM-QR56-ST", 6, TRUE, 1, 3),
 
     -- Electric Cars - São Miguel
-    ("SM-UV78-WX", 7, TRUE, 1),
-    ("SM-YZ90-AB", 7, TRUE, 1),
-    ("SM-CD12-EF", 7, TRUE, 1),
+    ("SM-UV78-WX", 7, TRUE, 1, 1),
+    ("SM-YZ90-AB", 7, TRUE, 1, 2),
+    ("SM-CD12-EF", 7, TRUE, 1, 3),
 
     -- Economy Cars - Santa Maria
-    ("SMa-AB34-CD", 1, TRUE, 2),
-    ("SMa-EF56-GH", 1, TRUE, 2),
-    ("SMa-IJ78-KL", 1, TRUE, 2),
+    ("SMa-AB34-CD", 1, TRUE, 2, 1),
+    ("SMa-EF56-GH", 1, TRUE, 2, 1),
+    ("SMa-IJ78-KL", 1, TRUE, 2, 2),
 
     -- Small Cars - Santa Maria
-    ("SMa-MN90-OP", 2, TRUE, 2),
-    ("SMa-QR12-ST", 2, TRUE, 2),
-    ("SMa-UV34-WX", 2, TRUE, 2),
+    ("SMa-MN90-OP", 2, TRUE, 2, 1),
+    ("SMa-QR12-ST", 2, TRUE, 2, 1),
+    ("SMa-UV34-WX", 2, TRUE, 2, 2),
 
     -- Sedan Cars - Santa Maria 
-    ("SMa-YZ56-AB", 3, TRUE, 2),
-    ("SMa-CD78-EF", 3, TRUE, 2),
-    ("SMa-GH90-IJ", 3, TRUE, 2),
+    ("SMa-YZ56-AB", 3, TRUE, 2, 1),
+    ("SMa-CD78-EF", 3, TRUE, 2, 1),
+    ("SMa-GH90-IJ", 3, TRUE, 2, 2),
 
     -- SUV Cars - Santa Maria
-    ("SMa-KL12-MN", 4, TRUE, 2),
-    ("SMa-OP34-QR", 4, TRUE, 2),
-    ("SMa-ST56-UV", 4, TRUE, 2),
+    ("SMa-KL12-MN", 4, TRUE, 2, 1),
+    ("SMa-OP34-QR", 4, TRUE, 2, 1),
+    ("SMa-ST56-UV", 4, TRUE, 2, 2),
 
     -- Sedan Premium Cars - Santa Maria
-    ("SMa-WX78-YZ", 5, TRUE, 2),
-    ("SMa-AB90-CD", 5, TRUE, 2),
-    ("SMa-EF12-GH", 5, TRUE, 2),
+    ("SMa-WX78-YZ", 5, TRUE, 2, 1),
+    ("SMa-AB90-CD", 5, TRUE, 2, 1),
+    ("SMa-EF12-GH", 5, TRUE, 2, 2),
 
     -- SUV Premium Cars - Santa Maria
-    ("SMa-IJ34-KL", 6, TRUE, 2),
-    ("SMa-MN56-OP", 6, TRUE, 2),
-    ("SMa-QR78-ST", 6, TRUE, 2),
+    ("SMa-IJ34-KL", 6, TRUE, 2, 1),
+    ("SMa-MN56-OP", 6, TRUE, 2, 1),
+    ("SMa-QR78-ST", 6, TRUE, 2, 2),
 
     -- Electric Cars - Santa Maria
-    ("SMa-UV90-WX", 7, TRUE, 2),
-    ("SMa-YZ12-AB", 7, TRUE, 2),
-    ("SMa-CD34-EF", 7, TRUE, 2);
+    ("SMa-UV90-WX", 7, TRUE, 2, 1),
+    ("SMa-YZ12-AB", 7, TRUE, 2, 1),
+    ("SMa-CD34-EF", 7, TRUE, 2, 2);
 
 INSERT INTO vehicle_property (vehicle_id, property_id, value)
 VALUES

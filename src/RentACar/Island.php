@@ -1,11 +1,18 @@
 <?php
 namespace RentACar;
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 class Island {
-    protected int $id;
-    protected string $name;
+    use DBModel;
 
-    public function __construct(int $id, string $name) {
+    protected ?string $name = null;
+
+    public function __construct(
+        ?string $name = null,
+        ?int $id = null
+    ) {
+        $this->tableName = 'island';
+        
         $this->id;
         $this->name;
     }

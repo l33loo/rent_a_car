@@ -1,11 +1,13 @@
 <?php
-require_once '../components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/vehicles.inc.php';
 
-echo getHeader();?>
+echo getHeader();
+?>
 
 <body>
-    <?php include '../components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
             <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Vehicles</h1>
@@ -52,9 +54,12 @@ echo getHeader();?>
                         <td><?php echo $vehicle->getRentable(); ?></td>
                         <td>TODO: Others...</td>
                         <td>
-                            <a href="vehicle.php?id=<?php echo $vehicle->getId(); ?>" class="btn btn-primary">View</a>
-                            <a href="" class="btn btn-secondary">Edit</a>
-                            <a href="" class="btn btn-danger">Delete</a>
+                            <a href="vehicle.php?id=<?php echo $vehicle->getId(); ?>" class="btn btn-primary">
+                                View
+                            </a>
+                            <a href="" class="btn btn-secondary">
+                                Edit
+                            </a>
                         </td>
                     </tr>
                 <?php } ?>

@@ -6,4 +6,4 @@ use RentACar\Vehicle;
 
 $vehicleId = $_GET['id'];
 
-$vehicle = Vehicle::find($vehicleId, 'vehicle');
+$vehicle = Vehicle::find($vehicleId);
