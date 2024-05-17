@@ -6,14 +6,18 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 class Location {
     use DBModel;
 
+    protected ?string $name = null;
     protected ?Address $address = null;
     protected ?int $address_id = null;
     protected ?Island $island = null;
     protected ?int $island_id = null;
+    protected ?bool $isArchived = null;
 
     public function __construct(
+        ?string $name = null,
         ?int $address_id = null,
         ?int $island_id = null,
+        ?bool $isArchived = null,
         ?Address $address = null,
         ?Island $island = null,
         ?int $id = null
@@ -22,6 +26,10 @@ class Location {
 
         if ($id !== null) {
             $this->id = $id;
+        }
+
+        if ($name !== null) {
+            $this->name = $name;
         }
         
         if ($address !== null) {
@@ -38,6 +46,10 @@ class Location {
         
         if ($island_id !== null) {
             $this->island_id = $island_id;
+        }
+
+        if ($isArchived !== null) {
+            $this->isArchived = $isArchived;
         }
     }
 
@@ -125,6 +137,46 @@ class Location {
     public function setIsland_id($island_id)
     {
         $this->island_id = $island_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isArchived
+     */ 
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set the value of isArchived
+     *
+     * @return  self
+     */ 
+    public function setIsArchived($isArchived)
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
     }

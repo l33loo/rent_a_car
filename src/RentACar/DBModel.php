@@ -30,9 +30,14 @@ trait DBModel
         $propertyKeys = array_keys($properties);
         $foreignKeys = preg_grep('/_id$/', $propertyKeys);
 
+        // Strip properties that are objects, because the latter
+        // are stored in different tables.
         foreach ($foreignKeys as $foreignKey) {
-            $objectProperty = rtrim($foreignKey, "_id");
-            unset($properties[$objectProperty]);
+            $objectProperty = substr($foreignKey, 0, -3);
+
+            if (key_exists($objectProperty, $properties)) {
+                unset($properties[$objectProperty]);
+            }
         }
 
         if (empty($this->id)) {

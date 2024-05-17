@@ -16,10 +16,11 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include '../components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
     <div class="container">
-        <div class="text-content">
-            <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Locations</h1>
+        <div class="text-content d-flex flex-wrap align-items-center justify-content-between px-3" style="margin-top: 150px; margin-bottom:50px;">
+            <h1>Manage Locations</h1>
+            <a href="/html/admin/locationNew.php" class="btn btn-success">Add New Location</a>
         </div>
     </div>
     <div class="container">
@@ -44,6 +45,14 @@ echo getHeader();
                         data-editable="true"
                         data-editable-emptytext="Custom empty text."
                     >
+                        Name
+                    </th>
+                    <th
+                        class="col"
+                        data-field="description"
+                        data-editable="true"
+                        data-editable-emptytext="Custom empty text."
+                    >
                         Island
                     </th>
                     <th
@@ -57,31 +66,34 @@ echo getHeader();
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <?php foreach ($locations as $location) {
-                        $location->loadRelation('island');
-                        $location->loadRelation('address');
-                        $address = $location->getAddress();
-                        $address->loadRelation('country');
-                        $locationId = $location->getId();
-                    ?>
+                <?php foreach ($locations as $location) {
+                    $location->loadRelation('island');
+                    $location->loadRelation('address');
+                    $address = $location->getAddress();
+                    $address->loadRelation('country');
+                    $locationId = $location->getId();
+
+                    if ($location->getIsArchived() === false) {
+                ?>
+                    <tr>
                         <th><?php echo $locationId; ?></th>
+                        <td><?php echo $location->getName(); ?></td>
                         <td><?php echo $address->getAddressToString(); ?></td>
                         <td><?php echo $location->getIsland()->getName(); ?></td>
                         <td class="d-flex flex-wrap justify-content-evenly">
                             <a href="locationView.php?id=<?php echo $locationId ?>" class="btn btn-primary">View</a>
-                            <a href="" class="btn btn-secondary">Edit</a>
+                            <!-- <a href="" class="btn btn-secondary">Edit</a> -->
                             <form action="" method="POST">
-                                <input type="submit" name="deleteLocation" class="btn btn-danger" value="Delete" />
+                                <input type="submit" name="archiveLocation" class="btn btn-danger" value="Archive" />
                                 <input type="hidden" name="locationId" value="<?php echo $locationId; ?>" />
                             </form>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php }} ?>
             </tbody>
         </table>
     </div>
-    <?php include '../components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
 </body>
 
 </html>
