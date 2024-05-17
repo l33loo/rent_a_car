@@ -18,16 +18,16 @@ $users = User::search([
     [
         'column' => 'email',
         'operator' => '=',
-        'value' => $_POST['email']
+        'value' => trim($_POST['email'])
     ]
 ]);
 
-if (count($users) !== 1 || $user[0]->getIsArchived() === true) {
+if (count($users) !== 1 || $users[0]->getIsArchived() === true) {
     redirectToLoginPage($wrongCredsMsg);
     exit;
 }
 
-if ($users[0]->checkPassword($_POST['password'])) {
+if ($users[0]->checkPassword(trim($_POST['password']))) {
     unset($_SESSION['loginError']);
     $_SESSION['logged_id'] = $users[0]->getId();
     $_SESSION['name'] = $users[0]->getName();
