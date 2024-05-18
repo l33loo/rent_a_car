@@ -10,12 +10,14 @@ class Category {
     protected ?string $description = null;
     protected ?array $properties = null;
     protected ?float $dailyRate = null;
+    protected ?bool $isArchived = null;
 
     public function __construct(
         ?string $name = null,
         ?string $description = null,
         ?array $properties = null,
         ?float $dailyRate = null,
+        ?bool $isArchived = null,
         ?int $id = null
     ) {
         $this->tableName = 'category';
@@ -34,6 +36,10 @@ class Category {
 
         if ($dailyRate !== null) {
             $this->dailyRate = $dailyRate;
+        }
+
+        if ($isArchived !== null) {
+            $this->isArchived = $isArchived;
         }
     }
 
@@ -67,5 +73,27 @@ class Category {
     public function getProperties(): ?array
     {
         return $this->properties;
+    }
+
+    /**
+     * Get the value of isArchived
+     * 
+     * @return bool
+     */ 
+    public function getIsArchived(): bool
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set the value of isArchived
+     *
+     * @return self
+     */ 
+    public function setIsArchived($isArchived): self
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
     }
 }
