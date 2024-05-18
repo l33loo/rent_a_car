@@ -46,17 +46,19 @@ echo getHeader();
             <?php foreach ($vehiclesByCategoryForIsland as $categoryId => $data) { ?>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $categoryId; ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $categoryId; ?>">
                             <?php echo !empty($data['categoryName']) ? $data['categoryName'] : 'Uncategorized'; ?>
                         </button>
                     </h2>
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                    <div id="panelsStayOpen-collapse<?php echo $categoryId; ?>" class="accordion-collapse collapse">
                         <div class="accordion-body">
-                            <div class="text-end mb-3">
-                                <a href="" class="btn btn-primary">View Category</a>    
-                                <a href="" class="btn btn-secondary">Edit Category</a>
-                                <a href="" class="btn btn-danger">Archive Category</a>
-                            </div>
+                            <?php if ($categoryId !== '') { ?>
+                                <div class="text-end mb-3">
+                                    <a href="" class="btn btn-primary">View Category</a>    
+                                    <a href="" class="btn btn-secondary">Edit Category</a>
+                                    <a href="" class="btn btn-danger">Archive Category</a>
+                                </div>
+                            <?php } ?>
                             <div class="table-responsive">
                                 <table class="table table-bordered align-middle" id="my_table_id" data-url="data/url.json" data-id-field="id"
                                     data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
