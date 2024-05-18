@@ -29,13 +29,18 @@ echo getHeader();
                     <div class="col-auto">
                         <select class="form-control" name="islandId" id="selectIsland">
                             <?php foreach ($islands as $island) { ?>
-                                <option value="<?php echo $island->getId(); ?>"><?php echo $island->getName(); ?></option>
+                                <option
+                                    value="<?php echo $island->getId(); ?>"
+                                    <?php echo $island->getId() == $islandId ? 'selected' : null; ?>
+                                >
+                                    <?php echo $island->getName();?>
+                                </option>
                             <?php } ?>
                         </select>
                         <input type="hidden" value="<?php echo $island->getName(); ?>" name="islandName">
                     </div>
                     <div class="col-auto">
-                        <input class="btn btn-primary" type="submit" name="selectIsland" value="Filter by island">
+                        <input class="btn btn-primary" type="submit" value="Filter by island">
                     </div>
                 </div>
             </form>           
@@ -104,7 +109,7 @@ echo getHeader();
                                             >
                                                 <th><?php echo $vehicle->getId(); ?></th>
                                                 <td><?php echo $vehicle->getPlate(); ?></td>
-                                                <td><?php echo $vehicle->getRentable(); ?></td>
+                                                <td><?php echo $vehicle->getRentable() ? 'YES' : 'NO'; ?></td>
                                                 <td class="table-responsive">
                                                     <table  class="table table-sm mb-0">
                                                         <thead>
