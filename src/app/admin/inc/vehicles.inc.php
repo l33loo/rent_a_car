@@ -26,6 +26,10 @@ try {
     }
 
     $categories = Category::search([]);
+    // Add null category so we can get vehicles
+    // without a category
+    $categories[] = new Category();
+
     $vehiclesByCategoryForIsland = [];
 
     foreach ($categories as $category) {

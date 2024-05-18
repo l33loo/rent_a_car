@@ -47,7 +47,7 @@ echo getHeader();
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                            <?php echo $data['categoryName']; ?>
+                            <?php echo !empty($data['categoryName']) ? $data['categoryName'] : 'Uncategorized'; ?>
                         </button>
                     </h2>
                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
@@ -95,7 +95,11 @@ echo getHeader();
                                             $vehicle->loadProperties();
                                             $vehicleProperties = $vehicle->getProperties();
                                         ?>
-                                            <tr>
+                                            <tr
+                                                <?php if ($vehicle->getRentable() === false) {
+                                                    echo 'class="table-active"';
+                                                } ?>
+                                            >
                                                 <td><?php echo $vehicle->getId(); ?></td>
                                                 <td><?php echo $vehicle->getPlate(); ?></td>
                                                 <td><?php echo $vehicle->getRentable(); ?></td>

@@ -40,7 +40,7 @@ class Category {
     /**
      * Get the value of id
      */ 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -48,7 +48,7 @@ class Category {
     /**
      * Get the value of name
      */ 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -56,7 +56,7 @@ class Category {
     /**
      * Get the value of description
      */ 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -64,7 +64,7 @@ class Category {
     /**
      * Get the value of properties
      */ 
-    public function getProperties(): array
+    public function getProperties(): ?array
     {
         return $this->properties;
     }
