@@ -35,9 +35,10 @@ CREATE TABLE IF NOT EXISTS island (
 -- LOCATION
 CREATE TABLE location (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    
+    name VARCHAR(90) NOT NULL,
     address_id INT UNSIGNED NOT NULL,
     island_id INT UNSIGNED NOT NULL,
+    isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
     CONSTRAINT fk_location_address
         FOREIGN KEY (address_id)
@@ -65,7 +66,7 @@ CREATE TABLE IF NOT EXISTS category (
 CREATE TABLE IF NOT EXISTS vehicle (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     plate VARCHAR(15) NOT NULL,
-    category_id INT UNSIGNED NOT NULL,
+    category_id INT UNSIGNED,
     rentable BOOLEAN NOT NULL,
     island_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id),
@@ -74,7 +75,8 @@ CREATE TABLE IF NOT EXISTS vehicle (
         REFERENCES category(id),
     CONSTRAINT fk_vehicle_island
         FOREIGN KEY (island_id)
-        REFERENCES island(id)
+        REFERENCES island(id),
+    CONSTRAINT UNIQUE (plate)
 );
 
 -- VEHICLE PROPERTIES
@@ -120,7 +122,8 @@ CREATE TABLE IF NOT EXISTS user (
     PRIMARY KEY(id),
     CONSTRAINT fk_user_address
         FOREIGN KEY (address_id)
-        REFERENCES address(id)
+        REFERENCES address(id),
+    CONSTRAINT UNIQUE (email)
 );
 
 -- CREDIT CARD
@@ -353,17 +356,17 @@ INSERT INTO island (
 );
 
 INSERT INTO location (
-    id, address_id, island_id
+    id, name, address_id, island_id
 ) VALUES (
-    1, 1, 1
+    1, "Ponta Delgada - Aeroporto", 1, 1
 ), (
-    2, 2, 1
+    2, "Ponta Delgada - Centro", 2, 1
 ), (
-    3, 3, 1
+    3, "Ribeira Grande - Centro", 3, 1
 ), (
-    4, 4, 2
+    4, "Vila do Porto - Aeroporto", 4, 2
 ), (
-    5, 5, 2
+    5, "Vila do Porto - Centro", 5, 2
 );
 
 INSERT INTO property (

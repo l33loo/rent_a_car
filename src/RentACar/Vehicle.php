@@ -4,45 +4,61 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
 
 use RentACar\Category;
-use RentACar\DBModel;
 use RentACar\Island;
+use RentACar\Property;
 
 class Vehicle {
     use DBModel;
 
     protected ?string $plate = null;
-    // protected ?Category $category = null;
-    protected ?int $category_id = null;
-    // protected ?array $properties = null;
-    protected bool $rentable = false;
-    // protected ?Island $island = null;
+    protected ?bool $rentable = null;
     protected ?int $island_id = null;
-    protected ?float $dailyRate = null;
+    protected ?int $category_id = null;
+    protected ?Island $island = null;
+    protected ?Category $category = null;
+    protected ?array $properties = null;
 
 
     public function __construct(
         ?string $plate = null,
-        // ?Category $category = null,
-        // ?array $properties = null,
         ?bool $rentable = null,
-        // ?Island $island = null,
         ?int $island_id = null,
-        ?float $dailyRate = null
+        ?int $category_id = null,
+        ?Island $island = null,
+        ?Category $category = null,
+        ?array $properties = null,
     ) {
-        // $this->id = $id;
+        $this->tableName = 'vehicle';
+
         if ($plate !== null ) {
             $this->plate = $plate;
         }
-        // $this->category = $category;
-        // $this->properties = $properties;
+
         if ($rentable !== null) {
             $this->rentable = $rentable;
+        }    
+
+        if ($category !== null) {
+            $this->category = $category;
         }
-        // $this->island = $island;
-        if ($dailyRate !== null) {
-            $this->dailyRate = $dailyRate;
+
+        if ($category_id !== null) {
+            $this->category_id = $category_id;
+        }
+
+        if ($island !== null) {
+            $this->island = $island;
+        }
+
+        if ($island_id !== null) {
+            $this->island_id = $island_id;
+        }
+        
+        if ($properties !== null) {
+            $this->properties = $properties;
         }
     }
 
@@ -78,6 +94,52 @@ class Vehicle {
         return $this->properties;
     }
 
+      /**
+     * Set the value of properties
+     *
+     * @return self
+     */ 
+    public function setProperties($properties): self
+    {
+        $this->properties = $properties;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of properties
+     * @return self
+     */ 
+    public function loadProperties(): self
+    {
+        // INSERT INTO vehicle_property (vehicle_id, property_id, value)
+        // VALUES
+        // -- Economy Cars - São Miguel
+        // (1, 1, "Renault"),
+        // (1, 2, "Clio"),
+        // (1, 3, "Red"),
+        // (1, 4, "2022"),
+        // (1, 5, "Volkswagen Polo"),
+        try {
+            $vehicleId = $this->id;
+            $stmt = self::rawSQL("
+                SELECT p.name, vp.value FROM property p
+                LEFT OUTER JOIN vehicle_property vp ON vp.property_id = p.id
+                WHERE vp.vehicle_id = $vehicleId;
+            ");
+
+            $results = [];
+            while($row = $stmt->fetchObject(Property::class)) {
+                $results[] = $row;
+            }
+            $this->properties = $results;
+        } catch(e) {
+            // TODO: error handling
+        }
+        
+        return $this;
+    }
+
     /**
      * Get the value of rentable
      */ 
@@ -104,25 +166,5 @@ class Vehicle {
     public function getIsland(): Island
     {
         return $this->island;
-    }
-
-    /**
-     * Get the value of dailyRate
-     */ 
-    public function getDailyRate(): float
-    {
-        return $this->dailyRate;
-    }
-
-    /**
-     * Set the value of dailyRate
-     *
-     * @return  self
-     */ 
-    public function setDailyRate(float $dailyRate): self
-    {
-        $this->dailyRate = $dailyRate;
-
-        return $this;
     }
 }

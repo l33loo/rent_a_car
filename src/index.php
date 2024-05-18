@@ -1,12 +1,13 @@
 <?php  
 use RentACar\Address;
+use RentACar\Location;
+
 session_start();
-require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/MyConnect.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/html/components/header.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Address.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Location.php";
 echo getHeader();
 
-$addresses = Address::search([]);
+$location = Location::search([]);
 ?>
 
 <style>
@@ -63,9 +64,8 @@ $addresses = Address::search([]);
                         Pick-up Location
                     </button>
                     <select class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <?php foreach ($addresses as $addresses) : ?>
-                        <option value="<?php echo ($addresses); ?>">
-                            <?php echo ($addresses); ?></option>
+                        <?php foreach ($location as $location) : ?>
+                        <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName();  ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -75,9 +75,8 @@ $addresses = Address::search([]);
                         Drop-Off Location
                     </button>
                     <select class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <?php foreach ($addresses as $addresses) : ?>
-                        <option value="<?php echo ($addresses); ?>">
-                            <?php echo ($addresses); ?></option>
+                        <?php foreach ($location as $location) : ?>
+                        <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName();  ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -89,9 +88,9 @@ $addresses = Address::search([]);
                         style="padding-left: 20px; background-color: rgba(0,0,0,0.7); color:white">
                         Pick-up Date
                     </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <a class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <input class="dropdown-item" type="date" name="" id="">
-                    </ul>
+                    </a>
                 </div>
                 <div class="dropdown" style="margin-top: 15px;">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -99,9 +98,9 @@ $addresses = Address::search([]);
                         style="background-color: rgba(0,0,0,0.7); color:white">
                         Drop-off Date
                     </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <a class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <input class="dropdown-item" type="date" name="" id="">
-                    </ul>
+                    </a>
                 </div>
             </div>
             <div class="col-md-4" style="padding-left:60px;">

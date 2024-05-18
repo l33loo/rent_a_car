@@ -1,25 +1,40 @@
 <?php
-namespace fleet;
+namespace RentACar;
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
 class Category {
-    protected int $id;
-    protected string $name;
-    protected string $description;
-    protected array $properties;
-    protected float $dailyRate;
+    use DBModel;
+
+    protected ?string $name = null;
+    protected ?string $description = null;
+    protected ?array $properties = null;
+    protected ?float $dailyRate = null;
 
     public function __construct(
-        int $id,
-        string $name,
-        string $description,
-        array $properties,
-        float $dailyRate
+        ?string $name = null,
+        ?string $description = null,
+        ?array $properties = null,
+        ?float $dailyRate = null,
+        ?int $id = null
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->description = $description;
-        $this->properties = $properties;
-        $this->dailyRate = $dailyRate;
+        $this->tableName = 'category';
+        
+        if ($name !== null) {
+            $this->name = $name;
+        }
+
+        if ($description !== null) {
+            $this->description = $description;
+        }
+
+        if ($properties !== null) {
+            $this->properties = $properties;
+        }
+
+        if ($dailyRate !== null) {
+            $this->dailyRate = $dailyRate;
+        }
     }
 
     /**
