@@ -42,10 +42,6 @@ try {
             ]
         ]);
 
-        if ($category->getId() === null) {
-            print_r($vehicles);
-        }
-
         $vehiclesByCategoryForIsland[$category->getId()] = [
             'categoryName' => $category->getName(),
             'vehicles' => $vehicles
