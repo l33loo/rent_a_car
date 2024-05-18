@@ -1,13 +1,11 @@
 <?php  
-session_start();
-require_once "/src/RentACar/MyConnect.php";
-require_once "/html/components/header.php";
-require_once "/src/RentACar/Address.php";
-
-echo getHeader();
 use RentACar\Address;
+session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/MyConnect.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/html/components/header.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Address.php";
+echo getHeader();
 
-// Obter localizações usando a classe Location
 $addresses = Address::search([]);
 ?>
 
