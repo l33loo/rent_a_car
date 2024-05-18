@@ -113,7 +113,11 @@ echo getHeader();
                                                 <td class="table-responsive">
                                                     <table  class="table table-sm mb-0">
                                                         <thead>
-                                                            <tr>
+                                                            <tr
+                                                                <?php if ($vehicle->getRentable() === false) {
+                                                                    echo 'class="table-active"';
+                                                                } ?>
+                                                            >
                                                                 <?php foreach ($vehicleProperties as $vehicleProperty) { ?>
                                                                     <th>
                                                                         <?php echo $vehicleProperty->getName() ?>
@@ -122,7 +126,11 @@ echo getHeader();
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
+                                                            <tr
+                                                                <?php if ($vehicle->getRentable() === false) {
+                                                                    echo 'class="table-active"';
+                                                                } ?>
+                                                            >
                                                                 <?php foreach ($vehicleProperties as $vehicleProperty) { ?>
                                                                     <td>
                                                                         <?php echo $vehicleProperty->getValue() ?>
