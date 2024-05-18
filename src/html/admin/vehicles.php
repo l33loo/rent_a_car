@@ -25,29 +25,38 @@ echo getHeader();
         </div>
         <div>
             <form action="" method="get">
-                <div class="d-flex flex-wrap">
-                    <select class="form-control" name="islandId" id="selectIsland">
-                        <?php foreach ($islands as $island) { ?>
-                            <option value="<?php echo $island->getId(); ?>"><?php echo $island->getName(); ?></option>
-                        <?php } ?>
-                    </select>
-                    <input type="hidden" value="<?php echo $island->getName(); ?>" name="islandName">
-                    <input class="btn btn-primary" type="submit" name="selectIsland" value="Filter by island">
+                <div class="row">
+                    <div class="col-auto">
+                        <select class="form-control" name="islandId" id="selectIsland">
+                            <?php foreach ($islands as $island) { ?>
+                                <option value="<?php echo $island->getId(); ?>"><?php echo $island->getName(); ?></option>
+                            <?php } ?>
+                        </select>
+                        <input type="hidden" value="<?php echo $island->getName(); ?>" name="islandName">
+                    </div>
+                    <div class="col-auto">
+                        <input class="btn btn-primary" type="submit" name="selectIsland" value="Filter by island">
+                    </div>
                 </div>
             </form>           
         </div>
     </div>
     <div class="container">
         <div class="accordion">
-            <?php foreach ($vehiclesByCategoryForIsland as $categoryName => $vehicles) { ?>
+            <?php foreach ($vehiclesByCategoryForIsland as $categoryId => $data) { ?>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                            <?php echo $categoryName; ?>
+                            <?php echo $data['categoryName']; ?>
                         </button>
                     </h2>
                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                         <div class="accordion-body">
+                            <div class="text-end mb-3">
+                                <a href="" class="btn btn-primary">View Category</a>    
+                                <a href="" class="btn btn-secondary">Edit Category</a>
+                                <a href="" class="btn btn-danger">Archive Category</a>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered align-middle" id="my_table_id" data-url="data/url.json" data-id-field="id"
                                     data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
@@ -82,7 +91,7 @@ echo getHeader();
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($vehicles as $vehicle) { 
+                                        <?php foreach ($data['vehicles'] as $vehicle) { 
                                             $vehicle->loadProperties();
                                             $vehicleProperties = $vehicle->getProperties();
                                         ?>

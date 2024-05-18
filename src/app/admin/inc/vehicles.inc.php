@@ -42,7 +42,10 @@ try {
             ]
         ]);
 
-        $vehiclesByCategoryForIsland[$category->getId()] = $vehicles;
+        $vehiclesByCategoryForIsland[$category->getId()] = [
+            'categoryName' => $category->getName(),
+            'vehicles' => $vehicles
+        ];
 
         // TODO: loca vehicle's properties
       
