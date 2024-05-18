@@ -18,7 +18,8 @@ class Location {
     protected ?int $address_id = null;
     protected ?int $island_id = null;
 
-    public function __construct(string $name) {
+    public function __construct(string $name) 
+    {
         $this->name = $name;
     }
 
@@ -28,7 +29,8 @@ class Location {
      * @param string $name
      * @return self
      */ 
-    public function setName(string $name): self {
+    public function setName(string $name): self 
+    {
         $this->name = $name;
         return $this;
     }
@@ -36,7 +38,8 @@ class Location {
     /**
      * Get the value of address
      */ 
-    public function getAddress(): Address {
+    public function getAddress(): Address 
+    {
         return $this->address;
     }
 
@@ -46,7 +49,8 @@ class Location {
      * @param Address $address
      * @return self
      */ 
-    public function setAddress(Address $address): self {
+    public function setAddress(Address $address): self 
+    {
         $this->address = $address;
         return $this;
     }
@@ -54,11 +58,30 @@ class Location {
     /**
      * Get the value of island
      */ 
-    public function getIsland(): Island {
+    public function getIsland(): Island 
+    {
         return $this->island;
     }
+    
+        /**
+     * Set the value of island
+     *
+     * @return  self
+     */ 
+    public function setIsland(Island $island): self
+    {
+        $this->island = $island;
 
-    public function getName(): string {
+        return $this;
+    }
+    
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getName(): string 
+    {
         return $this->name;
     }
 }

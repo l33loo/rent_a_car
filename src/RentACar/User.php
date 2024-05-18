@@ -5,10 +5,6 @@ use RentACar\MyConnect;
 use RentACar\DBModel;
 use RentACar\Profile;
 
-require_once "Profile.php";
-require_once "MyConnect.php";
-require_once 'DBModel.php';
-
 class User extends Profile
 {
     use DBModel;

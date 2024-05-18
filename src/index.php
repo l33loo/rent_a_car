@@ -1,14 +1,14 @@
 <?php  
-use RentACar\MyConnect;
-use RentACar\Address;
 session_start();
-require_once "./RentACar/MyConnect.php";
-require_once "./html/components/header.php";
-require "./RentACar/Address.php";
+require_once "/src/RentACar/MyConnect.php";
+require_once "/html/components/header.php";
+require_once "/src/RentACar/Address.php";
+
 echo getHeader();
+use RentACar\Address;
 
 // Obter localizações usando a classe Location
-$cityNames = Address::search([]);
+$addresses = Address::search([]);
 ?>
 
 <style>
@@ -65,9 +65,9 @@ $cityNames = Address::search([]);
                         Pick-up Location
                     </button>
                     <select class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <?php foreach ($cityNames as $cityName) : ?>
-                        <option value="<?php echo ($cityName); ?>">
-                            <?php echo ($cityName); ?></option>
+                        <?php foreach ($addresses as $addresses) : ?>
+                        <option value="<?php echo ($addresses); ?>">
+                            <?php echo ($addresses); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -77,9 +77,9 @@ $cityNames = Address::search([]);
                         Drop-Off Location
                     </button>
                     <select class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <?php foreach ($cityNames as $cityName) : ?>
-                        <option value="<?php echo ($cityName); ?>">
-                            <?php echo ($cityName); ?></option>
+                        <?php foreach ($addresses as $addresses) : ?>
+                        <option value="<?php echo ($addresses); ?>">
+                            <?php echo ($addresses); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
