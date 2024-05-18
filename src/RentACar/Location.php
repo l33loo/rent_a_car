@@ -54,6 +54,14 @@ class Location {
     }
 
     /**
+     * Get the value of id
+     */ 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * Get the value of address
      */ 
     public function getAddress(): Address
