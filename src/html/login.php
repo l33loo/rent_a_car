@@ -1,7 +1,6 @@
 <?php 
-require_once './components/header.php';
-
-session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/sessionUser.inc.php';
 
 echo getHeader();
 ?>
@@ -19,7 +18,7 @@ echo getHeader();
     <form action="../app/login.php" method="post">
         <div class="container mt-5 d-flex justify-content-center" style="padding-right:15px;">
             <div class="text-content">
-                <img src="../img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:3px;">
+                <img src="/img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:3px;">
                 <span>
                     Email:
                 </span>

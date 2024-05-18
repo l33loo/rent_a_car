@@ -1,42 +1,64 @@
 <?php
 namespace RentACar;
 
-use RentACar\MyConnect;
-use RentACar\DBModel;
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Profile.php';
+
+use Carbon\Carbon;
+use RentACar\Address;
 use RentACar\Profile;
 
 class User extends Profile
 {
-    use DBModel;
-
     protected ?string $passwordHash = null;
-    protected bool $isAdmin = false;
-    protected ?int $address_id = null;
+    protected ?bool $isAdmin = null;
 
     public function __construct(
         ?string $name = null,
         ?string $email = null,
         ?string $dateOfBirth = null,
         ?string $phone = null,
-        bool $isArchived = false,
+        ?bool $isArchived = null,
         ?string $password = null,
-        bool $isAdmin = false,
+        ?bool $isAdmin = null,
         ?int $address_id = null,
-        ?int $id = null
+        ?int $id = null,
+        ?Address $address = null
     ) {
         $this->tableName = 'user';
 
-        parent::__construct($id, $name, $email, $dateOfBirth, $phone, $isArchived);
+        parent::__construct(
+            $name,
+            $email,
+            $dateOfBirth,
+            $phone,
+            $isArchived,
+            $address_id,
+            $id,
+            $address,
+        );
 
         if ($password !== null) {
             $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
         }
 
-        // Set the value of $address_id directly
-        $this->address_id = $address_id;
+        if ($isAdmin !== null) {
+            $this->isAdmin = $isAdmin;
+        }
+    }
 
-        // Set the value of $isAdmin
-        $this->isAdmin = $isAdmin;
+    /**
+     * Set the value of password
+     *
+     * @return  self
+     */ 
+    public function setPasswordHash($passwordHash): self
+    {
+        
+        $this->passwordHash = $passwordHash;
+
+        return $this;
     }
 
     /**
@@ -46,8 +68,7 @@ class User extends Profile
      */ 
     public function setPassword($password): self
     {
-        $this->passwordHash = $password;
-        // $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
+        $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
         return $this;
     }
@@ -63,5 +84,17 @@ class User extends Profile
     public function getIsAdmin(): bool
     {
         return $this->isAdmin;
+    }
+
+    /**
+     * Set the value of isAdmin
+     *
+     * @return  self
+     */ 
+    public function setIsAdmin(bool $isAdmin): self
+    {
+            $this->isAdmin = $isAdmin;
+
+            return $this;
     }
 }

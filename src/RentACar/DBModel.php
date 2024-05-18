@@ -1,6 +1,7 @@
 <?php
 
 namespace RentACar;
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/RentACar/MyConnect.php');
 
 use RentACar\MyConnect;
@@ -26,44 +27,49 @@ trait DBModel
         unset($properties['tableName']);
         unset($properties['id']);
 
+        $propertyKeys = array_keys($properties);
+        $foreignKeys = preg_grep('/_id$/', $propertyKeys);
+
+        // Strip properties that are objects, because the latter
+        // are stored in different tables.
+        foreach ($foreignKeys as $foreignKey) {
+            $objectProperty = substr($foreignKey, 0, -3);
+
+            if (key_exists($objectProperty, $properties)) {
+                unset($properties[$objectProperty]);
+            }
+        }
+
         if (empty($this->id)) {
-            $sql = "INSERT INTO " . $this->tableName . " (" . implode(",", array_keys($properties)).") VALUES(";
+            $sql = 'INSERT INTO ' . $this->tableName . ' (' . implode(',', array_keys($properties)).') VALUES(';
             $params = [];
             foreach ($properties as $property => $value) {
-                $sql .= "?,";
+                $sql .= '?,';
 
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.
                 $params[] = is_bool($value) ? (int)$value: $value;
-                
-                // // This function may return Boolean false, but may also return a
-                // // non-Boolean value which evaluates to false. Use the === operator
-                // // for testing the return value of this function.
-                // if (next($properties) !== false) {
-                //     $sql .= ", ";
-                // }
             }
 
-            // next() doesn't work because its return values conflict and this gives error.
             $sql = rtrim($sql, ',');
-            $sql .= ");";
+            $sql .= ');';
 
             $stmt = $connection->prepare($sql);
             $stmt->execute($params);
             $this->id = $connection->lastInsertId();
         } else {
-            $sql = "UPDATE " . $this->tableName . " SET ";
+            $sql = 'UPDATE ' . $this->tableName . ' SET ';
             $params = [];
             foreach ($properties as $property => $value) {
-                $sql .= $property . " = ?";
+                $sql .= $property . ' = ?,';
 
-                $params[] = $value;
-                
-                if (next($properties) !== false) {
-                    $sql .= ", ";
-                }
+                // PDO does not accept booleans, so they need to be converted
+                // to their int equivalent.
+                $params[] = is_bool($value) ? (int)$value: $value;
             }
-            $sql .= " WHERE id = ?;";
+
+            $sql = rtrim($sql, ',');
+            $sql .= ' WHERE id = ?;';
             $params[] = $this->id;
 
             $stmt = $connection->prepare($sql);
@@ -100,10 +106,12 @@ trait DBModel
             return;
         }
 
+        $params = [];
+        $params[] = $this->id;
         $connection = MyConnect::getInstance()->getConnection();
         $sql = "DELETE FROM " . $this->tableName . " WHERE id = ?";
         $stmt = $connection->prepare($sql);
-        $stmt->execute([$this->id]);
+        $stmt->execute($params);
     }
 
     public static function search(array $filters, string $tableName = ''): array
@@ -137,14 +145,27 @@ trait DBModel
 
         $results = [];
         while($row = $stmt->fetchObject(static::class)) {
-            // print_r($row);
             $results[] = $row;
         }
 
         return $results;
     }
 
-    public static function camelToSnake($camelCase) {
+    public function loadRelation(string $relationName, string $tableName = ''): void
+    {
+        $className = 'RentACar\\' . self::snakeToCamel($relationName);
+        
+        $this->{$relationName} = $className::find($this->{$relationName . '_id'}, $tableName);
+    }
+
+    public static function rawSQL(string $sql): \PDOStatement
+    {
+        $connection = MyConnect::getInstance();
+        return $connection->query($sql);
+    }
+
+    public static function camelToSnake($camelCase): string
+    {
         $result = '';
       
         for ($i = 0; $i < strlen($camelCase); $i++) {
@@ -158,6 +179,18 @@ trait DBModel
         }
       
         return ltrim($result, '_');
+    }
+
+    public static function snakeToCamel($string, $capitalizeFirstCharacter = true): string
+    {
+
+        $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
+
+        if (!$capitalizeFirstCharacter) {
+            $str[0] = strtolower($str[0]);
+        }
+    
+        return $str;
     }
 
     // public static function pluralize($quantity, $singular, $plural=null) {
