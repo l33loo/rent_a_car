@@ -1,7 +1,6 @@
 <?php
 namespace RentACar;
 
-use RentACar\MyConnect;
 use RentACar\DBModel;
 use RentACar\Profile;
 
@@ -10,8 +9,7 @@ class User extends Profile
     use DBModel;
 
     protected ?string $passwordHash = null;
-    protected bool $isAdmin = false;
-    protected ?int $address_id = null;
+    protected ?bool $isAdmin = null;
 
     public function __construct(
         ?string $name = null,
@@ -54,6 +52,8 @@ class User extends Profile
 
     public function checkPassword(string $password): bool
     {
+        // echo "<br>Password: $password<br>";
+        // echo "this->passwordHash: $this->passwordHash<br>";
         return password_verify($password, $this->passwordHash);
     }
 

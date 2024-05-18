@@ -1,28 +1,45 @@
 <?php
 namespace RentACar;
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
+
 class Island {
-    protected int $id;
-    protected string $name;
+    use DBModel;
 
-    public function __construct(int $id, string $name) {
-        $this->id;
-        $this->name;
+    protected ?string $name = null;
+
+    public function __construct(
+        ?string $name = null,
+        ?int $id = null
+    ) {
+        $this->tableName = 'island';
+    
+        if ($name !== null) {
+            $this->name = $name;
+        }
     }
 
-    /**
-     * Get the value of id
-     */ 
-    public function getId(): int
-    {
-        return $this->id;
-    }
+    
 
     /**
      * Get the value of name
+     * 
+     * @return string
      */ 
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return self
+     */ 
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 }
