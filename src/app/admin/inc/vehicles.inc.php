@@ -19,11 +19,7 @@ try {
         $islandId = $islands[0]->getId();
     }
 
-    if (!empty($_GET['islandName'])) {
-        $islandName = $_GET['islandName'];
-    } else {
-        $islandName = $islands[0]->getName();
-    }
+    $islandName = Island::find($islandId)->getName();
 
     $categories = Category::search([]);
     // Add null category so we can get vehicles
