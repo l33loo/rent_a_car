@@ -32,7 +32,7 @@ try {
         $vehicles = Vehicle::search([
             [
                 'column' => 'category_id',
-                'operator' => '=',
+                'operator' => '<=>',
                 'value' => $category->getId()
             ],
             [
@@ -41,6 +41,10 @@ try {
                 'value' => $islandId
             ]
         ]);
+
+        if ($category->getId() === null) {
+            print_r($vehicles);
+        }
 
         $vehiclesByCategoryForIsland[$category->getId()] = [
             'categoryName' => $category->getName(),
