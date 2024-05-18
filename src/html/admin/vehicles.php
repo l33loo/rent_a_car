@@ -102,7 +102,7 @@ echo getHeader();
                                                     echo 'class="table-active"';
                                                 } ?>
                                             >
-                                                <td><?php echo $vehicle->getId(); ?></td>
+                                                <th><?php echo $vehicle->getId(); ?></th>
                                                 <td><?php echo $vehicle->getPlate(); ?></td>
                                                 <td><?php echo $vehicle->getRentable(); ?></td>
                                                 <td class="table-responsive">
