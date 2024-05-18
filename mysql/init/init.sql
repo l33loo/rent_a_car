@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS vehicle (
     category_id INT UNSIGNED,
     rentable BOOLEAN NOT NULL,
     island_id INT UNSIGNED NOT NULL,
+    isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
     CONSTRAINT fk_vehicle_category
         FOREIGN KEY (category_id)
