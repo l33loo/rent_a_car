@@ -20,11 +20,21 @@ class Category {
     ) {
         $this->tableName = 'category';
         
-        $this->id = $id;
-        $this->name = $name;
-        $this->description = $description;
-        $this->properties = $properties;
-        $this->dailyRate = $dailyRate;
+        if ($name !== null) {
+            $this->name = $name;
+        }
+
+        if ($description !== null) {
+            $this->description = $description;
+        }
+
+        if ($properties !== null) {
+            $this->properties = $properties;
+        }
+
+        if ($dailyRate !== null) {
+            $this->dailyRate = $dailyRate;
+        }
     }
 
     /**

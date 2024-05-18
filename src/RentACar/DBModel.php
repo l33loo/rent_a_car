@@ -158,7 +158,7 @@ trait DBModel
         $this->{$relationName} = $className::find($this->{$relationName . '_id'}, $tableName);
     }
 
-    public static function rawSQL(string $query, array $params)
+    public static function rawSQL(string $sql): \PDOStatement
     {
         $connection = MyConnect::getInstance();
         return $connection->query($sql);
