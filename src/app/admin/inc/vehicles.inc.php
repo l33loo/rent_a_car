@@ -42,9 +42,12 @@ try {
             ]
         ]);
 
-        $vehiclesByCategoryForIsland[$category->getName()] = $vehicles;
+        $vehiclesByCategoryForIsland[$category->getId()] = $vehicles;
 
         // TODO: loca vehicle's properties
+      
+
+
         // do this for vehicle view
         // $propertiesFilter = [
         //     'vehicle_id' => $vehicle->getId()

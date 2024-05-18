@@ -4,9 +4,11 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
 
 use RentACar\Category;
 use RentACar\Island;
+use RentACar\Property;
 
 class Vehicle {
     use DBModel;
@@ -118,13 +120,22 @@ class Vehicle {
         // (1, 3, "Red"),
         // (1, 4, "2022"),
         // (1, 5, "Volkswagen Polo"),
-        $vehicleId = $this->id;
-        $dbResults = self::rawSQL("
-            SELECT * FROM property p
-            LEFT OUTER JOIN vehicle_property vp ON vp.property_id = p.id
-            WHERE vp.vehicle_id = $vehicleId;
-        ");
-        print_r($dbResults);
+        try {
+            $vehicleId = $this->id;
+            $stmt = self::rawSQL("
+                SELECT p.name, vp.value FROM property p
+                LEFT OUTER JOIN vehicle_property vp ON vp.property_id = p.id
+                WHERE vp.vehicle_id = $vehicleId;
+            ");
+
+            $results = [];
+            while($row = $stmt->fetchObject(Property::class)) {
+                $results[] = $row;
+            }
+            $this->properties = $results;
+        } catch(e) {
+            // TODO: error handling
+        }
         
         return $this;
     }
