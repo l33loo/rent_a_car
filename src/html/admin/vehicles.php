@@ -59,7 +59,7 @@ echo getHeader();
                         <div class="accordion-body">
                             <?php if ($categoryId !== '') { ?>
                                 <div class="text-end mb-3">
-                                    <a href="" class="btn btn-primary">View Category</a>    
+                                    <a href="/html/admin/categoryView.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-primary">View Category</a>    
                                     <a href="" class="btn btn-secondary">Edit Category</a>
                                     <a href="" class="btn btn-danger">Archive Category</a>
                                 </div>

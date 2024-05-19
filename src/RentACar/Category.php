@@ -2,6 +2,9 @@
 namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
+
+use RentACar\Property;
 
 class Category {
     use DBModel;
@@ -96,4 +99,35 @@ class Category {
 
         return $this;
     }
-}
+
+    public function getObjectVars(): array
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * Get the value of properties
+     * @return self
+     */ 
+    public function loadProperties(): self
+    {
+        try {
+            $categoryId = $this->id;
+            $stmt = self::rawSQL("
+                SELECT c.name, cp.value FROM category c
+                LEFT OUTER JOIN category_property cp ON cp.property_id = c.id
+                WHERE cp.category_id = $categoryId;
+            ");
+
+            $results = [];
+            while($row = $stmt->fetchObject(Property::class)) {
+                $results[] = $row;
+            }
+            $this->properties = $results;
+        } catch(e) {
+            // TODO: error handling
+        }
+        
+        return $this;
+    }
+} 
