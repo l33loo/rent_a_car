@@ -84,6 +84,18 @@ class Vehicle {
     }
 
     /**
+     * Set the value of plate
+     *
+     * @return  self
+     */ 
+    public function setPlate(string $plate): self
+    {
+        $this->plate = $plate;
+
+        return $this;
+    }
+
+    /**
      * Get the value of category
      */ 
     public function getCategory(): Category
@@ -181,6 +193,26 @@ class Vehicle {
     public function setIsArchived($isArchived): self
     {
         $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of island_id
+     */ 
+    public function getIsland_id(): int
+    {
+        return $this->island_id;
+    }
+
+    /**
+     * Set the value of island_id
+     *
+     * @return  self
+     */ 
+    public function setIsland_id(int $island_id): self
+    {
+        $this->island_id = $island_id;
 
         return $this;
     }

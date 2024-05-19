@@ -36,7 +36,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Vehicle</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/admin/userEdit.php" method="post">
+                        <form action="/app/admin/vehicleEdit.php" method="post">
                             <div class="row mb-3">
                                 <div class="col-md-6 col-sm-12">
                                     <label for="plate">
@@ -45,10 +45,10 @@ echo getHeader();
                                     <input type="text" class="form-control" name="plate" value="<?php echo $vehicle->getPlate(); ?>">
                                 </div>
                                 <div class="col-md-6 col-sm-12">
-                                    <label for="island">
+                                    <label for="islandId">
                                         Island:
                                     </label>
-                                    <select class="form-control" name="island" id="selectIsland">
+                                    <select class="form-control" name="islandId" id="selectIsland">
                                         <?php foreach ($islands as $island) { ?>
                                             <option
                                                 value="<?php echo $island->getId(); ?>"

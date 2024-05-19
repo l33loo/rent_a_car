@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS vehicle (
 CREATE TABLE IF NOT EXISTS vehicle_property (
     vehicle_id INT UNSIGNED NOT NULL,
     property_id INT UNSIGNED NOT NULL,
-    value VARCHAR(45) NOT NULL,
+    propertyValue VARCHAR(45) NOT NULL,
     PRIMARY KEY (vehicle_id, property_id),
     CONSTRAINT fk_vehicle_property_vehicle
         FOREIGN KEY (vehicle_id)
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS vehicle_property (
 CREATE TABLE IF NOT EXISTS category_property (
     category_id INT UNSIGNED NOT NULL,
     property_id INT UNSIGNED NOT NULL,
-    value VARCHAR(45) NOT NULL,
+    propertyValue VARCHAR(45) NOT NULL,
     PRIMARY KEY (category_id, property_id),
     CONSTRAINT fk_category_property_category
         FOREIGN KEY (category_id)
@@ -553,7 +553,7 @@ INSERT INTO vehicle (plate, category_id, rentable, island_id)
     ("SMa-PG43-AS", 7, TRUE, 2),
     ("SMa-KS75-ID", 7, TRUE, 2);
 
-INSERT INTO vehicle_property (vehicle_id, property_id, value)
+INSERT INTO vehicle_property (vehicle_id, property_id, propertyValue)
 VALUES
 -- Economy Cars - São Miguel
 (1, 1, "Renault"),
@@ -1072,7 +1072,7 @@ VALUES
 (84, 4, "2022"),
 (84, 5, "Tesla Model 3");
 
-INSERT INTO category_property(category_id, property_id, value)
+INSERT INTO category_property(category_id, property_id, propertyValue)
     VALUES
     -- ECONOMY
     (1, 6, "manual"),

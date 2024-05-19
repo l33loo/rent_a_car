@@ -7,19 +7,19 @@ class Property {
     use DBModel;
 
     protected ?string $name = null;
-    protected ?string $value = null;
+    protected ?string $propertyValue = null;
 
     public function __construct(
         ?string $name = null,
-        ?string $value = null,
+        ?string $propertyValue = null,
         ?int $id = null
     ) {
         if ($name !== null) {
             $this->name = $name;
         }
 
-        if ($value !== null) {
-            $this->value = $value;
+        if ($propertyValue !== null) {
+            $this->propertyValue = $propertyValue;
         }
 
         if ($id !== null) {
@@ -50,9 +50,9 @@ class Property {
     /**
      * Get the value of value
      */ 
-    public function getValue()
+    public function getPropertyValue()
     {
-        return $this->value;
+        return $this->propertyValue;
     }
 
     /**
@@ -60,9 +60,9 @@ class Property {
      *
      * @return  self
      */ 
-    public function setValue($value)
+    public function setPropertyValue($propertyValue)
     {
-        $this->value = $value;
+        $this->propertyValue = $propertyValue;
 
         return $this;
     }
