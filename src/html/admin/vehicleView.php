@@ -32,7 +32,8 @@ echo getHeader();
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <h1>Vehicle <?php echo $vehicle->getPlate(); ?></h1>
             <div class="d-flex flex-wrap">
-                <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary">
+                <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>"
+                    class="btn btn-secondary">
                     Edit
                 </a>
                 <form action="/app/admin/userEdit.php" method="POST" class="ps-2">
@@ -42,22 +43,19 @@ echo getHeader();
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table table-bordered align-middle" id="my_table_id" data-url="data/url.json" data-id-field="id"
-                data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
+            <table class="table table-bordered align-middle" id="my_table_id" data-url="data/url.json"
+                data-id-field="id" data-editable-emptytext="Default empty text."
+                data-editable-url="/my/editable/update/path">
                 <thead>
                     <tr>
                         <th class="col" data-field="id" data-sortable="true" data-align="center">ID</th>
                         <?php foreach ($vehicle->getProperties() as $vehicleProperty) { ?>
-                            <th>
-                                <?php echo $vehicleProperty->getName() ?>
-                            </th>
+                        <th>
+                            <?php echo $vehicleProperty->getName() ?>
+                        </th>
                         <?php } ?>
-                        <th
-                            class="col"
-                            data-field="description"
-                            data-editable="true"
-                            data-editable-emptytext="Custom empty text."
-                        >
+                        <th class="col" data-field="description" data-editable="true"
+                            data-editable-emptytext="Custom empty text.">
                             Island
                         </th>
                         <th class="col" data-field="name" data-editable="true">Rentable</th>
@@ -67,9 +65,9 @@ echo getHeader();
                     <tr>
                         <th><?php echo $vehicle->getId(); ?></th>
                         <?php foreach ($vehicle->getProperties() as $vehicleProperty) { ?>
-                            <td>
-                                <?php echo $vehicleProperty->getPropertyValue() ?>
-                            </td>
+                        <td>
+                            <?php echo $vehicleProperty->getPropertyValue() ?>
+                        </td>
                         <?php } ?>
                         <td><?php echo $island->getName(); ?></td>
                         <td><?php echo $vehicle->getRentable() ? 'YES' : 'NO'; ?></td>
