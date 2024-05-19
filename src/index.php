@@ -1,13 +1,15 @@
 <?php  
 require_once $_SERVER['DOCUMENT_ROOT'] . "/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Location.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/html/reservationValidation.php";
 
 use RentACar\Location;
 
 session_start();
 echo getHeader();
 
-$location = Location::search([]);
+$locations = Location::search([]);
+
 ?>
 
 <style>
@@ -40,6 +42,23 @@ $location = Location::search([]);
     margin-left: auto;
     margin-right: auto;
 }
+
+form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+}
 </style>
 
 <body>
@@ -53,116 +72,42 @@ $location = Location::search([]);
         </div>
     </div>
 
-    <div class="container my-5 w-50"
-        style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
-        <div class="row" style="text-align: center; ">
-            <div class="col-md-4" style="padding-left: 40px;">
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style="padding-right: 22px; background-color: rgba(0,0,0,0.7); color:white">
-                        Pick-up Location
-                    </button>
-                    <select class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <?php foreach ($location as $location) : ?>
-                        <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName();  ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="dropdown" style="margin-top: 15px;">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
-                        aria-expanded="false" style="background-color: rgba(0,0,0,0.7); color:white">
-                        Drop-Off Location
-                    </button>
-                    <select class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <?php foreach ($location as $location) : ?>
-                        <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName();  ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-2" style="padding-right: 25px;">
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style="padding-left: 20px; background-color: rgba(0,0,0,0.7); color:white">
-                        Pick-up Date
-                    </button>
-                    <a class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <input class="dropdown-item" type="date" name="" id="">
-                    </a>
-                </div>
-                <div class="dropdown" style="margin-top: 15px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false"
-                        style="background-color: rgba(0,0,0,0.7); color:white">
-                        Drop-off Date
-                    </button>
-                    <a class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <input class="dropdown-item" type="date" name="" id="">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-4" style="padding-left:60px;">
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                        aria-expanded="false" style="padding-left: 20px;background-color: rgba(0,0,0,0.7); color:white">
-                        Pick-up Time
-                    </button>
-                    <select class="dropdown-menu" aria-labelledby="pickupTimeDropdown">
-                        <option class="dropdown-item" href="#">09:00</option>
-                        <option class="dropdown-item" href="#">09:30</option>
-                        <option class="dropdown-item" href="#">10:00</option>
-                        <option class="dropdown-item" href="#">10:30</option>
-                        <option class="dropdown-item" href="#">11:00</option>
-                        <option class="dropdown-item" href="#">11:30</option>
-                        <option class="dropdown-item" href="#">12:00</option>
-                        <option class="dropdown-item" href="#">12:30</option>
-                        <option class="dropdown-item" href="#">13:00</option>
-                        <option class="dropdown-item" href="#">13:30</option>
-                        <option class="dropdown-item" href="#">14:00</option>
-                        <option class="dropdown-item" href="#">14:30</option>
-                        <option class="dropdown-item" href="#">15:00</option>
-                        <option class="dropdown-item" href="#">15:30</option>
-                        <option class="dropdown-item" href="#">16:00</option>
-                        <option class="dropdown-item" href="#">16:30</option>
-                        <option class="dropdown-item" href="#">17:00</option>
-                        <option class="dropdown-item" href="#">17:30</option>
-                    </select>
-                </div>
-                <div class="dropdown" style="margin-top: 15px;">
-                    <button class=" btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false"
-                        style="background-color: rgba(0,0,0,0.7); color:white">
-                        Drop-Off Time
-                    </button>
-                    <select class="dropdown-menu" aria-labelledby="pickupTimeDropdown">
-                        <option class="dropdown-item" href="#">09:00</option>
-                        <option class="dropdown-item" href="#">09:30</option>
-                        <option class="dropdown-item" href="#">10:00</option>
-                        <option class="dropdown-item" href="#">10:30</option>
-                        <option class="dropdown-item" href="#">11:00</option>
-                        <option class="dropdown-item" href="#">11:30</option>
-                        <option class="dropdown-item" href="#">12:00</option>
-                        <option class="dropdown-item" href="#">12:30</option>
-                        <option class="dropdown-item" href="#">13:00</option>
-                        <option class="dropdown-item" href="#">13:30</option>
-                        <option class="dropdown-item" href="#">14:00</option>
-                        <option class="dropdown-item" href="#">14:30</option>
-                        <option class="dropdown-item" href="#">15:00</option>
-                        <option class="dropdown-item" href="#">15:30</option>
-                        <option class="dropdown-item" href="#">16:00</option>
-                        <option class="dropdown-item" href="#">16:30</option>
-                        <option class="dropdown-item" href="#">17:00</option>
-                        <option class="dropdown-item" href="#">17:30</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-1 d-flex justify-content-center align-items-center">
-                <button type="button" class="btn btn-outline-dark btn-lg" style="margin-left: 40px;">Search</button>
-            </div>
-        </div>
-    </div>
+    <form action="reservationValidation.php" method="post" style="padding:140px 0;" class="container">
+        <h2 style="padding-bottom: 50px;">Reservation</h2>
+        <label for="pickup-location">Pick-Up Location:</label>
+        <select id="pickup-location" name="pickup_location">
+            <?php foreach ($locations as $location) : ?>
+            <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName(); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <br>
+
+        <label for="dropoff-location">Drop-Off Location:</label>
+        <select id="dropoff-location" name="dropoff_location">
+            <?php foreach ($locations as $location) : ?>
+            <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName(); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <br>
+
+        <label for="pickup-date">Pick-Up Date:</label>
+        <input type="date" id="pickup-date" name="pickup_date" required>
+        <br>
+
+        <label for="dropoff-date">Drop-Off Date:</label>
+        <input type="date" id="dropoff-date" name="dropoff_date" required>
+        <br>
+
+        <label for="pickup-time">Pick-Up Time:</label>
+        <input type="time" id="pickup-time" name="pickup_time" min="09:30" max="17:30" required>
+        <br>
+
+        <label for="dropoff-time">Drop-Off Time:</label>
+        <input type="time" id="dropoff-time" name="dropoff_time" min="09:30:00" max="17:30:00" required>
+        <br>
+
+        <input type="submit" value="Submit">
+    </form>
 
     <div class="container">
         <h2 style="position:relative; top: -100px;">Our Fleet</h2>
