@@ -46,18 +46,6 @@ try {
             'categoryName' => $category->getName(),
             'vehicles' => $vehicles
         ];
-
-        // TODO: loca vehicle's properties
-      
-
-
-        // do this for vehicle view
-        // $propertiesFilter = [
-        //     'vehicle_id' => $vehicle->getId()
-        // ];
-
-        // $properties = Property::search($propertiesFilter);
-        // $vehicle->setProperties = $properties;
     }
 } catch (e) {
 

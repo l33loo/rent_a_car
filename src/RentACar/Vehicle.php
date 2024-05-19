@@ -84,6 +84,18 @@ class Vehicle {
     }
 
     /**
+     * Set the value of plate
+     *
+     * @return  self
+     */ 
+    public function setPlate(string $plate): self
+    {
+        $this->plate = $plate;
+
+        return $this;
+    }
+
+    /**
      * Get the value of category
      */ 
     public function getCategory(): Category
@@ -117,18 +129,10 @@ class Vehicle {
      */ 
     public function loadProperties(): self
     {
-        // INSERT INTO vehicle_property (vehicle_id, property_id, value)
-        // VALUES
-        // -- Economy Cars - São Miguel
-        // (1, 1, "Renault"),
-        // (1, 2, "Clio"),
-        // (1, 3, "Red"),
-        // (1, 4, "2022"),
-        // (1, 5, "Volkswagen Polo"),
         try {
             $vehicleId = $this->id;
             $stmt = self::rawSQL("
-                SELECT p.name, vp.value FROM property p
+                SELECT p.id, p.name, vp.propertyValue FROM property p
                 LEFT OUTER JOIN vehicle_property vp ON vp.property_id = p.id
                 WHERE vp.vehicle_id = $vehicleId;
             ");
@@ -189,6 +193,46 @@ class Vehicle {
     public function setIsArchived($isArchived): self
     {
         $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of island_id
+     */ 
+    public function getIsland_id(): int
+    {
+        return $this->island_id;
+    }
+
+    /**
+     * Set the value of island_id
+     *
+     * @return  self
+     */ 
+    public function setIsland_id(int $island_id): self
+    {
+        $this->island_id = $island_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of category_id
+     */ 
+    public function getCategory_id(): int
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * Set the value of category_id
+     *
+     * @return  self
+     */ 
+    public function setCategory_id(int $category_id): self
+    {
+        $this->category_id = $category_id;
 
         return $this;
     }

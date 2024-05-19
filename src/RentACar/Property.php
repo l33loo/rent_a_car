@@ -7,32 +7,26 @@ class Property {
     use DBModel;
 
     protected ?string $name = null;
-    protected ?string $value = null;
+    protected ?string $propertyValue = null;
 
     public function __construct(
         ?string $name = null,
-        ?string $value = null,
+        ?string $propertyValue = null,
         ?int $id = null
     ) {
+        $this->tableName = 'property';
+        
         if ($name !== null) {
             $this->name = $name;
         }
 
-        if ($value !== null) {
-            $this->value = $value;
+        if ($propertyValue !== null) {
+            $this->propertyValue = $propertyValue;
         }
 
         if ($id !== null) {
             $this->id = $id;
         }
-    }
-
-    /**
-     * Get the value of id
-     */ 
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     /**
@@ -43,44 +37,24 @@ class Property {
         return $this->name;
     }
 
-    // /**
-    //  * Get the value of properties
-    //  * @return array
-    //  */ 
-    // public static function fetchVehicleProperties(int $vehicleId): array
-    // {
-    //     // INSERT INTO vehicle_property (vehicle_id, property_id, value)
-    //     // VALUES
-    //     // -- Economy Cars - São Miguel
-    //     // (1, 1, "Renault"),
-    //     // (1, 2, "Clio"),
-    //     // (1, 3, "Red"),
-    //     // (1, 4, "2022"),
-    //     // (1, 5, "Volkswagen Polo"),
-    //     try {
-    //         $stmt = self::rawSQL("
-    //             SELECT p.name, vp.value FROM property p
-    //             LEFT OUTER JOIN vehicle_property vp ON vp.property_id = p.id
-    //             WHERE vp.vehicle_id = $vehicleId;
-    //         ");
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
 
-    //         $results = [];
-    //         while($row = $stmt->fetchObject(static::class)) {
-    //             $results[] = $row;
-    //         }
-    //     } catch(e) {
-    //         // TODO: error handling
-    //     }
-        
-    //     return $results;
-    // }
+        return $this;
+    }
 
     /**
      * Get the value of value
      */ 
-    public function getValue()
+    public function getPropertyValue()
     {
-        return $this->value;
+        return $this->propertyValue;
     }
 
     /**
@@ -88,9 +62,9 @@ class Property {
      *
      * @return  self
      */ 
-    public function setValue($value)
+    public function setPropertyValue($propertyValue)
     {
-        $this->value = $value;
+        $this->propertyValue = $propertyValue;
 
         return $this;
     }
