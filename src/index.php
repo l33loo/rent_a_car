@@ -1,10 +1,15 @@
-<?php
+<?php  
+require_once $_SERVER['DOCUMENT_ROOT'] . "/html/components/header.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Location.php";
+
+use RentACar\Location;
+
 session_start();
-
-require_once './html/components/header.php';
-
 echo getHeader();
+
+$location = Location::search([]);
 ?>
+
 <style>
 .bg-image {
     position: relative;
@@ -58,24 +63,22 @@ echo getHeader();
                         style="padding-right: 22px; background-color: rgba(0,0,0,0.7); color:white">
                         Pick-up Location
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+                    <select class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <?php foreach ($location as $location) : ?>
+                        <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName();  ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="dropdown" style="margin-top: 15px;">
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
                         aria-expanded="false" style="background-color: rgba(0,0,0,0.7); color:white">
                         Drop-Off Location
                     </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+                    <select class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <?php foreach ($location as $location) : ?>
+                        <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName();  ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
             </div>
             <div class="col-md-2" style="padding-right: 25px;">
@@ -85,12 +88,9 @@ echo getHeader();
                         style="padding-left: 20px; background-color: rgba(0,0,0,0.7); color:white">
                         Pick-up Date
                     </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+                    <a class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <input class="dropdown-item" type="date" name="" id="">
+                    </a>
                 </div>
                 <div class="dropdown" style="margin-top: 15px;">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -98,12 +98,9 @@ echo getHeader();
                         style="background-color: rgba(0,0,0,0.7); color:white">
                         Drop-off Date
                     </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+                    <a class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <input class="dropdown-item" type="date" name="" id="">
+                    </a>
                 </div>
             </div>
             <div class="col-md-4" style="padding-left:60px;">
@@ -112,12 +109,26 @@ echo getHeader();
                         aria-expanded="false" style="padding-left: 20px;background-color: rgba(0,0,0,0.7); color:white">
                         Pick-up Time
                     </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+                    <select class="dropdown-menu" aria-labelledby="pickupTimeDropdown">
+                        <option class="dropdown-item" href="#">09:00</option>
+                        <option class="dropdown-item" href="#">09:30</option>
+                        <option class="dropdown-item" href="#">10:00</option>
+                        <option class="dropdown-item" href="#">10:30</option>
+                        <option class="dropdown-item" href="#">11:00</option>
+                        <option class="dropdown-item" href="#">11:30</option>
+                        <option class="dropdown-item" href="#">12:00</option>
+                        <option class="dropdown-item" href="#">12:30</option>
+                        <option class="dropdown-item" href="#">13:00</option>
+                        <option class="dropdown-item" href="#">13:30</option>
+                        <option class="dropdown-item" href="#">14:00</option>
+                        <option class="dropdown-item" href="#">14:30</option>
+                        <option class="dropdown-item" href="#">15:00</option>
+                        <option class="dropdown-item" href="#">15:30</option>
+                        <option class="dropdown-item" href="#">16:00</option>
+                        <option class="dropdown-item" href="#">16:30</option>
+                        <option class="dropdown-item" href="#">17:00</option>
+                        <option class="dropdown-item" href="#">17:30</option>
+                    </select>
                 </div>
                 <div class="dropdown" style="margin-top: 15px;">
                     <button class=" btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -125,12 +136,26 @@ echo getHeader();
                         style="background-color: rgba(0,0,0,0.7); color:white">
                         Drop-Off Time
                     </button>
-                    <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Ribeira Grande</a></li>
-                        <li><a class="dropdown-item">Ponta Delgada</a></li>
-                        <li><a class="dropdown-item">Lagoa</a></li>
-                        <li><a class="dropdown-item">Nordeste</a></li>
-                    </ul>
+                    <select class="dropdown-menu" aria-labelledby="pickupTimeDropdown">
+                        <option class="dropdown-item" href="#">09:00</option>
+                        <option class="dropdown-item" href="#">09:30</option>
+                        <option class="dropdown-item" href="#">10:00</option>
+                        <option class="dropdown-item" href="#">10:30</option>
+                        <option class="dropdown-item" href="#">11:00</option>
+                        <option class="dropdown-item" href="#">11:30</option>
+                        <option class="dropdown-item" href="#">12:00</option>
+                        <option class="dropdown-item" href="#">12:30</option>
+                        <option class="dropdown-item" href="#">13:00</option>
+                        <option class="dropdown-item" href="#">13:30</option>
+                        <option class="dropdown-item" href="#">14:00</option>
+                        <option class="dropdown-item" href="#">14:30</option>
+                        <option class="dropdown-item" href="#">15:00</option>
+                        <option class="dropdown-item" href="#">15:30</option>
+                        <option class="dropdown-item" href="#">16:00</option>
+                        <option class="dropdown-item" href="#">16:30</option>
+                        <option class="dropdown-item" href="#">17:00</option>
+                        <option class="dropdown-item" href="#">17:30</option>
+                    </select>
                 </div>
             </div>
             <div class="col-md-1 d-flex justify-content-center align-items-center">
@@ -138,6 +163,7 @@ echo getHeader();
             </div>
         </div>
     </div>
+
     <div class="container">
         <h2 style="position:relative; top: -100px;">Our Fleet</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">
@@ -183,6 +209,7 @@ echo getHeader();
             </div>
         </div>
     </div>
+
     <?php include 'html/components/footer.inc.php'; ?>
 </body>
 

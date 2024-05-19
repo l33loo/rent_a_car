@@ -140,4 +140,3 @@ class Customer extends Profile {
         return $this;
     }
 }
-
