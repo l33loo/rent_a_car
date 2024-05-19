@@ -8,15 +8,7 @@ use RentACar\Property;
 
 echo getHeader();
 ?>
-<!-- public function __construct(
-?string $plate = null,
-?bool $rentable = null,
-?int $island_id = null,
-?int $category_id = null,
-?Island $island = null,
-?Category $category = null,
-?array $properties = null,
-) -->
+
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
     <div class="container d-flex flex-wrap justify-content-between align-items-center mt-5 pt-5 mb-3">
@@ -48,14 +40,19 @@ echo getHeader();
     </div>
     <div class="container">
         <div class="accordion">
-            <?php foreach ($vehiclesByCategoryForIsland as $categoryId => $data) { ?>
+            <?php foreach ($vehiclesByCategoryForIsland as $categoryId => $data) {
+                $categoryIsOpen = isset($_GET['categoryId']) && $_GET['categoryId'] == $categoryId;
+            ?>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $categoryId; ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $categoryId; ?>">
+                        <button class="accordion-button <?php echo $categoryIsOpen ? null : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $categoryId; ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $categoryId; ?>">
                             <?php echo !empty($data['categoryName']) ? $data['categoryName'] : 'Uncategorized'; ?>
                         </button>
                     </h2>
-                    <div id="panelsStayOpen-collapse<?php echo $categoryId; ?>" class="accordion-collapse collapse">
+                    <div
+                        id="panelsStayOpen-collapse<?php echo $categoryId; ?>"
+                        class="accordion-collapse collapse <?php echo $categoryIsOpen ? 'show' : null; ?>"
+                    >
                         <div class="accordion-body">
                             <?php if ($categoryId !== '') { ?>
                                 <div class="text-end mb-3">
@@ -133,7 +130,7 @@ echo getHeader();
                                                             >
                                                                 <?php foreach ($vehicleProperties as $vehicleProperty) { ?>
                                                                     <td>
-                                                                        <?php echo $vehicleProperty->getValue() ?>
+                                                                        <?php echo $vehicleProperty->getPropertyValue() ?>
                                                                     </td>
                                                                 <?php } ?>
                                                             </tr>
@@ -141,10 +138,10 @@ echo getHeader();
                                                     </table>
                                                 </td>
                                                 <td>
-                                                    <a href="vehicle.php?id=<?php echo $vehicle->getId(); ?>" class="btn btn-primary">
+                                                    <a href="/html/admin/vehicleView.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-primary">
                                                         View
                                                     </a>
-                                                    <a href="" class="btn btn-secondary">
+                                                    <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary">
                                                         Edit
                                                     </a>
                                                 </td>

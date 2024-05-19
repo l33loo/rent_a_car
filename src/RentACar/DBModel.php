@@ -26,6 +26,9 @@ trait DBModel
         $properties = get_object_vars($this);
         unset($properties['tableName']);
         unset($properties['id']);
+        if (array_key_exists('properties', $properties)) {
+            unset($properties['properties']);
+        }
 
         $propertyKeys = array_keys($properties);
         $foreignKeys = preg_grep('/_id$/', $propertyKeys);
