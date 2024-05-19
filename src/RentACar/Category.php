@@ -130,4 +130,24 @@ class Category {
         
         return $this;
     }
+
+    /**
+     * Get the value of dailyRate
+     */ 
+    public function getDailyRate(): float
+    {
+        return $this->dailyRate;
+    }
+
+    /**
+     * Set the value of dailyRate
+     *
+     * @return  self
+     */ 
+    public function setDailyRate(float $dailyRate): self
+    {
+        $this->dailyRate = $dailyRate;
+
+        return $this;
+    }
 } 
