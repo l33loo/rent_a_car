@@ -63,11 +63,35 @@ class Category {
     }
 
     /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * Get the value of description
      */ 
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    /**
+     * Set the value of description
+     *
+     * @return self
+     */ 
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -128,6 +152,26 @@ class Category {
             // TODO: error handling
         }
         
+        return $this;
+    }
+
+    /**
+     * Get the value of dailyRate
+     */ 
+    public function getDailyRate(): float
+    {
+        return $this->dailyRate;
+    }
+
+    /**
+     * Set the value of dailyRate
+     *
+     * @return  self
+     */ 
+    public function setDailyRate(float $dailyRate): self
+    {
+        $this->dailyRate = $dailyRate;
+
         return $this;
     }
 } 

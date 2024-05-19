@@ -1,11 +1,12 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/vehicles.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Vehicle.php';
 
+use RentACar\Category;
 use RentACar\Island;
 use RentACar\Property;
 use RentACar\Vehicle;
@@ -17,7 +18,15 @@ if (empty($_GET['vehicleId'])) {
         $vehicle = Vehicle::find($_GET['vehicleId']);
         $vehicle->loadRelation('island');
         $vehicle->loadProperties();
-        $island = Island::find($vehicle->getId());
+        $islands = Island::search([]);
+        $island = Island::find($vehicle->getIsland()->getId());
+        $categories = Category::search([
+            [
+                'column' => 'isArchived',
+                'operator' => '=',
+                'value' => false
+            ]
+        ]);
     } catch(e) {
         // TODO:
     }
@@ -38,13 +47,31 @@ echo getHeader();
                     <div class="card-body">
                         <form action="/app/admin/vehicleEdit.php" method="post">
                             <div class="row mb-3">
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <label for="plate">
                                         Plate:
                                     </label>
                                     <input type="text" class="form-control" name="plate" value="<?php echo $vehicle->getPlate(); ?>">
                                 </div>
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
+                                    <label for="categoryId">
+                                        Category:
+                                    </label>
+                                    <select class="form-control" name="categoryId" id="selectCategory">
+                                            <option value="">
+                                                No category
+                                            </option>
+                                        <?php foreach ($categories as $category) { ?>
+                                            <option
+                                                value="<?php echo $category->getId(); ?>"
+                                                <?php echo $category->getId() === $vehicle->getCategory_id() ? 'selected' : null; ?>
+                                            >
+                                                <?php echo $category->getName();?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 col-sm-12">
                                     <label for="islandId">
                                         Island:
                                     </label>
@@ -59,7 +86,7 @@ echo getHeader();
                                         <?php } ?>
                                     </select>
                                 </div>
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <label for="rentable">
                                         Rentable:
                                     </label>

@@ -19,9 +19,16 @@ try {
         $islandId = $islands[0]->getId();
     }
 
-    $islandName = Island::find($islandId)->getName();
+    $island = Island::find($islandId);
+    $islandName = $island->getName();
 
-    $categories = Category::search([]);
+    $categories = Category::search([
+        [
+            'column' => 'isArchived',
+            'operator' => '=',
+            'value' => false
+        ]
+    ]);
     // Add null category so we can get vehicles
     // without a category
     $categories[] = new Category();
@@ -39,6 +46,11 @@ try {
                 'column' => 'island_id',
                 'operator' => '=',
                 'value' => $islandId
+            ],
+            [
+                'column' => 'isArchived',
+                'operator' => '=',
+                'value' => false
             ]
         ]);
 

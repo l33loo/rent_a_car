@@ -17,8 +17,8 @@ echo getHeader();
         </div>
         <div>
             <form action="" method="get">
-                <div class="row">
-                    <div class="col-auto">
+                <div class="d-flex flex-wrap justify-content-end">
+                    <div class="ms-2">
                         <select class="form-control" name="islandId" id="selectIsland">
                             <?php foreach ($islands as $island) { ?>
                                 <option
@@ -31,7 +31,7 @@ echo getHeader();
                         </select>
                         <input type="hidden" value="<?php echo $island->getName(); ?>" name="islandName">
                     </div>
-                    <div class="col-auto">
+                    <div class="ms-2">
                         <input class="btn btn-primary" type="submit" value="Filter by island">
                     </div>
                 </div>
@@ -55,10 +55,13 @@ echo getHeader();
                     >
                         <div class="accordion-body">
                             <?php if ($categoryId !== '') { ?>
-                                <div class="text-end mb-3">
-                                    <a href="/html/admin/categoryView.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-primary">View Category</a>    
-                                    <a href="" class="btn btn-secondary">Edit Category</a>
-                                    <a href="" class="btn btn-danger">Archive Category</a>
+                                <div class="mb-3 d-flex flex-wrap justify-content-end">
+                                    <a href="/html/admin/categoryView.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-primary ms-2">View Category</a>    
+                                    <a href="/html/admin/categoryEdit.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-secondary ms-2">Edit Category</a>
+                                    <form action="/app/admin/categoryEdit.php" method="POST" class="ms-2">
+                                        <input type="submit" name="categoryArchive" class="btn btn-danger" value="Archive Category" />
+                                        <input type="hidden" name="categoryId" value="<?php echo $categoryId; ?>" />
+                                    </form>
                                 </div>
                             <?php } ?>
                             <div class="table-responsive">
