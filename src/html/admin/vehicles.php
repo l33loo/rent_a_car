@@ -17,8 +17,8 @@ echo getHeader();
         </div>
         <div>
             <form action="" method="get">
-                <div class="row">
-                    <div class="col-auto">
+                <div class="d-flex flex-wrap justify-content-end">
+                    <div class="ms-2">
                         <select class="form-control" name="islandId" id="selectIsland">
                             <?php foreach ($islands as $island) { ?>
                                 <option
@@ -31,7 +31,7 @@ echo getHeader();
                         </select>
                         <input type="hidden" value="<?php echo $island->getName(); ?>" name="islandName">
                     </div>
-                    <div class="col-auto">
+                    <div class="ms-2">
                         <input class="btn btn-primary" type="submit" value="Filter by island">
                     </div>
                 </div>
