@@ -375,26 +375,26 @@ INSERT INTO property (
     id, name
 ) VALUES (
     -- CAR PROPERTIES
-    1, "brand"
+    1, "Brand"
 ), (
-    2, "model"
+    2, "Model"
 ), (
-    3, "color"
+    3, "Color"
 ), (
-    4, "year"
+    4, "Year"
 ), (
-    5, "similarModel"
+    5, "Similar Model"
 ), (
     -- CATEGORY PROPERTIES
-    6, "transmission"
+    6, "Transmission"
 ), (
-    7, "fuel"
+    7, "Fuel"
 ), (
-    8, "seats"
+    8, "Seats"
 ), (
-    9, "doors"
+    9, "Doors"
 ), (
-    10, "trunkSize"
+    10, "Trunk Size"
 );
 
 INSERT INTO category (
