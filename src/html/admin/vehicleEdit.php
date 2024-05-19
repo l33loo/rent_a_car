@@ -20,7 +20,13 @@ if (empty($_GET['vehicleId'])) {
         $vehicle->loadProperties();
         $islands = Island::search([]);
         $island = Island::find($vehicle->getIsland()->getId());
-        $categories = Category::search([]);
+        $categories = Category::search([
+            [
+                'column' => 'isArchived',
+                'operator' => '=',
+                'value' => false
+            ]
+        ]);
     } catch(e) {
         // TODO:
     }
