@@ -19,7 +19,8 @@ try {
         $islandId = $islands[0]->getId();
     }
 
-    $islandName = Island::find($islandId)->getName();
+    $island = Island::find($islandId);
+    $islandName = $island->getName();
 
     $categories = Category::search([]);
     // Add null category so we can get vehicles
