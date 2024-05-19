@@ -117,18 +117,10 @@ class Vehicle {
      */ 
     public function loadProperties(): self
     {
-        // INSERT INTO vehicle_property (vehicle_id, property_id, value)
-        // VALUES
-        // -- Economy Cars - São Miguel
-        // (1, 1, "Renault"),
-        // (1, 2, "Clio"),
-        // (1, 3, "Red"),
-        // (1, 4, "2022"),
-        // (1, 5, "Volkswagen Polo"),
         try {
             $vehicleId = $this->id;
             $stmt = self::rawSQL("
-                SELECT p.name, vp.value FROM property p
+                SELECT p.id, p.name, vp.value FROM property p
                 LEFT OUTER JOIN vehicle_property vp ON vp.property_id = p.id
                 WHERE vp.vehicle_id = $vehicleId;
             ");

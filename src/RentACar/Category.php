@@ -114,7 +114,7 @@ class Category {
         try {
             $categoryId = $this->id;
             $stmt = self::rawSQL("
-                SELECT c.name, cp.value FROM category c
+                SELECT p.id, c.name, cp.value FROM property p
                 LEFT OUTER JOIN category_property cp ON cp.property_id = c.id
                 WHERE cp.category_id = $categoryId;
             ");

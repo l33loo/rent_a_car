@@ -8,15 +8,7 @@ use RentACar\Property;
 
 echo getHeader();
 ?>
-<!-- public function __construct(
-?string $plate = null,
-?bool $rentable = null,
-?int $island_id = null,
-?int $category_id = null,
-?Island $island = null,
-?Category $category = null,
-?array $properties = null,
-) -->
+
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
     <div class="container d-flex flex-wrap justify-content-between align-items-center mt-5 pt-5 mb-3">
@@ -141,10 +133,10 @@ echo getHeader();
                                                     </table>
                                                 </td>
                                                 <td>
-                                                    <a href="vehicle.php?id=<?php echo $vehicle->getId(); ?>" class="btn btn-primary">
+                                                    <a href="/html/admin/vehicleView.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-primary">
                                                         View
                                                     </a>
-                                                    <a href="" class="btn btn-secondary">
+                                                    <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary">
                                                         Edit
                                                     </a>
                                                 </td>
