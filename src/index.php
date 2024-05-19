@@ -1,10 +1,10 @@
 <?php  
-use RentACar\Address;
+require_once $_SERVER['DOCUMENT_ROOT'] . "/html/components/header.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Location.php";
+
 use RentACar\Location;
 
 session_start();
-require_once $_SERVER['DOCUMENT_ROOT'] . "/html/components/header.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Location.php";
 echo getHeader();
 
 $location = Location::search([]);
@@ -109,8 +109,9 @@ $location = Location::search([]);
                         aria-expanded="false" style="padding-left: 20px;background-color: rgba(0,0,0,0.7); color:white">
                         Pick-up Time
                     </button>
-                    <select class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <option class="dropdown-item" href="#">9:30</option>
+                    <select class="dropdown-menu" aria-labelledby="pickupTimeDropdown">
+                        <option class="dropdown-item" href="#">09:00</option>
+                        <option class="dropdown-item" href="#">09:30</option>
                         <option class="dropdown-item" href="#">10:00</option>
                         <option class="dropdown-item" href="#">10:30</option>
                         <option class="dropdown-item" href="#">11:00</option>
@@ -135,8 +136,9 @@ $location = Location::search([]);
                         style="background-color: rgba(0,0,0,0.7); color:white">
                         Drop-Off Time
                     </button>
-                    <select class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <option class="dropdown-item" href="#">9:30</option>
+                    <select class="dropdown-menu" aria-labelledby="pickupTimeDropdown">
+                        <option class="dropdown-item" href="#">09:00</option>
+                        <option class="dropdown-item" href="#">09:30</option>
                         <option class="dropdown-item" href="#">10:00</option>
                         <option class="dropdown-item" href="#">10:30</option>
                         <option class="dropdown-item" href="#">11:00</option>
