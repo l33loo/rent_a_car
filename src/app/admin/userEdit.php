@@ -10,8 +10,6 @@ if (empty($_POST['userId']) && empty($_GET['id']) && empty($_SESSION['logged_id'
     exit;
 }
 
-$userId;
-
 if (!empty($_POST['userId'])) {
     $userId = $_POST['userId'];
 } else if (!empty($_GET['id'])) {
