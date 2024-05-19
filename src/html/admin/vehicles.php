@@ -45,13 +45,13 @@ echo getHeader();
             ?>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button <?php echo $categoryIsOpen ? null : 'collapsed' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $categoryId; ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $categoryId; ?>">
+                        <button class="accordion-button <?php echo $categoryIsOpen ? null : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $categoryId; ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $categoryId; ?>">
                             <?php echo !empty($data['categoryName']) ? $data['categoryName'] : 'Uncategorized'; ?>
                         </button>
                     </h2>
                     <div
                         id="panelsStayOpen-collapse<?php echo $categoryId; ?>"
-                        class="accordion-collapse <?php echo $categoryIsOpen ? 'open' : 'collapse' ?>"
+                        class="accordion-collapse collapse <?php echo $categoryIsOpen ? 'show' : null; ?>"
                     >
                         <div class="accordion-body">
                             <?php if ($categoryId !== '') { ?>
