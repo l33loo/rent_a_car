@@ -14,6 +14,8 @@ class Property {
         ?string $propertyValue = null,
         ?int $id = null
     ) {
+        $this->tableName = 'property';
+        
         if ($name !== null) {
             $this->name = $name;
         }

@@ -13,9 +13,9 @@ if (empty($_GET['categoryId'])) {
 try {
     $category = Category::find($_GET['categoryId']);
     $category->loadProperties();
-    print_r($category);
+    // print_r($category);
     $categoryObjectVars = $category->getObjectVars();
-    print_r($categoryObjectVars);
+    // print_r($categoryObjectVars);
 } catch (e) {
     // TODO: manage error and redirect
 }
@@ -40,7 +40,7 @@ echo getHeader();
                 <tr>
                     <?php foreach ($categoryObjectVars as $varKey => $varValue) { ?>
                         <td>
-                            <?php echo $varValue; ?>
+                            <?php print_r($varValue); ?>
                         </td>
                     <?php } ?>
                 </tr>
