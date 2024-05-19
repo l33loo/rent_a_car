@@ -216,4 +216,24 @@ class Vehicle {
 
         return $this;
     }
+
+    /**
+     * Get the value of category_id
+     */ 
+    public function getCategory_id(): int
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * Set the value of category_id
+     *
+     * @return  self
+     */ 
+    public function setCategory_id(int $category_id): self
+    {
+        $this->category_id = $category_id;
+
+        return $this;
+    }
 }

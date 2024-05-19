@@ -40,14 +40,19 @@ echo getHeader();
     </div>
     <div class="container">
         <div class="accordion">
-            <?php foreach ($vehiclesByCategoryForIsland as $categoryId => $data) { ?>
+            <?php foreach ($vehiclesByCategoryForIsland as $categoryId => $data) {
+                $categoryIsOpen = isset($_GET['categoryId']) && $_GET['categoryId'] == $categoryId;
+            ?>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $categoryId; ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $categoryId; ?>">
+                        <button class="accordion-button <?php echo $categoryIsOpen ? null : 'collapsed' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $categoryId; ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $categoryId; ?>">
                             <?php echo !empty($data['categoryName']) ? $data['categoryName'] : 'Uncategorized'; ?>
                         </button>
                     </h2>
-                    <div id="panelsStayOpen-collapse<?php echo $categoryId; ?>" class="accordion-collapse collapse">
+                    <div
+                        id="panelsStayOpen-collapse<?php echo $categoryId; ?>"
+                        class="accordion-collapse <?php echo $categoryIsOpen ? 'open' : 'collapse' ?>"
+                    >
                         <div class="accordion-body">
                             <?php if ($categoryId !== '') { ?>
                                 <div class="text-end mb-3">

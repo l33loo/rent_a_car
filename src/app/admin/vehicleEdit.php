@@ -21,6 +21,7 @@ try {
     $vehicle->loadProperties();
     $vehicle->setPlate($_POST['plate']);
     $vehicle->setIsland_id($_POST['islandId']);
+    $vehicle->setRentable($_POST['rentable']);
     $vehicle->save();
 
     foreach ($vehicle->getProperties() as $property) {
@@ -34,10 +35,10 @@ try {
         $formPropertyValue = trim($_POST['property-' . $propertyId]);
         if ($formPropertyValue !== $property->getPropertyValue()) {
             $stmt = Vehicle::rawSQL("
-                UPDATE vehicle_property vp
-                SET vp.propertyValue = $formPropertyValue
-                WHERE vp.vehicle_id=$vehicleId
-                AND vp.property_id=$propertyId; 
+                UPDATE vehicle_property
+                SET propertyValue = '$formPropertyValue'
+                WHERE vehicle_id=$vehicleId
+                AND property_id=$propertyId; 
             ");
         }
     }
@@ -47,5 +48,6 @@ try {
     header('Location: /html/admin/vehicleEdit.php');
     exit;
 }
-
-header('Location: /html/admin/vehicles.php');
+$vehicleIsland_id = $vehicle->getIsland_id();
+$vehicleCategory_id = $vehicle->getCategory_id();
+header("Location: /html/admin/vehicles.php?islandId=$vehicleIsland_id&categoryId=$vehicleCategory_id");

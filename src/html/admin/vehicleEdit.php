@@ -38,13 +38,13 @@ echo getHeader();
                     <div class="card-body">
                         <form action="/app/admin/vehicleEdit.php" method="post">
                             <div class="row mb-3">
-                                <div class="col-md-6 col-sm-12">
+                                <div class="col-md-4 col-sm-12">
                                     <label for="plate">
                                         Plate:
                                     </label>
                                     <input type="text" class="form-control" name="plate" value="<?php echo $vehicle->getPlate(); ?>">
                                 </div>
-                                <div class="col-md-6 col-sm-12">
+                                <div class="col-md-4 col-sm-12">
                                     <label for="islandId">
                                         Island:
                                     </label>
@@ -57,6 +57,25 @@ echo getHeader();
                                                 <?php echo $island->getName();?>
                                             </option>
                                         <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <label for="rentable">
+                                        Rentable:
+                                    </label>
+                                    <select class="form-control" name="rentable" id="selectRentable">
+                                        <option
+                                            value="1"
+                                            <?php echo $vehicle->getRentable() ? 'selected' : null; ?>
+                                        >
+                                            YES
+                                        </option>
+                                        <option
+                                            value="0"
+                                            <?php echo $vehicle->getRentable() ? null : 'selected'; ?>
+                                        >
+                                            NO
+                                        </option>
                                     </select>
                                 </div>
                             </div>
