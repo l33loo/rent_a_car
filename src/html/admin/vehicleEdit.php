@@ -17,7 +17,7 @@ if (empty($_GET['vehicleId'])) {
         $vehicle = Vehicle::find($_GET['vehicleId']);
         $vehicle->loadRelation('island');
         $vehicle->loadProperties();
-        $island = Island::find($vehicle->getId());
+        $island = Island::find($vehicle->getIsland()->getId());
     } catch(e) {
         // TODO:
     }
