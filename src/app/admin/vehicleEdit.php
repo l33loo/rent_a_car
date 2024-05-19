@@ -21,6 +21,7 @@ try {
     $vehicle->loadProperties();
     $vehicle->setPlate($_POST['plate']);
     $vehicle->setIsland_id($_POST['islandId']);
+    $vehicle->setCategory_id($_POST['categoryId'] === '' ? null : $_POST['categoryId']);
     $vehicle->setRentable($_POST['rentable']);
     $vehicle->save();
 
