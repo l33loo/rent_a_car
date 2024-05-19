@@ -59,7 +59,7 @@ echo getHeader();
                                     <a href="/html/admin/categoryView.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-primary ms-2">View Category</a>    
                                     <a href="/html/admin/categoryEdit.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-secondary ms-2">Edit Category</a>
                                     <form action="/app/admin/categoryEdit.php" method="POST" class="ms-2">
-                                        <input type="submit" name="archiveCategory" class="btn btn-danger" value="Archive Category" />
+                                        <input type="submit" name="categoryArchive" class="btn btn-danger" value="Archive Category" />
                                         <input type="hidden" name="categoryId" value="<?php echo $categoryId; ?>" />
                                     </form>
                                 </div>

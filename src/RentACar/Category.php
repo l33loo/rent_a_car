@@ -63,11 +63,35 @@ class Category {
     }
 
     /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * Get the value of description
      */ 
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    /**
+     * Set the value of description
+     *
+     * @return self
+     */ 
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     /**

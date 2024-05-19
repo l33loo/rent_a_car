@@ -31,7 +31,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Category</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/admin/vehicleEdit.php" method="post">
+                        <form action="/app/admin/categoryEdit.php" method="post">
                             <div class="row mb-3">
                                 <div class="col-md-4 col-sm-12">
                                     <label for="name">
@@ -84,11 +84,11 @@ echo getHeader();
                                 <?php } ?>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <input type="hidden" name="vehicleId" value="<?php echo $category->getId(    ); ?>" />
+                                <input type="hidden" name="categoryId" value="<?php echo $category->getId(); ?>" />
                                 <input
                                     type="submit"
                                     class="btn btn-primary"
-                                    name="vehicleEdit"
+                                    name="categoryEdit"
                                     value="Edit Category"
                                 />
                             </div>
