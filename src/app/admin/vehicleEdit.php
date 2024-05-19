@@ -32,10 +32,10 @@ try {
         }
 
         $formPropertyValue = trim($_POST['property-' . $propertyId]);
-        if ($formPropertyValue !== $property->getValue()) {
+        if ($formPropertyValue !== $property->getPropertyValue()) {
             $stmt = Vehicle::rawSQL("
                 UPDATE vehicle_property vp
-                SET vp.value = $formPropertyValue
+                SET vp.propertyValue = $formPropertyValue
                 WHERE vp.vehicle_id=$vehicleId
                 AND vp.property_id=$propertyId; 
             ");

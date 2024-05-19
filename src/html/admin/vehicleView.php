@@ -67,7 +67,7 @@ echo getHeader();
                         <th><?php echo $vehicle->getId(); ?></th>
                         <?php foreach ($vehicle->getProperties() as $vehicleProperty) { ?>
                             <td>
-                                <?php echo $vehicleProperty->getValue() ?>
+                                <?php echo $vehicleProperty->getPropertyValue() ?>
                             </td>
                         <?php } ?>
                         <td><?php echo $island->getName(); ?></td>

@@ -132,7 +132,7 @@ class Vehicle {
         try {
             $vehicleId = $this->id;
             $stmt = self::rawSQL("
-                SELECT p.id, p.name, vp.value FROM property p
+                SELECT p.id, p.name, vp.propertyValue FROM property p
                 LEFT OUTER JOIN vehicle_property vp ON vp.property_id = p.id
                 WHERE vp.vehicle_id = $vehicleId;
             ");

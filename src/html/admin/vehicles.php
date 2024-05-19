@@ -125,7 +125,7 @@ echo getHeader();
                                                             >
                                                                 <?php foreach ($vehicleProperties as $vehicleProperty) { ?>
                                                                     <td>
-                                                                        <?php echo $vehicleProperty->getValue() ?>
+                                                                        <?php echo $vehicleProperty->getPropertyValue() ?>
                                                                     </td>
                                                                 <?php } ?>
                                                             </tr>

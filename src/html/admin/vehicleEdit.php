@@ -66,7 +66,7 @@ echo getHeader();
                                         <label for="property-<?php echo $property->getId(); ?>">
                                             <?php echo $property->getName(); ?>:
                                         </label>
-                                        <input type="text" class="form-control" name="property-<?php echo $property->getId(); ?>" value=<?php echo $property->getValue(); ?>>
+                                        <input type="text" class="form-control" name="property-<?php echo $property->getId(); ?>" value=<?php echo $property->getPropertyValue(); ?>>
                                     </div>
                                 <?php } ?>
                             </div>
