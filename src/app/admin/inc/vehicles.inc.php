@@ -19,20 +19,20 @@ try {
         $islandId = $islands[0]->getId();
     }
 
-    if (!empty($_GET['islandName'])) {
-        $islandName = $_GET['islandName'];
-    } else {
-        $islandName = $islands[0]->getName();
-    }
+    $islandName = Island::find($islandId)->getName();
 
     $categories = Category::search([]);
+    // Add null category so we can get vehicles
+    // without a category
+    $categories[] = new Category();
+
     $vehiclesByCategoryForIsland = [];
 
     foreach ($categories as $category) {
         $vehicles = Vehicle::search([
             [
                 'column' => 'category_id',
-                'operator' => '=',
+                'operator' => '<=>',
                 'value' => $category->getId()
             ],
             [
@@ -42,7 +42,10 @@ try {
             ]
         ]);
 
-        $vehiclesByCategoryForIsland[$category->getId()] = $vehicles;
+        $vehiclesByCategoryForIsland[$category->getId()] = [
+            'categoryName' => $category->getName(),
+            'vehicles' => $vehicles
+        ];
 
         // TODO: loca vehicle's properties
       
