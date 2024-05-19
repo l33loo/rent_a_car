@@ -20,7 +20,7 @@ class Vehicle {
     protected ?Island $island = null;
     protected ?Category $category = null;
     protected ?array $properties = null;
-
+    protected ?bool $isArchived = null;
 
     public function __construct(
         ?string $plate = null,
@@ -30,6 +30,7 @@ class Vehicle {
         ?Island $island = null,
         ?Category $category = null,
         ?array $properties = null,
+        ?bool $isArchived = null
     ) {
         $this->tableName = 'vehicle';
 
@@ -59,6 +60,10 @@ class Vehicle {
         
         if ($properties !== null) {
             $this->properties = $properties;
+        }
+
+        if ($isArchived !== null) {
+            $this->isArchived = $isArchived;
         }
     }
 
@@ -166,5 +171,25 @@ class Vehicle {
     public function getIsland(): Island
     {
         return $this->island;
+    }
+
+    /**
+     * Get the value of isArchived
+     */ 
+    public function getIsArchived(): bool
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set the value of isArchived
+     *
+     * @return  self
+     */ 
+    public function setIsArchived($isArchived): self
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
     }
 }

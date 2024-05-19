@@ -6,9 +6,9 @@ echo getHeader();
 ?>
 
 <body?>
-    <?php include '../components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
     <div>
         <?php print_r($vehicle); ?>
     </div>
-    <?php // TODO: uncomment => include '../components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
 </body>
