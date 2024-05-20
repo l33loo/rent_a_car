@@ -32,7 +32,7 @@ echo getHeader();
                         <input type="hidden" value="<?php echo $island->getName(); ?>" name="islandName">
                     </div>
                     <div class="ms-2">
-                        <input class="btn btn-primary" type="submit" value="Filter by island">
+                        <input class="btn btn-outline-secondary" type="submit" value="Filter by island">
                     </div>
                 </div>
             </form>           
