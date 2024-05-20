@@ -38,6 +38,13 @@ echo getHeader();
             </form>           
         </div>
     </div>
+    <div class="container mb-4">
+        <div class="d-flex flex-wrap">
+            <a href="/html/admin/categoryNew.php" class="btn btn-success">
+                Add New Category
+            </a>                       
+        </div>
+    </div>
     <div class="container">
         <div class="accordion">
             <?php foreach ($vehiclesByCategoryForIsland as $categoryId => $data) {
