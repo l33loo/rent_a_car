@@ -58,11 +58,6 @@ if (isset($_POST['vehicleArchive'])) {
     try {
         $vehicle = Vehicle::find($vehicleId);
         $vehicle->setIsArchived(true)->save();
-        $stmt = Vehicle::rawSQL("
-            UPDATE vehicle
-            SET category_id = NULL
-            WHERE category_id=$vehicleId
-        ");
         $islandId = $vehicle->getIsland_id();
         $categoryId = $vehicle->getCategory_id();
         header("Location: /html/admin/vehicles.php?islandId=$islandId&categoryId=$categoryId");
