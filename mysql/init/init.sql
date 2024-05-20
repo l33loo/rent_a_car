@@ -574,6 +574,7 @@ VALUES
 (3, 4, "2022"),
 (3, 5, "Renault Clio"),
 
+(4, 1, "Renault"),
 (4, 2, "Clio"),
 (4, 3, "Red"),
 (4, 4, "2022"),
@@ -1075,50 +1076,50 @@ VALUES
 INSERT INTO category_property(category_id, property_id, propertyValue)
     VALUES
     -- ECONOMY
-    (1, 6, "manual"),
-    (1, 7, "gas"),
+    (1, 6, "Manual"),
+    (1, 7, "Gas"),
     (1, 8, "4"),
     (1, 9, "3"),
     (1, 10, "2"),
 
     -- SMALL
-    (2, 6, "manual"),
-    (2, 7, "gas"),
+    (2, 6, "Manual"),
+    (2, 7, "Gas"),
     (2, 8, "5"),
     (2, 9, "5"),
     (2, 10, "3"),
 
     -- SEDAN
-    (3, 6, "manual"),
-    (3, 7, "gas"),
+    (3, 6, "Manual"),
+    (3, 7, "Gas"),
     (3, 8, "5"),
     (3, 9, "5"),
     (3, 10, "4"),
 
     -- SUV
-    (4, 6, "manual"),
-    (4, 7, "gas"),
+    (4, 6, "Manual"),
+    (4, 7, "Gas"),
     (4, 8, "5"),
     (4, 9, "5"),
     (4, 10, "5"),
 
     -- SEDAN PREMIUM
-    (5, 6, "automatic"),
-    (5, 7, "gas"),
+    (5, 6, "Automatic"),
+    (5, 7, "Gas"),
     (5, 8, "5"),
     (5, 9, "5"),
     (5, 10, "4"),
 
     -- SUV PREMIUM
-    (6, 6, "automatic"),
-    (6, 7, "gas"),
+    (6, 6, "Automatic"),
+    (6, 7, "Gas"),
     (6, 8, "5"),
     (6, 9, "5"),
     (6, 10, "5"),
 
     -- ELECTRIC
-    (7, 6, "automatic"),
-    (7, 7, "electric"),
+    (7, 6, "Automatic"),
+    (7, 7, "Electric"),
     (7, 8, "5"),
     (7, 9, "5"),
     (7, 10, "4");

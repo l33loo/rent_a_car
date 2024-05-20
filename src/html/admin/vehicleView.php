@@ -16,8 +16,10 @@ if (empty($_GET['vehicleId'])) {
     try {
         $vehicle = Vehicle::find($_GET['vehicleId']);
         $vehicle->loadRelation('island');
+        $vehicle->loadRelation('category');
         $vehicle->loadProperties();
-        $island = Island::find($vehicle->getIsland()->getId());
+        $island = $vehicle->getIsland();
+        $category = $vehicle->getCategory();
     } catch(e) {
         // TODO:
     }
@@ -36,9 +38,9 @@ echo getHeader();
                     class="btn btn-secondary">
                     Edit
                 </a>
-                <form action="/app/admin/userEdit.php" method="POST" class="ps-2">
-                    <input type="submit" name="archiveUser" class="btn btn-danger" value="Archive" />
-                    <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
+                <form action="/app/admin/vehicleEdit.php" method="POST" class="ps-2">
+                    <input type="submit" name="vehicleArchive" class="btn btn-danger" value="Archive" />
+                    <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId(); ?>" />
                 </form>
             </div>
         </div>
@@ -56,6 +58,12 @@ echo getHeader();
                         <?php } ?>
                         <th class="col" data-field="description" data-editable="true"
                             data-editable-emptytext="Custom empty text.">
+                        <th class="col" data-field="description" data-editable="true"
+                            data-editable-emptytext="Custom empty text.">
+                            Category
+                        </th>
+                        <th class="col" data-field="description" data-editable="true"
+                            data-editable-emptytext="Custom empty text.">
                             Island
                         </th>
                         <th class="col" data-field="name" data-editable="true">Rentable</th>
@@ -69,6 +77,7 @@ echo getHeader();
                             <?php echo $vehicleProperty->getPropertyValue() ?>
                         </td>
                         <?php } ?>
+                        <td><?php echo $category->getName(); ?></td>
                         <td><?php echo $island->getName(); ?></td>
                         <td><?php echo $vehicle->getRentable() ? 'YES' : 'NO'; ?></td>
                     </tr>

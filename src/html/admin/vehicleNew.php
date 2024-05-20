@@ -11,25 +11,25 @@ use RentACar\Island;
 use RentACar\Property;
 use RentACar\Vehicle;
 
-if (empty($_GET['vehicleId'])) {
-    // TODO: error
-} else {
-    try {
-        $vehicle = Vehicle::find($_GET['vehicleId']);
-        $vehicle->loadRelation('island');
-        $vehicle->loadProperties();
-        $islands = Island::search([]);
-        $island = Island::find($vehicle->getIsland()->getId());
-        $categories = Category::search([
-            [
-                'column' => 'isArchived',
-                'operator' => '=',
-                'value' => false
-            ]
-        ]);
-    } catch(e) {
-        // TODO:
-    }
+try {
+    $islands = Island::search([]);
+    $categories = Category::search([
+        [
+            'column' => 'isArchived',
+            'operator' => '=',
+            'value' => false
+        ]
+    ]);
+
+    $propertiesForVehicle = Property::search([
+        [
+            'column' => 'id',
+            'operator' => '<=',
+            'value' => 5
+        ]
+    ]);
+} catch(e) {
+    // TODO:
 }
 
 echo getHeader();
@@ -42,16 +42,16 @@ echo getHeader();
             <div class="col">
                 <div class="card mt-5 mb-4">
                     <div class="card-header">
-                        <h1 class="text-center">Edit Vehicle</h1>
+                        <h1 class="text-center">Add New Vehicle</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/admin/vehicleEdit.php" method="post">
+                        <form action="/app/admin/vehicleNew.php" method="post">
                             <div class="row mb-3">
                                 <div class="col-md-3 col-sm-12">
                                     <label for="plate">
                                         Plate:
                                     </label>
-                                    <input type="text" class="form-control" name="plate" value="<?php echo $vehicle->getPlate(); ?>">
+                                    <input type="text" class="form-control" name="plate">
                                 </div>
                                 <div class="col-md-3 col-sm-12">
                                     <label for="categoryId">
@@ -62,10 +62,7 @@ echo getHeader();
                                                 No category
                                             </option>
                                         <?php foreach ($categories as $category) { ?>
-                                            <option
-                                                value="<?php echo $category->getId(); ?>"
-                                                <?php echo $category->getId() === $vehicle->getCategory_id() ? 'selected' : null; ?>
-                                            >
+                                            <option value="<?php echo $category->getId(); ?>">
                                                 <?php echo $category->getName();?>
                                             </option>
                                         <?php } ?>
@@ -79,7 +76,7 @@ echo getHeader();
                                         <?php foreach ($islands as $island) { ?>
                                             <option
                                                 value="<?php echo $island->getId(); ?>"
-                                                <?php echo $island->getId() === $vehicle->getIsland()->getId() ? 'selected' : null; ?>
+                                                <?php echo !empty($_GET['islandId']) && $_GET['islandId'] == $island->getId() ? 'selected' : null ?>
                                             >
                                                 <?php echo $island->getName();?>
                                             </option>
@@ -91,23 +88,17 @@ echo getHeader();
                                         Rentable:
                                     </label>
                                     <select class="form-control" name="rentable" id="selectRentable">
-                                        <option
-                                            value="1"
-                                            <?php echo $vehicle->getRentable() ? 'selected' : null; ?>
-                                        >
+                                        <option value="1">
                                             YES
                                         </option>
-                                        <option
-                                            value="0"
-                                            <?php echo $vehicle->getRentable() ? null : 'selected'; ?>
-                                        >
+                                        <option value="0">
                                             NO
                                         </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-4">
-                                <?php foreach ($vehicle->getProperties() as $property) { ?>
+                                <?php foreach ($propertiesForVehicle as $property) { ?>
                                     <div class="col-md col-sm-12">
                                         <label for="property-<?php echo $property->getId(); ?>">
                                             <?php echo $property->getName(); ?>:
@@ -117,12 +108,11 @@ echo getHeader();
                                 <?php } ?>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId(    ); ?>" />
                                 <input
                                     type="submit"
                                     class="btn btn-primary"
-                                    name="vehicleEdit"
-                                    value="Edit Vehicle"
+                                    name="vehicleNew"
+                                    value="Add Vehicle"
                                 />
                             </div>
                         </form>
