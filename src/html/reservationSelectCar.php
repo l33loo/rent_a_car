@@ -1,12 +1,37 @@
-<?php  
+<?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/html/components/header.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Location.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Vehicle.php';
 
-use RentACar\Location;
+use RentACar\Category;
+use RentACar\Vehicle;
 
 session_start();
 
-$locations = Location::search([]);
+try {
+    // TODO: Validate that pick-up and drop-off locations are on the same island 
+
+    $categories = Category::search([]);
+    $vehiclesWithCategory = [];
+    $categoriesById = [];
+
+    foreach ($categories as $category) {
+        $category->loadProperties();
+        $categoryId = $category->getId();
+        $vehicles = Vehicle::search([], '', 3);
+        $categoriesById[$categoryId] = $category;
+
+        foreach ($vehicles as $vehicle) {
+            $vehicle->loadProperties();
+            $vehiclesWithCategory[] = [
+                'vehicle' => $vehicle,
+                'categoryId' => $categoryId
+            ];
+        }
+    }
+} catch(e) {
+    // TODO: handle errors
+}
 
 echo getHeader();
 ?>
@@ -56,66 +81,27 @@ echo getHeader();
 
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
-        <h1>Reservation</h1>
-        <form action="/html/reservationSelectCar.php" method="get">
-            <div class="row">
-                <div class="col-md-6 col-12">
-                    <h2>Pick-up</h2>
-                    <div class="row">
-                        <div class="col">
-                            <label for="pickup-location">1. Pick-Up Location:</label>
-                            <select id="pickup-location" name="pickup_location" class="form-select">
-                                <?php foreach ($locations as $location) : ?>
-                                    <option value="<?php echo $location->getId(); ?>">
-                                        <?php echo $location->getName(); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="pickup-date">Pick-Up Date:</label>
-                            <input type="date" id="pickup-date" name="pickup_date" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="pickup-time">Pick-Up Time:</label>
-                            <input type="time" id="pickup-time" name="pickup_time" min="09:30" max="17:30" class="form-control" required>
-                        </div>
-                    </div>
+        <h1>2. Select a car</h1>
+        <?php foreach ($vehiclesWithCategory as $vehicleWithCategory) {
+            $vehicle = $vehicleWithCategory['vehicle'];
+            $vehicleProperties = $vehicle->getProperties();
+            $category = $categoriesById[$vehicleWithCategory['categoryId']];
+            $categoryProperties = $category->getProperties();
+        ?>
+            <div class="row mb-3">
+                <div class="col">
+                    <img src="/img/car.jpg" alt="">
                 </div>
-                <div class="col-md-6 col-12">
-                    <h2>Drop-off</h2>
-                    <div class="row">
-                        <div class="col">
-                            <label for="dropoff-location">Drop-Off Location:</label>
-                            <select id="dropoff-location" name="dropoff_location" class="form-select">
-                                <?php foreach ($locations as $location) : ?>
-                                    <option value="<?php echo $location->getId(); ?>">
-                                        <?php echo $location->getName(); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="dropoff-date">Drop-Off Date:</label>
-                            <input type="date" id="dropoff-date" name="dropoff_date" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="dropoff-time">Drop-Off Time:</label>
-                            <input type="time" id="dropoff-time" name="dropoff_time" min="09:30:00" max="17:30:00" class="form-control" required>
-                        </div>
-                    </div>
+                <div class="col">
+                    <h2>
+                        <?php echo $vehicleProperties['Brand']->getPropertyValue() . ' ' . $vehicleProperties['Model']->getPropertyValue() ?>
+                    </h2>
+                </div>
+                <div class="col">
+
                 </div>
             </div>
-            <input type="submit" value="Submit" class="btn btn-primary">
-        </form>
+        <?php } ?>
     </div>
 
     <div class="container">
@@ -168,3 +154,4 @@ echo getHeader();
 </body>
 
 </html>
+
