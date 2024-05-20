@@ -38,7 +38,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/countries.inc.php';
         </div>
         <div class="col">
             <label for="country">Country</label>
-            <select class="form-control" name="countryId">
+            <select class="form-select" name="countryId">
                 <?php foreach($countries as $country) { ?>
                     <option value="<?php echo $country->getId(); ?>">
                         <?php echo $country->getName(); ?>
