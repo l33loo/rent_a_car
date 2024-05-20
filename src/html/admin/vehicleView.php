@@ -37,9 +37,9 @@ echo getHeader();
                 <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary">
                     Edit
                 </a>
-                <form action="/app/admin/userEdit.php" method="POST" class="ps-2">
-                    <input type="submit" name="archiveUser" class="btn btn-danger" value="Archive" />
-                    <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
+                <form action="/app/admin/vehicleEdit.php" method="POST" class="ps-2">
+                    <input type="submit" name="vehicleArchive" class="btn btn-danger" value="Archive" />
+                    <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId(); ?>" />
                 </form>
             </div>
         </div>

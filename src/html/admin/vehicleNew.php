@@ -11,7 +11,6 @@ use RentACar\Island;
 use RentACar\Property;
 use RentACar\Vehicle;
 
-
 try {
     $islands = Island::search([]);
     $categories = Category::search([
@@ -75,7 +74,10 @@ echo getHeader();
                                     </label>
                                     <select class="form-control" name="islandId" id="selectIsland">
                                         <?php foreach ($islands as $island) { ?>
-                                            <option value="<?php echo $island->getId(); ?>">
+                                            <option
+                                                value="<?php echo $island->getId(); ?>"
+                                                <?php echo !empty($_GET['islandId']) && $_GET['islandId'] == $island->getId() ? 'selected' : null ?>
+                                            >
                                                 <?php echo $island->getName();?>
                                             </option>
                                         <?php } ?>
