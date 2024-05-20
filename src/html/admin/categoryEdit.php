@@ -49,7 +49,7 @@ echo getHeader();
                                     <label for="isArchived">
                                         Is Archived:
                                     </label>
-                                    <select class="form-control" name="isArchived" id="selectIsArchived">
+                                    <select class="form-select" name="isArchived" id="selectIsArchived">
                                         <option
                                             value="1"
                                             <?php echo $category->getIsArchived() ? 'selected' : null; ?>

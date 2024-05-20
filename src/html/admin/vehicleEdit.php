@@ -57,7 +57,7 @@ echo getHeader();
                                     <label for="categoryId">
                                         Category:
                                     </label>
-                                    <select class="form-control" name="categoryId" id="selectCategory">
+                                    <select class="form-select" name="categoryId" id="selectCategory">
                                             <option value="">
                                                 No category
                                             </option>
@@ -75,7 +75,7 @@ echo getHeader();
                                     <label for="islandId">
                                         Island:
                                     </label>
-                                    <select class="form-control" name="islandId" id="selectIsland">
+                                    <select class="form-select" name="islandId" id="selectIsland">
                                         <?php foreach ($islands as $island) { ?>
                                             <option
                                                 value="<?php echo $island->getId(); ?>"
@@ -90,7 +90,7 @@ echo getHeader();
                                     <label for="rentable">
                                         Rentable:
                                     </label>
-                                    <select class="form-control" name="rentable" id="selectRentable">
+                                    <select class="form-select" name="rentable" id="selectRentable">
                                         <option
                                             value="1"
                                             <?php echo $vehicle->getRentable() ? 'selected' : null; ?>

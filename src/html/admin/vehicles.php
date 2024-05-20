@@ -19,7 +19,7 @@ echo getHeader();
             <form action="" method="get">
                 <div class="d-flex flex-wrap justify-content-end">
                     <div class="ms-2">
-                        <select class="form-control" name="islandId" id="selectIsland">
+                        <select class="form-select" name="islandId" id="selectIsland">
                             <?php foreach ($islands as $island) { ?>
                                 <option
                                     value="<?php echo $island->getId(); ?>"
