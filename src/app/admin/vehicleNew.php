@@ -9,23 +9,30 @@ use RentACar\Vehicle;
 
 // TODO: validate fields
 
-if (!isset($_POST['vehicleId'])) {
-    // TODO: error
-    exit;
-}
-
-$vehicleId = $_POST['vehicleId'];
-
 try {
-    $vehicle = Vehicle::find($vehicleId);
-    $vehicle->loadProperties();
-    $vehicle->setPlate($_POST['plate']);
-    $vehicle->setIsland_id($_POST['islandId']);
-    $vehicle->setCategory_id($_POST['categoryId'] === '' ? null : $_POST['categoryId']);
-    $vehicle->setRentable($_POST['rentable']);
-    $vehicle->save();
+    $vehicle = new Vehicle(
+        $_POST['plate'],
+        $_POST['rentable'],
+        $_POST['islandId'],
+        $_POST['categoryId'] === '' ? null : $_POST['categoryId'],
+        null, // island
+        null, // category
+        null, // properties
+        false // isArchived
+    );
 
-    foreach ($vehicle->getProperties() as $property) {
+    $vehicle->save();
+    $vehicleId= $vehicle->getId();
+
+    $propertiesForVehicle = Property::search([
+        [
+            'column' => 'id',
+            'operator' => '<=',
+            'value' => 5
+        ]
+    ]);
+
+    foreach ($propertiesForVehicle as $property) {
         $propertyId = $property->getId();
         if (!isset($_POST['property-' . $propertyId])) {
             echo 'NO PROPERTY ' . $property->getName();
@@ -34,14 +41,10 @@ try {
         }
 
         $formPropertyValue = trim($_POST['property-' . $propertyId]);
-        if ($formPropertyValue !== $property->getPropertyValue()) {
-            $stmt = Vehicle::rawSQL("
-                UPDATE vehicle_property
-                SET propertyValue = '$formPropertyValue'
-                WHERE vehicle_id=$vehicleId
-                AND property_id=$propertyId; 
-            ");
-        }
+        Vehicle::rawSQL("
+            INSERT INTO vehicle_property (propertyValue, vehicle_id, property_id)
+            VALUES ('$formPropertyValue', $vehicleId, $propertyId); 
+        ");
     }
 } catch(e) {
 // TODO: manage error

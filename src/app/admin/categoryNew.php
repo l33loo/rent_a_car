@@ -36,10 +36,8 @@ try {
 
         $formPropertyValue = trim($_POST['property-' . $propertyId]);
         $stmt = Category::rawSQL("
-            UPDATE category_property
-            SET propertyValue = '$formPropertyValue'
-            WHERE category_id=$categoryId
-            AND property_id=$propertyId; 
+            INSERT INTO category_property (propertyValue, category_id, property_id)
+            VALUES ('$formPropertyValue', $categoryId, $propertyId);
         ");
     }
 } catch(e) {

@@ -40,7 +40,10 @@ echo getHeader();
     </div>
     <div class="container mb-4">
         <div class="d-flex flex-wrap">
-            <a href="/html/admin/categoryNew.php" class="btn btn-success">
+            <a href="/html/admin/vehicleNew.php" class="btn btn-primary me-2">
+                Add New Vehicle
+            </a> 
+            <a href="/html/admin/categoryNew.php" class="btn btn-success me-2">
                 Add New Category
             </a>                       
         </div>

@@ -5,13 +5,17 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
 
 use RentACar\Property;
 
-$propertiesForCategory = Property::search([
-    [
-        'column' => 'id',
-        'operator' => '>=',
-        'value' => 6
-    ]
-]);
+try {
+    $propertiesForCategory = Property::search([
+        [
+            'column' => 'id',
+            'operator' => '>=',
+            'value' => 6
+        ]
+    ]);
+} catch(e) {
+    // TODO: handle error
+}
 
 echo getHeader();
 ?>
