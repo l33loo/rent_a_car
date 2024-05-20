@@ -40,7 +40,7 @@ echo getHeader();
     </div>
     <div class="container mb-4">
         <div class="d-flex flex-wrap">
-            <a href="/html/admin/vehicleNew.php" class="btn btn-primary me-2">
+            <a href="/html/admin/vehicleNew.php?islandId=<?php echo $islandId; ?>" class="btn btn-primary me-2">
                 Add New Vehicle
             </a> 
             <a href="/html/admin/categoryNew.php" class="btn btn-success me-2">
@@ -151,12 +151,18 @@ echo getHeader();
                                                     </table>
                                                 </td>
                                                 <td>
-                                                    <a href="/html/admin/vehicleView.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-primary">
-                                                        View
-                                                    </a>
-                                                    <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary">
-                                                        Edit
-                                                    </a>
+                                                    <div class="d-flex flex-wrap align-items-center">
+                                                        <a href="/html/admin/vehicleView.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-primary me-2">
+                                                            View
+                                                        </a>
+                                                        <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary me-2">
+                                                            Edit
+                                                        </a>
+                                                        <form action="/app/admin/vehicleEdit.php" method="POST" class="me-2">
+                                                            <input type="submit" name="vehicleArchive" class="btn btn-danger" value="Archive" />
+                                                            <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId(); ?>" />
+                                                        </form>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php } ?>
