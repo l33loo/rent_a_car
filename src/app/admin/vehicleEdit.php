@@ -49,6 +49,5 @@ try {
     header('Location: /html/admin/vehicleEdit.php');
     exit;
 }
-$vehicleIsland_id = $vehicle->getIsland_id();
-$vehicleCategory_id = $vehicle->getCategory_id();
-header("Location: /html/admin/vehicles.php?islandId=$vehicleIsland_id&categoryId=$vehicleCategory_id");
+
+header("Location: /html/admin/vehicleView.php?vehicleId=$vehicleId");
