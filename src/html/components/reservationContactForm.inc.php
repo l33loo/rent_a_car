@@ -31,6 +31,22 @@
             <input type="date" class="form-control" name="dateOfBirth">
         </div>
     </div>
+    <div class="row mb-3">
+        <div class="col">
+            <img src="/img/password.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
+            <label for="driversLicense">
+                Driver's License:
+            </label>
+            <input type="text" class="form-control" name="driversLicense">
+        </div>
+        <div class="col">
+            <img src="/img/password.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+            <label for="taxNumber">
+                Tax Number (optional):
+            </label>
+            <input type="text" class="form-control" name="taxNumber">
+        </div>
+    </div>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formAddress.inc.php'; ?>
     <fieldset class="mb-3">
         <legend>
