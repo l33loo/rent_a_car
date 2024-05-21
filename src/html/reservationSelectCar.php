@@ -8,8 +8,10 @@ use RentACar\Vehicle;
 
 session_start();
 
+// TODO: validate form fields
+
 try {
-    // TODO: Validate that pick-up and drop-off locations are on the same island 
+    // TODO: Validate that pick-up and drop-off locations are on the same island
 
     $categories = Category::search([]);
     $vehiclesWithCategory = [];
@@ -18,7 +20,7 @@ try {
     foreach ($categories as $category) {
         $category->loadProperties();
         $categoryId = $category->getId();
-        $vehicles = Vehicle::search([], '', 3);
+        $vehicles = Vehicle::search([], '', 2);
         $categoriesById[$categoryId] = $category;
 
         foreach ($vehicles as $vehicle) {
@@ -96,60 +98,35 @@ echo getHeader();
                     <h2>
                         <?php echo $vehicleProperties['Brand']->getPropertyValue() . ' ' . $vehicleProperties['Model']->getPropertyValue() ?>
                     </h2>
+                    <div>
+                        Or similar <?php echo $category->getName() ?> car
+                    </div>
+                    <div class="row">
+                        <?php foreach ($categoryProperties as $categoryProperty) { ?>
+                            <div class="col-6">
+                                <?php echo $categoryProperty->getName() . ': ' . $categoryProperty->getPropertyValue() ?>
+                            </div>
+                        <?php } ?>
+                    </div>
                 </div>
-                <div class="col">
-
+                <div class="col-auto">
+                    <div class="h3">
+                        <?php echo $category->getDailyRate() ?> Euros <small>per day</small>
+                    </div>
+                    <form action="/html/reservationContact.php" method="get">
+                        <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId() ?>">
+                        <input type="hidden" name="pickupLocation" value="<?php echo $_GET['pickupLocation'] ?>">
+                        <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">
+                        <input type="hidden" name="pickupTime" value="<?php echo $_GET['pickupTime'] ?>">
+                        <input type="hidden" name="pickupLocation" value="<?php echo $_GET['dropoffLocation'] ?>">
+                        <input type="hidden" name="pickupDate" value="<?php echo $_GET['dropoffDate'] ?>">
+                        <input type="hidden" name="pickupTime" value="<?php echo $_GET['dropoffTime'] ?>">
+                        <input type="submit" value="Book Now" class="btn btn-success">
+                    </form>
                 </div>
             </div>
         <?php } ?>
     </div>
-
-    <div class="container">
-        <h2 style="position:relative; top: -100px;">Our Fleet</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">
-            <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(16px 16px 20px);">
-                    <img src="/img/car.jpg" class="card-img-top" alt="car">
-                    <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Regular</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
-                            non
-                            urna tincidunt consectetur. Nulla facilisi.</p>
-                        <button type="button" class="btn btn-outline-dark"
-                            style="border-radius: 15px;">Categories</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="/img/moto.jpg" class="card-img-top" alt="moto">
-                    <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Motorcycle</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
-                            non
-                            urna tincidunt consectetur. Nulla facilisi.</p>
-                        <button type="button" class="btn btn-outline-dark "
-                            style="border-radius: 15px;">Categories</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="/img/suv.jpg" class="card-img-top" alt="suv">
-                    <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Suv</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
-                            non
-                            urna tincidunt consectetur. Nulla facilisi.
-                        </p>
-                        <button type="button" class="btn btn-outline-dark"
-                            style="border-radius: 15px;">Categories</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
 </body>
 

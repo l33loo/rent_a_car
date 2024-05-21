@@ -64,7 +64,7 @@ echo getHeader();
                     <div class="row">
                         <div class="col">
                             <label for="pickup-location">1. Pick-Up Location:</label>
-                            <select id="pickup-location" name="pickup_location" class="form-select">
+                            <select id="pickup-location" name="pickupLocation" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>
@@ -76,13 +76,13 @@ echo getHeader();
                     <div class="row">
                         <div class="col">
                             <label for="pickup-date">Pick-Up Date:</label>
-                            <input type="date" id="pickup-date" name="pickup_date" class="form-control" required>
+                            <input type="date" id="pickup-date" name="pickupDate" class="form-control" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="pickup-time">Pick-Up Time:</label>
-                            <input type="time" id="pickup-time" name="pickup_time" min="09:30" max="17:30" class="form-control" required>
+                            <input type="time" id="pickup-time" name="pickupTime" min="09:30" max="17:30" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ echo getHeader();
                     <div class="row">
                         <div class="col">
                             <label for="dropoff-location">Drop-Off Location:</label>
-                            <select id="dropoff-location" name="dropoff_location" class="form-select">
+                            <select id="dropoff-location" name="dropoffLocation" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>
@@ -103,13 +103,13 @@ echo getHeader();
                     <div class="row">
                         <div class="col">
                             <label for="dropoff-date">Drop-Off Date:</label>
-                            <input type="date" id="dropoff-date" name="dropoff_date" class="form-control" required>
+                            <input type="date" id="dropoff-date" name="dropoffDate" class="form-control" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="dropoff-time">Drop-Off Time:</label>
-                            <input type="time" id="dropoff-time" name="dropoff_time" min="09:30:00" max="17:30:00" class="form-control" required>
+                            <input type="time" id="dropoff-time" name="dropoffTime" min="09:30:00" max="17:30:00" class="form-control" required>
                         </div>
                     </div>
                 </div>
