@@ -1,14 +1,26 @@
 <?php
-// TODO: make property names match db columns
 namespace RentACar;
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
+
+use RentACar\Category;
+use RentACar\Customer;
+use RentACar\Location;
+use RentACar\User;
+
 class Reservation {
+    use DBModel;
+
     protected int $id;
-    protected fleets\Category $category;
-    protected accounts\Customer $customer;
+    protected Category $category;
+    protected Customer $customer;
     protected Status $status;
-    protected locality\Location $pickupLocation;
-    protected locality\Location $dropoffLocation;
+    protected Location $pickupLocation;
+    protected Location $dropoffLocation;
     // TODO: use Carbon type
     protected string $pickupDate;
     // TODO: use Carbon type
@@ -17,8 +29,8 @@ class Reservation {
     protected string $pickupTime;
     // TODO: use Carbon type
     protected string $dropoffTime;
-    protected fleets\Vehicle $vehicle;
-    protected accounts\User $reservedBy;
+    protected Vehicle $vehicle;
+    protected User $reservedBy;
     // TODO: use Carbon type
     protected string $reservedDate;
     // TODO: Update UML to reflect this

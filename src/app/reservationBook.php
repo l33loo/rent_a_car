@@ -22,17 +22,33 @@ try {
     );
     $address->save();
 
+    $customer = new Customer(
+
+    );
+
+    $customer->save();
+
     $reservation = new Reservation(
 
     );
 
     // TODO: search credit card and check if the same values
     // no need to create a new credit card if it already exists
-    $creditCardDbResults = CreditCard::search([
+    $creditCardDbResult = CreditCard::search([
         [
             'column' => 'ccNumber',
             'operator' => '=',
             'value' => trim($_POST['ccNumber'])
+        ],
+        [
+            'column' => 'ccExpiry',
+            'operator' => '=',
+            'value' => trim($_POST['ccExpiry'])
+        ],
+        [
+            'column' => 'ccCVV',
+            'operator' => '=',
+            'value' => trim($_POST['ccCVV'])
         ]
     ]);
 
@@ -43,15 +59,15 @@ try {
             trim($_POST['ccCVV'])
         );
         $newCreditCard->save();
-        $reservation->
-    } else if ($creditCardDbResults === 1) {
+        $reservation->setCreditCard_id($newCreditCard->getId());
+    } else if (count($creditCardDbResults) === 1) {
         $oldCreditCard = $creditCard[0];
-        if ($oldCreditCard->getCcExpiry() === trim($_POST['ccExpiry']) && $oldCreditCard->getCcCVV() === trim($_POST['ccCVV'])) {
-
-        }
+        $reservation->setCreditCard_id($oldCreditCard->getId());
+    } else {
+        // TODO: throw error?
     }
 
-    
+    $reservation->save();
 } catch(e) {
     // TODO: handle errors
 
