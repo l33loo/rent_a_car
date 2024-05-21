@@ -114,14 +114,14 @@ echo getHeader();
                         <?php echo $category->getDailyRate() ?> Euros <small>per day</small>
                     </div>
                     <form action="/html/reservationContact.php" method="get">
-                        <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId() ?>">
+                        <input type="hidden" name="categoryId" value="<?php echo $categoryId ?>">
                         <input type="hidden" name="pickupLocation" value="<?php echo $_GET['pickupLocation'] ?>">
                         <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">
                         <input type="hidden" name="pickupTime" value="<?php echo $_GET['pickupTime'] ?>">
-                        <input type="hidden" name="pickupLocation" value="<?php echo $_GET['dropoffLocation'] ?>">
-                        <input type="hidden" name="pickupDate" value="<?php echo $_GET['dropoffDate'] ?>">
-                        <input type="hidden" name="pickupTime" value="<?php echo $_GET['dropoffTime'] ?>">
-                        <input type="submit" value="Book Now" class="btn btn-success">
+                        <input type="hidden" name="dropoffLocation" value="<?php echo $_GET['dropoffLocation'] ?>">
+                        <input type="hidden" name="dropoffDate" value="<?php echo $_GET['dropoffDate'] ?>">
+                        <input type="hidden" name="dropoffTime" value="<?php echo $_GET['dropoffTime'] ?>">
+                        <input type="submit" value="Book Now" class="btn btn-success" name="reservationCar">
                     </form>
                 </div>
             </div>
