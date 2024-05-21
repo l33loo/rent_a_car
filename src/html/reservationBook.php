@@ -83,11 +83,11 @@ echo getHeader();
 
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
-        <h1>3. Contact</h1>
+        <h1>3. Book</h1>
         <?php if (empty($_SESSION['logged_id'])) {
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/reservationContactFormGuest.inc.php';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/reservationBookFormGuest.inc.php';
         } else {
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/reservationContactForm.inc.php';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/reservationBookForm.inc.php';
         } ?>
     </div>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
