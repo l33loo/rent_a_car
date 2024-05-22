@@ -13,15 +13,16 @@ use RentACar\User;
 
 session_start();
 
-if (empty($_SESSION('logged_id'))) {
+if (empty($_SESSION['logged_id'])) {
     $sessionUserId = null;
 } else {
-    $sessionUserId = $_SESSION('logged_id');
+    $sessionUserId = strval($_SESSION['logged_id']);
 }
 
-$userId = $_POST('userId');
+$userId = $_POST['userId'];
 if ($userId !== $sessionUserId) {
     // TODO: error
+    echo 'Not same user ids';
     exit;
 }
 
@@ -47,14 +48,14 @@ try {
     $address->save();
 
     $customer = new Customer(
-        trim($_POST('name')),
-        trim($_POST('email')),
-        trim($_POST('dateOfBirth')),
-        trim($_POST('phone')),
+        trim($_POST['name']),
+        trim($_POST['email']),
+        trim($_POST['dateOfBirth']),
+        trim($_POST['phone']),
         false, // isArchived
         $address->getId(),
-        trim($_POST('driversLicense')),
-        trim($_POST('taxNumber')),
+        trim($_POST['driversLicense']),
+        trim($_POST['taxNumber']),
         $userId, // TODO:
         null, // address
         null // user
@@ -99,26 +100,26 @@ try {
 
     $reservation = new Reservation(
         // TODO: use Carbon type
-        trim($_POST('pickupDate')),
+        trim($_POST['pickupDate']),
         // TODO: use Carbon type
-        trim($_POST('dropoffDate')),
+        trim($_POST['dropoffDate']),
         // TODO: use Carbon type
-        trim($_POST('pickupTime')),
+        trim($_POST['pickupTime']),
         // TODO: use Carbon type
-        trim($_POST('dropoffTime')),
+        trim($_POST['dropoffTime']),
         // TODO: use Carbon type
-        trim($_POST('totalPrice')),
+        trim($_POST['totalPrice']),
         null, // reservedTimestamp
         null, // revisions
 
         $address->getId(), // Billing address
         $creditCard->getId(),
         $userId, // reservedByUser_id
-        trim($_POST('categoryId')),
+        trim($_POST['categoryId']),
         $customer->getId(), // TODO:
         1, // status_id
-        trim($_POST('pickupLocationId')),
-        trim($_POST('dropoffLocationId')),
+        trim($_POST['pickupLocationId']),
+        trim($_POST['dropoffLocationId']),
         null, // vehicle_id
         null, // returnedLocation_id
         null, // collectedByUser_id
@@ -141,5 +142,9 @@ try {
     // TODO: handle errors
 
     // TODO: send back to form with existing data
+    echo 'error saving reservation';
     header('Location: /html/reservationBook.php');
+    exit;
 }
+
+header('Location: /html/userView.php?userId' . $userId);
