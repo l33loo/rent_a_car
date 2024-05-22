@@ -1188,7 +1188,7 @@ INSERT INTO customer (
 
 INSERT INTO status (id, statusName)
 VALUES
-(1, "Booked"),
+(1, "Requested"),
 (2, "Confirmed"),
 (3, "Cancelled"),
 (4, "Void");
