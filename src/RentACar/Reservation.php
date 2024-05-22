@@ -48,6 +48,7 @@ class Reservation {
     protected ?string $pickupTime = null;
     // TODO: use Carbon type
     protected ?string $dropoffTime = null;
+    protected ?float $totalPrice = null;
     // TODO: use Carbon type
     protected ?string $reservedTimestamp = null;
     // TODO: Update UML to reflect this
@@ -91,6 +92,7 @@ class Reservation {
         // TODO: use Carbon type
         ?string $dropoffTime = null,
         // TODO: use Carbon type
+        ?float $totalPrice = null,
         ?string $reservedTimestamp = null,
         // TODO: Update UML to reflect this
         ?array $revisions = null,
@@ -140,6 +142,9 @@ class Reservation {
         // TODO: use Carbon type
         if ($dropoffTime !== null) {
             $this->dropoffTime = $dropoffTime;
+        }
+        if ($totalPrice !== null) {
+            $this->totalPrice = $totalPrice;
         }
         // TODO: use Carbon type
         if ($reservedTimestamp !== null) {
