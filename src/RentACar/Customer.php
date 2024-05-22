@@ -1,45 +1,86 @@
 <?php
 namespace RentACar;
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Profile.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
+
+use Carbon\Carbon;
+use RentACar\Address;
+use RentACar\Profile;
+use RentACar\User;
+
 class Customer extends Profile {
-    protected string $driversLicense;
-    // TODO: change class to CreditCard
-    protected string $creditCard;
-    protected string $taxNumber;
-    protected User $user;
+    protected ?string $driversLicense = null;
+    protected ?string $taxNumber = null;
+    protected ?User $user = null;
 
     public function __construct(
-        int $id,
-        string $name,
-        string $email,
-        // TODO: Carbon type
-        string $dateOfBirth,
-        \RentACar\Address $address,
-        string $phone,
-        bool $isArchived,
-        string $driversLicense,
-        string $creditCard,
-        string $taxNumber,
-        User $user
+        ?string $name = null,
+        ?string $email = null,
+        ?string $dateOfBirth = null,
+        ?string $phone = null,
+        ?bool $isArchived = null,
+        ?int $address_id = null,
+        ?string $driversLicense = null,
+        ?string $taxNumber = null,
+        ?Address $address = null,
+        ?User $user = null,
+        ?int $id = null
     ) {
+        $this->tableName = 'customer';
+
         parent::__construct(
-            $id,
             $name,
             $email,
             $dateOfBirth,
-            $address,
             $phone,
-            $isArchived
+            $isArchived,
+            $address_id,
+            $id,
+            $address,
         );
 
-        $this->driversLicense = $driversLicense;
-        $this->creditCard = $creditCard;
-        $this->taxNumber = $taxNumber;
-        $this->user = $user;
+        if ($name !== null) {
+            $this->name = $name;
+        }
+        if ($email !== null) {
+            $this->email = $email;
+        }
+        if ($dateOfBirth !== null) {
+            $this->dateOfBirth = $dateOfBirth;
+        }
+        if ($phone !== null) {
+            $this->phone = $phone;
+        }
+        if ($isArchived !== null) {
+            $this->isArchived = $isArchived;
+        }
+        if ($address_id !== null) {
+            $this->address_id = $address_id;
+        }
+        if ($driversLicense !== null) {
+            $this->driversLicense = $driversLicense;
+        }
+        if ($taxNumber !== null) {
+            $this->taxNumber = $taxNumber;
+        }
+        if ($address !== null) {
+            $this->address = $address;
+        }
+        if ($user !== null) {
+            $this->user = $user;
+        }
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     /**
      * Get the value of driversLicense
+     * 
+     * @return string
      */ 
     public function getDriversLicense(): string
     {
@@ -49,7 +90,7 @@ class Customer extends Profile {
     /**
      * Set the value of driversLicense
      *
-     * @return  self
+     * @return self
      */ 
     public function setDriversLicense(string $driversLicense): self
     {
@@ -59,29 +100,9 @@ class Customer extends Profile {
     }
 
     /**
-     * Get the value of creditCard
-     * TODO: make credit card type
-     */ 
-    public function getCreditCard(): string
-    {
-        return $this->creditCard;
-    }
-
-    /**
-     * Set the value of creditCard
-     *
-     * @return  self
-     * TODO: CreditCard type
-     */ 
-    public function setCreditCard(string $creditCard): self
-    {
-        $this->creditCard = $creditCard;
-
-        return $this;
-    }
-
-    /**
      * Get the value of taxNumber
+     * 
+     * @return string
      */ 
     public function getTaxNumber(): string
     {
@@ -91,7 +112,7 @@ class Customer extends Profile {
     /**
      * Set the value of taxNumber
      *
-     * @return  self
+     * @return self
      */ 
     public function setTaxNumber(string $taxNumber): self
     {
@@ -102,8 +123,10 @@ class Customer extends Profile {
 
     /**
      * Get the value of user
+     * 
+     * @return ?User
      */ 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -111,31 +134,11 @@ class Customer extends Profile {
     /**
      * Set the value of user
      *
-     * @return  self
+     * @return self
      */ 
-    public function setUser(User $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of email
-     */ 
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set the value of email
-     *
-     * @return  self
-     */ 
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
 
         return $this;
     }
