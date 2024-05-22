@@ -146,11 +146,11 @@ CREATE TABLE IF NOT EXISTS customer (
     address_id INT UNSIGNED NOT NULL,
     phone VARCHAR(25) NOT NULL,
     driversLicense VARCHAR(90) NOT NULL,
-    -- TODO: do we want this attached to the customer?
+    -- TODO: do we want credit card attached to the customer?
     -- Better with user, or just the reservation
-    creditCard_id INT UNSIGNED NOT NULL,
+    -- creditCard_id INT UNSIGNED NOT NULL,
     taxNumber VARCHAR(20),
-    user_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY(id),
     CONSTRAINT fk_customer_address
@@ -158,10 +158,10 @@ CREATE TABLE IF NOT EXISTS customer (
         REFERENCES address(id),
     CONSTRAINT fk_customer_user
         FOREIGN KEY (user_id)
-        REFERENCES user(id),
-    CONSTRAINT fk_customer_creditCard
-        FOREIGN KEY (creditCard_id)
-        REFERENCES creditCard(id)
+        REFERENCES user(id)
+    -- CONSTRAINT fk_customer_creditCard
+    --     FOREIGN KEY (creditCard_id)
+    --     REFERENCES creditCard(id)
 );
 
 -- STATUS (OF RESERVATION)
@@ -1171,7 +1171,6 @@ INSERT INTO customer (
     address_id,
     phone,
     driversLicense,
-    creditCard_id,
     taxNumber,
     user_id
 ) VALUES (
@@ -1181,14 +1180,13 @@ INSERT INTO customer (
     7,
     "123123123",
     "PT123999000",
-    1,
     "222123123",
     2
 );
 
 INSERT INTO status (id, statusName)
 VALUES
-(1, "Booked"),
+(1, "Requested"),
 (2, "Confirmed"),
 (3, "Cancelled"),
 (4, "Void");

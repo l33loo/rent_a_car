@@ -57,14 +57,14 @@ echo getHeader();
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>Reservation</h1>
-        <form action="/html/reservationSelectCar.php" method="get">
+        <form action="/html/reservationSelectVehicle.php" method="get">
             <div class="row">
                 <div class="col-md-6 col-12">
                     <h2>Pick-up</h2>
                     <div class="row">
                         <div class="col">
                             <label for="pickup-location">1. Pick-Up Location:</label>
-                            <select id="pickup-location" name="pickupLocation" class="form-select">
+                            <select id="pickup-location" name="pickupLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>
@@ -91,7 +91,7 @@ echo getHeader();
                     <div class="row">
                         <div class="col">
                             <label for="dropoff-location">Drop-Off Location:</label>
-                            <select id="dropoff-location" name="dropoffLocation" class="form-select">
+                            <select id="dropoff-location" name="dropoffLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>

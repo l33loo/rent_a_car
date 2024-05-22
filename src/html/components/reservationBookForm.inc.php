@@ -1,4 +1,4 @@
-<form action="" method="post">
+<form action="/app/reservationBook.php" method="post">
     <div class="row mb-3">
         <div class="col">
             <img src="/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
@@ -71,10 +71,10 @@
     <div class="d-flex justify-content-center">
         <input type="hidden" name="userId" value="<?php echo empty($_SESSION['logged_id']) ? null : $_SESSION['logged_id'] ?>">
         <input type="hidden" name="categoryId" value="<?php echo $_GET['categoryId'] ?>">
-        <input type="hidden" name="pickupLocation" value="<?php echo $_GET['pickupLocation'] ?>">
+        <input type="hidden" name="pickupLocationId" value="<?php echo $_GET['pickupLocationId'] ?>">
         <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">
         <input type="hidden" name="pickupTime" value="<?php echo $_GET['pickupTime'] ?>">
-        <input type="hidden" name="dropoffLocation" value="<?php echo $_GET['dropoffLocation'] ?>">
+        <input type="hidden" name="dropoffLocationId" value="<?php echo $_GET['dropoffLocationId'] ?>">
         <input type="hidden" name="dropoffDate" value="<?php echo $_GET['dropoffDate'] ?>">
         <input type="hidden" name="dropoffTime" value="<?php echo $_GET['dropoffTime'] ?>">
         <input type="submit" value="Book Now" class="btn btn-success" name="reservationBook">
