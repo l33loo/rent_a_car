@@ -14,9 +14,15 @@ use RentACar\User;
 session_start();
 
 if (empty($_SESSION('logged_id'))) {
-    $userId = null;
+    $sessionUserId = null;
 } else {
-    $userId = $_SESSION('logged_id');
+    $sessionUserId = $_SESSION('logged_id');
+}
+
+$userId = $_POST('userId');
+if ($userId !== $sessionUserId) {
+    // TODO: error
+    exit;
 }
 
 // TODO: validate fields
@@ -103,7 +109,6 @@ try {
         // TODO: use Carbon type
         trim($_POST('totalPrice')),
         null, // reservedTimestamp
-        // TODO: Update UML to reflect this
         null, // revisions
 
         $address->getId(), // Billing address
