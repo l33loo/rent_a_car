@@ -48,7 +48,7 @@ echo getHeader();
                                     <label for="isArchived">
                                         Is Archived:
                                     </label>
-                                    <select class="form-control" name="isArchived" id="selectIsArchived">
+                                    <select class="form-select" name="isArchived" id="selectIsArchived">
                                         <option value="0">
                                             NO
                                         </option>
@@ -68,18 +68,21 @@ echo getHeader();
                             </div>
                             <div class="row mb-4">
                                 <?php foreach ($propertiesForCategory as $property) { ?>
-                                <div class="col-md col-sm-12">
-                                    <label for="property-<?php echo $property->getId(); ?>">
-                                        <?php echo $property->getName(); ?>:
-                                    </label>
-                                    <input type="text" class="form-control"
-                                        name="property-<?php echo $property->getId(); ?>"
-                                        value=<?php echo $property->getPropertyValue(); ?>>
-                                </div>
+                                    <div class="col-md col-sm-12">
+                                        <label for="property-<?php echo $property->getId(); ?>">
+                                            <?php echo $property->getName(); ?>:
+                                        </label>
+                                        <input type="text" class="form-control" name="property-<?php echo $property->getId(); ?>" value=<?php echo $property->getPropertyValue(); ?>>
+                                    </div>
                                 <?php } ?>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <input type="submit" class="btn btn-primary" name="categoryEdit" value="Add Category" />
+                                <input
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    name="categoryEdit"
+                                    value="Add Category"
+                                />
                             </div>
                         </form>
                     </div>
@@ -88,5 +91,4 @@ echo getHeader();
         </div>
     </div>
 </body>
-
 </html>

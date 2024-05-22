@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS category (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(45) NOT NULL,
     description VARCHAR(90) NOT NULL,
-    dailyRate FLOAT(2) NOT NULL,
+    dailyRate DECIMAL(5,2) NOT NULL,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE
 );
 
@@ -146,9 +146,11 @@ CREATE TABLE IF NOT EXISTS customer (
     address_id INT UNSIGNED NOT NULL,
     phone VARCHAR(25) NOT NULL,
     driversLicense VARCHAR(90) NOT NULL,
-    creditCard_id INT UNSIGNED NOT NULL,
-    taxNumber VARCHAR(20) NOT NULL,
-    user_id INT UNSIGNED NOT NULL,
+    -- TODO: do we want credit card attached to the customer?
+    -- Better with user, or just the reservation
+    -- creditCard_id INT UNSIGNED NOT NULL,
+    taxNumber VARCHAR(20),
+    user_id INT UNSIGNED,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY(id),
     CONSTRAINT fk_customer_address
@@ -156,10 +158,10 @@ CREATE TABLE IF NOT EXISTS customer (
         REFERENCES address(id),
     CONSTRAINT fk_customer_user
         FOREIGN KEY (user_id)
-        REFERENCES user(id),
-    CONSTRAINT fk_customer_creditCard
-        FOREIGN KEY (creditCard_id)
-        REFERENCES creditCard(id)
+        REFERENCES user(id)
+    -- CONSTRAINT fk_customer_creditCard
+    --     FOREIGN KEY (creditCard_id)
+    --     REFERENCES creditCard(id)
 );
 
 -- STATUS (OF RESERVATION)
@@ -181,14 +183,21 @@ CREATE TABLE IF NOT EXISTS reservation (
     dropoffDate DATE NOT NULL,
     pickupTime TIME NOT NULL,
     dropoffTime TIME NOT NULL,
-    vehicle_id INT UNSIGNED NOT NULL,
+    totalPrice DECIMAL(6,2) NOT NULL,
+    -- To be added by admin when customer picks up the car
+    vehicle_id INT UNSIGNED,
     reservedByUser_id INT UNSIGNED NOT NULL,
-    reservedTimestamp TIMESTAMP,
-    dateReturned DATE NOT NULL,
-    timeReturned TIME NOT NULL,
-    returnedLocation_id INT UNSIGNED NOT NULL,
-    collectedByUser_id INT UNSIGNED NOT NULL,
+    reservedTimestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -- To be added by admin when customer returns the car
+    dateReturned DATE,
+    -- To be added by admin when customer returns the car
+    timeReturned TIME,
+    -- To be added by admin when customer returns the car
+    returnedLocation_id INT UNSIGNED,
+    -- To be added by admin when customer returns the car
+    collectedByUser_id INT UNSIGNED,
     billingAddress_id INT UNSIGNED NOT NULL,
+    creditCard_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_reservation_category
         FOREIGN KEY (category_id)
@@ -219,7 +228,10 @@ CREATE TABLE IF NOT EXISTS reservation (
         REFERENCES user(id),
     CONSTRAINT fk_reservation_billingAddress
         FOREIGN KEY (billingAddress_id)
-        REFERENCES address(id)
+        REFERENCES address(id),
+    CONSTRAINT fk_reservation_creditCard
+        FOREIGN KEY (creditCard_id)
+        REFERENCES creditCard(id)
 );
 
 -- REVISION (OF RESERVATION)
@@ -1159,7 +1171,6 @@ INSERT INTO customer (
     address_id,
     phone,
     driversLicense,
-    creditCard_id,
     taxNumber,
     user_id
 ) VALUES (
@@ -1169,14 +1180,13 @@ INSERT INTO customer (
     7,
     "123123123",
     "PT123999000",
-    1,
     "222123123",
     2
 );
 
 INSERT INTO status (id, statusName)
 VALUES
-(1, "Booked"),
+(1, "Requested"),
 (2, "Confirmed"),
 (3, "Cancelled"),
 (4, "Void");

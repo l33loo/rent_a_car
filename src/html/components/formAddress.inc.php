@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/countries.inc.php';
 ?>
 
 <fieldset class="mb-3">
-    <legend class>
+    <legend>
         <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
         Address
     </legend>
@@ -38,7 +38,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/countries.inc.php';
         </div>
         <div class="col">
             <label for="country">Country</label>
-            <select class="form-control" name="countryId">
+            <select class="form-select" name="countryId">
                 <?php foreach($countries as $country) { ?>
                     <option value="<?php echo $country->getId(); ?>">
                         <?php echo $country->getName(); ?>

@@ -56,14 +56,20 @@ echo getHeader();
                             <?php echo $vehicleProperty->getName() ?>
                         </th>
                         <?php } ?>
-                        <th class="col" data-field="description" data-editable="true"
-                            data-editable-emptytext="Custom empty text.">
-                        <th class="col" data-field="description" data-editable="true"
-                            data-editable-emptytext="Custom empty text.">
+                        <th
+                            class="col"
+                            data-field="description"
+                            data-editable="true"
+                            data-editable-emptytext="Custom empty text."
+                        >
                             Category
                         </th>
-                        <th class="col" data-field="description" data-editable="true"
-                            data-editable-emptytext="Custom empty text.">
+                        <th
+                            class="col"
+                            data-field="description"
+                            data-editable="true"
+                            data-editable-emptytext="Custom empty text."
+                        >
                             Island
                         </th>
                         <th class="col" data-field="name" data-editable="true">Rentable</th>
