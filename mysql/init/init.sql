@@ -146,9 +146,9 @@ CREATE TABLE IF NOT EXISTS customer (
     address_id INT UNSIGNED NOT NULL,
     phone VARCHAR(25) NOT NULL,
     driversLicense VARCHAR(90) NOT NULL,
-    -- TODO: do we want this attached to the customer?
+    -- TODO: do we want credit card attached to the customer?
     -- Better with user, or just the reservation
-    creditCard_id INT UNSIGNED NOT NULL,
+    -- creditCard_id INT UNSIGNED NOT NULL,
     taxNumber VARCHAR(20),
     user_id INT UNSIGNED NOT NULL,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE,
