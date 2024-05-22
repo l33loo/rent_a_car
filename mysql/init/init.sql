@@ -1171,7 +1171,6 @@ INSERT INTO customer (
     address_id,
     phone,
     driversLicense,
-    creditCard_id,
     taxNumber,
     user_id
 ) VALUES (
@@ -1181,7 +1180,6 @@ INSERT INTO customer (
     7,
     "123123123",
     "PT123999000",
-    1,
     "222123123",
     2
 );
