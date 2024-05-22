@@ -126,44 +126,104 @@ class Reservation {
         $this->tableName = 'reservation';
 
         // TODO: use Carbon type
-        ?string $pickupDate = null,
+        if ($pickupDate !== null) {
+            $this->pickupDate = $pickupDate;
+        }
         // TODO: use Carbon type
-        ?string $dropoffDate = null,
+        if ($dropoffDate !== null) {
+            $this->dropoffDate = $dropoffDate;
+        }
         // TODO: use Carbon type
-        ?string $pickupTime = null,
+        if ($pickupTime !== null) {
+            $this->pickupTime = $pickupTime;
+        }
         // TODO: use Carbon type
-        ?string $dropoffTime = null,
+        if ($dropoffTime !== null) {
+            $this->dropoffTime = $dropoffTime;
+        }
         // TODO: use Carbon type
-        ?string $reservedTimestamp = null,
+        if ($reservedTimestamp !== null) {
+            $this->reservedTimestamp = $reservedTimestamp;
+        }
         // TODO: Update UML to reflect this
-        ?array $revisions = null,
+        if ($revisions !== null) {
+            $this->revisions = $revisions;
+        }
 
-        ?int $billingAddress_id = null,
-        ?int $creditCard_id = null,
-        ?int $reservedByUser_id = null,
-        ?int $category_id = null,
-        ?int $customer_id = null,
-        ?int $status_id = null,
-        ?int $pickupLocation_id = null,
-        ?int $dropoffLocation_id = null,
-        ?int $vehicle_id = null,
-        ?int $returnedLocation_id = null,
-        ?int $collectedByUser_id = null,
+        if ($billingAddress_id !== null) {
+            $this->billingAddress_id = $billingAddress_id;
+        }
+        if ($creditCard_id !== null) {
+            $this->creditCard_id = $creditCard_id;
+        }
+        if ($reservedByUser_id !== null) {
+            $this->reservedByUser_id = $reservedByUser_id;
+        }
+        if ($category_id !== null) {
+            $this->category_id = $category_id;
+        }
+        if ($customer_id !== null) {
+            $this->customer_id = $customer_id;
+        }
+        if ($status_id !== null) {
+            $this->status_id = $status_id;
+        }
+        if ($pickupLocation_id !== null) {
+            $this->pickupLocation_id = $pickupLocation_id;
+        }
+        if ($dropoffLocation_id !== null) {
+            $this->dropoffLocation_id = $dropoffLocation_id;
+        }
+        if ($vehicle_id !== null) {
+            $this->vehicle_id = $vehicle_id;
+        }
+        if ($returnedLocation_id !== null) {
+            $this->returnedLocation_id = $returnedLocation_id;
+        }
+        if ($collectedByUser_id !== null) {
+            $this->collectedByUser_id = $collectedByUser_id;
+        }
 
         // TODO: use Carbon type
-        ?string $dateReturned = null,
+        if ($dateReturned !== null) {
+            $this->dateReturned = $dateReturned;
+        }
         // TODO: use Carbon type
-        ?string $timeReturned = null,
-        ?Address $billingAddress = null,
-        ?CreditCard $creditCard = null,
-        ?User $reservedByUser = null,
-        ?Category $category = null,
-        ?Customer $customer = null,
-        ?Status $status = null,
-        ?Location $pickupLocation = null,
-        ?Location $dropoffLocation = null,
-        ?Vehicle $vehicle = null,
-        ?Location $returnedLocation = null,
-        ?User $collectedByUser = null,
+        if ($timeReturned !== null) {
+            $this->timeReturned = $timeReturned;
+        }
+        if ($billingAddress !== null) {
+            $this->billingAddress = $billingAddress;
+        }
+        if ($creditCard !== null) {
+            $this->creditCard = $creditCard;
+        }
+        if ($reservedByUser !== null) {
+            $this->reservedByUser = $reservedByUser;
+        }
+        if ($category !== null) {
+            $this->category = $category;
+        }
+        if ($customer !== null) {
+            $this->customer = $customer;
+        }
+        if ($status !== null) {
+            $this->status = $status;
+        }
+        if ($pickupLocation !== null) {
+            $this->pickupLocation = $pickupLocation;
+        }
+        if ($dropoffLocation !== null) {
+            $this->dropoffLocation = $dropoffLocation;
+        }
+        if ($vehicle !== null) {
+            $this->vehicle = $vehicle;
+        }
+        if ($returnedLocation !== null) {
+            $this->returnedLocation = $returnedLocation;
+        }
+        if ($collectedByUser !== null) {
+            $this->collectedByUser = $collectedByUser;
+        }
     }
 }
