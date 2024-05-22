@@ -158,10 +158,10 @@ CREATE TABLE IF NOT EXISTS customer (
         REFERENCES address(id),
     CONSTRAINT fk_customer_user
         FOREIGN KEY (user_id)
-        REFERENCES user(id),
-    CONSTRAINT fk_customer_creditCard
-        FOREIGN KEY (creditCard_id)
-        REFERENCES creditCard(id)
+        REFERENCES user(id)
+    -- CONSTRAINT fk_customer_creditCard
+    --     FOREIGN KEY (creditCard_id)
+    --     REFERENCES creditCard(id)
 );
 
 -- STATUS (OF RESERVATION)
