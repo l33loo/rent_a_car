@@ -1,4 +1,4 @@
-<form action="" method="post">
+<form action="/app/reservationBook.php" method="post">
     <div class="row mb-3">
         <div class="col">
             <img src="/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
