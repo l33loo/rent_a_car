@@ -66,7 +66,7 @@ try {
     // No need to create a new credit card if it already exists
     // The credit cards will never be deleted or modified because
     // they are part of the reservation, which we decided to keep intact
-    $creditCardDbResult = CreditCard::search([
+    $creditCardDbResults = CreditCard::search([
         [
             'column' => 'ccNumber',
             'operator' => '=',
@@ -82,9 +82,9 @@ try {
             'operator' => '=',
             'value' => trim($_POST['ccCVV'])
         ]
-    ]);
+    ], 'creditCard');
 
-    if (count($creditCardDbResults) === 0) {
+    if ($creditCardDbResults === null) {
         $creditCard = new CreditCard(
             trim($_POST['ccNumber']),
             trim($_POST['ccExpiry']),
@@ -95,7 +95,7 @@ try {
     // because we chose to never delete of directly modify a Reservation or a
     // reservation Revision
     } else if (count($creditCardDbResults) >= 1) {
-        $creditCard = $creditCard[0];
+        $creditCard = $creditCardDbResults[0];
     }
 
     $reservation = new Reservation(
@@ -108,18 +108,18 @@ try {
         // TODO: use Carbon type
         trim($_POST['dropoffTime']),
         // TODO: use Carbon type
-        trim($_POST['totalPrice']),
+        100.00, // TODO: fix totalPrice
         null, // reservedTimestamp
-        null, // revisions
+        [], // revisions
 
         $address->getId(), // Billing address
         $creditCard->getId(),
         $userId, // reservedByUser_id
-        trim($_POST['categoryId']),
+        $_POST['categoryId'],
         $customer->getId(), // TODO:
         1, // status_id
-        trim($_POST['pickupLocationId']),
-        trim($_POST['dropoffLocationId']),
+        $_POST['pickupLocationId'],
+        $_POST['dropoffLocationId'],
         null, // vehicle_id
         null, // returnedLocation_id
         null, // collectedByUser_id
