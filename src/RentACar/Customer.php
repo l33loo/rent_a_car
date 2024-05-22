@@ -104,9 +104,9 @@ class Customer extends Profile {
     /**
      * Get the value of taxNumber
      * 
-     * @return string
+     * @return ?string
      */ 
-    public function getTaxNumber(): string
+    public function getTaxNumber(): ?string
     {
         return $this->taxNumber;
     }
@@ -116,7 +116,7 @@ class Customer extends Profile {
      *
      * @return self
      */ 
-    public function setTaxNumber(string $taxNumber): self
+    public function setTaxNumber(?string $taxNumber): self
     {
         $this->taxNumber = $taxNumber;
 
