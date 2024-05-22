@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS customer (
     -- Better with user, or just the reservation
     -- creditCard_id INT UNSIGNED NOT NULL,
     taxNumber VARCHAR(20),
-    user_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY(id),
     CONSTRAINT fk_customer_address
