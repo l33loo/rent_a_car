@@ -41,7 +41,7 @@ if (isset($_POST['userEditAddress'])) {
             $_POST['countryId']
         );
         $newAddress->save();
-        $user->setAddress_id($newAddress->getId());
+        $user->setAddress($newAddress);
         $user->save();
     } catch(e) {
         // TODO: error message

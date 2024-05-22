@@ -104,6 +104,18 @@ class Vehicle {
     }
 
     /**
+     * Set the value of category
+     *
+     * @return self
+     */ 
+    public function setCategory(Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
      * Get the value of properties
      */ 
     public function getProperties(): array
@@ -175,6 +187,19 @@ class Vehicle {
     public function getIsland(): Island
     {
         return $this->island;
+    }
+
+
+    /**
+     * Set the value of island
+     *
+     * @return self
+     */ 
+    public function setIsland(Island $island): self
+    {
+        $this->island = $island;
+
+        return $this;
     }
 
     /**

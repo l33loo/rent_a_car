@@ -26,22 +26,30 @@ trait DBModel
         $properties = get_object_vars($this);
         unset($properties['tableName']);
         unset($properties['id']);
-        if (array_key_exists('properties', $properties)) {
-            unset($properties['properties']);
-        }
 
-        $propertyKeys = array_keys($properties);
-        $foreignKeys = preg_grep('/_id$/', $propertyKeys);
+        foreach ($properties as $propertyKey => $propertyValue) {
+            if (is_array($propertyValue)) {
+                unset($properties[$propertyKey]);
+            }
 
-        // Strip properties that are objects, because the latter
-        // are stored in different tables.
-        foreach ($foreignKeys as $foreignKey) {
-            $objectProperty = substr($foreignKey, 0, -3);
-
-            if (key_exists($objectProperty, $properties)) {
-                unset($properties[$objectProperty]);
+            if (is_object($propertyValue) && array_key_exists($propertyKey . '_id', $properties)) {
+                $properties[$propertyKey . '_id'] = $propertyValue->getId();
+                unset($properties[$propertyKey]);
             }
         }
+
+        // $propertyKeys = array_keys($properties);
+        // $foreignKeys = preg_grep('/_id$/', $propertyKeys);
+
+        // // Strip properties that are objects, because the latter
+        // // are stored in different tables.
+        // foreach ($foreignKeys as $foreignKey) {
+        //     $objectProperty = substr($foreignKey, 0, -3);
+
+        //     if (key_exists($objectProperty, $properties)) {
+        //         $properties[$foreignKey] = $properties[$objectProperty]->getId();
+        //     }
+        // }
 
         if (empty($this->id)) {
             $sql = 'INSERT INTO ' . $this->tableName . ' (' . implode(',', array_keys($properties)).') VALUES(';
@@ -161,6 +169,12 @@ trait DBModel
     public function loadRelation(string $relationName, string $tableName = ''): void
     {
         $className = 'RentACar\\' . self::snakeToCamel($relationName);
+        $relationId = $this->{$relationName . '_id'};
+
+        if ($relationId === null) {
+            $this->{$relationName} = new $className();
+            return;
+        }
         
         $this->{$relationName} = $className::find($this->{$relationName . '_id'}, $tableName);
     }

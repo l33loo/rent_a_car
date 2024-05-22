@@ -16,6 +16,7 @@ if (empty($_GET['vehicleId'])) {
 } else {
     try {
         $vehicle = Vehicle::find($_GET['vehicleId']);
+        $vehicle->loadRelation('category');
         $vehicle->loadRelation('island');
         $vehicle->loadProperties();
         $islands = Island::search([]);
@@ -64,7 +65,7 @@ echo getHeader();
                                         <?php foreach ($categories as $category) { ?>
                                             <option
                                                 value="<?php echo $category->getId(); ?>"
-                                                <?php echo $category->getId() === $vehicle->getCategory_id() ? 'selected' : null; ?>
+                                                <?php echo $category->getId() === $vehicle->getCategory()->getId() ? 'selected' : null; ?>
                                             >
                                                 <?php echo $category->getName();?>
                                             </option>

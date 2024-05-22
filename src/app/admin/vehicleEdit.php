@@ -1,9 +1,13 @@
 <?php
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Vehicle.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 
+use RentACar\Category;
+use RentACar\Island;
 use RentACar\Property;
 use RentACar\Vehicle;
 
@@ -21,8 +25,8 @@ if (isset($_POST['vehicleEdit'])) {
         $vehicle = Vehicle::find($vehicleId);
         $vehicle->loadProperties();
         $vehicle->setPlate($_POST['plate']);
-        $vehicle->setIsland_id($_POST['islandId']);
-        $vehicle->setCategory_id($_POST['categoryId'] === '' ? null : $_POST['categoryId']);
+        $vehicle->setIsland(Island::find($_POST['islandId']));
+        $vehicle->setCategory(($_POST['categoryId'] === '' ? (new Category()) : Category::find($_POST['categoryId'])));
         $vehicle->setRentable($_POST['rentable']);
         $vehicle->save();
 
@@ -57,9 +61,11 @@ if (isset($_POST['vehicleEdit'])) {
 if (isset($_POST['vehicleArchive'])) {
     try {
         $vehicle = Vehicle::find($vehicleId);
+        $vehicle->loadRelation('island');
+        $vehicle->loadRelation('category');
         $vehicle->setIsArchived(true)->save();
-        $islandId = $vehicle->getIsland_id();
-        $categoryId = $vehicle->getCategory_id();
+        $islandId = $vehicle->getIsland()->getId();
+        $categoryId = empty($vehicle->getCategory()) ? '' : $vehicle->getCategory()->getId();
         header("Location: /html/admin/vehicles.php?islandId=$islandId&categoryId=$categoryId");
     } catch(e) {
         // TODO: handle error
