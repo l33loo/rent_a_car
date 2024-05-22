@@ -183,10 +183,11 @@ CREATE TABLE IF NOT EXISTS reservation (
     dropoffDate DATE NOT NULL,
     pickupTime TIME NOT NULL,
     dropoffTime TIME NOT NULL,
+    totalPrice DECIMAL(6,2) NOT NULL,
     -- To be added by admin when customer picks up the car
     vehicle_id INT UNSIGNED,
     reservedByUser_id INT UNSIGNED NOT NULL,
-    reservedTimestamp TIMESTAMP,
+    reservedTimestamp DEFAULT CURRENT_TIMESTAMP,
     -- To be added by admin when customer returns the car
     dateReturned DATE,
     -- To be added by admin when customer returns the car
