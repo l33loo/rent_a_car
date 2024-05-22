@@ -14,6 +14,7 @@ use RentACar\User;
 class Customer extends Profile {
     protected ?string $driversLicense = null;
     protected ?string $taxNumber = null;
+    protected ?int $user_id = null;
     protected ?User $user = null;
 
     public function __construct(
@@ -25,6 +26,7 @@ class Customer extends Profile {
         ?int $address_id = null,
         ?string $driversLicense = null,
         ?string $taxNumber = null,
+        ?int $user_id = null,
         ?Address $address = null,
         ?User $user = null,
         ?int $id = null
@@ -139,6 +141,28 @@ class Customer extends Profile {
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of user_id
+     * 
+     * @return ?int
+     */ 
+    public function getUser_id(): ?int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set the value of user_id
+     *
+     * @return self
+     */ 
+    public function setUser_id(?int $user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }
