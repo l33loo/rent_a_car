@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/countries.inc.php';
 ?>
 
 <fieldset class="mb-3">
-    <legend class>
+    <legend>
         <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
         Address
     </legend>

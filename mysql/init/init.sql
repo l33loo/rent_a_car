@@ -146,8 +146,10 @@ CREATE TABLE IF NOT EXISTS customer (
     address_id INT UNSIGNED NOT NULL,
     phone VARCHAR(25) NOT NULL,
     driversLicense VARCHAR(90) NOT NULL,
+    -- TODO: do we want this attached to the customer?
+    -- Better with user, or just the reservation
     creditCard_id INT UNSIGNED NOT NULL,
-    taxNumber VARCHAR(20) NOT NULL,
+    taxNumber VARCHAR(20),
     user_id INT UNSIGNED NOT NULL,
     isArchived BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY(id),
@@ -181,14 +183,20 @@ CREATE TABLE IF NOT EXISTS reservation (
     dropoffDate DATE NOT NULL,
     pickupTime TIME NOT NULL,
     dropoffTime TIME NOT NULL,
-    vehicle_id INT UNSIGNED NOT NULL,
+    -- To be added by admin when customer picks up the car
+    vehicle_id INT UNSIGNED,
     reservedByUser_id INT UNSIGNED NOT NULL,
     reservedTimestamp TIMESTAMP,
-    dateReturned DATE NOT NULL,
-    timeReturned TIME NOT NULL,
-    returnedLocation_id INT UNSIGNED NOT NULL,
-    collectedByUser_id INT UNSIGNED NOT NULL,
+    -- To be added by admin when customer returns the car
+    dateReturned DATE,
+    -- To be added by admin when customer returns the car
+    timeReturned TIME,
+    -- To be added by admin when customer returns the car
+    returnedLocation_id INT UNSIGNED,
+    -- To be added by admin when customer returns the car
+    collectedByUser_id INT UNSIGNED,
     billingAddress_id INT UNSIGNED NOT NULL,
+    creditCard_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_reservation_category
         FOREIGN KEY (category_id)
@@ -219,7 +227,10 @@ CREATE TABLE IF NOT EXISTS reservation (
         REFERENCES user(id),
     CONSTRAINT fk_reservation_billingAddress
         FOREIGN KEY (billingAddress_id)
-        REFERENCES address(id)
+        REFERENCES address(id),
+    CONSTRAINT fk_reservation_creditCard
+        FOREIGN KEY (creditCard_id)
+        REFERENCES creditCard(id)
 );
 
 -- REVISION (OF RESERVATION)

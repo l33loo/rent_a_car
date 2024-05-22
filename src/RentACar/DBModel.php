@@ -117,7 +117,7 @@ trait DBModel
         $stmt->execute($params);
     }
 
-    public static function search(array $filters, string $tableName = ''): array
+    public static function search(array $filters, string $tableName = '', ?int $resultsLimit = null): array
     {
         if ($tableName === '') {
             $class_parts = explode('\\', static::class);
@@ -138,6 +138,10 @@ trait DBModel
 
                 $sql .= $filter['column'] . ' ' . $filter['operator'] . ' ?';
             }
+        }
+
+        if (!empty($resultsLimit)) {
+            $sql .= " LIMIT $resultsLimit";
         }
 
         $connection = MyConnect::getInstance()->getConnection();

@@ -7,19 +7,19 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 use RentACar\Address;
 use RentACar\User;
 
-$address = new Address(
-    $_POST['street'],
-    $_POST['door'],
-    $_POST['apartment'],
-    $_POST['city'],
-    $_POST['district'],
-    $_POST['postalCode'],
-    $_POST['countryId']
-);
-
-$address->save();
-
 try {
+    $address = new Address(
+        $_POST['street'],
+        $_POST['door'],
+        $_POST['apartment'],
+        $_POST['city'],
+        $_POST['district'],
+        $_POST['postalCode'],
+        $_POST['countryId']
+    );
+    
+    $address->save();
+    
     $user = new User(
         $_POST['name'],
         trim($_POST['email']),
