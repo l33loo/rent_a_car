@@ -121,7 +121,7 @@ echo getHeader();
                         <input type="hidden" name="dropoffLocationId" value="<?php echo $_GET['dropoffLocationId'] ?>">
                         <input type="hidden" name="dropoffDate" value="<?php echo $_GET['dropoffDate'] ?>">
                         <input type="hidden" name="dropoffTime" value="<?php echo $_GET['dropoffTime'] ?>">
-                        <input type="submit" value="Book Now" class="btn btn-success" name="reservationCar">
+                        <input type="submit" value="Book Now" class="btn btn-success" name="reservationSelectVehicle">
                     </form>
                 </div>
             </div>
