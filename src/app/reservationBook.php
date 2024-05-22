@@ -59,10 +59,9 @@ try {
             trim($_POST['ccCVV'])
         );
         $newCreditCard->save();
-        $reservation->setCreditCard_id($newCreditCard->getId());
-    } else if (count($creditCardDbResults) === 1) {
-        $oldCreditCard = $creditCard[0];
-        $reservation->setCreditCard_id($oldCreditCard->getId());
+        $reservation->setCreditCard($newCreditCard);
+    } else if (count($creditCardDbResults) >= 1) {
+        $reservation->setCreditCard($creditCard[0]);
     } else {
         // TODO: throw error?
     }
