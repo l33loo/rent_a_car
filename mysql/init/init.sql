@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS reservation (
     -- To be added by admin when customer picks up the car
     vehicle_id INT UNSIGNED,
     reservedByUser_id INT UNSIGNED NOT NULL,
-    reservedTimestamp DEFAULT CURRENT_TIMESTAMP,
+    reservedTimestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     -- To be added by admin when customer returns the car
     dateReturned DATE,
     -- To be added by admin when customer returns the car
