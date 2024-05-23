@@ -4,31 +4,43 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revisions.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Status.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 
 use RentACar\Customer;
 use RentACar\Island;
 use RentACar\Location;
-use RentACar\Revisions;
+use RentACar\Revision;
 use RentACar\Status;
 use RentACar\User;
 
-if (empty($_GET['id'])) {
+if (empty($_GET['reservationId'])) {
     // TODO: error + redirect
     echo 'No reservation id';
     exit;
 }
 
-$latestRevisionId = $_GET['id'];
-$latestRevision = Revision::rawSQL("
+$reservationId = $_GET['reservationId'];
+$stmt = Revision::rawSQL("
     SELECT * FROM revision
-    WHERE reservation_id=$latestRevisionId
+    WHERE reservation_id=$reservationId
     ORDER BY submittedTimestamp DESC
     LIMIT 1;
 ");
-$latestRevisionId = $latestRevision->getId();
+
+$results = [];
+while($row = $stmt->fetchObject(Revision::class)) {
+    $results[] = $row;
+}
+
+if (count($results) !== 1) {
+    echo 'Error retrieving latest revision';
+    // TODO: error and redirect
+    exit;
+}
+
+$latestRevisionId = $results[0]->getId();
 $locations = Location::search([]);
 
 

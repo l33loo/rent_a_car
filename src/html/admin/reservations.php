@@ -16,12 +16,21 @@ use RentACar\Revision;
 use RentACar\Status;
 use RentACar\User;
 
-$reservations = Revision::rawSQL("
-    SELECT * FROM revision
-    GROUP BY reservation_id
-    ORDER BY submittedTimestamp
-    LIMIT 1;
+$stmt = Revision::rawSQL("
+    SELECT revision.* FROM revision,
+    (
+        SELECT reservation_id, max(submittedTimestamp) as maxSubmittedTimestamp
+            FROM revision
+            GROUP BY reservation_id
+    ) maxRevision
+    WHERE revision.reservation_id = maxRevision.reservation_id
+    AND revision.submittedTimestamp = maxRevision.maxSubmittedTimestamp;
 ");
+
+$reservations = [];
+while($row = $stmt->fetchObject(Revision::class)) {
+    $reservations[] = $row;
+}
 
 echo getHeader();
 ?>
@@ -108,8 +117,8 @@ echo getHeader();
                             <td><?php echo $reservation->getDropoffTime(); ?></td>
                             <td><?php echo $reservation->loadRelation('status', 'status')->getStatus()->getStatusName(); ?></td>
                             <td>
-                                <a href="/html/admin/reservationView.php?id=<?php echo $reservation->getId(); ?>" class="btn btn-primary">View</a>
-                                <a href="/html/admin/reservationEdit.php?id=<?php echo $reservation->getId(); ?>" class="btn btn-secondary">Edit</a>
+                                <a href="/html/admin/reservationView.php?reservationId=<?php echo $reservation->getId(); ?>" class="btn btn-primary">View</a>
+                                <a href="/html/admin/reservationEdit.php?reservationId=<?php echo $reservation->getId(); ?>" class="btn btn-secondary">Edit</a>
                                 <!-- <a href="" class="btn btn-danger">Delete</a> -->
                             </td>
                         </tr>
