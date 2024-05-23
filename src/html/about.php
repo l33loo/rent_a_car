@@ -25,7 +25,6 @@
         background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
     }
 
-    /* Estilos para a lista de localizações */
     .location-list {
         list-style: none;
         padding: 0;
@@ -97,16 +96,10 @@
                 <div class="text-content">
                     <ul class="location-list">
                         <?php
-                        // Criar uma instância da classe de localização
                         $locations = RentACar\Location::search([]);
-
-                        // Exibir as localizações
                         foreach ($locations as $loc) {
-                            // Certifique-se de carregar o endereço associado
                             $loc->loadRelation('address');
                             $address = $loc->getAddress();
-
-                            // Verifique se o endereço não é nulo
                             if ($address) {
                                 echo "<li class='location-list-item'>
                                         <span class='location-name'>{$loc->getName()}</span> - 

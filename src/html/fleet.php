@@ -1,5 +1,5 @@
 <?php 
-require_once './components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
 
 use RentACar\Category;
@@ -59,12 +59,12 @@ $categories = Category::search([]);
     <div class="container" style="margin-top: 50px;">
         <?php foreach ($categories as $category): ?>
         <div class="card">
-            <img class="card-img-top" src="../img/car.jpg" alt="Category Image">
+            <img class="card-img-top" src="/img/<?php echo $category->getName()?>.jpg" alt="Category Image">
             <div class="card-info">
                 <h2><?php echo $category->getName(); ?></h2>
                 <p><?php echo $category->getDescription(); ?></p>
                 <p>Daily Rate: <?php echo number_format($category->getDailyRate(), 2); ?> €</p>
-                <a href=" #" class="btn btn-primary">View Details</a>
+                <a href="../html/categoryView.php" class="btn btn-primary">View Details</a>
             </div>
         </div>
         <?php endforeach; ?>
