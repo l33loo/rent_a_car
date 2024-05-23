@@ -33,13 +33,13 @@ trait DBModel
         $propertyKeys = array_keys($properties);
         $foreignKeys = preg_grep('/_id$/', $propertyKeys);
 
-        // Strip properties that are objects, because the latter
+        // Strip properties that are objects or arrays, because the latter
         // are stored in different tables.
-        foreach ($foreignKeys as $foreignKey) {
-            $objectProperty = substr($foreignKey, 0, -3);
-
-            if (key_exists($objectProperty, $properties)) {
-                unset($properties[$objectProperty]);
+        foreach ($properties as $propertyKey => $propertyValue) {
+            // If there is a corresponding `{property}_id`, it means the current
+            // property is for an object that maps to another db table.
+            if (key_exists($propertyKey . '_id', $properties) || is_array($propertyValue)) {
+                unset($properties[$propertyKey]);
             }
         }
 
