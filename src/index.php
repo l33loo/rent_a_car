@@ -6,16 +6,16 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/html/reservationValidation.php";
 use RentACar\Location;
 
 session_start();
-echo getHeader();
 
 $locations = Location::search([]);
 
+echo getHeader();
 ?>
 
 <style>
 .bg-image {
     position: relative;
-    background-image: url(./img/homepage.jpg);
+    background-image: url(/img/homepage.jpg);
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -62,7 +62,7 @@ select {
 </style>
 
 <body>
-    <?php include 'html/components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
     <div class="bg-image" style="position: relative;">
         <div class="gradient-overlay"></div>
         <div class="container">
@@ -71,50 +71,77 @@ select {
             </div>
         </div>
     </div>
-
-    <form action="reservationValidation.php" method="post" style="padding:140px 0;" class="container">
-        <h2 style="padding-bottom: 50px;">Reservation</h2>
-        <label for="pickup-location">Pick-Up Location:</label>
-        <select id="pickup-location" name="pickup_location">
-            <?php foreach ($locations as $location) : ?>
-            <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName(); ?></option>
-            <?php endforeach; ?>
-        </select>
-        <br>
-
-        <label for="dropoff-location">Drop-Off Location:</label>
-        <select id="dropoff-location" name="dropoff_location">
-            <?php foreach ($locations as $location) : ?>
-            <option value="<?php echo $location->getId(); ?>"><?php echo $location->getName(); ?></option>
-            <?php endforeach; ?>
-        </select>
-        <br>
-
-        <label for="pickup-date">Pick-Up Date:</label>
-        <input type="date" id="pickup-date" name="pickup_date" required>
-        <br>
-
-        <label for="dropoff-date">Drop-Off Date:</label>
-        <input type="date" id="dropoff-date" name="dropoff_date" required>
-        <br>
-
-        <label for="pickup-time">Pick-Up Time:</label>
-        <input type="time" id="pickup-time" name="pickup_time" min="09:30" max="17:30" required>
-        <br>
-
-        <label for="dropoff-time">Drop-Off Time:</label>
-        <input type="time" id="dropoff-time" name="dropoff_time" min="09:30:00" max="17:30:00" required>
-        <br>
-
-        <input type="submit" value="Submit">
-    </form>
+  
+    <div class="container my-5 w-50"
+        style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
+        <h1>Reservation</h1>
+        <form action="/html/reservationSelectVehicle.php" method="get">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <h2>Pick-up</h2>
+                    <div class="row">
+                        <div class="col">
+                            <label for="pickup-location">1. Pick-Up Location:</label>
+                            <select id="pickup-location" name="pickupLocationId" class="form-select">
+                                <?php foreach ($locations as $location) : ?>
+                                    <option value="<?php echo $location->getId(); ?>">
+                                        <?php echo $location->getName(); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="pickup-date">Pick-Up Date:</label>
+                            <input type="date" id="pickup-date" name="pickupDate" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="pickup-time">Pick-Up Time:</label>
+                            <input type="time" id="pickup-time" name="pickupTime" min="09:30" max="17:30" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <h2>Drop-off</h2>
+                    <div class="row">
+                        <div class="col">
+                            <label for="dropoff-location">Drop-Off Location:</label>
+                            <select id="dropoff-location" name="dropoffLocationId" class="form-select">
+                                <?php foreach ($locations as $location) : ?>
+                                    <option value="<?php echo $location->getId(); ?>">
+                                        <?php echo $location->getName(); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="dropoff-date">Drop-Off Date:</label>
+                            <input type="date" id="dropoff-date" name="dropoffDate" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="dropoff-time">Drop-Off Time:</label>
+                            <input type="time" id="dropoff-time" name="dropoffTime" min="09:30:00" max="17:30:00" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form>
+    </div>
 
     <div class="container">
         <h2 style="position:relative; top: -100px;">Our Fleet</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">
             <div class="col">
                 <div class="card h-100" style="    filter: drop-shadow(16px 16px 20px);">
-                    <img src="./img/car.jpg" class="card-img-top" alt="car">
+                    <img src="/img/car.jpg" class="card-img-top" alt="car">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Regular</h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
@@ -127,7 +154,7 @@ select {
             </div>
             <div class="col">
                 <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="./img/moto.jpg" class="card-img-top" alt="moto">
+                    <img src="/img/moto.jpg" class="card-img-top" alt="moto">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Motorcycle</h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
@@ -140,7 +167,7 @@ select {
             </div>
             <div class="col">
                 <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="./img/suv.jpg" class="card-img-top" alt="suv">
+                    <img src="/img/suv.jpg" class="card-img-top" alt="suv">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Suv</h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
@@ -155,7 +182,7 @@ select {
         </div>
     </div>
 
-    <?php include 'html/components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
 </body>
 
 </html>

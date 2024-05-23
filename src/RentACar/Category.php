@@ -145,7 +145,7 @@ class Category {
 
             $results = [];
             while($row = $stmt->fetchObject(Property::class)) {
-                $results[] = $row;
+                $results[$row->getName()] = $row;
             }
             $this->properties = $results;
         } catch(e) {

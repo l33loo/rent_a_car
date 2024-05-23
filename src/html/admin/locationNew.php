@@ -25,7 +25,7 @@ echo getHeader();
                     <label for="email">
                         Select Fleet:
                     </label>
-                    <select class="form-control" name="islandId">
+                    <select class="form-select" name="islandId">
                         <?php foreach($islands as $island) { ?>
                             <option value="<?php echo $island->getId(); ?>">
                                 <?php echo $island->getName(); ?>
