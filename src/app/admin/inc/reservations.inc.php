@@ -1,7 +1,7 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 
-use RentACar\Reservation;
+use RentACar\Revision;
 
-$reservations = Reservation::search([], 'reservation');
+$revisions = Revision::search([], 'revision');

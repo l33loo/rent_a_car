@@ -5,7 +5,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Status.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
@@ -14,29 +13,17 @@ use RentACar\Category;
 use RentACar\Customer;
 use RentACar\Island;
 use RentACar\Location;
-use RentACar\Reservation;
 use RentACar\Revision;
 use RentACar\Status;
 use RentACar\User;
 
 try {
-    if (empty($_GET['reservationId'])) {
-        // TODO: error + redirect
-        echo 'No reservation id';
-        exit;
-    }
-
-    $reservationId = $_GET['reservationId'];
-    $reservation = Reservation::find($reservationId);
-    $latestRevision = $reservation->findLatestRevision();
-    $latestRevisionId = $latestRevision->getId();
     $locations = Location::search([]);
+    $statuses = Status::search([]);
     $categories = Category::search([]);
 } catch(e) {
-    // TODO: error
-    exit;
-}
 
+}
 
 echo getHeader();
 ?>
@@ -46,7 +33,7 @@ echo getHeader();
 
     <div class="container pt-5">
         <h1 class="pt-5 pb-3">Edit Reservation</h1>
-        <form action="/app/admin/reservationEdit.php" method="post">
+        <form action="/app/admin/reservationNew.php" method="post">
             <div class="row mb-1">
                 <div class="col-md-6 col-12">
                     <h2 class="h4 mb-3">Pick-up</h2>
@@ -104,7 +91,15 @@ echo getHeader();
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-sm col-md-6">
+                <div class="col">
+                    <label for="statusId">Reservation status:</label>
+                    <select name="statusId" id="status" class="form-select">
+                        <?php foreach ($statuses as $status) { ?>
+                            <option value="<?php echo $status->getId() ?>"><?php echo $status->getStatusName() ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="col">
                     <label for="categoryId">Vehicle category:</label>
                     <select name="categoryId" id="category" class="form-select">
                         <?php foreach ($categories as $category) { ?>
@@ -113,30 +108,11 @@ echo getHeader();
                     </select>
                 </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
-                <input type="submit" name="reservationEditRes" value="Edit Reservation" class="btn btn-primary">
-            </div>
-        </form>
-        <form action="/app/admin/reservationEdit.php" method="post">
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formCustomer.inc.php'; ?>
-            <div class="d-flex justify-content-center">
-                <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
-                <input type="submit" name="reservationEditCustomer" value="Edit Customer" class="btn btn-primary">
-            </div>
-        </form>
-        <form action="/app/admin/reservationEdit.php" method="post">
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formAddress.inc.php'; ?>
-            <div class="d-flex justify-content-center">
-                <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
-                <input type="submit" name="reservationEditAddress" value="Edit Address" class="btn btn-primary">
-            </div>
-        </form>
-        <form action="/app/admin/reservationEdit.php" method="post">
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formPayment.inc.php'; ?>
             <div class="d-flex justify-content-center">
-                <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
-                <input type="submit" name="reservationEditPayment" value="Edit Payment" class="btn btn-primary">
+                <input type="submit" name="reservationNew" value="Reserve" class="btn btn-primary">
             </div>
         </form>
     </div>

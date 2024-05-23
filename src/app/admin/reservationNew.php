@@ -1,4 +1,5 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/CreditCard.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
@@ -13,19 +14,10 @@ use RentACar\Reservation;
 use RentACar\Revision;
 use RentACar\User;
 
-session_start();
-
 if (empty($_SESSION['logged_id'])) {
     $sessionUserId = null;
 } else {
     $sessionUserId = strval($_SESSION['logged_id']);
-}
-
-$userId = $_POST['userId'];
-if ($userId !== $sessionUserId) {
-    // TODO: error
-    echo 'Not same user ids';
-    exit;
 }
 
 // TODO: validate fields
@@ -58,7 +50,7 @@ try {
         $address->getId(),
         trim($_POST['driversLicense']),
         trim($_POST['taxNumber']),
-        $userId, // TODO:
+        null, // user_id
         null, // address
         null // user
     );
@@ -106,7 +98,7 @@ try {
         exit;
     }
 
-    $reservation = new Reservation($userId);
+    $reservation = new Reservation();
     $reservation->save();
 
     $revision = new Revision(
@@ -125,10 +117,10 @@ try {
 
         $address->getId(), // Billing address
         $creditCard->getId(),
-        $userId, // submittedByUser_id
-        $_POST['categoryId'],
-        $customer->getId(), // TODO:
-        1, // status_id
+        $sessionUserId, // submittedByUser_id
+        $_POST['categoryId'], // category_id 
+        $customer->getId(), // customer_id
+        $_POST['statusId'], // status_id
         $_POST['pickupLocationId'],
         $_POST['dropoffLocationId'],
         null, // vehicle_id
@@ -155,13 +147,13 @@ try {
 
     // TODO: send back to form with existing data
     echo 'error saving Revision';
-    header('Location: /html/RevisionBook.php');
+    header('Location: /html/reservations.php');
     exit;
 }
 
-// TODO: Send to Revision view, with success message
-if (!empty($userId)) {
-    header("Location: /html/userView.php?userId=$userId");
-} else {
-    header("Location: /html/index.php");
-}
+// // TODO: Send to Revision view, with success message
+// if (!empty($userId)) {
+//     header("Location: /html/userView.php?userId=$userId");
+// } else {
+//     header("Location: /index.php");
+// }

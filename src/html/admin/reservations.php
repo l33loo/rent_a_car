@@ -6,6 +6,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Status.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 
@@ -13,19 +14,35 @@ use RentACar\Customer;
 use RentACar\Island;
 use RentACar\Location;
 use RentACar\Reservation;
+use RentACar\Revision;
 use RentACar\Status;
 use RentACar\User;
 
-$reservations = Reservation::search([]);
+$stmt = Revision::rawSQL("
+    SELECT revision.* FROM revision,
+    (
+        SELECT reservation_id, max(submittedTimestamp) as maxSubmittedTimestamp
+            FROM revision
+            GROUP BY reservation_id
+    ) maxRevision
+    WHERE revision.reservation_id = maxRevision.reservation_id
+    AND revision.submittedTimestamp = maxRevision.maxSubmittedTimestamp;
+");
+
+$revisions = [];
+while($row = $stmt->fetchObject(Revision::class)) {
+    $revisions[] = $row;
+}
 
 echo getHeader();
 ?>
 
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
-    <div class="container">
-        <div class="text-content">
-            <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Reservations</h1>
+    <div class="container mt-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center pt-5 mb-4">
+            <h1>Manage Reservations</h1>
+            <a class="btn btn-success" href="/html/admin/reservationNew.php">New Reservation</a>
         </div>
     </div>
     <div class="container">
@@ -43,13 +60,13 @@ echo getHeader();
                     ?string $dropoffTime = null,
                     // TODO: use Carbon type
                     ?float $totalPrice = null,
-                    ?string $reservedTimestamp = null,
+                    ?string $submittedTimestamp = null,
                     // TODO: Update UML to reflect this
                     ?array $revisions = null,
 
                     ?int $billingAddress_id = null,
                     ?int $creditCard_id = null,
-                    ?int $reservedByUser_id = null,
+                    ?int $submittedByUser_id = null,
                     ?int $category_id = null,
                     ?int $customer_id = null,
                     ?int $status_id = null,
@@ -65,7 +82,7 @@ echo getHeader();
                     ?string $timeReturned = null,
                     ?Address $billingAddress = null,
                     ?CreditCard $creditCard = null,
-                    ?User $reservedByUser = null,
+                    ?User $submittedByUser = null,
                     ?Category $category = null,
                     ?Customer $customer = null,
                     ?Status $status = null,
@@ -89,23 +106,25 @@ echo getHeader();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($reservations as $reservation) {
-                        $reservation->loadRelation('category', 'category');
+                    <?php foreach ($revisions as $revision) {
+                        $revision->loadRelation('category');
+                        $revision->loadRelation('reservation');
+                        $reservationId = $revision->getReservation()->getId();
                     ?>
                         <tr>
-                            <th><?php echo $reservation->getId(); ?></th>
-                            <td><?php echo $reservation->getCategory()->getName(); ?></td>
-                            <td><?php echo $reservation->loadRelation('pickupLocation', 'location')->getPickupLocation()->getName(); ?></td>
-                            <td><?php echo $reservation->getPickupDate(); ?></td>
-                            <td><?php echo $reservation->getPickupTime(); ?></td>
-                            <td><?php echo $reservation->loadRelation('dropoffLocation', 'location')->getDropoffLocation()->getName(); ?></td>
-                            <td><?php echo $reservation->getDropoffDate(); ?></td>
-                            <td><?php echo $reservation->getDropoffTime(); ?></td>
-                            <td><?php echo $reservation->loadRelation('status', 'status')->getStatus()->getStatusName(); ?></td>
+                            <th><?php echo $reservationId; ?></th>
+                            <td><?php echo $revision->getCategory()->getName(); ?></td>
+                            <td><?php echo $revision->loadRelation('pickupLocation', 'location')->getPickupLocation()->getName(); ?></td>
+                            <td><?php echo $revision->getPickupDate(); ?></td>
+                            <td><?php echo $revision->getPickupTime(); ?></td>
+                            <td><?php echo $revision->loadRelation('dropoffLocation', 'location')->getDropoffLocation()->getName(); ?></td>
+                            <td><?php echo $revision->getDropoffDate(); ?></td>
+                            <td><?php echo $revision->getDropoffTime(); ?></td>
+                            <td><?php echo $revision->loadRelation('status', 'status')->getStatus()->getStatusName(); ?></td>
                             <td>
-                                <a href="/html/admin/reservationView.php?id=<?php echo $reservation->getId(); ?>" class="btn btn-primary">View</a>
-                                <a href="/html/admin/reservationEdit.php?id=<?php echo $reservation->getId(); ?>" class="btn btn-secondary">Edit</a>
-                                <!-- <a href="" class="btn btn-danger">Delete</a> -->
+                                <a href="/html/admin/reservationView.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-primary">View</a>
+                                <a href="/html/admin/reservationEdit.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-secondary">Edit Base Reservation</a>
+                                <a href="/html/admin/reservationComplete.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-warning">Complete Reservation</a>
                             </td>
                         </tr>
                     <?php } ?>

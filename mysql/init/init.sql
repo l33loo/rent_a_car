@@ -174,6 +174,17 @@ CREATE TABLE IF NOT EXISTS status (
 -- RESERVATION
 CREATE TABLE IF NOT EXISTS reservation (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ownerUser_id INT UNSIGNED,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_reservation_user
+        FOREIGN KEY (ownerUser_id)
+        REFERENCES user(id)
+);
+
+-- REVISION (of RESERVATION)
+-- Keep all versions of a given reservation
+CREATE TABLE IF NOT EXISTS revision (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     category_id INT UNSIGNED NOT NULL,
     customer_id INT UNSIGNED NOT NULL,
     status_id INT UNSIGNED NOT NULL,
@@ -186,8 +197,8 @@ CREATE TABLE IF NOT EXISTS reservation (
     totalPrice DECIMAL(6,2) NOT NULL,
     -- To be added by admin when customer picks up the car
     vehicle_id INT UNSIGNED,
-    reservedByUser_id INT UNSIGNED NOT NULL,
-    reservedTimestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    submittedByUser_id INT UNSIGNED NOT NULL,
+    submittedTimestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     -- To be added by admin when customer returns the car
     dateReturned DATE,
     -- To be added by admin when customer returns the car
@@ -198,62 +209,8 @@ CREATE TABLE IF NOT EXISTS reservation (
     collectedByUser_id INT UNSIGNED,
     billingAddress_id INT UNSIGNED NOT NULL,
     creditCard_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_reservation_category
-        FOREIGN KEY (category_id)
-        REFERENCES category(id),
-    CONSTRAINT fk_reservation_customer
-        FOREIGN KEY (customer_id)
-        REFERENCES customer(id),
-    CONSTRAINT fk_reservation_status
-        FOREIGN KEY (status_id)
-        REFERENCES status(id),
-    CONSTRAINT fk_reservation_pickupLocation
-        FOREIGN KEY (pickupLocation_id)
-        REFERENCES location(id),
-    CONSTRAINT fk_reservation_dropoffLocation
-        FOREIGN KEY (dropoffLocation_id)
-        REFERENCES location(id),
-    CONSTRAINT fk_reservation_vehicle
-        FOREIGN KEY (vehicle_id)
-        REFERENCES vehicle(id),
-    CONSTRAINT fk_reservation_user
-        FOREIGN KEY (reservedByUser_id)
-        REFERENCES user(id),
-    CONSTRAINT fk_reservation_returnedLocation
-        FOREIGN KEY (returnedLocation_id)
-        REFERENCES location(id),
-    CONSTRAINT fk_reservation_collectedByUser
-        FOREIGN KEY (collectedByUser_id)
-        REFERENCES user(id),
-    CONSTRAINT fk_reservation_billingAddress
-        FOREIGN KEY (billingAddress_id)
-        REFERENCES address(id),
-    CONSTRAINT fk_reservation_creditCard
-        FOREIGN KEY (creditCard_id)
-        REFERENCES creditCard(id)
-);
-
--- REVISION (OF RESERVATION)
-CREATE TABLE IF NOT EXISTS revision (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     reservation_id INT UNSIGNED NOT NULL,
-    category_id INT UNSIGNED NOT NULL,
-    customer_id INT UNSIGNED NOT NULL,
-    status_id INT UNSIGNED NOT NULL,
-    pickupLocation_id INT UNSIGNED NOT NULL,
-    dropoffLocation_id INT UNSIGNED NOT NULL,
-    pickupDate DATE NOT NULL,
-    dropoffDate DATE NOT NULL,
-    pickupTime TIME NOT NULL,
-    dropoffTime TIME NOT NULL,
-    vehicle_id INT UNSIGNED NOT NULL,
-    revisionByUser_id INT UNSIGNED NOT NULL,
-    revisionTimestamp TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT fk_revision_reservation
-        FOREIGN KEY (reservation_id)
-        REFERENCES reservation(id),
     CONSTRAINT fk_revision_category
         FOREIGN KEY (category_id)
         REFERENCES category(id),
@@ -273,8 +230,23 @@ CREATE TABLE IF NOT EXISTS revision (
         FOREIGN KEY (vehicle_id)
         REFERENCES vehicle(id),
     CONSTRAINT fk_revision_user
-        FOREIGN KEY (revisionByUser_id)
-        REFERENCES user(id)
+        FOREIGN KEY (submittedByUser_id)
+        REFERENCES user(id),
+    CONSTRAINT fk_revision_returnedLocation
+        FOREIGN KEY (returnedLocation_id)
+        REFERENCES location(id),
+    CONSTRAINT fk_revision_collectedByUser
+        FOREIGN KEY (collectedByUser_id)
+        REFERENCES user(id),
+    CONSTRAINT fk_revision_billingAddress
+        FOREIGN KEY (billingAddress_id)
+        REFERENCES address(id),
+    CONSTRAINT fk_revision_creditCard
+        FOREIGN KEY (creditCard_id)
+        REFERENCES creditCard(id),
+    CONSTRAINT fk_revision_reservation
+        FOREIGN KEY (reservation_id)
+        REFERENCES reservation(id)
 );
 
 -- POPULATE COUNTRY
