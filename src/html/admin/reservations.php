@@ -37,9 +37,10 @@ echo getHeader();
 
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
-    <div class="container">
-        <div class="text-content">
-            <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Reservations</h1>
+    <div class="container mt-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center pt-5 mb-4">
+            <h1>Manage Reservations</h1>
+            <a class="btn btn-success" href="/html/admin/reservationNew.php">New Reservation</a>
         </div>
     </div>
     <div class="container">
