@@ -55,7 +55,7 @@ echo getHeader();
                         </div>
                         <img src="../../img/grid.svg" alt="Car Icon"
                             style="height: 40px; width:40px; position:relative; left:50%; transform:translate(-50%); margin-top:5px;">
-                        <a href=""> <img src="../../img/arrowDown.svg" alt="Arrow Down" style="width:30px;
+                        <a href="/html/admin/reservations.php"> <img src="../../img/arrowDown.svg" alt="Arrow Down" style="width:30px;
                         position:relative; top:50px; left:65px;" ;></a>
                     </div>
                 </div>

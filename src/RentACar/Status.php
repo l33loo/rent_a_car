@@ -1,30 +1,45 @@
 <?php
 namespace RentACar;
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
+
 // TODO: update UML and SQL Schema to add Status
 
 class Status {
-    protected int $id;
-    protected string $name;
+    use DBModel;
 
-    public function __construct(int $id, string $name) {
-        $this->id = $id;
-        $this->name = $name;
+    protected ?string $statusName;
+
+    public function __construct(?string $statusName = null, ?int $id = null) {
+        $this->tableName = 'status';
+
+        if ($statusName !== null) {
+            $this->statusName = $statusName;
+        }
+        if ($id !== null) {
+            $this->id = $id;
+        }
     }
 
     /**
-     * Get the value of id
+     * Get the value of statusName
+     * 
+     * @return string
      */ 
-    public function getId(): int
+    public function getStatusName(): string
     {
-        return $this->id;
+        return $this->statusName;
     }
 
     /**
-     * Get the value of name
+     * Set the value of statusName
+     *
+     * @return self
      */ 
-    public function getName(): string
+    public function setStatusName(string $statusName): self
     {
-        return $this->name;
+        $this->statusName = $statusName;
+
+        return $this;
     }
 }

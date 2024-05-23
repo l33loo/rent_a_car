@@ -153,4 +153,9 @@ try {
     exit;
 }
 
-header("Location: /html/userView.php?userId=$userId");
+// TODO: Send to reservation view, with success message
+if (!empty($userId)) {
+    header("Location: /html/userView.php?userId=$userId");
+} else {
+    header("Location: /html/index.php");
+}

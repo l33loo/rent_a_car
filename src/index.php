@@ -60,10 +60,10 @@ echo getHeader();
         <form action="/html/reservationSelectVehicle.php" method="get">
             <div class="row">
                 <div class="col-md-6 col-12">
-                    <h2>Pick-up</h2>
+                    <h2>1. Pick-up</h2>
                     <div class="row">
                         <div class="col">
-                            <label for="pickup-location">1. Pick-Up Location:</label>
+                            <label for="pickup-location">Pick-Up Location:</label>
                             <select id="pickup-location" name="pickupLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
