@@ -28,8 +28,13 @@ try {
     $latestRevision = $reservation->findLatestRevision();
     $locations = Location::search([]);
     $statuses = Status::search([]);
+    $avaiableVehicles = $latestRevision->findAvailableVehicles();
+    echo 'hello <3';
+    print_r($avaiableVehicles);
 } catch(e) {
-
+    echo 'error <3';
+    print_r($avaiableVehicles);
+    exit;
 }
 
 //     ?int $reservation_id = null,
@@ -90,8 +95,11 @@ echo getHeader();
                     </label>
                     <select name="vehicleId" id="vehicle" class="form-select">
                         <option value="none">None</option>
-                        <?php foreach ($categories as $category) { ?>
-                            <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
+                        <?php foreach ($avaiableVehicles as $vehicle) {
+                            $vehicle->loadProperties();
+                            $properties = $vehicle->getProperties();
+                        ?>
+                            <option value="<?php echo $vehicle->getId() ?>"><?php echo $properties['Model']->getPropertyValue() . ' ' . $properties['Brand']->getPropertyValue() ?></option>
                         <?php } ?>
                     </select>
                 </div>
