@@ -84,7 +84,8 @@ try {
         ]
     ], 'creditCard');
 
-    if ($creditCardDbResults === null) {
+    $creditCard;
+    if ($creditCardDbResults === null || count($creditCardDbResults) === 0) {
         $creditCard = new CreditCard(
             trim($_POST['ccNumber']),
             trim($_POST['ccExpiry']),
@@ -96,6 +97,11 @@ try {
     // reservation Revision
     } else if (count($creditCardDbResults) >= 1) {
         $creditCard = $creditCardDbResults[0];
+    } else {
+        // TODO: error
+        echo "error with credit card";
+        print_r($creditCardDbResults);
+        exit;
     }
 
     $reservation = new Reservation(
@@ -109,7 +115,7 @@ try {
         trim($_POST['dropoffTime']),
         // TODO: use Carbon type
         100.00, // TODO: fix totalPrice
-        null, // reservedTimestamp
+        date("Y-m-d H:i:s", time()), // reservedTimestamp
         [], // revisions
 
         $address->getId(), // Billing address
@@ -147,4 +153,4 @@ try {
     exit;
 }
 
-header('Location: /html/userView.php?userId' . $userId);
+header("Location: /html/userView.php?userId=$userId");
