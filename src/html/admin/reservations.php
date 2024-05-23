@@ -5,18 +5,23 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Status.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 
 use RentACar\Customer;
 use RentACar\Island;
 use RentACar\Location;
-use RentACar\Reservation;
+use RentACar\Revision;
 use RentACar\Status;
 use RentACar\User;
 
-$reservations = Reservation::search([]);
+$reservations = Revision::rawSQL("
+    SELECT * FROM revision
+    GROUP BY reservation_id
+    ORDER BY submittedTimestamp
+    LIMIT 1;
+");
 
 echo getHeader();
 ?>
@@ -43,13 +48,13 @@ echo getHeader();
                     ?string $dropoffTime = null,
                     // TODO: use Carbon type
                     ?float $totalPrice = null,
-                    ?string $reservedTimestamp = null,
+                    ?string $submittedTimestamp = null,
                     // TODO: Update UML to reflect this
                     ?array $revisions = null,
 
                     ?int $billingAddress_id = null,
                     ?int $creditCard_id = null,
-                    ?int $reservedByUser_id = null,
+                    ?int $submittedByUser_id = null,
                     ?int $category_id = null,
                     ?int $customer_id = null,
                     ?int $status_id = null,
@@ -65,7 +70,7 @@ echo getHeader();
                     ?string $timeReturned = null,
                     ?Address $billingAddress = null,
                     ?CreditCard $creditCard = null,
-                    ?User $reservedByUser = null,
+                    ?User $submittedByUser = null,
                     ?Category $category = null,
                     ?Customer $customer = null,
                     ?Status $status = null,

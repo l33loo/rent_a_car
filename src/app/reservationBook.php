@@ -3,12 +3,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/CreditCard.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 
 use RentACar\Address;
 use RentACar\CreditCard;
 use RentACar\Customer;
 use RentACar\Reservation;
+use RentACar\Revision;
 use RentACar\User;
 
 session_start();
@@ -65,7 +67,7 @@ try {
 
     // No need to create a new credit card if it already exists
     // The credit cards will never be deleted or modified because
-    // they are part of the reservation, which we decided to keep intact
+    // they are part of the Revision, which we decided to keep intact
     $creditCardDbResults = CreditCard::search([
         [
             'column' => 'ccNumber',
@@ -93,8 +95,8 @@ try {
         );
         $creditCard->save();
     // So as not to duplicate. Credit Cards are never deleted from the database
-    // because we chose to never delete of directly modify a Reservation or a
-    // reservation Revision
+    // because we chose to never delete of directly modify a Revision or a
+    // Revision Revision
     } else if (count($creditCardDbResults) >= 1) {
         $creditCard = $creditCardDbResults[0];
     } else {
@@ -104,7 +106,11 @@ try {
         exit;
     }
 
-    $reservation = new Reservation(
+    $reservation = new Reservation($userId);
+    $reservation->save();
+
+    $revision = new Revision(
+        $reservation->getId(),
         // TODO: use Carbon type
         trim($_POST['pickupDate']),
         // TODO: use Carbon type
@@ -115,12 +121,11 @@ try {
         trim($_POST['dropoffTime']),
         // TODO: use Carbon type
         100.00, // TODO: fix totalPrice
-        date("Y-m-d H:i:s", time()), // reservedTimestamp
-        [], // revisions
+        date("Y-m-d H:i:s", time()), // submittedTimestamp
 
         $address->getId(), // Billing address
         $creditCard->getId(),
-        $userId, // reservedByUser_id
+        $userId, // submittedByUser_id
         $_POST['categoryId'],
         $customer->getId(), // TODO:
         1, // status_id
@@ -131,9 +136,10 @@ try {
         null, // collectedByUser_id
         null, // dateReturned
         null, // timeReturned
+        $reservation,
         $address,
         $creditCard,
-        null, // reservedByUser
+        null, // submittedByUser
         null, // category
         $customer,
         null, // status
@@ -143,17 +149,17 @@ try {
         null, // returnedLocation
         null // collectedByUser
     );
-    $reservation->save();
+    $revision->save();
 } catch(e) {
     // TODO: handle errors
 
     // TODO: send back to form with existing data
-    echo 'error saving reservation';
-    header('Location: /html/reservationBook.php');
+    echo 'error saving Revision';
+    header('Location: /html/RevisionBook.php');
     exit;
 }
 
-// TODO: Send to reservation view, with success message
+// TODO: Send to Revision view, with success message
 if (!empty($userId)) {
     header("Location: /html/userView.php?userId=$userId");
 } else {

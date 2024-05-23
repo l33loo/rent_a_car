@@ -4,14 +4,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revisions.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Status.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 
 use RentACar\Customer;
 use RentACar\Island;
 use RentACar\Location;
-use RentACar\Reservation;
+use RentACar\Revisions;
 use RentACar\Status;
 use RentACar\User;
 
@@ -21,8 +21,14 @@ if (empty($_GET['id'])) {
     exit;
 }
 
-$reservationId = $_GET['id'];
-$reservation = Reservation::find($reservationId);
+$latestRevisionId = $_GET['id'];
+$latestRevision = Revision::rawSQL("
+    SELECT * FROM revision
+    WHERE reservation_id=$latestRevisionId
+    ORDER BY submittedTimestamp DESC
+    LIMIT 1;
+");
+$latestRevisionId = $latestRevision->getId();
 $locations = Location::search([]);
 
 
@@ -92,28 +98,28 @@ echo getHeader();
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
+                <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
                 <input type="submit" name="reservationEditRes" value="Edit Reservation" class="btn btn-primary">
             </div>
         </form>
         <form action="/app/admin/reservationEdit.php" method="post">
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formCustomer.inc.php'; ?>
             <div class="d-flex justify-content-center">
-                <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
+                <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
                 <input type="submit" name="reservationEditCustomer" value="Edit Customer" class="btn btn-primary">
             </div>
         </form>
         <form action="/app/admin/reservationEdit.php" method="post">
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formAddress.inc.php'; ?>
             <div class="d-flex justify-content-center">
-                <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
+                <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
                 <input type="submit" name="reservationEditAddress" value="Edit Address" class="btn btn-primary">
             </div>
         </form>
         <form action="/app/admin/reservationEdit.php" method="post">
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formPayment.inc.php'; ?>
             <div class="d-flex justify-content-center">
-                <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
+                <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
                 <input type="submit" name="reservationEditPayment" value="Edit Payment" class="btn btn-primary">
             </div>
         </form>

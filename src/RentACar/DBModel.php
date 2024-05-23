@@ -158,8 +158,12 @@ trait DBModel
         return $results;
     }
 
-    public function loadRelation(string $relationName, string $tableName): self
+    public function loadRelation(string $relationName, string $tableName = ''): self
     {
+        if ($tableName === '') {
+            $tableName = $relationName;
+        }
+        
         $className = 'RentACar\\' . self::snakeToCamel($tableName);
         
         $this->{$relationName} = $className::find($this->{$relationName . '_id'}, $tableName);

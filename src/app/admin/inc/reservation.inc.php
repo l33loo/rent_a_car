@@ -1,9 +1,9 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 
-use RentACar\Reservation;
+use RentACar\Revision;
 
-$reservationId = $_GET['id'];
+$revisionId = $_GET['id'];
 
-$reservation = Reservation::find($reservationId, 'reservation');
+$revision = Revision::find($revisionId, 'revision');
