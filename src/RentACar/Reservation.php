@@ -2,7 +2,11 @@
 namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
+
+use RentACar\Revision;
+use RentACar\User;
 
 class Reservation {
     use DBModel;
@@ -67,5 +71,33 @@ class Reservation {
         $this->ownerUser = $ownerUser;
 
         return $this;
+    }
+
+    /**
+     * Get the latest revision of the reservation
+     *
+     * @return Revision
+     */ 
+    public function findLatestRevision(): Revision
+    {
+        $reservationId = $this->id;
+        $stmt = Revision::rawSQL("
+            SELECT * FROM revision
+            WHERE reservation_id=$reservationId
+            ORDER BY submittedTimestamp DESC
+            LIMIT 1;
+        ");
+
+        $results = [];
+        while($row = $stmt->fetchObject(Revision::class)) {
+            $results[] = $row;
+        }
+
+        if (count($results) !== 1) {
+            echo 'Error retrieving latest revision';
+            // TODO: error and redirect
+        }
+
+        return $results[0];
     }
 }

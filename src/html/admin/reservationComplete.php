@@ -5,6 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Status.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
@@ -13,17 +14,65 @@ use RentACar\Category;
 use RentACar\Customer;
 use RentACar\Island;
 use RentACar\Location;
+use RentACar\Reservation;
 use RentACar\Revision;
 use RentACar\Status;
 use RentACar\User;
 
 try {
+    if (empty($_GET['reservationId'])) {
+        //TODO: error
+    }
+    $reservationId = $_GET['reservationId'];
+    $reservation = Reservation::find($reservationId);
+    $latestRevision = $reservation->findLatestRevision();
     $locations = Location::search([]);
     $statuses = Status::search([]);
-    $categories = Category::search([]);
 } catch(e) {
 
 }
+
+//     ?int $reservation_id = null,
+//     // TODO: use Carbon type
+//     ?string $pickupDate = null,
+//     // TODO: use Carbon type
+//     ?string $dropoffDate = null,
+//     // TODO: use Carbon type
+//     ?string $pickupTime = null,
+//     // TODO: use Carbon type
+//     ?string $dropoffTime = null,
+//     // TODO: use Carbon type
+//     ?float $totalPrice = null,
+//     ?string $submittedTimestamp = null,
+
+//     ?int $billingAddress_id = null,
+//     ?int $creditCard_id = null,
+//     ?int $submittedByUser_id = null,
+//     ?int $category_id = null,
+//     ?int $customer_id = null,
+//     ?int $status_id = null,
+//     ?int $pickupLocation_id = null,
+//     ?int $dropoffLocation_id = null,
+//     ?int $vehicle_id = null,
+//     ?int $returnedLocation_id = null,
+//     ?int $collectedByUser_id = null,
+
+//     // TODO: use Carbon type
+//     ?string $dateReturned = null,
+//     // TODO: use Carbon type
+//     ?string $timeReturned = null,
+//     ?Reservation $reservation = null,
+//     ?Address $billingAddress = null,
+//     ?CreditCard $creditCard = null,
+//     ?User $submittedByUser = null,
+//     ?Category $category = null,
+//     ?Customer $customer = null,
+//     ?Status $status = null,
+//     ?Location $pickupLocation = null,
+//     ?Location $dropoffLocation = null,
+//     ?Vehicle $vehicle = null,
+//     ?Location $returnedLocation = null,
+//     ?User $collectedByUser = null
 
 echo getHeader();
 ?>
@@ -32,15 +81,39 @@ echo getHeader();
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
 
     <div class="container pt-5">
-        <h1 class="pt-5 pb-3">Edit Reservation</h1>
+        <h1 class="pt-5 pb-3">Complete Reservation</h1>
         <form action="/app/admin/reservationNew.php" method="post">
+            <div class="row mb-4">
+                <div class="col-sm-12 col-md-6">
+                    <label for="vehicleId" class="h4">
+                        Vehicle:
+                    </label>
+                    <select name="vehicleId" id="vehicle" class="form-select">
+                        <option value="none">None</option>
+                        <?php foreach ($categories as $category) { ?>
+                            <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="statusId" class="h4">
+                        Reservation status:
+                    </label>
+                    <select name="statusId" id="status" class="form-select">
+                        <?php foreach ($statuses as $status) { ?>
+                            <option value="<?php echo $status->getId() ?>"><?php echo $status->getStatusName() ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
             <div class="row mb-1">
                 <div class="col-md-6 col-12">
-                    <h2 class="h4 mb-3">Pick-up</h2>
+                    <h2 class="h4 mb-3">Effective Pick-up</h2>
                     <div class="row mb-3">
                         <div class="col">
                             <label for="pickup-location">Pick-Up Location:</label>
                             <select id="pickup-location" name="pickupLocationId" class="form-select">
+                                <option value="none">None</option>
                                 <?php foreach ($locations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>
@@ -63,12 +136,13 @@ echo getHeader();
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
-                    <h2 class="h4 mb-3">Drop-off</h2>
+                    <h2 class="h4 mb-3">Effective Drop-off</h2>
                     <div class="row mb-3">
                         <div class="col">
                             <label for="dropoff-location">Drop-Off Location:</label>
                             <select id="dropoff-location" name="dropoffLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
+                                    <option value="none">None</option>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>
                                     </option>
@@ -90,29 +164,8 @@ echo getHeader();
                     </div>
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="statusId">Reservation status:</label>
-                    <select name="statusId" id="status" class="form-select">
-                        <?php foreach ($statuses as $status) { ?>
-                            <option value="<?php echo $status->getId() ?>"><?php echo $status->getStatusName() ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="categoryId">Vehicle category:</label>
-                    <select name="categoryId" id="category" class="form-select">
-                        <?php foreach ($categories as $category) { ?>
-                            <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-            </div>
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formCustomer.inc.php'; ?>
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formAddress.inc.php'; ?>
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formPayment.inc.php'; ?>
             <div class="d-flex justify-content-center">
-                <input type="submit" name="reservationNew" value="Reserve" class="btn btn-primary">
+                <input type="submit" name="reservationNew" value="Update" class="btn btn-primary">
             </div>
         </form>
     </div>

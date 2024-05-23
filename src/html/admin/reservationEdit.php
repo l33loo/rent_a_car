@@ -1,47 +1,41 @@
 <?php  
 require_once $_SERVER['DOCUMENT_ROOT'] . "/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Status.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 
+use RentACar\Category;
 use RentACar\Customer;
 use RentACar\Island;
 use RentACar\Location;
+use RentACar\Reservation;
 use RentACar\Revision;
 use RentACar\Status;
 use RentACar\User;
 
-if (empty($_GET['reservationId'])) {
-    // TODO: error + redirect
-    echo 'No reservation id';
+try {
+    if (empty($_GET['reservationId'])) {
+        // TODO: error + redirect
+        echo 'No reservation id';
+        exit;
+    }
+
+    $reservationId = $_GET['reservationId'];
+    $reservation = Reservation::find($reservationId);
+    $latestRevision = $reservation->findLatestRevision();
+    $latestRevisionId = $latestRevision->getId();
+    $locations = Location::search([]);
+    $categories = Category::search([]);
+} catch(e) {
+    // TODO: error
     exit;
 }
-
-$reservationId = $_GET['reservationId'];
-$stmt = Revision::rawSQL("
-    SELECT * FROM revision
-    WHERE reservation_id=$reservationId
-    ORDER BY submittedTimestamp DESC
-    LIMIT 1;
-");
-
-$results = [];
-while($row = $stmt->fetchObject(Revision::class)) {
-    $results[] = $row;
-}
-
-if (count($results) !== 1) {
-    echo 'Error retrieving latest revision';
-    // TODO: error and redirect
-    exit;
-}
-
-$latestRevisionId = $results[0]->getId();
-$locations = Location::search([]);
 
 
 echo getHeader();
@@ -107,6 +101,16 @@ echo getHeader();
                             <input type="time" id="dropoff-time" name="dropoffTime" min="09:30:00" max="17:30:00" class="form-control" required>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm col-md-6">
+                    <label for="categoryId">Vehicle category:</label>
+                    <select name="categoryId" id="category" class="form-select">
+                        <?php foreach ($categories as $category) { ?>
+                            <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
             <div class="d-flex justify-content-center">

@@ -118,9 +118,9 @@ try {
         $address->getId(), // Billing address
         $creditCard->getId(),
         $sessionUserId, // submittedByUser_id
-        1, // TODO: $_POST['categoryId']
-        $customer->getId(),
-        1, // status_id
+        $_POST['categoryId'], // category_id 
+        $customer->getId(), // customer_id
+        $_POST['statusId'], // status_id
         $_POST['pickupLocationId'],
         $_POST['dropoffLocationId'],
         null, // vehicle_id

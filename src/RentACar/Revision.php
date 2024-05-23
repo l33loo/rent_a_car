@@ -872,4 +872,26 @@ class Revision {
 
         return $this;
     }
+
+    /**
+     * Get the value of reservation
+     * 
+     * @return Reservation
+     */ 
+    public function getReservation(): Reservation
+    {
+        return $this->reservation;
+    }
+
+    /**
+     * Set the value of reservation
+     *
+     * @return self
+     */ 
+    public function setReservation(Reservation $reservation): self
+    {
+        $this->reservation = $reservation;
+
+        return $this;
+    }
 }
