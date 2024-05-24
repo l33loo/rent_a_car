@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS revision (
     effectivePickupDate DATE,
     effectivePickupTime TIME,
     effectivePickupLocation_id INT UNSIGNED,
+    givenByUser_id INT UNSIGNED,
 
     -- To be added by admin when customer returns the car
     effectiveDropoffDate DATE,
@@ -236,11 +237,17 @@ CREATE TABLE IF NOT EXISTS revision (
     CONSTRAINT fk_revision_user
         FOREIGN KEY (submittedByUser_id)
         REFERENCES user(id),
-    CONSTRAINT fk_revision_returnedLocation
-        FOREIGN KEY (returnedLocation_id)
+    CONSTRAINT fk_revision_effectivePickupLocation
+        FOREIGN KEY (effectivePickupLocation_id)
+        REFERENCES location(id),
+    CONSTRAINT fk_revision_effectiveDropoffLocation
+        FOREIGN KEY (effectiveDropoffLocation_id)
         REFERENCES location(id),
     CONSTRAINT fk_revision_collectedByUser
         FOREIGN KEY (collectedByUser_id)
+        REFERENCES user(id),
+    CONSTRAINT fk_revision_givenByUser
+        FOREIGN KEY (givenByUser_id)
         REFERENCES user(id),
     CONSTRAINT fk_revision_billingAddress
         FOREIGN KEY (billingAddress_id)

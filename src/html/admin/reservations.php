@@ -73,13 +73,13 @@ echo getHeader();
                     ?int $pickupLocation_id = null,
                     ?int $dropoffLocation_id = null,
                     ?int $vehicle_id = null,
-                    ?int $returnedLocation_id = null,
+                    ?int $effectiveDropoffLocation_id = null,
                     ?int $collectedByUser_id = null,
 
                     // TODO: use Carbon type
-                    ?string $dateReturned = null,
+                    ?string $effectiveDropoffDate = null,
                     // TODO: use Carbon type
-                    ?string $timeReturned = null,
+                    ?string $effectiveDropoffTime = null,
                     ?Address $billingAddress = null,
                     ?CreditCard $creditCard = null,
                     ?User $submittedByUser = null,
@@ -89,7 +89,7 @@ echo getHeader();
                     ?Location $pickupLocation = null,
                     ?Location $dropoffLocation = null,
                     ?Vehicle $vehicle = null,
-                    ?Location $returnedLocation = null,
+                    ?Location $effectiveDropoffLocation = null,
                     ?User $collectedByUser = null
                     */ ?>
                     <tr>
