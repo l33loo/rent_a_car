@@ -955,8 +955,7 @@ class Revision {
         $countAvailableVehicles = count($resultsAvailableVehicles);
         $countVehiclesInCategoryOnIsland = $stmtVehiclesInCategoryOnIsland->rowCount();
 
-        print_r($countVehiclesInCategoryOnIsland);
-
+        // Keep 25% of available fleet as buffer
         if (($countAvailableVehicles/$countVehiclesInCategoryOnIsland*100) >= 75) {
             return $resultsAvailableVehicles;
         } else {
