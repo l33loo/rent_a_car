@@ -30,7 +30,7 @@ try {
     $reservation = Reservation::find($reservationId);
     $latestRevision = $reservation->findLatestRevision();
     $latestRevisionId = $latestRevision->getId();
-    $locations = Location::search([]);
+    $locations = Location::fetchActiveLocations();
     $categories = Category::search([]);
 } catch(e) {
     // TODO: error

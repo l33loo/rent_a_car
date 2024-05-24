@@ -6,7 +6,7 @@ use RentACar\Location;
 
 session_start();
 
-$locations = Location::search([]);
+$locations = Location::fetchActiveLocations();
 
 echo getHeader();
 ?>

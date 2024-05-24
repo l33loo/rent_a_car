@@ -10,7 +10,7 @@ use RentACar\Island;
 use RentACar\Location;
 
 // TODO try catch + errors
-$locations = Location::search([]);
+$locations = Location::fetchActiveLocations();
 
 echo getHeader();
 ?>

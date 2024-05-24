@@ -29,18 +29,7 @@ try {
     $latestRevision->loadRelation('dropoffLocation', 'location');
     $latestRevisionDroppoffLocation = $latestRevision->getDropoffLocation();
     $latestRevisionDroppoffLocation->loadRelation('island');
-    $effectiveLocations = Location::search([
-        [
-            'column' => 'island_id',
-            'operator' => '=',
-            'value' => $latestRevisionDroppoffLocation->getIsland()->getId()
-        ],
-        [
-            'column' => 'isArchived',
-            'operator' => '=',
-            'value' => false
-        ]
-    ]);
+    $effectiveLocations = Location::fetchActiveLocations($latestRevisionDroppoffLocation->getIsland()->getId());
     $statuses = Status::search([]);
     $avaiableVehicles = $latestRevision->findAvailableVehicles();
 } catch(e) {

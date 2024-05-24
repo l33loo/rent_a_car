@@ -180,4 +180,31 @@ class Location {
 
         return $this;
     }
+
+    public static function fetchActiveLocations(?int $islandId = null): array
+    {
+        $filters = [
+            [
+                'column' => 'isArchived',
+                'operator' => '=',
+                'value' => false
+            ]
+        ];
+
+        if ($islandId !== null) {
+            $filters[] = [
+                'column' => 'island_id',
+                'operator' => '=',
+                'value' => $islandId
+            ];
+        }
+
+        try {
+            $activeLocations = self::search($filters);
+        } catch(e) {
+            // TODO: handle error
+        }
+
+        return $activeLocations;
+    }
 }

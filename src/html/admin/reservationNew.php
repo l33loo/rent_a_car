@@ -18,7 +18,7 @@ use RentACar\Status;
 use RentACar\User;
 
 try {
-    $locations = Location::search([]);
+    $locations = Location::fetchActiveLocations();
     $statuses = Status::search([]);
     $categories = Category::search([]);
 } catch(e) {
