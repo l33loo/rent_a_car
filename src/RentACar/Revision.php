@@ -526,9 +526,9 @@ class Revision {
     /**
      * Get the value of vehicle_id
      * 
-     * @return int
+     * @return ?int
      */ 
-    public function getVehicle_id(): int
+    public function getVehicle_id(): ?int
     {
         return $this->vehicle_id;
     }
