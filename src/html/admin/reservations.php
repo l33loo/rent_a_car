@@ -18,21 +18,7 @@ use RentACar\Revision;
 use RentACar\Status;
 use RentACar\User;
 
-$stmt = Revision::rawSQL("
-    SELECT revision.* FROM revision
-    LEFT OUTER JOIN (
-        SELECT reservation_id, max(submittedTimestamp) as maxSubmittedTimestamp
-            FROM revision
-            GROUP BY reservation_id
-    ) latestRevision
-    ON revision.reservation_id = latestRevision.reservation_id
-    WHERE revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp;
-");
 
-$revisions = [];
-while($row = $stmt->fetchObject(Revision::class)) {
-    $revisions[] = $row;
-}
 
 echo getHeader();
 ?>
@@ -49,51 +35,8 @@ echo getHeader();
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
-                    <?php /*
-                    // TODO: use Carbon type
-                    ?string $pickupDate = null,
-                    // TODO: use Carbon type
-                    ?string $dropoffDate = null,
-                    // TODO: use Carbon type
-                    ?string $pickupTime = null,
-                    // TODO: use Carbon type
-                    ?string $dropoffTime = null,
-                    // TODO: use Carbon type
-                    ?float $totalPrice = null,
-                    ?string $submittedTimestamp = null,
-                    // TODO: Update UML to reflect this
-                    ?array $revisions = null,
-
-                    ?int $billingAddress_id = null,
-                    ?int $creditCard_id = null,
-                    ?int $submittedByUser_id = null,
-                    ?int $category_id = null,
-                    ?int $customer_id = null,
-                    ?int $status_id = null,
-                    ?int $pickupLocation_id = null,
-                    ?int $dropoffLocation_id = null,
-                    ?int $vehicle_id = null,
-                    ?int $effectiveDropoffLocation_id = null,
-                    ?int $collectedByUser_id = null,
-
-                    // TODO: use Carbon type
-                    ?string $effectiveDropoffDate = null,
-                    // TODO: use Carbon type
-                    ?string $effectiveDropoffTime = null,
-                    ?Address $billingAddress = null,
-                    ?CreditCard $creditCard = null,
-                    ?User $submittedByUser = null,
-                    ?Category $category = null,
-                    ?Customer $customer = null,
-                    ?Status $status = null,
-                    ?Location $pickupLocation = null,
-                    ?Location $dropoffLocation = null,
-                    ?Vehicle $vehicle = null,
-                    ?Location $effectiveDropoffLocation = null,
-                    ?User $collectedByUser = null
-                    */ ?>
                     <tr>
-                        <th>Reservation ID</th>
+                        <th>ID</th>
                         <th>Category</th>
                         <th>Pickup Location</th>
                         <th>Pickup Date</th>
@@ -101,26 +44,33 @@ echo getHeader();
                         <th>Dropoff Location</th>
                         <th>Dropoff Date</th>
                         <th>Dropoff Time</th>
+                        <th>Vehicle</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($revisions as $revision) {
-                        $revision->loadRelation('category');
-                        $revision->loadRelation('reservation');
+                    <?php $revisions = Revision::fetchAllLatestRevisions();
+                    foreach ($revisions as $revision) {
+                        $revision->loadCategory();
+                        $revision->loadReservation();
+                        $revision->loadVehicle();
+                        $revision->loadPickupLocation();
+                        $revision->loadDropoffLocation();
+
                         $reservationId = $revision->getReservation()->getId();
                     ?>
                         <tr>
                             <th><?php echo $reservationId; ?></th>
                             <td><?php echo $revision->getCategory()->getName(); ?></td>
-                            <td><?php echo $revision->loadRelation('pickupLocation', 'location')->getPickupLocation()->getName(); ?></td>
+                            <td><?php echo $revision->getPickupLocation()->getName(); ?></td>
                             <td><?php echo $revision->getPickupDate(); ?></td>
                             <td><?php echo $revision->getPickupTime(); ?></td>
-                            <td><?php echo $revision->loadRelation('dropoffLocation', 'location')->getDropoffLocation()->getName(); ?></td>
+                            <td><?php echo $revision->getDropoffLocation()->getName(); ?></td>
                             <td><?php echo $revision->getDropoffDate(); ?></td>
                             <td><?php echo $revision->getDropoffTime(); ?></td>
-                            <td><?php echo $revision->loadRelation('status', 'status')->getStatus()->getStatusName(); ?></td>
+                            <td><?php echo $revision->getVehicle() === null ? null : $revision->getVehicle()->getPlate() ?></td>
+                            <td><?php echo $revision->loadStatus()->getStatus()->getStatusName(); ?></td>
                             <td>
                                 <a href="/html/admin/reservationView.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-primary">View</a>
                                 <a href="/html/admin/reservationEdit.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-secondary">Edit</a>

@@ -68,14 +68,6 @@ class Vehicle {
     }
 
     /**
-     * Get the value of id
-     */ 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
      * Get the value of plate
      */ 
     public function getPlate(): string

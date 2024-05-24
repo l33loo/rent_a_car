@@ -13,10 +13,25 @@ trait DBModel
 
     /**
      * Get the value of id
+     * 
+     * @return int
      */ 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     * 
+     * @return self
+     */ 
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+
     }
 
     public function save()

@@ -205,16 +205,6 @@ class Revision {
             $this->vehicle_id = $vehicle_id;
         }
 
-    //     -- To be added by admin when customer picks up the car
-    // effectivePickupDate DATE,
-    // effectivePickupTime TIME,
-    // effectivePickupLocation_id INT UNSIGNED,
-
-    // -- To be added by admin when customer returns the car
-    // effectiveDropoffDate DATE,
-    // effectiveDropoffTime TIME,
-    // effectiveDropoffLocation_id INT UNSIGNED,
-    // collectedByUser_id INT UNSIGNED,
         if ($effectiveDropoffLocation_id !== null) {
             $this->effectiveDropoffLocation_id = $effectiveDropoffLocation_id;
         }
@@ -846,9 +836,9 @@ class Revision {
     /**
      * Get the value of vehicle
      * 
-     * @return Vehicle
+     * @return ?Vehicle
      */ 
-    public function getVehicle(): Vehicle
+    public function getVehicle(): ?Vehicle
     {
         return $this->vehicle;
     }
@@ -868,9 +858,9 @@ class Revision {
     /**
      * Get the value of effectiveDropoffLocation
      * 
-     * @return Location
+     * @return ?Location
      */ 
-    public function getEffectiveDropoffLocation(): Location
+    public function getEffectiveDropoffLocation(): ?Location
     {
         return $this->effectiveDropoffLocation;
     }
@@ -992,6 +982,66 @@ class Revision {
     }
 
     /**
+     * Get the value of effectivePickupDate
+     */ 
+    public function getEffectivePickupDate()
+    {
+        return $this->effectivePickupDate;
+    }
+
+    /**
+     * Set the value of effectivePickupDate
+     *
+     * @return  self
+     */ 
+    public function setEffectivePickupDate($effectivePickupDate)
+    {
+        $this->effectivePickupDate = $effectivePickupDate;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of effectivePickupTime
+     */ 
+    public function getEffectivePickupTime()
+    {
+        return $this->effectivePickupTime;
+    }
+
+    /**
+     * Set the value of effectivePickupTime
+     *
+     * @return  self
+     */ 
+    public function setEffectivePickupTime($effectivePickupTime)
+    {
+        $this->effectivePickupTime = $effectivePickupTime;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of givenByUser_id
+     */ 
+    public function getGivenByUser_id()
+    {
+        return $this->givenByUser_id;
+    }
+
+    /**
+     * Set the value of givenByUser_id
+     *
+     * @return  self
+     */ 
+    public function setGivenByUser_id($givenByUser_id)
+    {
+        $this->givenByUser_id = $givenByUser_id;
+
+        return $this;
+    }
+
+    /**
      * Get the latest revision of the reservation
      *
      * @return array
@@ -1060,5 +1110,168 @@ class Revision {
         } else {
             return [];
         }
+    }
+
+    /**
+     * Load revision's Status
+     *
+     * @return self
+     */ 
+    public function loadStatus(): self
+    {
+        try {
+            $this->loadRelation('status');
+        } catch(e) {
+
+        }
+        return $this;
+    }
+
+    /**
+     * Load revision's Category
+     *
+     * @return self
+     */ 
+    public function loadCategory(): self
+    {
+        try {
+            $this->loadRelation('category');
+        } catch(e) {
+
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Load revision's Reservation
+     *
+     * @return self
+     */ 
+    public function loadReservation(): self
+    {
+        try {
+            $this->loadRelation('reservation');
+        } catch(e) {
+
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Load revision's pickup Location
+     *
+     * @return self
+     */ 
+    public function loadPickupLocation(): self
+    {
+        try {
+            $this->loadRelation('pickupLocation', 'location');
+        } catch(e) {
+        
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Load revision's pickup Location
+     *
+     * @return self
+     */ 
+    public function loadEffectivePickupLocation(): self
+    {
+        try {
+            if ($this->effectivePickupLocation_id !== null) {
+                $this->loadRelation('effectivePickupLocation', 'location');
+            }
+        } catch(e) {
+        
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Load revision's dropoff Location
+     *
+     * @return self
+     */ 
+    public function loadDropoffLocation(): self
+    {
+        try {
+            $this->loadRelation('dropoffLocation', 'location');
+        } catch(e) {
+        
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Load revision's Vehicle
+     *
+     * @return self
+     */ 
+    public function loadVehicle(): self
+    {
+        try {
+            if ($this->vehicle_id !== null) {
+                $this->loadRelation('vehicle');
+            }
+        } catch(e) {
+
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Fetch all latest revisions
+     *
+     * @return array
+     */ 
+    public static function fetchAllLatestRevisions(): array
+    {
+        try {
+            $revisions = [];
+            $stmt = Revision::rawSQL("
+                SELECT revision.* FROM revision
+                LEFT OUTER JOIN (
+                    SELECT reservation_id, max(submittedTimestamp) as maxSubmittedTimestamp
+                        FROM revision
+                        GROUP BY reservation_id
+                ) latestRevision
+                ON revision.reservation_id = latestRevision.reservation_id
+                WHERE revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp;
+            ");
+            while($row = $stmt->fetchObject(Revision::class)) {
+                $revisions[] = $row;
+            }
+        } catch(e) {
+
+        }
+
+        return $revisions;
+    }
+
+
+    /**
+     * Save revision as a new db row
+     *
+     * @return self
+     */ 
+    public function saveNewRevision(): self
+    {
+        try {
+            $this->id = null;
+            $this->submittedTimestamp = date("Y-m-d H:i:s", time());
+            $this->submittedByUser_id = $_SESSION['logged_id'];
+            $this->save();
+        } catch(e) {
+
+        }
+        return $this;
     }
 }
