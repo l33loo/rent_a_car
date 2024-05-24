@@ -7,12 +7,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Vehicle.php';
 
 use RentACar\Category;
 use RentACar\CreditCard;
 use RentACar\Customer;
 use RentACar\Location;
 use RentACar\User;
+use RentACar\Vehicle;
 
 // id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 // category_id INT UNSIGNED NOT NULL,
@@ -893,5 +895,71 @@ class Revision {
         $this->reservation = $reservation;
 
         return $this;
+    }
+
+    /**
+     * Get the latest revision of the reservation
+     *
+     * @return array
+     */ 
+    public function findAvailableVehicles(): array
+    {
+        $this->loadRelation('dropoffLocation', 'location');
+        $dropoffLocation = $this->dropoffLocation;
+        $dropoffLocation->loadRelation('island');
+        $islandId = $dropoffLocation->getIsland()->getId();
+        $categoryId = $this->category_id;
+        $pickupDate = $this->pickupDate;
+
+        $stmtAvailableVehicles = Revision::rawSQL("
+            SELECT DISTINCT vehicle.* FROM vehicle
+            LEFT OUTER JOIN revision
+            ON revision.vehicle_id = vehicle.id
+            LEFT OUTER JOIN (
+                SELECT reservation_id, max(submittedTimestamp) as maxSubmittedTimestamp
+                    FROM revision
+                    GROUP BY reservation_id
+            ) latestRevision
+            ON revision.reservation_id = latestRevision.reservation_id
+            LEFT OUTER JOIN location
+            ON revision.dropoffLocation_id = location.id
+            -- vehicle is already part of other bookings, but is available for this booking
+            WHERE (
+                revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp 
+                AND revision.category_id=$categoryId
+                AND location.island_id=$islandId
+                AND revision.dropoffDate < $pickupDate
+            -- vehicle is not part of any bookings, so it is available
+            ) OR (latestRevision.maxSubmittedTimestamp IS NULL
+                AND revision.category_id IS NULL
+                AND location.island_id IS NULL
+                AND revision.dropoffDate IS NULL
+            )
+            AND vehicle.isArchived = FALSE
+            AND vehicle.rentable = TRUE;
+        ");
+
+        $resultsAvailableVehicles = [];
+        while($row = $stmtAvailableVehicles->fetchObject(Vehicle::class)) {
+            $resultsAvailableVehicles[] = $row;
+        }
+
+        $stmtVehiclesInCategoryOnIsland = self::rawSQL("
+            SELECT id FROM vehicle
+            WHERE isArchived = FALSE
+            AND rentable = TRUE
+            AND category_id=$categoryId
+            AND island_id=$islandId;
+        ");
+
+        $countAvailableVehicles = count($resultsAvailableVehicles);
+        $countVehiclesInCategoryOnIsland = $stmtVehiclesInCategoryOnIsland->rowCount();
+
+        // Keep 25% of available fleet as buffer
+        if (($countAvailableVehicles/$countVehiclesInCategoryOnIsland*100) >= 75) {
+            return $resultsAvailableVehicles;
+        } else {
+            return [];
+        }
     }
 }
