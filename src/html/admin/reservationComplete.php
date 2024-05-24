@@ -26,7 +26,21 @@ try {
     $reservationId = $_GET['reservationId'];
     $reservation = Reservation::find($reservationId);
     $latestRevision = $reservation->findLatestRevision();
-    $locations = Location::search([]);
+    $latestRevision->loadRelation('dropoffLocation', 'location');
+    $latestRevisionDroppoffLocation = $latestRevision->getDropoffLocation();
+    $latestRevisionDroppoffLocation->loadRelation('island');
+    $effectiveLocations = Location::search([
+        [
+            'column' => 'island_id',
+            'operator' => '=',
+            'value' => $latestRevisionDroppoffLocation->getIsland()->getId()
+        ],
+        [
+            'column' => 'isArchived',
+            'operator' => '=',
+            'value' => false
+        ]
+    ]);
     $statuses = Status::search([]);
     $avaiableVehicles = $latestRevision->findAvailableVehicles();
 } catch(e) {
@@ -119,7 +133,7 @@ echo getHeader();
                             <label for="pickup-location">Pick-Up Location:</label>
                             <select id="pickup-location" name="pickupLocationId" class="form-select">
                                 <option value="none">None</option>
-                                <?php foreach ($locations as $location) : ?>
+                                <?php foreach ($effectiveLocations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>
                                     </option>
@@ -146,8 +160,8 @@ echo getHeader();
                         <div class="col">
                             <label for="dropoff-location">Drop-Off Location:</label>
                             <select id="dropoff-location" name="dropoffLocationId" class="form-select">
-                                <?php foreach ($locations as $location) : ?>
-                                    <option value="none">None</option>
+                                <option value="none">None</option>
+                                <?php foreach ($effectiveLocations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>
                                     </option>
