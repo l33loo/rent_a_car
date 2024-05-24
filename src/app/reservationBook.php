@@ -163,5 +163,5 @@ try {
 if (!empty($userId)) {
     header("Location: /html/userView.php?userId=$userId");
 } else {
-    header("Location: /html/index.php");
+    header("Location: /index.php");
 }
