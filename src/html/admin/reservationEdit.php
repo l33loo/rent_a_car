@@ -54,7 +54,7 @@ echo getHeader();
         <h1 class="pt-5 pb-3">Admin Reservation Updates</h1>
         <div class="row bg-secondary-subtle py-3 my-4">
             <div class="col-sm-12 col-md border-end border-primary">
-                <form action="/app/admin/revervationEdit.php" method="post">
+                <form action="/app/admin/reservationEdit.php" method="post">
                     <label for="statusId" class="h4">
                         1. Reservation status:
                     </label>
@@ -73,20 +73,30 @@ echo getHeader();
                 </form>
             </div>
             <div class="col-sm-12 col-md">
-                <form action="/app/admin/revervationEdit.php" method="post">
+                <form action="/app/admin/reservationEdit.php" method="post">
                     <label for="vehicleId" class="h4">
                         2. Vehicle:
                     </label>
-                    <select name="vehicleId" id="vehicle" class="form-select">
+                    <select name="vehicleId" id="vehicleId" class="form-select">
                         <option value="none">None</option>
+                        <?php if ($latestRevision->getVehicle_id() !== null) {
+                            $latestRevision->loadRelation('vehicle');
+                            $revisionVehicle = $latestRevision->getVehicle();
+                            $revisionVehicle->loadProperties();
+                            $revisionVehicleProperties = $revisionVehicle->getProperties();
+                        ?>
+                            <option
+                                value="<?php echo $revisionVehicle->getId() ?>"
+                                selected
+                            >
+                                <?php echo $revisionVehicleProperties['Model']->getPropertyValue() . ' ' . $revisionVehicleProperties['Brand']->getPropertyValue() . ' - ' . $revisionVehicle->getPlate() ?>
+                            </option>
+                        <?php } ?>
                         <?php foreach ($avaiableVehicles as $vehicle) {
                             $vehicle->loadProperties();
                             $properties = $vehicle->getProperties();
                         ?>
-                            <option
-                                value="<?php echo $vehicle->getId() ?>"
-                                <?php echo $vehicle->getId() === $latestRevision->getVehicle_id() ? 'selected' : null ?>
-                            >
+                            <option value="<?php echo $vehicle->getId() ?>">
                                 <?php echo $properties['Model']->getPropertyValue() . ' ' . $properties['Brand']->getPropertyValue() . ' - ' . $vehicle->getPlate() ?>
                             </option>
                         <?php } ?>
@@ -101,11 +111,11 @@ echo getHeader();
                 <h2 class="h4 mb-3">3. Effective Pick-up</h2>
             </div>
             <div class="col-12">
-                <form action="/app/admin/revervationEdit.php" method="post">
+                <form action="/app/admin/reservationEdit.php" method="post">
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
-                            <label for="pickupLocation">Pick-Up Location:</label>
-                            <select id="pickupLocation" name="pickupLocationId" class="form-select">
+                            <label for="pickupLocationId">Pick-Up Location:</label>
+                            <select id="pickupLocationId" name="pickupLocationId" class="form-select">
                                 <option value="none">None</option>
                                 <?php foreach ($effectiveLocations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
@@ -131,7 +141,7 @@ echo getHeader();
                         </div>
                         <div class="col-12">
                             <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                            <input class="btn btn-primary mt-3" type="submit" name="reservationEditPickup" value="Record Pickup">
+                            <input class="btn btn-primary mt-3" type="submit" name="reservationEditEffectivePickup" value="Record Pickup">
                         </div>
                     </div>
                 </div>
@@ -142,7 +152,7 @@ echo getHeader();
                 <h2 class="h4 mb-3">4. Effective Drop-Off</h2>
             </div>
             <div class="col-12">
-                <form action="/app/admin/revervationEdit.php" method="post">
+                <form action="/app/admin/reservationEdit.php" method="post">
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
                             <label for="dropoffLocation">Drop-Off Location:</label>
@@ -165,7 +175,7 @@ echo getHeader();
                         </div>
                         <div class="col-12">
                             <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                            <input class="btn btn-primary mt-3" type="submit" name="reservationEditDropoff" value="Record Dropoff">
+                            <input class="btn btn-primary mt-3" type="submit" name="reservationEditEffectiveDropoff" value="Record Dropoff">
                         </div>
                     </div>
                 </form>
