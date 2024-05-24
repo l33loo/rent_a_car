@@ -910,6 +910,7 @@ class Revision {
         $islandId = $dropoffLocation->getIsland()->getId();
         $categoryId = $this->category_id;
         $pickupDate = $this->pickupDate;
+        $dropoffDate = $this->dropoffDate;
 
         $stmtAvailableVehicles = Revision::rawSQL("
             SELECT DISTINCT vehicle.* FROM vehicle
@@ -923,20 +924,24 @@ class Revision {
             ON revision.reservation_id = latestRevision.reservation_id
             LEFT OUTER JOIN location
             ON revision.dropoffLocation_id = location.id
-            -- vehicle is already part of other bookings, but is available for this booking
+            LEFT OUTER JOIN status
+            ON revision.status_id = status.id
             WHERE (
-                revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp 
-                AND revision.category_id=$categoryId
-                AND location.island_id=$islandId
-                AND revision.dropoffDate < $pickupDate
-            -- vehicle is not part of any bookings, so it is available
-            ) OR (latestRevision.maxSubmittedTimestamp IS NULL
-                AND revision.category_id IS NULL
-                AND location.island_id IS NULL
-                AND revision.dropoffDate IS NULL
+                -- vehicle is not part of any bookings, so it is available
+                latestRevision.maxSubmittedTimestamp IS NULL
+
+                -- vehicle is already part of other bookings, but is available for this booking
+                OR (
+                    revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp 
+                    AND (status.statusName != 'Cancelled' OR status.statusName != 'Void')
+                    AND revision.dropoffDate < $pickupDate
+                    AND revision.pickupDate > $dropoffDate
+                )
             )
             AND vehicle.isArchived = FALSE
-            AND vehicle.rentable = TRUE;
+            AND vehicle.rentable = TRUE
+            AND vehicle.category_id=$categoryId
+            AND vehicle.island_id=$islandId
         ");
 
         $resultsAvailableVehicles = [];
