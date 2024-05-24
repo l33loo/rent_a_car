@@ -29,11 +29,8 @@ try {
     $locations = Location::search([]);
     $statuses = Status::search([]);
     $avaiableVehicles = $latestRevision->findAvailableVehicles();
-    echo 'hello <3';
-    print_r($avaiableVehicles);
 } catch(e) {
-    echo 'error <3';
-    print_r($avaiableVehicles);
+    // TODO: handle error
     exit;
 }
 
