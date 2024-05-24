@@ -923,21 +923,26 @@ class Revision {
             ON revision.reservation_id = latestRevision.reservation_id
             LEFT OUTER JOIN location
             ON revision.dropoffLocation_id = location.id
-            WHERE revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp
+            -- vehicle is already part of other bookings, but is available for this booking
+            WHERE (
+                revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp 
+                AND revision.category_id=$categoryId
+                AND location.island_id=$islandId
+                AND revision.dropoffDate < $pickupDate
+            -- vehicle is not part of any bookings, so it is available
+            ) OR (latestRevision.maxSubmittedTimestamp IS NULL
+                AND revision.category_id IS NULL
+                AND location.island_id IS NULL
+                AND revision.dropoffDate IS NULL
+            )
             AND vehicle.isArchived = FALSE
-            AND vehicle.rentable = TRUE
-            AND (revision.category_id=$categoryId OR revision.category_id IS NULL)
-            AND (location.island_id=$islandId OR location.island_id IS NULL)
-            AND (revision.dropoffDate < $pickupDate OR revision.dropoffDate IS NULL);
-            
+            AND vehicle.rentable = TRUE;
         ");
 
         $resultsAvailableVehicles = [];
         while($row = $stmtAvailableVehicles->fetchObject(Vehicle::class)) {
             $resultsAvailableVehicles[] = $row;
         }
-
-        print_r($resultsAvailableVehicles);
 
         $stmtVehiclesInCategoryOnIsland = self::rawSQL("
             SELECT id FROM vehicle
