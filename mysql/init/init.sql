@@ -199,14 +199,18 @@ CREATE TABLE IF NOT EXISTS revision (
     vehicle_id INT UNSIGNED,
     submittedByUser_id INT UNSIGNED NOT NULL,
     submittedTimestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    -- To be added by admin when customer picks up the car
+    effectivePickupDate DATE,
+    effectivePickupTime TIME,
+    effectivePickupLocation_id INT UNSIGNED,
+
     -- To be added by admin when customer returns the car
-    dateReturned DATE,
-    -- To be added by admin when customer returns the car
-    timeReturned TIME,
-    -- To be added by admin when customer returns the car
-    returnedLocation_id INT UNSIGNED,
-    -- To be added by admin when customer returns the car
+    effectiveDropoffDate DATE,
+    effectiveDropoffTime TIME,
+    effectiveDropoffLocation_id INT UNSIGNED,
     collectedByUser_id INT UNSIGNED,
+    
     billingAddress_id INT UNSIGNED NOT NULL,
     creditCard_id INT UNSIGNED NOT NULL,
     reservation_id INT UNSIGNED NOT NULL,
