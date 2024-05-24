@@ -199,14 +199,19 @@ CREATE TABLE IF NOT EXISTS revision (
     vehicle_id INT UNSIGNED,
     submittedByUser_id INT UNSIGNED NOT NULL,
     submittedTimestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    -- To be added by admin when customer picks up the car
+    effectivePickupDate DATE,
+    effectivePickupTime TIME,
+    effectivePickupLocation_id INT UNSIGNED,
+    givenByUser_id INT UNSIGNED,
+
     -- To be added by admin when customer returns the car
-    dateReturned DATE,
-    -- To be added by admin when customer returns the car
-    timeReturned TIME,
-    -- To be added by admin when customer returns the car
-    returnedLocation_id INT UNSIGNED,
-    -- To be added by admin when customer returns the car
+    effectiveDropoffDate DATE,
+    effectiveDropoffTime TIME,
+    effectiveDropoffLocation_id INT UNSIGNED,
     collectedByUser_id INT UNSIGNED,
+    
     billingAddress_id INT UNSIGNED NOT NULL,
     creditCard_id INT UNSIGNED NOT NULL,
     reservation_id INT UNSIGNED NOT NULL,
@@ -232,11 +237,17 @@ CREATE TABLE IF NOT EXISTS revision (
     CONSTRAINT fk_revision_user
         FOREIGN KEY (submittedByUser_id)
         REFERENCES user(id),
-    CONSTRAINT fk_revision_returnedLocation
-        FOREIGN KEY (returnedLocation_id)
+    CONSTRAINT fk_revision_effectivePickupLocation
+        FOREIGN KEY (effectivePickupLocation_id)
+        REFERENCES location(id),
+    CONSTRAINT fk_revision_effectiveDropoffLocation
+        FOREIGN KEY (effectiveDropoffLocation_id)
         REFERENCES location(id),
     CONSTRAINT fk_revision_collectedByUser
         FOREIGN KEY (collectedByUser_id)
+        REFERENCES user(id),
+    CONSTRAINT fk_revision_givenByUser
+        FOREIGN KEY (givenByUser_id)
         REFERENCES user(id),
     CONSTRAINT fk_revision_billingAddress
         FOREIGN KEY (billingAddress_id)

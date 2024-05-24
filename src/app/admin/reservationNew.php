@@ -124,10 +124,14 @@ try {
         $_POST['pickupLocationId'],
         $_POST['dropoffLocationId'],
         null, // vehicle_id
-        null, // returnedLocation_id
+        null, // effectivePickupLocation_id
+        null, // givenByUser_id
+        null, // effectivePickupDate
+        null, // effectivePickupTime
+        null, // effectiveDropoffLocation_id
         null, // collectedByUser_id
-        null, // dateReturned
-        null, // timeReturned
+        null, // effectiveDropoffDate
+        null, // effectiveDropoffTime
         $reservation,
         $address,
         $creditCard,
@@ -138,7 +142,9 @@ try {
         null, // pickupLocation
         null, // dropoffLocation
         null, // vehicle
-        null, // returnedLocation
+        null, // effectivePickupLocation
+        null, // givenByUser
+        null, // effectiveDropoffLocation
         null // collectedByUser
     );
     $revision->save();

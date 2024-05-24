@@ -31,11 +31,11 @@ use RentACar\Vehicle;
 // submittedByUser_id INT UNSIGNED NOT NULL,
 // submittedTimestamp TIMESTAMP,
 // -- To be added by admin when customer returns the car
-// dateReturned DATE,
+// effectiveDropoffDate DATE,
 // -- To be added by admin when customer returns the car
-// timeReturned TIME,
+// effectiveDropoffTime TIME,
 // -- To be added by admin when customer returns the car
-// returnedLocation_id INT UNSIGNED,
+// effectiveDropoffLocation_id INT UNSIGNED,
 // -- To be added by admin when customer returns the car
 // collectedByUser_id INT UNSIGNED,
 // billingAddress_id INT UNSIGNED NOT NULL,
@@ -64,13 +64,21 @@ class Revision {
     protected ?int $pickupLocation_id = null;
     protected ?int $dropoffLocation_id = null;
     protected ?int $vehicle_id = null;
-    protected ?int $returnedLocation_id = null;
-    protected ?int $collectedByUser_id = null;
 
+    protected ?int $effectivePickupLocation_id = null;
+    protected ?int $givenByUser_id = null;
     // TODO: use Carbon type
-    protected ?string $dateReturned = null;
+    protected ?string $effectivePickupDate = null;
     // TODO: use Carbon type
-    protected ?string $timeReturned = null;
+    protected ?string $effectivePickupTime = null;
+
+    protected ?int $effectiveDropoffLocation_id = null;
+    protected ?int $collectedByUser_id = null;
+    // TODO: use Carbon type
+    protected ?string $effectiveDropoffDate = null;
+    // TODO: use Carbon type
+    protected ?string $effectiveDropoffTime = null;
+    
     protected ?Reservation $reservation = null;
     protected ?Address $billingAddress = null;
     protected ?CreditCard $creditCard = null;
@@ -81,7 +89,9 @@ class Revision {
     protected ?Location $pickupLocation = null;
     protected ?Location $dropoffLocation = null;
     protected ?Vehicle $vehicle = null;
-    protected ?Location $returnedLocation = null;
+    protected ?Location $effectivePickupLocation = null;
+    protected ?User $givenByUser = null;
+    protected ?Location $effectiveDropoffLocation = null;
     protected ?User $collectedByUser = null;
 
     public function __construct(
@@ -107,13 +117,21 @@ class Revision {
         ?int $pickupLocation_id = null,
         ?int $dropoffLocation_id = null,
         ?int $vehicle_id = null,
-        ?int $returnedLocation_id = null,
-        ?int $collectedByUser_id = null,
 
+        ?int $effectivePickupLocation_id = null,
+        ?int $givenByUser_id = null,
         // TODO: use Carbon type
-        ?string $dateReturned = null,
+        ?string $effectivePickupDate = null,
         // TODO: use Carbon type
-        ?string $timeReturned = null,
+        ?string $effectivePickupTime = null,
+
+        ?int $effectiveDropoffLocation_id = null,
+        ?int $collectedByUser_id = null,
+        // TODO: use Carbon type
+        ?string $effectiveDropoffDate = null,
+        // TODO: use Carbon type
+        ?string $effectiveDropoffTime = null,
+
         ?Reservation $reservation = null,
         ?Address $billingAddress = null,
         ?CreditCard $creditCard = null,
@@ -124,7 +142,9 @@ class Revision {
         ?Location $pickupLocation = null,
         ?Location $dropoffLocation = null,
         ?Vehicle $vehicle = null,
-        ?Location $returnedLocation = null,
+        ?Location $effectivePickupLocation = null,
+        ?User $givenByUser = null,
+        ?Location $effectiveDropoffLocation = null,
         ?User $collectedByUser = null
     ) {
         $this->tableName = 'revision';
@@ -184,20 +204,31 @@ class Revision {
         if ($vehicle_id !== null) {
             $this->vehicle_id = $vehicle_id;
         }
-        if ($returnedLocation_id !== null) {
-            $this->returnedLocation_id = $returnedLocation_id;
+
+    //     -- To be added by admin when customer picks up the car
+    // effectivePickupDate DATE,
+    // effectivePickupTime TIME,
+    // effectivePickupLocation_id INT UNSIGNED,
+
+    // -- To be added by admin when customer returns the car
+    // effectiveDropoffDate DATE,
+    // effectiveDropoffTime TIME,
+    // effectiveDropoffLocation_id INT UNSIGNED,
+    // collectedByUser_id INT UNSIGNED,
+        if ($effectiveDropoffLocation_id !== null) {
+            $this->effectiveDropoffLocation_id = $effectiveDropoffLocation_id;
         }
         if ($collectedByUser_id !== null) {
             $this->collectedByUser_id = $collectedByUser_id;
         }
 
         // TODO: use Carbon type
-        if ($dateReturned !== null) {
-            $this->dateReturned = $dateReturned;
+        if ($effectiveDropoffDate !== null) {
+            $this->effectiveDropoffDate = $effectiveDropoffDate;
         }
         // TODO: use Carbon type
-        if ($timeReturned !== null) {
-            $this->timeReturned = $timeReturned;
+        if ($effectiveDropoffTime !== null) {
+            $this->effectiveDropoffTime = $effectiveDropoffTime;
         }
         if ($reservation !== null) {
             $this->reservation = $reservation;
@@ -229,8 +260,11 @@ class Revision {
         if ($vehicle !== null) {
             $this->vehicle = $vehicle;
         }
-        if ($returnedLocation !== null) {
-            $this->returnedLocation = $returnedLocation;
+        if ($givenByUser !== null) {
+            $this->givenByUser = $givenByUser;
+        }
+        if ($effectiveDropoffLocation !== null) {
+            $this->effectiveDropoffLocation = $effectiveDropoffLocation;
         }
         if ($collectedByUser !== null) {
             $this->collectedByUser = $collectedByUser;
@@ -546,23 +580,23 @@ class Revision {
     }
 
     /**
-     * Get the value of returnedLocation_id
+     * Get the value of effectiveDropoffLocation_id
      * 
      * @return int
      */ 
-    public function getReturnedLocation_id(): int
+    public function getEffectiveDropoffLocation_id(): int
     {
-        return $this->returnedLocation_id;
+        return $this->effectiveDropoffLocation_id;
     }
 
     /**
-     * Set the value of returnedLocation_id
+     * Set the value of effectiveDropoffLocation_id
      *
      * @return self
      */ 
-    public function setReturnedLocation_id(int $returnedLocation_id): self
+    public function setEffectiveDropoffLocation_id(int $effectiveDropoffLocation_id): self
     {
-        $this->returnedLocation_id = $returnedLocation_id;
+        $this->effectiveDropoffLocation_id = $effectiveDropoffLocation_id;
 
         return $this;
     }
@@ -590,45 +624,45 @@ class Revision {
     }
 
     /**
-     * Get the value of dateReturned
+     * Get the value of effectiveDropoffDate
      * 
      * @return string
      */ 
-    public function getDateReturned(): string
+    public function getEffectiveDropoffDate(): string
     {
-        return $this->dateReturned;
+        return $this->effectiveDropoffDate;
     }
 
     /**
-     * Set the value of dateReturned
+     * Set the value of effectiveDropoffDate
      *
      * @return self
      */ 
-    public function setDateReturned(string $dateReturned): self
+    public function setEffectiveDropoffDate(string $effectiveDropoffDate): self
     {
-        $this->dateReturned = $dateReturned;
+        $this->effectiveDropoffDate = $effectiveDropoffDate;
 
         return $this;
     }
 
     /**
-     * Get the value of timeReturned
+     * Get the value of effectiveDropoffTime
      * 
      * @return string
      */ 
-    public function getTimeReturned(): string
+    public function getEffectiveDropoffTime(): string
     {
-        return $this->timeReturned;
+        return $this->effectiveDropoffTime;
     }
 
     /**
-     * Set the value of timeReturned
+     * Set the value of effectiveDropoffTime
      *
      * @return self
      */ 
-    public function setTimeReturned(string $timeReturned): self
+    public function setEffectiveDropoffTime(string $effectiveDropoffTime): self
     {
-        $this->timeReturned = $timeReturned;
+        $this->effectiveDropoffTime = $effectiveDropoffTime;
 
         return $this;
     }
@@ -832,23 +866,23 @@ class Revision {
     }
 
     /**
-     * Get the value of returnedLocation
+     * Get the value of effectiveDropoffLocation
      * 
      * @return Location
      */ 
-    public function getReturnedLocation(): Location
+    public function getEffectiveDropoffLocation(): Location
     {
-        return $this->returnedLocation;
+        return $this->effectiveDropoffLocation;
     }
 
     /**
-     * Set the value of returnedLocation
+     * Set the value of effectiveDropoffLocation
      *
      * @return self
      */ 
-    public function setReturnedLocation(Location $returnedLocation): self
+    public function setEffectiveDropoffLocation(Location $effectiveDropoffLocation): self
     {
-        $this->returnedLocation = $returnedLocation;
+        $this->effectiveDropoffLocation = $effectiveDropoffLocation;
 
         return $this;
     }
@@ -893,6 +927,66 @@ class Revision {
     public function setReservation(Reservation $reservation): self
     {
         $this->reservation = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of effectivePickupLocation_id
+     */ 
+    public function getEffectivePickupLocation_id()
+    {
+        return $this->effectivePickupLocation_id;
+    }
+
+    /**
+     * Set the value of effectivePickupLocation_id
+     *
+     * @return  self
+     */ 
+    public function setEffectivePickupLocation_id($effectivePickupLocation_id)
+    {
+        $this->effectivePickupLocation_id = $effectivePickupLocation_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of effectivePickupLocation
+     */ 
+    public function getEffectivePickupLocation()
+    {
+        return $this->effectivePickupLocation;
+    }
+
+    /**
+     * Set the value of effectivePickupLocation
+     *
+     * @return  self
+     */ 
+    public function setEffectivePickupLocation($effectivePickupLocation)
+    {
+        $this->effectivePickupLocation = $effectivePickupLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of givenByUser
+     */ 
+    public function getGivenByUser()
+    {
+        return $this->givenByUser;
+    }
+
+    /**
+     * Set the value of givenByUser
+     *
+     * @return  self
+     */ 
+    public function setGivenByUser($givenByUser)
+    {
+        $this->givenByUser = $givenByUser;
 
         return $this;
     }
