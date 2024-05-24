@@ -96,7 +96,7 @@ echo getHeader();
                             $vehicle->loadProperties();
                             $properties = $vehicle->getProperties();
                         ?>
-                            <option value="<?php echo $vehicle->getId() ?>"><?php echo $properties['Model']->getPropertyValue() . ' ' . $properties['Brand']->getPropertyValue() ?></option>
+                            <option value="<?php echo $vehicle->getId() ?>"><?php echo $properties['Model']->getPropertyValue() . ' ' . $properties['Brand']->getPropertyValue() . ' - ' . $vehicle->getPlate() ?></option>
                         <?php } ?>
                     </select>
                 </div>
