@@ -84,7 +84,7 @@ class Reservation {
         $stmt = Revision::rawSQL("
             SELECT * FROM revision
             WHERE reservation_id=$reservationId
-            ORDER BY submittedTimestamp DESC
+            ORDER BY submittedTimestamp DESC, id DESC
             LIMIT 1;
         ");
 
