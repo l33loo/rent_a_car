@@ -205,16 +205,6 @@ class Revision {
             $this->vehicle_id = $vehicle_id;
         }
 
-    //     -- To be added by admin when customer picks up the car
-    // effectivePickupDate DATE,
-    // effectivePickupTime TIME,
-    // effectivePickupLocation_id INT UNSIGNED,
-
-    // -- To be added by admin when customer returns the car
-    // effectiveDropoffDate DATE,
-    // effectiveDropoffTime TIME,
-    // effectiveDropoffLocation_id INT UNSIGNED,
-    // collectedByUser_id INT UNSIGNED,
         if ($effectiveDropoffLocation_id !== null) {
             $this->effectiveDropoffLocation_id = $effectiveDropoffLocation_id;
         }
