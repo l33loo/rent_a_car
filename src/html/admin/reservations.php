@@ -19,14 +19,14 @@ use RentACar\Status;
 use RentACar\User;
 
 $stmt = Revision::rawSQL("
-    SELECT revision.* FROM revision,
-    (
+    SELECT revision.* FROM revision
+    LEFT OUTER JOIN (
         SELECT reservation_id, max(submittedTimestamp) as maxSubmittedTimestamp
             FROM revision
             GROUP BY reservation_id
-    ) maxRevision
-    WHERE revision.reservation_id = maxRevision.reservation_id
-    AND revision.submittedTimestamp = maxRevision.maxSubmittedTimestamp;
+    ) latestRevision
+    ON revision.reservation_id = latestRevision.reservation_id
+    WHERE revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp;
 ");
 
 $revisions = [];
@@ -93,7 +93,7 @@ echo getHeader();
                     ?User $collectedByUser = null
                     */ ?>
                     <tr>
-                        <th>ID</th>
+                        <th>Reservation ID</th>
                         <th>Category</th>
                         <th>Pickup Location</th>
                         <th>Pickup Date</th>
