@@ -123,8 +123,7 @@ echo getHeader();
                             <td><?php echo $revision->loadRelation('status', 'status')->getStatus()->getStatusName(); ?></td>
                             <td>
                                 <a href="/html/admin/reservationView.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-primary">View</a>
-                                <a href="/html/admin/reservationEdit.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-secondary">Edit Base Reservation</a>
-                                <a href="/html/admin/reservationComplete.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-warning">Complete Reservation</a>
+                                <a href="/html/admin/reservationEdit.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-secondary">Edit</a>
                             </td>
                         </tr>
                     <?php } ?>
