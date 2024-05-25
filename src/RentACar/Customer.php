@@ -6,7 +6,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Profile.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 
-use Carbon\Carbon;
 use RentACar\Address;
 use RentACar\Profile;
 use RentACar\User;

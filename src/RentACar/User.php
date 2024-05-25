@@ -5,7 +5,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Profile.php';
 
-use Carbon\Carbon;
 use RentACar\Address;
 use RentACar\Profile;
 

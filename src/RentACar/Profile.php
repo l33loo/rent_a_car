@@ -5,7 +5,6 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
 
-use Carbon\Carbon;
 use RentACar\Address;
 
 abstract class Profile {
