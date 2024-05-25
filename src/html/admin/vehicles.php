@@ -46,77 +46,59 @@ echo getHeader();
             </a>
         </div>
     </div>
-    <div class="container mb-4">
-        <div class="d-flex flex-wrap">
-            <a href="/html/admin/vehicleNew.php?islandId=<?php echo $islandId; ?>" class="btn btn-primary me-2">
-                Add New Vehicle
-            </a> 
-            <a href="/html/admin/categoryNew.php" class="btn btn-success me-2">
-                Add New Category
-            </a>                       
-        </div>
-    </div>
     <div class="container">
         <div class="accordion">
             <?php foreach ($vehiclesByCategoryForIsland as $categoryId => $data) {
                 $categoryIsOpen = isset($_GET['categoryId']) && $_GET['categoryId'] == $categoryId;
             ?>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button <?php echo $categoryIsOpen ? null : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $categoryId; ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $categoryId; ?>">
-                            <?php echo !empty($data['categoryName']) ? $data['categoryName'] : 'Uncategorized'; ?>
-                        </button>
-                    </h2>
-                    <div
-                        id="panelsStayOpen-collapse<?php echo $categoryId; ?>"
-                        class="accordion-collapse collapse <?php echo $categoryIsOpen ? 'show' : null; ?>"
-                    >
-                        <div class="accordion-body">
-                            <?php if ($categoryId !== '') { ?>
-                                <div class="mb-3 d-flex flex-wrap justify-content-end">
-                                    <a href="/html/admin/categoryView.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-primary ms-2">View Category</a>    
-                                    <a href="/html/admin/categoryEdit.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-secondary ms-2">Edit Category</a>
-                                    <form action="/app/admin/categoryEdit.php" method="POST" class="ms-2">
-                                        <input type="submit" name="categoryArchive" class="btn btn-danger" value="Archive Category" />
-                                        <input type="hidden" name="categoryId" value="<?php echo $categoryId; ?>" />
-                                    </form>
-                                </div>
-                            <?php } ?>
-                            <div class="table-responsive">
-                                <table class="table table-bordered align-middle" id="my_table_id" data-url="data/url.json" data-id-field="id"
-                                    data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
-                                    <thead>
-                                        <tr>
-                                            <th class="col" data-field="id" data-sortable="true" data-align="center">ID</th>
-                                            <th
-                                                class="col"
-                                                data-field="description"
-                                                data-editable="true"
-                                                data-editable-emptytext="Custom empty text."
-                                            >
-                                                Plate
-                                            </th>
-                                            <th class="col" data-field="name" data-editable="true">Rentable</th>
-                                            <th
-                                                class="col"
-                                                data-field="description"
-                                                data-editable="true"
-                                                data-editable-emptytext="Custom empty text."
-                                            >
-                                                Properties
-                                            </th>
-                                            <th
-                                                class="col"
-                                                data-field="description"
-                                                data-editable="true"
-                                                data-editable-emptytext="Custom empty text."
-                                            >
-                                                Actions
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($data['vehicles'] as $vehicle) { 
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button <?php echo $categoryIsOpen ? null : 'collapsed'; ?>" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $categoryId; ?>"
+                        aria-expanded="false" aria-controls="panelsStayOpen-collapse<?php echo $categoryId; ?>">
+                        <?php echo !empty($data['categoryName']) ? $data['categoryName'] : 'Uncategorized'; ?>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapse<?php echo $categoryId; ?>"
+                    class="accordion-collapse collapse <?php echo $categoryIsOpen ? 'show' : null; ?>">
+                    <div class="accordion-body">
+                        <?php if ($categoryId !== '') { ?>
+                        <div class="mb-3 d-flex flex-wrap justify-content-end">
+                            <a href="/html/admin/categoryView.php?categoryId=<?php echo $categoryId; ?>"
+                                class="btn btn-primary ms-2">View Category</a>
+                            <a href="/html/admin/categoryEdit.php?categoryId=<?php echo $categoryId; ?>"
+                                class="btn btn-secondary ms-2">Edit Category</a>
+                            <form action="/app/admin/categoryEdit.php" method="POST" class="ms-2">
+                                <input type="submit" name="categoryArchive" class="btn btn-danger"
+                                    value="Archive Category" />
+                                <input type="hidden" name="categoryId" value="<?php echo $categoryId; ?>" />
+                            </form>
+                        </div>
+                        <?php } ?>
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle" id="my_table_id" data-url="data/url.json"
+                                data-id-field="id" data-editable-emptytext="Default empty text."
+                                data-editable-url="/my/editable/update/path">
+                                <thead>
+                                    <tr>
+                                        <th class="col" data-field="id" data-sortable="true" data-align="center">ID</th>
+                                        <th class="col" data-field="description" data-editable="true"
+                                            data-editable-emptytext="Custom empty text.">
+                                            Plate
+                                        </th>
+                                        <th class="col" data-field="name" data-editable="true">Rentable</th>
+                                        <th class="col" data-field="description" data-editable="true"
+                                            data-editable-emptytext="Custom empty text.">
+                                            Properties
+                                        </th>
+                                        <th class="col" data-field="description" data-editable="true"
+                                            data-editable-emptytext="Custom empty text.">
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($data['vehicles'] as $vehicle) { 
                                             $vehicle->loadProperties();
                                             $vehicleProperties = $vehicle->getProperties();
                                         ?>
@@ -142,36 +124,38 @@ echo getHeader();
                                                 <tbody>
                                                     <tr <?php if ($vehicle->getRentable() === false) {
                                                                     echo 'class="table-active"';
-                                                                } ?>
-                                                            >
-                                                                <?php foreach ($vehicleProperties as $vehicleProperty) { ?>
-                                                                    <td>
-                                                                        <?php echo $vehicleProperty->getPropertyValue() ?>
-                                                                    </td>
-                                                                <?php } ?>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-wrap align-items-center">
-                                                        <a href="/html/admin/vehicleView.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-primary me-2">
-                                                            View
-                                                        </a>
-                                                        <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary me-2">
-                                                            Edit
-                                                        </a>
-                                                        <form action="/app/admin/vehicleEdit.php" method="POST" class="me-2">
-                                                            <input type="submit" name="vehicleArchive" class="btn btn-danger" value="Archive" />
-                                                            <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId(); ?>" />
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                                                } ?>>
+                                                        <?php foreach ($vehicleProperties as $vehicleProperty) { ?>
+                                                        <td>
+                                                            <?php echo $vehicleProperty->getPropertyValue() ?>
+                                                        </td>
+                                                        <?php } ?>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-wrap align-items-center">
+                                                <a href="/html/admin/vehicleView.php?vehicleId=<?php echo $vehicle->getId(); ?>"
+                                                    class="btn btn-primary me-2">
+                                                    View
+                                                </a>
+                                                <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>"
+                                                    class="btn btn-secondary me-2">
+                                                    Edit
+                                                </a>
+                                                <form action="/app/admin/vehicleEdit.php" method="POST" class="me-2">
+                                                    <input type="submit" name="vehicleArchive" class="btn btn-danger"
+                                                        value="Archive" />
+                                                    <input type="hidden" name="vehicleId"
+                                                        value="<?php echo $vehicle->getId(); ?>" />
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
