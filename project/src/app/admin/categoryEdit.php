@@ -5,6 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Category;
 use RentACar\Property;
+use RentACar\Vehicle;
 
 if (empty($_POST['categoryId'])) {
     // TODO: send back with error
@@ -15,14 +16,28 @@ $categoryId = $_POST['categoryId'];
 
 if (isset($_POST['categoryEdit'])) {
     try {
-        $category = Category::find($categoryId);
-        $category->loadProperties();
-        $category->setName($_POST['name']);
-        $category->setDescription($_POST['description']);
-        $category->setDailyRate($_POST['dailyRate']);
-        $category->setIsArchived($_POST['isArchived']);
-        $category->save();
+        $vehiclesFromCategory = Vehicle::search([
+            [
+                'column' => 'category_id',
+                'operator' => '=',
+                'value' => $categoryId
+            ]
+        ]);
 
+        $category = Category::find($categoryId);
+        // Archive existing category
+        $category->setIsArchived(true)->save();
+
+        // Create a new category with the edits
+        $category->loadProperties()
+            ->setName($_POST['name'])
+            ->setDescription($_POST['description'])
+            ->setDailyRate($_POST['dailyRate'])
+            ->setIsArchived(false)
+            ->setId(null)
+            ->save();
+
+        $categoryIdAfter = $category->getId();
         foreach ($category->getProperties() as $property) {
             $propertyId = $property->getId();
             if (!isset($_POST['property-' . $propertyId])) {
@@ -32,22 +47,30 @@ if (isset($_POST['categoryEdit'])) {
             }
     
             $formPropertyValue = trim($_POST['property-' . $propertyId]);
-            if ($formPropertyValue !== $property->getPropertyValue()) {
-                $stmt = Category::rawSQL("
-                    UPDATE category_property
-                    SET propertyValue = '$formPropertyValue'
-                    WHERE category_id=$categoryId
-                    AND property_id=$propertyId; 
-                ");
-            }
+            $stmt = Category::rawSQL("
+                INSERT INTO category_property
+                VALUES ($categoryIdAfter, $propertyId, '$formPropertyValue'); 
+            ");
         }
+        
+        foreach ($vehiclesFromCategory as $vehicle) {
+            $vehicle->setCategory_id($categoryIdAfter)->save();
+        }
+
+        Revision::updateActiveRevisionsCategory($categoryId, $categoryIdAfter);
     } catch(e) {
         // TODO: error message
         echo 'ERROR SIGNING UP :(';
         print_r(e);
         exit;
     }
-    header('Location: /src/html/admin/categoryView.php?categoryId=' . $categoryId);
+
+    if ($category->getIsArchived() === true) {
+        header('Location: /src/html/admin/vehicles.php');
+    } else {
+        header('Location: /src/html/admin/categoryView.php?categoryId=' . $categoryIdAfter);
+    }
+    
     exit;
 }
 

@@ -26,16 +26,17 @@ try {
     $latestRevision->loadDropoffLocation();
     $latestRevision->loadStatus();
     $latestRevision->loadEffectivePickupLocation();
+    $latestRevision->loadEffectiveDropoffLocation();
     $latestRevisionId = $latestRevision->getId();
     $latestRevisionPickupLocation = $latestRevision->getPickupLocation();
     $latestRevisionDroppoffLocation = $latestRevision->getDropoffLocation();
     $latestRevisionDroppoffLocation->loadRelation('island');
     $effectiveLocations = Location::fetchActiveLocations($latestRevisionDroppoffLocation->getIsland()->getId());
     $statuses = Status::search([]);
-    $avaiableVehicles = $latestRevision->findAvailableVehicles();
+    $availableVehicles = $latestRevision->findAvailableVehicles();
     $locations = Location::fetchActiveLocations();
     $categories = Category::search([]);
-    $disabledFromPickup = $latestRevision->getEffectivePickupLocation() !== null;
+    $wasPickedUp = $latestRevision->getEffectivePickupLocation() !== null;
     $disabledFromDropoff = $latestRevision->getEffectiveDropoffLocation() !== null;
 } catch(e) {
     // TODO: handle error
@@ -56,7 +57,7 @@ echo getHeader();
                     <label for="statusId" class="h4">
                         1. Reservation Status:
                     </label>
-                    <select name="statusId" id="status" class="form-select" disabled="<?php echo $disabledFromPickup ?>">
+                    <select name="statusId" id="status" class="form-select" <?php echo $wasPickedUp ? 'disabled' : null ?>>
                         <?php foreach ($statuses as $status) { ?>
                             <option
                                 value="<?php echo $status->getId() ?>"
@@ -67,7 +68,7 @@ echo getHeader();
                         <?php } ?>
                     </select>
                     <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                    <input class="btn btn-primary mt-3" type="submit" name="reservationEditStatus" value="Update Status" disabled="<?php echo $disabledFromPickup ?>">
+                    <input class="btn btn-primary mt-3" type="submit" name="reservationEditStatus" value="Update Status" <?php echo $wasPickedUp ? 'disabled' : null ?>>
                 </form>
             </div>
             <div class="col-sm-12 col-md">
@@ -75,7 +76,7 @@ echo getHeader();
                     <label for="vehicleId" class="h4">
                         2. Vehicle:
                     </label>
-                    <select name="vehicleId" id="vehicleId" class="form-select" disabled="<?php echo $disabledFromPickup ?>">
+                    <select name="vehicleId" id="vehicleId" class="form-select" <?php echo $wasPickedUp ? 'disabled' : null ?>>
                         <option value="none">None</option>
                         <?php if ($latestRevision->getVehicle_id() !== null) {
                             $latestRevision->loadVehicle();
@@ -90,7 +91,7 @@ echo getHeader();
                                 <?php echo $revisionVehicleProperties['Model']->getPropertyValue() . ' ' . $revisionVehicleProperties['Brand']->getPropertyValue() . ' - ' . $revisionVehicle->getPlate() ?>
                             </option>
                         <?php } ?>
-                        <?php foreach ($avaiableVehicles as $vehicle) {
+                        <?php foreach ($availableVehicles as $vehicle) {
                             $vehicle->loadProperties();
                             $properties = $vehicle->getProperties();
                         ?>
@@ -100,7 +101,7 @@ echo getHeader();
                         <?php } ?>
                     </select>
                     <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                    <input class="btn btn-primary mt-3" type="submit" name="reservationEditVehicle" value="Assign Vehicle" disabled="<?php echo $disabledFromPickup ?>">
+                    <input class="btn btn-primary mt-3" type="submit" name="reservationEditVehicle" value="Assign Vehicle" <?php echo $wasPickedUp ? 'disabled' : null ?>>
                 </form>
             </div>
         </div>
@@ -117,13 +118,17 @@ echo getHeader();
                                 id="pickupLocationId"
                                 name="pickupLocationId"
                                 class="form-select"
-                                disabled="<?php echo $disabledFromPickup ?>"
+                                <?php echo $wasPickedUp ? 'disabled' : null ?>
                             >
                                 <option value="none">None</option>
                                 <?php foreach ($effectiveLocations as $location) : ?>
                                     <option
                                         value="<?php echo $location->getId(); ?>"
-                                        <?php echo $location->getId() === $latestRevisionPickupLocation->getId() ? 'selected' : null ?> 
+                                        <?php if ($wasPickedUp) { 
+                                            echo $location->getId() === $latestRevision->getEffectivePickupLocation()->getId() ? 'selected' : null;
+                                        } else {
+                                            echo $location->getId() === $latestRevisionPickupLocation->getId() ? 'selected' : null;
+                                        }?> 
                                     >
                                         <?php echo $location->getName(); ?>
                                     </option>
@@ -138,9 +143,13 @@ echo getHeader();
                                 id="pickupDate"
                                 name="pickupDate"
                                 class="form-control"
-                                value="<?php echo date('Y-m-d', time()) ?>"
-                                disabled="<?php echo $disabledFromPickup ?>"
-                               
+                                value="<?php if ($wasPickedUp) { 
+                                    echo $latestRevision->getEffectivePickupDate();
+                                } else {
+                                    echo date('Y-m-d', time());
+                                } ?>"
+                                <?php echo $wasPickedUp ? 'disabled' : null ?>  
+                                
                             >
                         </div>
                         <div class="col-sm-12 col-md-4">
@@ -150,9 +159,12 @@ echo getHeader();
                                 id="pickupTime"
                                 name="pickupTime"
                                 class="form-control"
-                                value="<?php echo date('H:i:s', time()) ?>"
-                                disabled="<?php echo $disabledFromPickup ?>"
-                               
+                                value="<?php if ($wasPickedUp) { 
+                                    echo $latestRevision->getEffectivePickupTime();
+                                } else {
+                                    echo date('H:i:s', time());
+                                } ?>"
+                                <?php echo $wasPickedUp ? 'disabled' : null ?>
                             >
                         </div>
                         <div class="col-12">
@@ -160,14 +172,14 @@ echo getHeader();
                                 type="hidden"
                                 name="reservationId"
                                 value="<?php echo $reservationId ?>"
-                                disabled="<?php echo $disabledFromPickup ?>"
+                                <?php echo $wasPickedUp ? 'disabled' : null ?>
                             >
                             <input
                                 class="btn btn-primary mt-3"
                                 type="submit"
                                 name="reservationEditEffectivePickup"
                                 value="Record Pickup"
-                                disabled="<?php echo $disabledFromPickup ?>"
+                                <?php echo $wasPickedUp ? 'disabled' : null ?>
                             >
                         </div>
                     </div>
@@ -270,7 +282,7 @@ echo getHeader();
                 <div class="row mb-3">
                     <div class="col-sm col-md-6">
                         <label for="categoryId">Vehicle category:</label>
-                        <select name="categoryId" id="category" class="form-select" disabled="<?php echo $disabledFromPickup ?>">
+                        <select name="categoryId" id="category" class="form-select" disabled="<?php echo $wasPickedUp ?>">
                             <?php foreach ($categories as $category) { ?>
                                 <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
                             <?php } ?>

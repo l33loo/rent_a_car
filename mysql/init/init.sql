@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS revision (
     totalPrice DECIMAL(6,2) NOT NULL,
     -- To be added by admin when customer picks up the car
     vehicle_id INT UNSIGNED,
-    submittedByUser_id INT UNSIGNED NOT NULL,
+    submittedByUser_id INT UNSIGNED,
     submittedTimestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     -- To be added by admin when customer picks up the car
@@ -1148,6 +1148,7 @@ VALUES (
 );
 
 INSERT INTO customer (
+    id,
     name,
     email,
     dateOfBirth,
@@ -1157,6 +1158,7 @@ INSERT INTO customer (
     taxNumber,
     user_id
 ) VALUES (
+    1,
     "Empresa Vila Real",
     "davide@vilareal.pt",
     "1960-05-26",
@@ -1173,3 +1175,116 @@ VALUES
 (2, "Confirmed"),
 (3, "Cancelled"),
 (4, "Void");
+
+INSERT INTO reservation (id, ownerUser_id)
+VALUES
+    -- Created by Guest or Admin
+    (1, NULL),
+    -- Created by User
+    (2, 2);
+
+INSERT INTO revision (
+    id,
+    category_id,
+    customer_id,
+    status_id,
+    pickupLocation_id,
+    dropoffLocation_id,
+    pickupDate,
+    dropoffDate,
+    pickupTime,
+    dropoffTime,
+    totalPrice,
+    vehicle_id,
+    submittedByUser_id,
+    submittedTimestamp,
+    effectivePickupDate,
+    effectivePickupTime,
+    effectivePickupLocation_id,
+    givenByUser_id,
+    effectiveDropoffDate,
+    effectiveDropoffTime,
+    effectiveDropoffLocation_id,
+    collectedByUser_id,
+    billingAddress_id,
+    creditCard_id,
+    reservation_id
+) VALUES (
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    '2024-08-01',
+    '2024-08-10',
+    '09:30:00',
+    '09:30:00',
+    100.00,
+    NULL,
+    NULL,
+    '2024-05-20 15:23:21',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    1,
+    1,
+    1
+), (
+    2,
+    4,
+    1,
+    1,
+    2,
+    2,
+    '2024-05-24',
+    '2024-06-07',
+    '12:00:00',
+    '10:30:00',
+    350.00,
+    NULL,
+    2,
+    '2024-03-20 11:06:24',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    1,
+    1,
+    2
+), (
+    3,
+    4,
+    1,
+    2,
+    2,
+    2,
+    '2024-05-24',
+    '2024-06-07',
+    '12:00:00',
+    '10:30:00',
+    350.00,
+    19,
+    2,
+    '2024-05-24 12:06:36',
+    '2024-05-24',
+    '12:06:36',
+    2,
+    1,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    1,
+    1,
+    2
+);

@@ -75,7 +75,7 @@ class Vehicle {
     /**
      * Set the value of plate
      *
-     * @return  self
+     * @return self
      */ 
     public function setPlate(string $plate): self
     {
@@ -86,8 +86,10 @@ class Vehicle {
 
     /**
      * Get the value of category
+     * 
+     * @return ?Category
      */ 
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }

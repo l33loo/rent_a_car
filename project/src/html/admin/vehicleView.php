@@ -13,6 +13,7 @@ if (empty($_GET['vehicleId'])) {
 } else {
     try {
         $vehicle = Vehicle::find($_GET['vehicleId']);
+        print_r($vehicle);
         $vehicle->loadRelation('island');
         $vehicle->loadRelation('category');
         $vehicle->loadProperties();
@@ -31,11 +32,11 @@ echo getHeader();
     <div class="container mt-5 pt-5">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <h1>Vehicle <?php echo $vehicle->getPlate(); ?></h1>
-            <div class="d-flex flex-wrap">
+            <div class="d-flex flex-wrap align-items-center">
                 <a href="/src/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary">
                     Edit
                 </a>
-                <form action="/src/app/admin/vehicleEdit.php" method="POST" class="ps-2">
+                <form action="/src/app/admin/vehicleEdit.php" method="POST" class="ps-2 mb-0">
                     <input type="submit" name="vehicleArchive" class="btn btn-danger" value="Archive" />
                     <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId(); ?>" />
                 </form>
@@ -79,7 +80,7 @@ echo getHeader();
                                 <?php echo $vehicleProperty->getPropertyValue() ?>
                             </td>
                         <?php } ?>
-                        <td><?php echo $category->getName(); ?></td>
+                        <td><?php echo $category === null ? 'None' : $category->getName(); ?></td>
                         <td><?php echo $island->getName(); ?></td>
                         <td><?php echo $vehicle->getRentable() ? 'YES' : 'NO'; ?></td>
                     </tr>

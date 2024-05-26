@@ -175,6 +175,10 @@ trait DBModel
 
     public function loadRelation(string $relationName, string $tableName = ''): self
     {
+        if ($this->{$relationName . '_id'} === null) {
+            return $this;
+        }
+        
         if ($tableName === '') {
             $tableName = $relationName;
         }

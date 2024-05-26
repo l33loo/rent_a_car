@@ -38,34 +38,13 @@ echo getHeader();
                                     </label>
                                     <input type="text" class="form-control" name="name" value="<?php echo $category->getName(); ?>">
                                 </div>
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-2 col-sm-12">
                                     <label for="dailyRate">
                                         Daily Rate:
                                     </label>
                                     <input class="form-control" type="number" step="0.01" name="dailyRate" value="<?php echo $category->getDailyRate(); ?>">
                                 </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <label for="isArchived">
-                                        Is Archived:
-                                    </label>
-                                    <select class="form-select" name="isArchived" id="selectIsArchived">
-                                        <option
-                                            value="1"
-                                            <?php echo $category->getIsArchived() ? 'selected' : null; ?>
-                                        >
-                                            YES
-                                        </option>
-                                        <option
-                                            value="0"
-                                            <?php echo $category->getIsArchived() ? null : 'selected'; ?>
-                                        >
-                                            NO
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col">
+                                <div class="col-sm-12 col-md">
                                     <label for="description">
                                         Description:
                                     </label>
@@ -89,6 +68,7 @@ echo getHeader();
                                     class="btn btn-primary"
                                     name="categoryEdit"
                                     value="Edit Category"
+                                    <?php echo $category->getIsArchived() === true ? 'disabled' : null ?>
                                 />
                             </div>
                         </form>
