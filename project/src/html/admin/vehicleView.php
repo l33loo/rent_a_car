@@ -32,11 +32,11 @@ echo getHeader();
     <div class="container mt-5 pt-5">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <h1>Vehicle <?php echo $vehicle->getPlate(); ?></h1>
-            <div class="d-flex flex-wrap">
+            <div class="d-flex flex-wrap align-items-center">
                 <a href="/src/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary">
                     Edit
                 </a>
-                <form action="/src/app/admin/vehicleEdit.php" method="POST" class="ps-2">
+                <form action="/src/app/admin/vehicleEdit.php" method="POST" class="ps-2 mb-0">
                     <input type="submit" name="vehicleArchive" class="btn btn-danger" value="Archive" />
                     <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId(); ?>" />
                 </form>
