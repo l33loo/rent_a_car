@@ -92,7 +92,7 @@ echo getHeader();
         ?>
             <div class="row mb-3">
                 <div class="col">
-                    <img src="/img/car.jpg" alt="">
+                    <img src="/src/img/car.jpg" alt="">
                 </div>
                 <div class="col">
                     <h2>

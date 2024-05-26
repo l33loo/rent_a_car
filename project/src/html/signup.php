@@ -12,14 +12,14 @@ echo getHeader();
         <form action="/src/app/signup.php" method="post">
             <div class="row mb-3">
                 <div class="col">
-                    <img src="/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
+                    <img src="/src/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
                     <label for="name">
                         Name:
                     </label>
                     <input type="text" class="form-control" name="name">
                 </div>
                 <div class="col">
-                    <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                    <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                     <label for="email">
                         Email:
                     </label>
@@ -28,14 +28,14 @@ echo getHeader();
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <img src="/img/password.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
+                    <img src="/src/img/password.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
                     <label for="password">
                         Password:
                     </label>
                     <input type="password" class="form-control" name="password">
                 </div>
                 <div class="col">
-                    <img src="/img/password.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                    <img src="/src/img/password.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                     <label for="confirmPassword">
                         Confirm password:
                     </label>
@@ -44,14 +44,14 @@ echo getHeader();
             </div>
             <div class="row mb-4">
                 <div class="col">
-                    <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                    <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                     <label for="phone">
                         Phone:
                     </label>
                     <input type="text" class="form-control" name="phone">
                 </div>
                 <div class="col">
-                    <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                    <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                     <label for="dateOfBirth">
                         Birthdate:
                     </label>

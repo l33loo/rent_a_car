@@ -80,7 +80,7 @@ echo getHeader();
                                 style="height:20px; width:20px;"> <span style="margin-left:5px;">Telephone - 296 649
                                 385</span>
                         </li>
-                        <li style="padding-top:10px;"><img src="/img/email.svg" alt="Email"
+                        <li style="padding-top:10px;"><img src="/src/img/email.svg" alt="Email"
                                 style="height:20px; width:20px;"> <span style="margin-left:5px;">Email -
                                 SuperstarRentalCar@gmail.com</span></li>
                         <li style="padding-top:10px;"><img src="../img/socialMedia.svg" alt="Socia Media"

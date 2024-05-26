@@ -14,14 +14,14 @@ echo getHeader();
         <form action="/src/app/admin/locationNew.php" method="post">
             <div class="row mb-3">
                 <div class="col">
-                    <img src="/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
+                    <img src="/src/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
                     <label for="name">
                         Location Name:
                     </label>
                     <input type="text" class="form-control" name="name">
                 </div>
                 <div class="col">
-                    <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                    <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                     <label for="email">
                         Select Fleet:
                     </label>

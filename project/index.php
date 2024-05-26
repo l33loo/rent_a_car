@@ -123,7 +123,7 @@ echo getHeader();
         <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">
             <div class="col">
                 <div class="card h-100" style="    filter: drop-shadow(16px 16px 20px);">
-                    <img src="/img/car.jpg" class="card-img-top" alt="car">
+                    <img src="/src/img/car.jpg" class="card-img-top" alt="car">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Regular</h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
@@ -136,7 +136,7 @@ echo getHeader();
             </div>
             <div class="col">
                 <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="/img/moto.jpg" class="card-img-top" alt="moto">
+                    <img src="/src/img/moto.jpg" class="card-img-top" alt="moto">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Motorcycle</h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
@@ -149,7 +149,7 @@ echo getHeader();
             </div>
             <div class="col">
                 <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="/img/suv.jpg" class="card-img-top" alt="suv">
+                    <img src="/src/img/suv.jpg" class="card-img-top" alt="suv">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Suv</h5>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien

@@ -1,6 +1,6 @@
 <fieldset class="mb-3">
     <legend>
-        <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+        <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
         Payment
     </legend>
     <div class="row mb-4">
