@@ -1,5 +1,5 @@
 <?php 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
@@ -16,7 +16,7 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content d-flex flex-wrap align-items-center justify-content-between px-3" style="margin-top: 150px; margin-bottom:50px;">
             <h1>Manage Locations</h1>
@@ -93,7 +93,7 @@ echo getHeader();
             </tbody>
         </table>
     </div>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/footer.inc.php'; ?>
 </body>
 
 </html>

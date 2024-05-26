@@ -71,7 +71,7 @@ echo getHeader();
 </style>
 
 <body>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
     <div class="bg-image" style="position: relative;">
         <div class="gradient-overlay"></div>
         <div class="container">
@@ -127,7 +127,7 @@ echo getHeader();
             </div>
         <?php } ?>
     </div>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/footer.inc.php'; ?>
 </body>
 
 </html>

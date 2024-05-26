@@ -1,12 +1,12 @@
 <?php 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/sessionUser.inc.php';
 
 echo getHeader();
 ?>
 
 <body>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
     <div class="container">
         <h1 class="text-center mb-5" style="margin-top: 100px;">Sign Up</h1>
         <form action="/app/signup.php" method="post">
@@ -58,7 +58,7 @@ echo getHeader();
                     <input type="date" class="form-control" name="dateOfBirth">
                 </div>
             </div>
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formAddress.inc.php'; ?>
+            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formAddress.inc.php'; ?>
             <div class="d-flex justify-content-center">
                 <input
                     type="submit"
@@ -69,7 +69,7 @@ echo getHeader();
             </div>
         </form>
     </div>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/footer.inc.php'; ?>
     <script type="text/javascript">
     </script>
 </body>

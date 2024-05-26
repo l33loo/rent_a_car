@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
 // require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/reservations.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
@@ -24,7 +24,7 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
     <div class="container mt-5">
         <div class="d-flex flex-wrap justify-content-between align-items-center pt-5 mb-4">
             <h1>Manage Reservations</h1>

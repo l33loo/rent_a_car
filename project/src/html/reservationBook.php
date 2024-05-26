@@ -71,7 +71,7 @@ echo getHeader();
 </style>
 
 <body>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
     <div class="bg-image" style="position: relative;">
         <div class="gradient-overlay"></div>
         <div class="container">
@@ -85,12 +85,12 @@ echo getHeader();
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>3. Book</h1>
         <?php if (empty($_SESSION['logged_id'])) {
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/reservationBookFormGuest.inc.php';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/reservationBookFormGuest.inc.php';
         } else {
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/reservationBookForm.inc.php';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/reservationBookForm.inc.php';
         } ?>
     </div>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/footer.inc.php'; ?>
 </body>
 
 </html>

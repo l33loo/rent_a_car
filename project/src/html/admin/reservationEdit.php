@@ -53,7 +53,7 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
 
     <div class="container pt-5">
         <h1 class="pt-5 pb-3">Admin Reservation Updates</h1>
@@ -290,21 +290,21 @@ echo getHeader();
                 </div>
             </form>
             <form action="/app/admin/reservationEdit.php" method="post">
-                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formCustomer.inc.php'; ?>
+                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formCustomer.inc.php'; ?>
                 <div class="d-flex justify-content-center">
                     <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
                     <input type="submit" name="reservationEditCustomer" value="Edit Customer" class="btn btn-primary">
                 </div>
             </form>
             <form action="/app/admin/reservationEdit.php" method="post">
-                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formAddress.inc.php'; ?>
+                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formAddress.inc.php'; ?>
                 <div class="d-flex justify-content-center">
                     <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
                     <input type="submit" name="reservationEditAddress" value="Edit Address" class="btn btn-primary">
                 </div>
             </form>
             <form action="/app/admin/reservationEdit.php" method="post">
-                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formPayment.inc.php'; ?>
+                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formPayment.inc.php'; ?>
                 <div class="d-flex justify-content-center">
                     <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
                     <input type="submit" name="reservationEditPayment" value="Edit Payment" class="btn btn-primary">
@@ -312,7 +312,7 @@ echo getHeader();
             </form>
         </div>
     </div>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/html/components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/footer.inc.php'; ?>
 </body>
 
 </html>

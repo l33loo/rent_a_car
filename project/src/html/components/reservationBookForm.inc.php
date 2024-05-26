@@ -1,7 +1,7 @@
 <form action="/app/reservationBook.php" method="post">
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formCustomer.inc.php'; ?>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formAddress.inc.php'; ?>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/html/components/formPayment.inc.php'; ?>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formCustomer.inc.php'; ?>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formAddress.inc.php'; ?>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formPayment.inc.php'; ?>
     <div class="d-flex justify-content-center">
         <input type="hidden" name="userId" value="<?php echo empty($_SESSION['logged_id']) ? null : $_SESSION['logged_id'] ?>">
         <input type="hidden" name="categoryId" value="<?php echo $_GET['categoryId'] ?>">
