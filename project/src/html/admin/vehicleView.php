@@ -2,9 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/vehicles.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Island.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Property.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Vehicle.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Island;
 use RentACar\Property;

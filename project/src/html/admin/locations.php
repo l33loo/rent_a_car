@@ -1,9 +1,7 @@
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Address.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Island.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Location.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Address;
 use RentACar\Island;

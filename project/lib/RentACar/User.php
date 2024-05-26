@@ -2,8 +2,6 @@
 namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Address.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Profile.php';
 
 use Carbon\Carbon;
 use RentACar\Address;

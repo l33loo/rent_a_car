@@ -1,6 +1,6 @@
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/sessionGuest.inc.php';
 
 use RentACar\User;

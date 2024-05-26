@@ -1,7 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Category.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Vehicle.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Category;
 use RentACar\Vehicle;

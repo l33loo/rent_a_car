@@ -1,10 +1,7 @@
 <?php
 namespace RentACar;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Category.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/DBModel.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Island.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Property.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Category;
 use RentACar\Island;
