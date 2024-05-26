@@ -1170,7 +1170,7 @@ class Revision {
     }
 
     /**
-     * Load revision's pickup Location
+     * Load revision's effective pickup Location
      *
      * @return self
      */ 
@@ -1196,6 +1196,24 @@ class Revision {
     {
         try {
             $this->loadRelation('dropoffLocation', 'location');
+        } catch(e) {
+        
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Load revision's effective dropoff Location
+     *
+     * @return self
+     */ 
+    public function loadEffectiveDropoffLocation(): self
+    {
+        try {
+            if ($this->effectiveDropoffLocation_id !== null) {
+                $this->loadRelation('effectiveDropoffLocation', 'location');
+            }
         } catch(e) {
         
         }
@@ -1239,6 +1257,41 @@ class Revision {
                 ) latestRevision
                 ON revision.reservation_id = latestRevision.reservation_id
                 WHERE revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp;
+            ");
+            while($row = $stmt->fetchObject(Revision::class)) {
+                $revisions[] = $row;
+            }
+        } catch(e) {
+
+        }
+
+        return $revisions;
+    }
+
+    /**
+     * Update category on active revisions 
+     *
+     * @return array
+     */ 
+    public static function updateActiveRevisionsCategory(int $categoryIdBefore, int $categoryIdAfter): array
+    {
+        try {
+            $revisions = [];
+            $stmt = Revision::rawSQL("
+                UPDATE revision r
+                LEFT OUTER JOIN (
+                    SELECT reservation_id, max(submittedTimestamp) as maxSubmittedTimestamp
+                        FROM revision
+                        GROUP BY reservation_id
+                ) latestRevision
+                ON r.reservation_id = latestRevision.reservation_id
+                LEFT OUTER JOIN status s
+                ON r.status_id=s.id
+                SET r.category_id=$categoryIdAfter
+                WHERE r.submittedTimestamp = latestRevision.maxSubmittedTimestamp
+                AND r.category_id=$categoryIdBefore
+                AND r.pickupDate > CURRENT_DATE()
+                AND (s.statusName != 'Cancelled' OR s.statusName != 'Void');
             ");
             while($row = $stmt->fetchObject(Revision::class)) {
                 $revisions[] = $row;
