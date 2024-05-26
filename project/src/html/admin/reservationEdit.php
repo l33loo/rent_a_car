@@ -32,7 +32,7 @@ try {
     $latestRevisionDroppoffLocation->loadRelation('island');
     $effectiveLocations = Location::fetchActiveLocations($latestRevisionDroppoffLocation->getIsland()->getId());
     $statuses = Status::search([]);
-    $avaiableVehicles = $latestRevision->findAvailableVehicles();
+    $availableVehicles = $latestRevision->findAvailableVehicles();
     $locations = Location::fetchActiveLocations();
     $categories = Category::search([]);
     $disabledFromPickup = $latestRevision->getEffectivePickupLocation() !== null;
@@ -90,7 +90,7 @@ echo getHeader();
                                 <?php echo $revisionVehicleProperties['Model']->getPropertyValue() . ' ' . $revisionVehicleProperties['Brand']->getPropertyValue() . ' - ' . $revisionVehicle->getPlate() ?>
                             </option>
                         <?php } ?>
-                        <?php foreach ($avaiableVehicles as $vehicle) {
+                        <?php foreach ($availableVehicles as $vehicle) {
                             $vehicle->loadProperties();
                             $properties = $vehicle->getProperties();
                         ?>
