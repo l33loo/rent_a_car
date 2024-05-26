@@ -1,6 +1,6 @@
 <?php  
 require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Location.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/lib/RentACar/Location.php";
 
 use RentACar\Location;
 
