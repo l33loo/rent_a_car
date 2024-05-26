@@ -13,6 +13,7 @@ if (empty($_GET['vehicleId'])) {
 } else {
     try {
         $vehicle = Vehicle::find($_GET['vehicleId']);
+        print_r($vehicle);
         $vehicle->loadRelation('island');
         $vehicle->loadRelation('category');
         $vehicle->loadProperties();
@@ -79,7 +80,7 @@ echo getHeader();
                                 <?php echo $vehicleProperty->getPropertyValue() ?>
                             </td>
                         <?php } ?>
-                        <td><?php echo $category->getName(); ?></td>
+                        <td><?php echo $category === null ? 'None' : $category->getName(); ?></td>
                         <td><?php echo $island->getName(); ?></td>
                         <td><?php echo $vehicle->getRentable() ? 'YES' : 'NO'; ?></td>
                     </tr>
