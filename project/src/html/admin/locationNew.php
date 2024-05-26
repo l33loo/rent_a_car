@@ -23,7 +23,7 @@ echo getHeader();
                 <div class="col">
                     <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                     <label for="email">
-                        Select Fleet:
+                        Select Island:
                     </label>
                     <select class="form-select" name="islandId">
                         <?php foreach($islands as $island) { ?>
