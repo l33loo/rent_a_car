@@ -1,8 +1,8 @@
 <?php
 namespace RentACar;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Country.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Country.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/DBModel.php';
 
 use RentACar\Country;
 

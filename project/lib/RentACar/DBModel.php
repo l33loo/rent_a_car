@@ -2,7 +2,7 @@
 
 namespace RentACar;
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/RentACar/MyConnect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/MyConnect.php');
 
 use RentACar\MyConnect;
 

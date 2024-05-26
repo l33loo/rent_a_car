@@ -1,8 +1,8 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Category.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Property.php';
 
 use RentACar\Category;
 use RentACar\Property;

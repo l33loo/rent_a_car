@@ -2,7 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/countries.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/sessionGuest.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/User.php';
 clearstatcache();
 use RentACar\User;
 

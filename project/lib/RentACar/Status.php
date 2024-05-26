@@ -1,7 +1,7 @@
 <?php
 namespace RentACar;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/DBModel.php';
 
 // TODO: update UML and SQL Schema to add Status
 

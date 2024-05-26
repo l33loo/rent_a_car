@@ -1,11 +1,11 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/CreditCard.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Reservation.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Address.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/CreditCard.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Customer.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Reservation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Revision.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/User.php';
 
 use RentACar\Address;
 use RentACar\CreditCard;

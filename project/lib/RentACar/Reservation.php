@@ -1,9 +1,9 @@
 <?php
 namespace RentACar;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/DBModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Revision.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/User.php';
 
 use RentACar\Revision;
 use RentACar\User;

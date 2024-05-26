@@ -1,13 +1,13 @@
 <?php
 namespace RentACar;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/CreditCard.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/DBModel.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Vehicle.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Category.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/CreditCard.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Customer.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/DBModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Location.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Vehicle.php';
 
 use RentACar\Category;
 use RentACar\CreditCard;

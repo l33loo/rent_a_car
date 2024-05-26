@@ -1,13 +1,13 @@
 <?php  
 require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Revision.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Status.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Category.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Customer.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Island.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Location.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Revision.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Status.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/User.php';
 
 use RentACar\Category;
 use RentACar\Customer;

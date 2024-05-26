@@ -1,9 +1,9 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Vehicle.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Category.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Island.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Property.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Vehicle.php';
 
 use RentACar\Category;
 use RentACar\Island;

@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/RentACar/Island.php';
 
 use \RentACar\Island;
 
