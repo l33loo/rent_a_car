@@ -5,6 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Category;
 use RentACar\Property;
+use RentACar\Revision;
 use RentACar\Vehicle;
 
 if (empty($_POST['categoryId'])) {
