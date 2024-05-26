@@ -30,7 +30,13 @@ echo getHeader();
                     Edit
                 </a>
                 <form action="/src/app/admin/categoryEdit.php" method="POST" class="ps-2 mb-0">
-                    <input type="submit" name="categoryArchive" class="btn btn-danger" value="Archive" />
+                    <input
+                        type="submit"
+                        name="categoryArchive"
+                        class="btn btn-danger"
+                        value="Archive"
+                        <?php echo $category->getIsArchived() === true ? 'disabled' : null ?>
+                    />
                     <input type="hidden" name="categoryId" value="<?php echo $category->getId(); ?>" />
                 </form>
             </div>
