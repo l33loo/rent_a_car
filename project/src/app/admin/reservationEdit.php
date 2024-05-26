@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/CreditCard.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';

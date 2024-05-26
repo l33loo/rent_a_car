@@ -1,7 +1,7 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
 
 use RentACar\User;
 

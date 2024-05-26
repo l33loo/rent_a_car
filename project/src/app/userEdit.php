@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/sessionGuest.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/sessionGuest.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Address.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 

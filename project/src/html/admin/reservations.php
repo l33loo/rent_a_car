@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
-// require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/reservations.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
+// require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/reservations.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Customer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Island.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Location.php';

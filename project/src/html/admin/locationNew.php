@@ -1,7 +1,7 @@
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/islands.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/islands.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
 
 
 echo getHeader();

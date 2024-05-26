@@ -3,7 +3,7 @@
 // TODO: fix
 // include ('autoload.php');
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/sessionUser.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/sessionUser.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/User.php';
 use RentACar\User;
 

@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/inc/countries.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/countries.inc.php';
 ?>
 
 <fieldset class="mb-3">

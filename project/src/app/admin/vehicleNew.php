@@ -2,7 +2,7 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Property.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Vehicle.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/admin/inc/session.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
 
 use RentACar\Property;
 use RentACar\Vehicle;
