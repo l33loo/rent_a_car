@@ -28,7 +28,7 @@ echo getHeader();
     <div class="container mt-5">
         <div class="d-flex flex-wrap justify-content-between align-items-center pt-5 mb-4">
             <h1>Manage Reservations</h1>
-            <a class="btn btn-success" href="/html/admin/reservationNew.php">New Reservation</a>
+            <a class="btn btn-success" href="/src/html/admin/reservationNew.php">New Reservation</a>
         </div>
     </div>
     <div class="container">
@@ -72,8 +72,8 @@ echo getHeader();
                             <td><?php echo $revision->getVehicle() === null ? null : $revision->getVehicle()->getPlate() ?></td>
                             <td><?php echo $revision->loadStatus()->getStatus()->getStatusName(); ?></td>
                             <td>
-                                <a href="/html/admin/reservationView.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-primary">View</a>
-                                <a href="/html/admin/reservationEdit.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-secondary">Edit</a>
+                                <a href="/src/html/admin/reservationView.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-primary">View</a>
+                                <a href="/src/html/admin/reservationEdit.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-secondary">Edit</a>
                             </td>
                         </tr>
                     <?php } ?>

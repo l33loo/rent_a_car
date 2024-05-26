@@ -1,6 +1,6 @@
 <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/html/admin/dashboard.php">Superstar Rental Car</a>
+        <a class="navbar-brand" href="/src/html/admin/dashboard.php">Superstar Rental Car</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
             aria-label="Toggle navigation">

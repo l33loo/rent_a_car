@@ -34,7 +34,7 @@ echo getHeader();
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <h1>Vehicle <?php echo $vehicle->getPlate(); ?></h1>
             <div class="d-flex flex-wrap">
-                <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary">
+                <a href="/src/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary">
                     Edit
                 </a>
                 <form action="/app/admin/vehicleEdit.php" method="POST" class="ps-2">

@@ -40,10 +40,10 @@ echo getHeader();
     </div>
     <div class="container mb-4">
         <div class="d-flex flex-wrap">
-            <a href="/html/admin/vehicleNew.php?islandId=<?php echo $islandId; ?>" class="btn btn-primary me-2">
+            <a href="/src/html/admin/vehicleNew.php?islandId=<?php echo $islandId; ?>" class="btn btn-primary me-2">
                 Add New Vehicle
             </a> 
-            <a href="/html/admin/categoryNew.php" class="btn btn-success me-2">
+            <a href="/src/html/admin/categoryNew.php" class="btn btn-success me-2">
                 Add New Category
             </a>                       
         </div>
@@ -66,8 +66,8 @@ echo getHeader();
                         <div class="accordion-body">
                             <?php if ($categoryId !== '') { ?>
                                 <div class="mb-3 d-flex flex-wrap justify-content-end">
-                                    <a href="/html/admin/categoryView.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-primary ms-2">View Category</a>    
-                                    <a href="/html/admin/categoryEdit.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-secondary ms-2">Edit Category</a>
+                                    <a href="/src/html/admin/categoryView.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-primary ms-2">View Category</a>    
+                                    <a href="/src/html/admin/categoryEdit.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-secondary ms-2">Edit Category</a>
                                     <form action="/app/admin/categoryEdit.php" method="POST" class="ms-2">
                                         <input type="submit" name="categoryArchive" class="btn btn-danger" value="Archive Category" />
                                         <input type="hidden" name="categoryId" value="<?php echo $categoryId; ?>" />
@@ -152,10 +152,10 @@ echo getHeader();
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-wrap align-items-center">
-                                                        <a href="/html/admin/vehicleView.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-primary me-2">
+                                                        <a href="/src/html/admin/vehicleView.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-primary me-2">
                                                             View
                                                         </a>
-                                                        <a href="/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary me-2">
+                                                        <a href="/src/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary me-2">
                                                             Edit
                                                         </a>
                                                         <form action="/app/admin/vehicleEdit.php" method="POST" class="me-2">

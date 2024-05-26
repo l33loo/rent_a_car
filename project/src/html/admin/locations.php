@@ -20,7 +20,7 @@ echo getHeader();
     <div class="container">
         <div class="text-content d-flex flex-wrap align-items-center justify-content-between px-3" style="margin-top: 150px; margin-bottom:50px;">
             <h1>Manage Locations</h1>
-            <a href="/html/admin/locationNew.php" class="btn btn-success">Add New Location</a>
+            <a href="/src/html/admin/locationNew.php" class="btn btn-success">Add New Location</a>
         </div>
     </div>
     <div class="container">

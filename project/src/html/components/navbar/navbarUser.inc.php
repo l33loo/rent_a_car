@@ -8,17 +8,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/html/fleet.php">
+            <a class="nav-link" href="/src/html/fleet.php">
                 Fleet
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/html/about.php">
+            <a class="nav-link" href="/src/html/about.php">
                 About
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/html/userView.php">
+            <a class="nav-link" href="/src/html/userView.php">
                 My Account
             </a>
         </li>
