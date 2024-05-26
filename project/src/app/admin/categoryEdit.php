@@ -56,6 +56,8 @@ if (isset($_POST['categoryEdit'])) {
         foreach ($vehiclesFromCategory as $vehicle) {
             $vehicle->setCategory_id($categoryIdAfter)->save();
         }
+
+        Revision::updateActiveRevisionsCategory($categoryId, $categoryIdAfter);
     } catch(e) {
         // TODO: error message
         echo 'ERROR SIGNING UP :(';
