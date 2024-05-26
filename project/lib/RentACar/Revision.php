@@ -1047,6 +1047,21 @@ class Revision {
         $dropoffLocation->loadRelation('island');
         $islandId = $dropoffLocation->getIsland()->getId();
         $categoryId = $this->category_id;
+
+        $stmtVehiclesInCategoryOnIsland = self::rawSQL("
+            SELECT id FROM vehicle
+            WHERE isArchived = FALSE
+            AND rentable = TRUE
+            AND category_id=$categoryId
+            AND island_id=$islandId;
+        ");
+
+        $countVehiclesInCategoryOnIsland = $stmtVehiclesInCategoryOnIsland->rowCount();
+
+        if ($countVehiclesInCategoryOnIsland === 0) {
+            return [];
+        }
+        
         $pickupDate = $this->pickupDate;
         $dropoffDate = $this->dropoffDate;
 
@@ -1087,16 +1102,7 @@ class Revision {
             $resultsAvailableVehicles[] = $row;
         }
 
-        $stmtVehiclesInCategoryOnIsland = self::rawSQL("
-            SELECT id FROM vehicle
-            WHERE isArchived = FALSE
-            AND rentable = TRUE
-            AND category_id=$categoryId
-            AND island_id=$islandId;
-        ");
-
         $countAvailableVehicles = count($resultsAvailableVehicles);
-        $countVehiclesInCategoryOnIsland = $stmtVehiclesInCategoryOnIsland->rowCount();
 
         // Keep 25% of available fleet as buffer
         if (($countAvailableVehicles/$countVehiclesInCategoryOnIsland*100) >= 75) {
