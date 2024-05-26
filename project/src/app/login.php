@@ -34,9 +34,9 @@ if ($users[0]->checkPassword(trim($_POST['password']))) {
     $_SESSION['isAdmin'] = $users[0]->getIsAdmin();
 
     if ($users[0]->getIsAdmin()) {
-        header('Location: /html/admin/dashboard.php');
+        header('Location: /src/html/admin/dashboard.php');
     } else {
-        header('Location: /index.php');
+        header('Location: /src/index.php');
     }
 } else {
     redirectToLoginPage($wrongCredsMsg);
@@ -46,5 +46,5 @@ if ($users[0]->checkPassword(trim($_POST['password']))) {
 function redirectToLoginPage(string $errorMsg): void
 {
     $_SESSION['loginError'] = $errorMsg;
-    header('Location: /html/login.php');
+    header('Location: /src/html/login.php');
 }

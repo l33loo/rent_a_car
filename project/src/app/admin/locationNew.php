@@ -35,8 +35,8 @@ try {
     $newLocation->save();
 } catch (e) {
     // TODO
-    header('Location: /html/admin/locationNew.php');
+    header('Location: /src/html/admin/locationNew.php');
     exit;
 }
 
-header('Location: /html/admin/locations.php');
+header('Location: /src/html/admin/locations.php');

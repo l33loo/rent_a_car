@@ -33,7 +33,7 @@ if (isset($_POST['userEditProfile'])) {
         echo 'ERROR SIGNING UP :(';
         print_r(e);
     } finally {
-        header('Location: /html/admin/userEdit.php?id=' . $userId);
+        header('Location: /src/html/admin/userEdit.php?id=' . $userId);
     }
     exit;
 }
@@ -56,11 +56,11 @@ if (isset($_POST['userEditAddress'])) {
         // TODO: error message
         echo 'ERROR SIGNING UP :(';
         print_r(e);
-        // header('Location: /html/admin/userEdit.php?id=' . $userId);
+        // header('Location: /src/html/admin/userEdit.php?id=' . $userId);
         exit;
     } finally {
         // TODO: make sure this is upon success
-        header('Location: /html/admin/user.php?id=' . $userId);
+        header('Location: /src/html/admin/user.php?id=' . $userId);
     }
 }
 

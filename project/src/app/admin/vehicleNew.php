@@ -49,8 +49,8 @@ try {
 } catch(e) {
 // TODO: manage error
     print_r(e);
-    header('Location: /html/admin/vehicleEdit.php');
+    header('Location: /src/html/admin/vehicleEdit.php');
     exit;
 }
 
-header("Location: /html/admin/vehicleView.php?vehicleId=$vehicleId");
+header("Location: /src/html/admin/vehicleView.php?vehicleId=$vehicleId");

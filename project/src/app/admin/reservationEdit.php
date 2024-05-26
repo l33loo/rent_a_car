@@ -71,4 +71,4 @@ if (isset($_POST['reservationEditEffectiveDropoff'])) {
     } 
 }
 
-header("Location: /html/admin/reservationEdit.php?reservationId=$reservationId");
+header("Location: /src/html/admin/reservationEdit.php?reservationId=$reservationId");

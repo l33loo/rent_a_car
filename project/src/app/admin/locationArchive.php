@@ -16,5 +16,5 @@ try {
     echo "error";
     exit;
 } finally {
-    header('Location: /html/admin/locations.php');
+    header('Location: /src/html/admin/locations.php');
 }

@@ -48,7 +48,7 @@ if (isset($_POST['categoryEdit'])) {
         print_r(e);
         exit;
     }
-    header('Location: /html/admin/categoryView.php?categoryId=' . $categoryId);
+    header('Location: /src/html/admin/categoryView.php?categoryId=' . $categoryId);
     exit;
 }
 

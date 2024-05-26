@@ -38,7 +38,7 @@ try {
     print_r(e);
 } finally {
     // TODO: make sure this is upon success
-    header('Location: /html/login.php');
+    header('Location: /src/html/login.php');
 }
 
 

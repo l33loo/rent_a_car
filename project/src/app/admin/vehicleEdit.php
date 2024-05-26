@@ -44,11 +44,11 @@ if (isset($_POST['vehicleEdit'])) {
                 ");
             }
         }
-        header("Location: /html/admin/vehicleView.php?vehicleId=$vehicleId");
+        header("Location: /src/html/admin/vehicleView.php?vehicleId=$vehicleId");
     } catch(e) {
     // TODO: manage error
         print_r(e);
-        header('Location: /html/admin/vehicleEdit.php');
+        header('Location: /src/html/admin/vehicleEdit.php');
         exit;
     }
     exit;
@@ -60,7 +60,7 @@ if (isset($_POST['vehicleArchive'])) {
         $vehicle->setIsArchived(true)->save();
         $islandId = $vehicle->getIsland_id();
         $categoryId = $vehicle->getCategory_id();
-        header("Location: /html/admin/vehicles.php?islandId=$islandId&categoryId=$categoryId");
+        header("Location: /src/html/admin/vehicles.php?islandId=$islandId&categoryId=$categoryId");
     } catch(e) {
         // TODO: handle error
         exit;

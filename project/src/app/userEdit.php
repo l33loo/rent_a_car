@@ -21,10 +21,10 @@ if (isset($_POST['userEditProfile'])) {
         // TODO: error message
         echo 'ERROR SIGNING UP :(';
         print_r(e);
-        header('Location: /html/userEdit.php');
+        header('Location: /src/html/userEdit.php');
     } finally {
         // TODO: make sure this is upon success
-        header('Location: /html/userView.php');
+        header('Location: /src/html/userView.php');
     }
     exit;
 }
@@ -47,11 +47,11 @@ if (isset($_POST['userEditAddress'])) {
         // TODO: error message
         echo 'ERROR SIGNING UP :(';
         print_r(e);
-        header('Location: /html/userEdit.php');
+        header('Location: /src/html/userEdit.php');
         exit;
     } finally {
         // TODO: make sure this is upon success
-        header('Location: /html/userView.php');
+        header('Location: /src/html/userView.php');
     }
     exit;
 }
@@ -60,7 +60,7 @@ if (isset($_POST['userEditPassword'])) {
     try {
         if (empty(trim($_POST['password']))) {
             // TODO: error
-            header('Location: /html/userEdit.php');
+            header('Location: /src/html/userEdit.php');
             exit;
         } else {
             // TODO: clear error
@@ -68,7 +68,7 @@ if (isset($_POST['userEditPassword'])) {
     
         if (empty($_POST['confirmPassword'])) {
             // TODO: error
-            header('Location: /html/userEdit.php');
+            header('Location: /src/html/userEdit.php');
             exit;
         }
     
@@ -76,7 +76,7 @@ if (isset($_POST['userEditPassword'])) {
     
         if (trim($_POST['password']) !== $_POST['confirmPassword']) {
             // TODO: error
-            header('Location: /html/userEdit.php');
+            header('Location: /src/html/userEdit.php');
             exit;
         }
 
@@ -86,7 +86,7 @@ if (isset($_POST['userEditPassword'])) {
         // TODO: error messages
         echo 'ERROR SIGNING UP :(';
         print_r(e);
-        header('Location: /html/userEdit.php');
+        header('Location: /src/html/userEdit.php');
         exit;
     }
     
@@ -97,6 +97,6 @@ if (isset($_POST['userEditPassword'])) {
     setcookie('user_email', '', time() - 3600, '/');
     setcookie('user_name', '', time() - 3600, '/');
     
-    header("Location: /html/login.php");
+    header("Location: /src/html/login.php");
     exit;
 }

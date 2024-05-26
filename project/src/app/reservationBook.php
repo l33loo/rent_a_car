@@ -161,13 +161,13 @@ try {
 
     // TODO: send back to form with existing data
     echo 'error saving Revision';
-    header('Location: /html/RevisionBook.php');
+    header('Location: /src/html/RevisionBook.php');
     exit;
 }
 
 // TODO: Send to Revision view, with success message
 if (!empty($userId)) {
-    header("Location: /html/userView.php?userId=$userId");
+    header("Location: /src/html/userView.php?userId=$userId");
 } else {
-    header("Location: /index.php");
+    header("Location: /src/index.php");
 }
