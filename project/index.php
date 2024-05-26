@@ -57,7 +57,7 @@ echo getHeader();
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>Reservation</h1>
-        <form action="/html/reservationSelectVehicle.php" method="get">
+        <form action="/src/html/reservationSelectVehicle.php" method="get">
             <div class="row">
                 <div class="col-md-6 col-12">
                     <h2>1. Pick-up</h2>

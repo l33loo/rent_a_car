@@ -68,7 +68,7 @@ echo getHeader();
                                 <div class="mb-3 d-flex flex-wrap justify-content-end">
                                     <a href="/src/html/admin/categoryView.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-primary ms-2">View Category</a>    
                                     <a href="/src/html/admin/categoryEdit.php?categoryId=<?php echo $categoryId; ?>" class="btn btn-secondary ms-2">Edit Category</a>
-                                    <form action="/app/admin/categoryEdit.php" method="POST" class="ms-2">
+                                    <form action="/src/app/admin/categoryEdit.php" method="POST" class="ms-2">
                                         <input type="submit" name="categoryArchive" class="btn btn-danger" value="Archive Category" />
                                         <input type="hidden" name="categoryId" value="<?php echo $categoryId; ?>" />
                                     </form>
@@ -158,7 +158,7 @@ echo getHeader();
                                                         <a href="/src/html/admin/vehicleEdit.php?vehicleId=<?php echo $vehicle->getId(); ?>" class="btn btn-secondary me-2">
                                                             Edit
                                                         </a>
-                                                        <form action="/app/admin/vehicleEdit.php" method="POST" class="me-2">
+                                                        <form action="/src/app/admin/vehicleEdit.php" method="POST" class="me-2">
                                                             <input type="submit" name="vehicleArchive" class="btn btn-danger" value="Archive" />
                                                             <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId(); ?>" />
                                                         </form>

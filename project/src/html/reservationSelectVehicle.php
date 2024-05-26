@@ -113,7 +113,7 @@ echo getHeader();
                     <div class="h3">
                         <?php echo $category->getDailyRate() ?> Euros <small>per day</small>
                     </div>
-                    <form action="/html/reservationBook.php" method="get">
+                    <form action="/src/html/reservationBook.php" method="get">
                         <input type="hidden" name="categoryId" value="<?php echo $categoryId ?>">
                         <input type="hidden" name="pickupLocationId" value="<?php echo $_GET['pickupLocationId'] ?>">
                         <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">

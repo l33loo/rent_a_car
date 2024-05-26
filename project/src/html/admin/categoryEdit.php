@@ -31,7 +31,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Category - <?php echo $category->getName() ?></h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/admin/categoryEdit.php" method="post">
+                        <form action="/src/app/admin/categoryEdit.php" method="post">
                             <div class="row mb-3">
                                 <div class="col-md-4 col-sm-12">
                                     <label for="name">

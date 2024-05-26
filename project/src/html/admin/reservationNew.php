@@ -33,7 +33,7 @@ echo getHeader();
 
     <div class="container pt-5">
         <h1 class="pt-5 pb-3">Edit Reservation</h1>
-        <form action="/app/admin/reservationNew.php" method="post">
+        <form action="/src/app/admin/reservationNew.php" method="post">
             <div class="row mb-1">
                 <div class="col-md-6 col-12">
                     <h2 class="h4 mb-3">Pick-up</h2>

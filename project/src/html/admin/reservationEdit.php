@@ -59,7 +59,7 @@ echo getHeader();
         <h1 class="pt-5 pb-3">Admin Reservation Updates</h1>
         <div class="row bg-secondary-subtle py-3 my-4">
             <div class="col-sm-12 col-md border-end border-primary">
-                <form action="/app/admin/reservationEdit.php" method="post">
+                <form action="/src/app/admin/reservationEdit.php" method="post">
                     <label for="statusId" class="h4">
                         1. Reservation Status:
                     </label>
@@ -78,7 +78,7 @@ echo getHeader();
                 </form>
             </div>
             <div class="col-sm-12 col-md">
-                <form action="/app/admin/reservationEdit.php" method="post">
+                <form action="/src/app/admin/reservationEdit.php" method="post">
                     <label for="vehicleId" class="h4">
                         2. Vehicle:
                     </label>
@@ -116,7 +116,7 @@ echo getHeader();
                 <h2 class="h4 mb-3">3. Effective Pick-up</h2>
             </div>
             <div class="col-12">
-                <form action="/app/admin/reservationEdit.php" method="post">
+                <form action="/src/app/admin/reservationEdit.php" method="post">
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
                             <label for="pickupLocationId">Pick-Up Location:</label>
@@ -186,7 +186,7 @@ echo getHeader();
                 <h2 class="h4 mb-3">4. Effective Drop-Off</h2>
             </div>
             <div class="col-12">
-                <form action="/app/admin/reservationEdit.php" method="post">
+                <form action="/src/app/admin/reservationEdit.php" method="post">
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
                             <label for="dropoffLocation">Drop-Off Location:</label>
@@ -217,7 +217,7 @@ echo getHeader();
         </div>
         <div>
             <h1 class="py-3">Edit Base Reservation</h1>
-            <form action="/app/admin/reservationEdit.php" method="post">
+            <form action="/src/app/admin/reservationEdit.php" method="post">
                 <div class="row mb-1">
                     <div class="col-md-6 col-12">
                         <h2 class="h4 mb-3">Pick-up</h2>
@@ -289,21 +289,21 @@ echo getHeader();
                     <input type="submit" name="reservationEditRes" value="Edit Reservation" class="btn btn-primary">
                 </div>
             </form>
-            <form action="/app/admin/reservationEdit.php" method="post">
+            <form action="/src/app/admin/reservationEdit.php" method="post">
                 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formCustomer.inc.php'; ?>
                 <div class="d-flex justify-content-center">
                     <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
                     <input type="submit" name="reservationEditCustomer" value="Edit Customer" class="btn btn-primary">
                 </div>
             </form>
-            <form action="/app/admin/reservationEdit.php" method="post">
+            <form action="/src/app/admin/reservationEdit.php" method="post">
                 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formAddress.inc.php'; ?>
                 <div class="d-flex justify-content-center">
                     <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
                     <input type="submit" name="reservationEditAddress" value="Edit Address" class="btn btn-primary">
                 </div>
             </form>
-            <form action="/app/admin/reservationEdit.php" method="post">
+            <form action="/src/app/admin/reservationEdit.php" method="post">
                 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formPayment.inc.php'; ?>
                 <div class="d-flex justify-content-center">
                     <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">

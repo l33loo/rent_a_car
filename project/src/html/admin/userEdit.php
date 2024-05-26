@@ -34,7 +34,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Profile</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/admin/userEdit.php" method="post">
+                        <form action="/src/app/admin/userEdit.php" method="post">
                             <div class="row mb-3">
                                 <div class="col">
                                     <img src="/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
@@ -89,7 +89,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Address</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/admin/userEdit.php" method="post">
+                        <form action="/src/app/admin/userEdit.php" method="post">
                             <fieldset class="mb-3">
                                 <legend class>
                                     <img src="/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
@@ -163,13 +163,13 @@ echo getHeader();
                                 <div class="card m-1">
                                     <?php if ($user->getIsArchived()) { ?>
                                         <h2 class="card-header h5">The user is Archived:</h2>
-                                        <form action="/app/admin/userEdit.php" method="POST" class="card-body">
+                                        <form action="/src/app/admin/userEdit.php" method="POST" class="card-body">
                                             <input type="submit" name="unarchiveUser" class="btn btn-success" value="Unarchive" />
                                             <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
                                         </form>
                                     <?php } else { ?>
                                         <h2 class="card-header h5">The user is Active:</h2>
-                                        <form action="/app/admin/userEdit.php" method="POST" class="card-body">
+                                        <form action="/src/app/admin/userEdit.php" method="POST" class="card-body">
                                             <input type="submit" name="archiveUser" class="btn btn-danger" value="Archive" />
                                             <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
                                         </form>
@@ -180,13 +180,13 @@ echo getHeader();
                                 <div class="card m-1">
                                     <?php if ($user->getIsAdmin()) { ?>
                                         <h2 class="card-header h5">The user is an Admin:</h2>
-                                        <form action="/app/admin/userEdit.php" method="POST" class="card-body">
+                                        <form action="/src/app/admin/userEdit.php" method="POST" class="card-body">
                                             <input type="submit" name="removeAdminPrivileges" class="btn btn-warning" value="Remove admin priviledges" />
                                             <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
                                         </form>
                                     <?php } else { ?>
                                         <h2 class="card-header h5">The user is not an Admin:</h2>
-                                        <form action="/app/admin/userEdit.php" method="POST" class="card-body">
+                                        <form action="/src/app/admin/userEdit.php" method="POST" class="card-body">
                                             <input type="submit" name="grantAdminPrivileges" class="btn btn-danger" value="Grant admin priviledges" />
                                             <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
                                         </form>

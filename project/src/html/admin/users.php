@@ -104,12 +104,12 @@ echo getHeader();
                             <a href="/src/html/admin/user.php?id=<?php echo $userId; ?>" class="btn btn-primary">View</a>
                             <a href="/src/html/admin/userEdit.php?id=<?php echo $userId; ?>" class="btn btn-secondary">Edit</a>
                             <?php if ($userIsArchived) { ?>
-                                <form action="/app/admin/userEdit.php" method="POST">
+                                <form action="/src/app/admin/userEdit.php" method="POST">
                                     <input type="submit" name="unarchiveUser" class="btn btn-success" value="Unarchive" />
                                     <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
                                 </form>
                             <?php } else { ?>
-                                <form action="/app/admin/userEdit.php" method="POST">
+                                <form action="/src/app/admin/userEdit.php" method="POST">
                                     <input type="submit" name="archiveUser" class="btn btn-danger" value="Archive" />
                                     <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
                                 </form>

@@ -30,7 +30,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Category</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/admin/categoryNew.php" method="post">
+                        <form action="/src/app/admin/categoryNew.php" method="post">
                             <div class="row mb-3">
                                 <div class="col-md-4 col-sm-12">
                                     <label for="name">

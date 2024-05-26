@@ -24,7 +24,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Profile</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/userEdit.php" method="post">
+                        <form action="/src/app/userEdit.php" method="post">
                             <div class="row mb-3">
                                 <div class="col">
                                     <img src="/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
@@ -78,7 +78,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Address</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/userEdit.php" method="post">
+                        <form action="/src/app/userEdit.php" method="post">
                             <fieldset class="mb-3">
                                 <legend class>
                                     <img src="../img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
@@ -146,7 +146,7 @@ echo getHeader();
                         <h1 class="text-center">Edit Password</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/userEdit.php" method="post">
+                        <form action="/src/app/userEdit.php" method="post">
                             <div class="row mb-3">
                                 <div class="col">
                                     <img src="/img/password.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">

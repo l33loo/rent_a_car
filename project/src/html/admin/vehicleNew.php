@@ -45,7 +45,7 @@ echo getHeader();
                         <h1 class="text-center">Add New Vehicle</h1>
                     </div>
                     <div class="card-body">
-                        <form action="/app/admin/vehicleNew.php" method="post">
+                        <form action="/src/app/admin/vehicleNew.php" method="post">
                             <div class="row mb-3">
                                 <div class="col-md-3 col-sm-12">
                                     <label for="plate">

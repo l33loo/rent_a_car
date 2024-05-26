@@ -9,7 +9,7 @@ echo getHeader();
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
     <div class="container">
         <h1 class="text-center mb-5" style="margin-top: 100px;">Sign Up</h1>
-        <form action="/app/signup.php" method="post">
+        <form action="/src/app/signup.php" method="post">
             <div class="row mb-3">
                 <div class="col">
                     <img src="/img/profile.svg" alt="" style="height: 20px; width:20px; margin-bottom:10px;">
