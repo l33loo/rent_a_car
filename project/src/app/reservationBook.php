@@ -124,7 +124,7 @@ try {
         $userId, // submittedByUser_id
         $_POST['categoryId'],
         $customer->getId(), // TODO:
-        1, // status_id
+        1, // status_id: Confirmed
         $_POST['pickupLocationId'],
         $_POST['dropoffLocationId'],
         $_POST['vehicleId'], // vehicle_id
@@ -142,7 +142,7 @@ try {
         null, // submittedByUser
         null, // category
         $customer,
-        1, // status: Confirmed
+        NULL, // status
         null, // pickupLocation
         null, // dropoffLocation
         null, // vehicle
@@ -151,7 +151,7 @@ try {
         null, // effectiveDropoffLocation
         null // collectedByUser
     );
-    $revision->setTotalPrice();
+    $revision->calculateAndSetTotalPrice();
     $revision->save();
 } catch(e) {
     // TODO: handle errors

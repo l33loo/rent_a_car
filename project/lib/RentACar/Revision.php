@@ -2,6 +2,7 @@
 namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
 use RentACar\Category;
 use RentACar\CreditCard;
@@ -354,19 +355,19 @@ class Revision {
     }
 
     /**
-     * Set the value of totalPrice
+     * Calculate and set the the value of totalPrice
      *
      * @return self
      */ 
-    public function setTotalPrice(): self
+    public function calculateAndSetTotalPrice(): self
     {
         try {
             $category = Category::find($this->category_id);
-            $pickupDateTime = \DateTime::createFromFormat('Y-m-d', $this->pickupDate);
-            $dropoffDateTime = \DateTime::createFromFormat('Y-m-d', $this->dropoffDate);
-            $days = $pickupDateTime->diff($dropoffDateTime)->days;
-            $dailyRate = $category->getDailyRate();
-            $this->totalPrice = number_format((float)($dailyRate * $days), 2, '.', '');
+            $this->totalPrice = calculateTotalPrice(
+                $category->getDailyRate(), 
+                $this->pickupDate, 
+                $this->dropoffDate
+            );
         } catch(e) {
             // TODO: error handling
         }
