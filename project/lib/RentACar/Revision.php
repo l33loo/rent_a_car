@@ -610,9 +610,9 @@ class Revision {
     /**
      * Get the value of effectiveDropoffDate
      * 
-     * @return string
+     * @return ?string
      */ 
-    public function getEffectiveDropoffDate(): string
+    public function getEffectiveDropoffDate(): ?string
     {
         return $this->effectiveDropoffDate;
     }
@@ -632,9 +632,9 @@ class Revision {
     /**
      * Get the value of effectiveDropoffTime
      * 
-     * @return string
+     * @return ?string
      */ 
-    public function getEffectiveDropoffTime(): string
+    public function getEffectiveDropoffTime(): ?string
     {
         return $this->effectiveDropoffTime;
     }
