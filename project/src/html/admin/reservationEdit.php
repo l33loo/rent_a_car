@@ -26,6 +26,7 @@ try {
     $latestRevision->loadPickupLocation();
     $latestRevision->loadDropoffLocation();
     $latestRevision->loadStatus();
+    $latestRevision->loadBillingAddress();
     $latestRevision->loadEffectivePickupLocation();
     $latestRevision->loadEffectiveDropoffLocation();
     $latestRevisionId = $latestRevision->getId();
@@ -192,66 +193,65 @@ echo getHeader();
             </div>
             <div class="col-12">
                 <form action="/src/app/admin/reservationEdit.php" method="post">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-4">
-                            <label for="dropoffLocation">Drop-Off Location:</label>
-                            <select
-                                id="dropoffLocation"
-                                name="dropoffLocationId"
-                                class="form-select"
-                                <?php echo (!$wasPickedUp || $wasDroppedOff) ? 'disabled' : null ?>
-                            >
-                                <option value="none">None</option>
-                                <?php foreach ($effectiveLocations as $location) : ?>
-                                    <option value="<?php echo $location->getId(); ?>"
-                                        <?php if ($wasDroppedOff) { 
-                                            echo $location->getId() === $latestRevision->getEffectiveDropoffLocation()->getId() ? 'selected' : null;
-                                        } else {
-                                            echo $location->getId() === $latestRevisionDropoffLocation->getId() ? 'selected' : null;
-                                        }?> 
-                                    >
-                                        <?php echo $location->getName(); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
+                    <fieldset <?php echo $wasDroppedOff ? 'disabled' : null ?>>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="dropoffLocation">Drop-Off Location:</label>
+                                <select
+                                    id="dropoffLocation"
+                                    name="dropoffLocationId"
+                                    class="form-select"
+                                >
+                                    <option value="none">None</option>
+                                    <?php foreach ($effectiveLocations as $location) : ?>
+                                        <option value="<?php echo $location->getId(); ?>"
+                                            <?php if ($wasDroppedOff) { 
+                                                echo $location->getId() === $latestRevision->getEffectiveDropoffLocation()->getId() ? 'selected' : null;
+                                            } else {
+                                                echo $location->getId() === $latestRevisionDropoffLocation->getId() ? 'selected' : null;
+                                            }?> 
+                                        >
+                                            <?php echo $location->getName(); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="dropoffDate">Drop-Off Date:</label>
+                                <input
+                                    type="date"
+                                    id="dropoffDate"
+                                    name="dropoffDate"
+                                    class="form-control"
+                                    value="<?php if ($wasDroppedOff) { 
+                                        echo $latestRevision->getEffectiveDropoffDate();
+                                    } else {
+                                        echo date('Y-m-d', time());
+                                    } ?>"
+                                >
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="dropoffTime">Drop-Off Time:</label>
+                                <input
+                                    type="time"
+                                    id="dropoffTime"
+                                    name="dropoffTime"
+                                    min="09:30"
+                                    max="17:30"
+                                    class="form-control"
+                                    value="<?php if ($wasDroppedOff) { 
+                                        echo $latestRevision->getEffectiveDropoffTime();
+                                    } else {
+                                        echo date('H:i:s', time());
+                                    } ?>"
+                                >
+                            </div>
+                            <div class="col-12">
+                                <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
+                                <input class="btn btn-primary mt-3" type="submit" name="reservationEditEffectiveDropoff" value="Record Dropoff">
+                            </div>
                         </div>
-                        <div class="col-sm-12 col-md-4">
-                            <label for="dropoffDate">Drop-Off Date:</label>
-                            <input
-                                type="date"
-                                id="dropoffDate"
-                                name="dropoffDate"
-                                class="form-control"
-                                value="<?php if ($wasDroppedOff) { 
-                                    echo $latestRevision->getEffectiveDropoffDate();
-                                } else {
-                                    echo date('Y-m-d', time());
-                                } ?>"
-                                <?php echo (!$wasPickedUp || $wasDroppedOff) ? 'disabled' : null ?>
-                            >
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <label for="dropoffTime">Drop-Off Time:</label>
-                            <input
-                                type="time"
-                                id="dropoffTime"
-                                name="dropoffTime"
-                                min="09:30"
-                                max="17:30"
-                                class="form-control"
-                                value="<?php if ($wasDroppedOff) { 
-                                    echo $latestRevision->getEffectiveDropoffTime();
-                                } else {
-                                    echo date('H:i:s', time());
-                                } ?>"
-                                <?php echo (!$wasPickedUp || $wasDroppedOff) ? 'disabled' : null ?>
-                            >
-                        </div>
-                        <div class="col-12">
-                            <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                            <input class="btn btn-primary mt-3" type="submit" name="reservationEditEffectiveDropoff" value="Record Dropoff" <?php echo (!$wasPickedUp || $wasDroppedOff) ? 'disabled' : null ?>>
-                        </div>
-                    </div>
+                    </fieldset>
                 </form>
             </div>
         </div>
@@ -261,57 +261,64 @@ echo getHeader();
                 <div class="row mb-1">
                     <div class="col-md-6 col-12">
                         <h2 class="h4 mb-3">Pick-up</h2>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="pickupLocation">Pick-Up Location:</label>
-                                <select id="pickupLocation" name="pickupLocationId" class="form-select">
-                                    <?php foreach ($locations as $location) : ?>
-                                        <option value="<?php echo $location->getId(); ?>">
-                                            <?php echo $location->getName(); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
+                        <fieldset <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="pickupLocation">Pick-Up Location:</label>
+                                    <select id="pickupLocation" name="pickupLocationId" class="form-select">
+                                        <?php foreach ($locations as $location) : ?>
+                                            <option
+                                                value="<?php echo $location->getId(); ?>"
+                                                <?php echo $location->getId() === $latestRevisionDropoffLocation->getId() ? 'selected' : null; ?>
+                                            >
+                                                <?php echo $location->getName(); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="pickupDate">Pick-Up Date:</label>
-                                <input type="date" id="pickupDate" name="pickupDate" class="form-control">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="pickupDate">Pick-Up Date:</label>
+                                    <input type="date" id="pickupDate" name="pickupDate" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="pickupTime">Pick-Up Time:</label>
-                                <input type="time" id="pickupTime" name="pickupTime" min="09:30" max="17:30" class="form-control">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="pickupTime">Pick-Up Time:</label>
+                                    <input type="time" id="pickupTime" name="pickupTime" min="09:30" max="17:30" class="form-control">
+                                </div>
                             </div>
-                        </div>
+                        </fieldset>
                     </div>
                     <div class="col-md-6 col-12">
                         <h2 class="h4 mb-3">Drop-off</h2>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="dropoffLocation">Drop-Off Location:</label>
-                                <select id="dropoffLocation" name="dropoffLocationId" class="form-select">
-                                    <?php foreach ($locations as $location) : ?>
-                                        <option value="<?php echo $location->getId(); ?>">
-                                            <?php echo $location->getName(); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
+                        <fieldset <?php echo $wasDroppedOff ? 'disabled' : null ?>>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="dropoffLocation">Drop-Off Location:</label>
+                                    <select id="dropoffLocation" name="dropoffLocationId" class="form-select">
+                                        <?php foreach ($locations as $location) : ?>
+                                            <option value="<?php echo $location->getId(); ?>">
+                                                <?php echo $location->getName(); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="dropoffDate">Drop-Off Date:</label>
-                                <input type="date" id="dropoffDate" name="dropoffDate" class="form-control">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="dropoffDate">Drop-Off Date:</label>
+                                    <input type="date" id="dropoffDate" name="dropoffDate" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="dropoffTime">Drop-Off Time:</label>
-                                <input type="time" id="dropoffTime" name="dropoffTime" min="09:30:00" max="17:30:00" class="form-control">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="dropoffTime">Drop-Off Time:</label>
+                                    <input type="time" id="dropoffTime" name="dropoffTime" min="09:30:00" max="17:30:00" class="form-control">
+                                </div>
                             </div>
-                        </div>
+                        </fieldset>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -335,30 +342,93 @@ echo getHeader();
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
-                    <input type="submit" name="reservationEditRes" value="Edit Reservation" class="btn btn-primary">
+                    <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
+                    <input
+                        type="submit"
+                        name="reservationEditRes"
+                        value="Edit Reservation"
+                        class="btn btn-primary"
+                        <?php echo $wasDroppedOff ? 'disabled' : null ?>
+                    >
                 </div>
             </form>
             <form action="/src/app/admin/reservationEdit.php" method="post">
-                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formCustomer.inc.php'; ?>
-                <div class="d-flex justify-content-center">
-                    <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
-                    <input type="submit" name="reservationEditCustomer" value="Edit Customer" class="btn btn-primary">
-                </div>
+                <fieldset class="mb-3" <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                    <legend>
+                        <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                        Billing Address
+                    </legend>
+                    <div class="row mb-4">
+                        <div class="col-8">
+                            <label for="street">Street</label>
+                            <input type="text" class="form-control" name="street">
+                        </div>
+                        <div class="col">
+                            <label for="door">Door</label>
+                            <input type="text" class="form-control" name="door">
+                        </div>
+                        <div class="col">
+                            <label for="apartment">Apartment</label>
+                            <input type="text" class="form-control" name="apartment">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" name="city">
+                        </div>
+                        <div class="col">
+                            <label for="district">District</label>
+                            <input type="text" class="form-control" name="district">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <label for="postalCode">Postal Code</label>
+                            <input type="text" class="form-control" name="postalCode">
+                        </div>
+                        <div class="col">
+                            <label for="country">Country</label>
+                            <select class="form-select" name="countryId">
+                                <?php foreach($countries as $country) { ?>
+                                    <option value="<?php echo $country->getId(); ?>">
+                                        <?php echo $country->getName(); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
+                        <input type="submit" name="reservationEditBillingAddress" value="Update Billing Address" class="btn btn-primary">
+                    </div>
+                </fieldset>
             </form>
             <form action="/src/app/admin/reservationEdit.php" method="post">
-                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formAddress.inc.php'; ?>
-                <div class="d-flex justify-content-center">
-                    <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
-                    <input type="submit" name="reservationEditAddress" value="Edit Address" class="btn btn-primary">
-                </div>
-            </form>
-            <form action="/src/app/admin/reservationEdit.php" method="post">
-                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formPayment.inc.php'; ?>
-                <div class="d-flex justify-content-center">
-                    <input type="hidden" name="latestRevisionId" value="<?php echo $latestRevisionId ?>">
-                    <input type="submit" name="reservationEditPayment" value="Edit Payment" class="btn btn-primary">
-                </div>
+                <fieldset class="mb-3" <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                    <legend>
+                        <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
+                        Payment
+                    </legend>
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-8">
+                            <label for="ccNumber">Credit Card Number</label>
+                            <input type="text" class="form-control" name="ccNumber">
+                        </div>
+                        <div class="col-12 col-md">
+                            <label for="ccExpiry">Expiry</label>
+                            <input type="date" class="form-control" name="ccExpiry">
+                        </div>
+                        <div class="col-12 col-md">
+                            <label for="ccCVV">CVV</label>
+                            <input type="text" class="form-control" name="ccCVV">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
+                        <input type="submit" name="reservationEditPayment" value="Edit Payment" class="btn btn-primary">
+                    </div>
+                </fieldset>
             </form>
         </div>
     </div>

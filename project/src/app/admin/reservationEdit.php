@@ -28,7 +28,7 @@ try {
 if (isset($_POST['reservationEditStatus'])) {
     try {
         $latestRevision->setStatus_id($_POST['statusId']);
-        $latestRevision->saveNewRevision();
+        $latestRevision->update();
     } catch(e) {
         // TODO: handle error
     }    
@@ -37,7 +37,7 @@ if (isset($_POST['reservationEditStatus'])) {
 if (isset($_POST['reservationEditVehicle'])) {
     try {
         $latestRevision->setVehicle_id($_POST['vehicleId']);
-        $latestRevision->saveNewRevision();
+        $latestRevision->update();
     } catch(e) {
         // TODO: handle error
     } 
@@ -48,7 +48,7 @@ if (isset($_POST['reservationEditEffectivePickup'])) {
         $latestRevision->setEffectivePickupLocation_id($_POST['pickupLocationId']);
         $latestRevision->setEffectivePickupDate($_POST['pickupDate']);
         $latestRevision->setEffectivePickupTime($_POST['pickupTime']);
-        $latestRevision->saveNewRevision();
+        $latestRevision->update();
     } catch(e) {
         // TODO: handle error
     } 
@@ -59,7 +59,22 @@ if (isset($_POST['reservationEditEffectiveDropoff'])) {
         $latestRevision->setEffectiveDropoffLocation_id($_POST['dropoffLocationId']);
         $latestRevision->setEffectiveDropoffDate($_POST['dropoffDate']);
         $latestRevision->setEffectiveDropoffTime($_POST['dropoffTime']);
-        $latestRevision->saveNewRevision();
+        $latestRevision->update();
+    } catch(e) {
+        // TODO: handle error
+    } 
+}
+
+if (isset($_POST['reservationEditRes'])) {
+    try {
+        $latestRevision->setPickupLocation_id($_POST['pickupLocationId']);
+        $latestRevision->setPickupDate($_POST['pickupDate']);
+        $latestRevision->setPickupTime($_POST['pickupTime']);
+        $latestRevision->setDropoffLocation_id($_POST['dropoffLocationId']);
+        $latestRevision->setDropoffDate($_POST['dropoffDate']);
+        $latestRevision->setDropoffTime($_POST['dropoffTime']);
+        $latestRevision->setCategory_id($_POST['categoryId']);
+        $latestRevision->update();
     } catch(e) {
         // TODO: handle error
     } 
