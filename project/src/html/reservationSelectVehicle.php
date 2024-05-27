@@ -32,7 +32,9 @@ try {
 
         foreach ($vehicles as $vehicle) {
             $vehicle->loadProperties();
-            $vehiclesWithCategory[] = [
+            // TODO: replace this hacky way to eliminate duplicate models
+            // with a proper DB query
+            $vehiclesWithCategory[$vehicle->Model] = [
                 'vehicle' => $vehicle,
                 'categoryId' => $categoryId
             ];
