@@ -26,7 +26,7 @@ echo getHeader();
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
 
     <div class="container pt-5">
-        <h1 class="pt-5 pb-3">Edit Reservation</h1>
+        <h1 class="pt-5 pb-3">New Reservation</h1>
         <form action="/src/app/admin/reservationNew.php" method="post">
             <div class="row mb-1">
                 <div class="col-md-6 col-12">

@@ -916,6 +916,26 @@ class Revision {
     }
 
     /**
+     * Get the value of pickupLocation_id
+     */ 
+    public function getPickupLocation_id(): int
+    {
+        return $this->pickupLocation_id;
+    }
+
+    /**
+     * Set the value of pickupLocation_id
+     *
+     * @return self
+     */ 
+    public function setPickupLocation_id($pickupLocation_id)
+    {
+        $this->pickupLocation_id = $pickupLocation_id;
+
+        return $this;
+    }
+
+    /**
      * Get the value of effectivePickupLocation_id
      */ 
     public function getEffectivePickupLocation_id()
@@ -1160,6 +1180,38 @@ class Revision {
     }
 
     /**
+     * Load revision's Customer
+     *
+     * @return self
+     */ 
+    public function loadCustomer(): self
+    {
+        try {
+            $this->loadRelation('customer');
+        } catch(e) {
+
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Load revision's Customer
+     *
+     * @return self
+     */ 
+    public function loadBillingAddress(): self
+    {
+        try {
+            $this->loadRelation('billingAddress', 'address');
+        } catch(e) {
+
+        }
+        
+        return $this;
+    }
+
+    /**
      * Load revision's pickup Location
      *
      * @return self
@@ -1309,13 +1361,12 @@ class Revision {
         return $revisions;
     }
 
-
     /**
      * Save revision as a new db row
      *
      * @return self
      */ 
-    public function saveNewRevision(): self
+    public function update(): self
     {
         try {
             $this->id = null;
