@@ -40,7 +40,7 @@ echo getHeader();
 <style>
 .bg-image {
     position: relative;
-    background-image: url(/img/homepage.jpg);
+    background-image: url(/src/img/homepage.jpg);
     background-size: cover;
     background-position: center;
     height: 100vh;

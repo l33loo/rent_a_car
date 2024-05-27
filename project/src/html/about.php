@@ -6,7 +6,7 @@ echo getHeader();
 <style>
 .bg-image {
     position: relative;
-    background-image: url(../img/WhoweAre.png);
+    background-image: url(/src/img/WhoweAre.png);
     background-size: cover;
     background-position: center;
     height: 50vh;
