@@ -1106,7 +1106,9 @@ class Revision {
                 -- vehicle is already part of other bookings, but is available for this booking
                 OR (
                     revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp 
-                    AND (status.statusName != 'Cancelled' OR status.statusName != 'Void')
+                    AND status.statusName != 'Cancelled'
+                    AND status.statusName != 'Modification Declined'
+                    AND status.statusName != 'Payment Declined'
                     AND revision.dropoffDate < $pickupDate
                     AND revision.pickupDate > $dropoffDate
                 )
@@ -1349,7 +1351,9 @@ class Revision {
                 WHERE r.submittedTimestamp = latestRevision.maxSubmittedTimestamp
                 AND r.category_id=$categoryIdBefore
                 AND r.pickupDate > CURRENT_DATE()
-                AND (s.statusName != 'Cancelled' OR s.statusName != 'Void');
+                AND s.statusName != 'Cancelled'
+                AND s.statusName != 'Modification Declined'
+                AND s.statusName != 'Payment Declined';
             ");
             while($row = $stmt->fetchObject(Revision::class)) {
                 $revisions[] = $row;
