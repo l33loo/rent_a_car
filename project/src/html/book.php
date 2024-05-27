@@ -6,7 +6,7 @@ echo getHeader();
 <style>
 .bg-image {
     position: relative;
-    background-image: url(../img/droppingKey.jpg);
+    background-image: url(/src/img/droppingKey.jpg);
     background-size: cover;
     background-position: center;
     height: 50vh;
