@@ -40,10 +40,10 @@ try {
     $categories = Category::search([]);
     $wasPickedUp = $latestRevision->getEffectivePickupLocation() !== null;
     $wasDroppedOff = $latestRevision->getEffectiveDropoffLocation() !== null;
-    $pickupDate = \DateTime::createFromFormat('Y-m-d', $latestRevision->getPickupDate());
-    $dropoffDate = \DateTime::createFromFormat('Y-m-d', $latestRevision->getDropoffDate());
-    $days = $pickupDate->diff($dropoffDate)->days;
-    $category = $latestRevision->getCategory()->loadProperties();
+    $pickupDateTime = \DateTime::createFromFormat('Y-m-d', $latestRevision->getPickupDate());
+    $dropoffDateTime = \DateTime::createFromFormat('Y-m-d', $latestRevision->getDropoffDate());
+    $days = $pickupDateTime->diff($dropoffDateTime)->days;
+    $category = $latestRevision->getCategory();
     $dailyRate = $category->getDailyRate();
 } catch(e) {
     // TODO: handle error

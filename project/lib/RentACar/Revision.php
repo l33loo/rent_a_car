@@ -358,9 +358,18 @@ class Revision {
      *
      * @return self
      */ 
-    public function setTotalPrice(float $totalPrice): self
+    public function setTotalPrice(): self
     {
-        $this->totalPrice = $totalPrice;
+        try {
+            $category = Category::find($this->category_id);
+            $pickupDateTime = \DateTime::createFromFormat('Y-m-d', $this->pickupDate);
+            $dropoffDateTime = \DateTime::createFromFormat('Y-m-d', $this->dropoffDate);
+            $days = $pickupDateTime->diff($dropoffDateTime)->days;
+            $dailyRate = $category->getDailyRate();
+            $this->totalPrice = number_format((float)($dailyRate * $days), 2, '.', '');
+        } catch(e) {
+            // TODO: error handling
+        }
 
         return $this;
     }

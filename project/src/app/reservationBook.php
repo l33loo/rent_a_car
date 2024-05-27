@@ -81,6 +81,7 @@ try {
         ]
     ], 'creditCard');
 
+    // This is where the payment would normally be accepted or declined
     $creditCard;
     if ($creditCardDbResults === null || count($creditCardDbResults) === 0) {
         $creditCard = new CreditCard(
@@ -90,8 +91,8 @@ try {
         );
         $creditCard->save();
     // So as not to duplicate. Credit Cards are never deleted from the database
-    // because we chose to never delete of directly modify a Revision or a
-    // Revision Revision
+    // because we chose to never delete of directly modify a Reservation or a
+    // Reservation Revision
     } else if (count($creditCardDbResults) >= 1) {
         $creditCard = $creditCardDbResults[0];
     } else {
@@ -114,8 +115,8 @@ try {
         trim($_POST['pickupTime']),
         // TODO: use Carbon type
         trim($_POST['dropoffTime']),
+        NULL, // totalPrice - added below
         // TODO: use Carbon type
-        100.00, // TODO: fix totalPrice
         date("Y-m-d H:i:s", time()), // submittedTimestamp
 
         $address->getId(), // billingAddress_id
@@ -126,7 +127,7 @@ try {
         1, // status_id
         $_POST['pickupLocationId'],
         $_POST['dropoffLocationId'],
-        null, // vehicle_id
+        $_POST['vehicleId'], // vehicle_id
         null, // effectivePickupLocation_id
         null, // givenByUser_id
         null, // effectivePickupDate
@@ -141,7 +142,7 @@ try {
         null, // submittedByUser
         null, // category
         $customer,
-        null, // status
+        1, // status: Confirmed
         null, // pickupLocation
         null, // dropoffLocation
         null, // vehicle
@@ -150,6 +151,7 @@ try {
         null, // effectiveDropoffLocation
         null // collectedByUser
     );
+    $revision->setTotalPrice();
     $revision->save();
 } catch(e) {
     // TODO: handle errors

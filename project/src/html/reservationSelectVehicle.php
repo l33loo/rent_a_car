@@ -114,6 +114,7 @@ echo getHeader();
                     </div>
                     <form action="/src/html/reservationBook.php" method="get">
                         <input type="hidden" name="categoryId" value="<?php echo $categoryId ?>">
+                        <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId() ?>">
                         <input type="hidden" name="pickupLocationId" value="<?php echo $_GET['pickupLocationId'] ?>">
                         <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">
                         <input type="hidden" name="pickupTime" value="<?php echo $_GET['pickupTime'] ?>">
