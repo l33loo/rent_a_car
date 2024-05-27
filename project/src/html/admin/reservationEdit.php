@@ -40,6 +40,11 @@ try {
     $categories = Category::search([]);
     $wasPickedUp = $latestRevision->getEffectivePickupLocation() !== null;
     $wasDroppedOff = $latestRevision->getEffectiveDropoffLocation() !== null;
+    $pickupDate = \DateTime::createFromFormat('Y-m-d', $latestRevision->getPickupDate());
+    $dropoffDate = \DateTime::createFromFormat('Y-m-d', $latestRevision->getDropoffDate());
+    $days = $pickupDate->diff($dropoffDate)->days;
+    $category = $latestRevision->getCategory()->loadProperties();
+    $dailyRate = $category->getDailyRate();
 } catch(e) {
     // TODO: handle error
     exit;
@@ -441,6 +446,16 @@ echo getHeader();
                         <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                         Payment
                     </legend>
+                    <div>
+                        <div class="my-3 h4">
+                            <div>
+                                <?php echo "$days days at " . number_format((float)($dailyRate), 2, '.', '') . '€/day' ?>
+                            </div>
+                            <div>
+                                TOTAL PRICE: <?php echo number_format((float)($dailyRate * $days), 2, '.', ''); ?>€
+                            </div>
+                        </div>
+                    </div>
                     <div class="row mb-4">
                         <div class="col-12 col-md-8">
                             <label for="ccNumber">Credit Card Number</label>
