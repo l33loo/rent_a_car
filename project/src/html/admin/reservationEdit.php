@@ -269,7 +269,7 @@ echo getHeader();
                                         <?php foreach ($locations as $location) : ?>
                                             <option
                                                 value="<?php echo $location->getId(); ?>"
-                                                <?php echo $location->getId() === $latestRevisionDropoffLocation->getId() ? 'selected' : null; ?>
+                                                <?php echo $location->getId() === $latestRevisionPickupLocation->getId() ? 'selected' : null; ?>
                                             >
                                                 <?php echo $location->getName(); ?>
                                             </option>
@@ -280,13 +280,27 @@ echo getHeader();
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="pickupDate">Pick-Up Date:</label>
-                                    <input type="date" id="pickupDate" name="pickupDate" class="form-control">
+                                    <input
+                                        type="date"
+                                        id="pickupDate"
+                                        name="pickupDate"
+                                        class="form-control"
+                                        value="<?php echo $latestRevision->getPickupDate() ?>"
+                                    >
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="pickupTime">Pick-Up Time:</label>
-                                    <input type="time" id="pickupTime" name="pickupTime" min="09:30" max="17:30" class="form-control">
+                                    <input
+                                        type="time"
+                                        id="pickupTime"
+                                        name="pickupTime"
+                                        min="09:30"
+                                        max="17:30"
+                                        class="form-control"
+                                        value="<?php echo $latestRevision->getPickupTime() ?>"
+                                    >
                                 </div>
                             </div>
                         </fieldset>
@@ -299,7 +313,10 @@ echo getHeader();
                                     <label for="dropoffLocation">Drop-Off Location:</label>
                                     <select id="dropoffLocation" name="dropoffLocationId" class="form-select">
                                         <?php foreach ($locations as $location) : ?>
-                                            <option value="<?php echo $location->getId(); ?>">
+                                            <option
+                                                value="<?php echo $location->getId(); ?>"
+                                                <?php echo $location->getId() === $latestRevisionDropoffLocation->getId() ? 'selected' : null; ?>
+                                            >
                                                 <?php echo $location->getName(); ?>
                                             </option>
                                         <?php endforeach; ?>
@@ -309,13 +326,27 @@ echo getHeader();
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="dropoffDate">Drop-Off Date:</label>
-                                    <input type="date" id="dropoffDate" name="dropoffDate" class="form-control">
+                                    <input
+                                        type="date"
+                                        id="dropoffDate"
+                                        name="dropoffDate"
+                                        class="form-control"
+                                        value="<?php echo $latestRevision->getDropoffDate() ?>"
+                                    >
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="dropoffTime">Drop-Off Time:</label>
-                                    <input type="time" id="dropoffTime" name="dropoffTime" min="09:30:00" max="17:30:00" class="form-control">
+                                    <input
+                                        type="time"
+                                        id="dropoffTime"
+                                        name="dropoffTime"
+                                        min="09:30:00"
+                                        max="17:30:00"
+                                        class="form-control"
+                                        value="<?php echo $latestRevision->getPickupTime() ?>"
+                                    >
                                 </div>
                             </div>
                         </fieldset>
