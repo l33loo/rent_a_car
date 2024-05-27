@@ -1171,10 +1171,11 @@ INSERT INTO customer (
 
 INSERT INTO status (id, statusName)
 VALUES
-(1, "Requested"),
-(2, "Confirmed"),
-(3, "Cancelled"),
-(4, "Void");
+(1, "Confirmed"),
+(2, "Modification Requested"),
+(3, "Modification Declined"),
+(4, "Cancelled"),
+(5, "Payment Declined");
 
 INSERT INTO reservation (id, ownerUser_id)
 VALUES
