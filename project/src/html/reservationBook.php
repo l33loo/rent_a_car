@@ -9,31 +9,6 @@ session_start();
 
 // TODO: validate form fields
 
-try {
-    // TODO: Validate that pick-up and drop-off locations are on the same island
-
-    $categories = Category::search([]);
-    $vehiclesWithCategory = [];
-    $categoriesById = [];
-
-    foreach ($categories as $category) {
-        $category->loadProperties();
-        $categoryId = $category->getId();
-        $vehicles = Vehicle::search([], '', 2);
-        $categoriesById[$categoryId] = $category;
-
-        foreach ($vehicles as $vehicle) {
-            $vehicle->loadProperties();
-            $vehiclesWithCategory[] = [
-                'vehicle' => $vehicle,
-                'categoryId' => $categoryId
-            ];
-        }
-    }
-} catch(e) {
-    // TODO: handle errors
-}
-
 echo getHeader();
 ?>
 
