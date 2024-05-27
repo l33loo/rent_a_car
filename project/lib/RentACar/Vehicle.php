@@ -227,4 +227,76 @@ class Vehicle {
 
         return $this;
     }
+
+    /**
+     * Get the the available vehicles for the island,
+     * category, and reservation dates
+     *
+     * @return array
+     */ 
+    public static function findAvailableVehicles(int $categoryId, int $islandId, string $pickupDate, string $dropoffDate, bool $wantUniqueModel = false): array
+    {
+        $stmtVehiclesInCategoryOnIsland = self::rawSQL("
+            SELECT id FROM vehicle
+            WHERE isArchived = FALSE
+            AND rentable = TRUE
+            AND category_id=$categoryId
+            AND island_id=$islandId;
+        ");
+
+        $countVehiclesInCategoryOnIsland = $stmtVehiclesInCategoryOnIsland->rowCount();
+
+        if ($countVehiclesInCategoryOnIsland === 0) {
+            return [];
+        }
+
+        $stmtAvailableVehicles = Revision::rawSQL(
+            "SELECT v.*
+            FROM vehicle v
+            LEFT OUTER JOIN revision
+            ON revision.vehicle_id = v.id
+            LEFT OUTER JOIN (
+                SELECT reservation_id, max(submittedTimestamp) as maxSubmittedTimestamp
+                    FROM revision
+                    GROUP BY reservation_id
+            ) latestRevision
+            ON revision.reservation_id = latestRevision.reservation_id
+            LEFT OUTER JOIN location
+            ON revision.dropoffLocation_id = location.id
+            LEFT OUTER JOIN status
+            ON revision.status_id = status.id
+            WHERE (
+                -- vehicle is not part of any bookings, so it is available
+                latestRevision.maxSubmittedTimestamp IS NULL
+
+                -- vehicle is already part of other bookings, but is available for this booking
+                OR (
+                    revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp 
+                    AND status.statusName != 'Cancelled'
+                    AND status.statusName != 'Modification Declined'
+                    AND status.statusName != 'Payment Declined'
+                    AND revision.dropoffDate < $pickupDate
+                    AND revision.pickupDate > $dropoffDate
+                )
+            )
+            AND v.isArchived = FALSE
+            AND v.rentable = TRUE
+            AND v.category_id = $categoryId
+            AND v.island_id = $islandId;"
+        );
+
+        $resultsAvailableVehicles = [];
+        while($row = $stmtAvailableVehicles->fetchObject(Vehicle::class)) {
+            $resultsAvailableVehicles[] = $row;
+        }
+
+        $countAvailableVehicles = count($resultsAvailableVehicles);
+
+        // Keep 25% of available fleet as buffer
+        if (($countAvailableVehicles/$countVehiclesInCategoryOnIsland*100) >= 75) {
+            return $resultsAvailableVehicles;
+        } else {
+            return [];
+        }
+    }
 }

@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
 use RentACar\Category;
+use RentACar\Location;
 use RentACar\Vehicle;
 
 session_start();
@@ -13,6 +14,7 @@ session_start();
 try {
     // TODO: Validate that pick-up and drop-off locations are on the same island
 
+    $dropoffLocation = Location::find($_GET['dropoffLocationId']);
     $categories = Category::search([]);
     $vehiclesWithCategory = [];
     $categoriesById = [];
@@ -20,7 +22,12 @@ try {
     foreach ($categories as $category) {
         $category->loadProperties();
         $categoryId = $category->getId();
-        $vehicles = Vehicle::search([], '', 2);
+        $vehicles = Vehicle::findAvailableVehicles(
+            $category->getId(),
+            $dropoffLocation->getIsland_id(),
+            $_GET['pickupDate'],
+            $_GET['dropoffDate']
+        );
         $categoriesById[$categoryId] = $category;
 
         foreach ($vehicles as $vehicle) {
@@ -31,6 +38,7 @@ try {
             ];
         }
     }
+
 } catch(e) {
     // TODO: handle errors
 }
@@ -114,7 +122,7 @@ echo getHeader();
                         <?php echo convertNumToEuros($category->getDailyRate()) ?> <small>per day</small>
                     </div>
                     <div class="h5">
-                        <?php echo 'TOTAL: ' . convertNumToEuros(
+                        <?php echo 'Total: ' . convertNumToEuros(
                             calculateTotalPrice(
                                 $category->getDailyRate(),
                                 $_GET['pickupDate'],
@@ -123,7 +131,7 @@ echo getHeader();
                         ) ?>
                     </div>
                     <form action="/src/html/reservationBook.php" method="get">
-                        <input type="hidden" name="categoryId" value="<?php echo $categoryId ?>">
+                        <input type="hidden" name="categoryId" value="<?php echo $category->getId() ?>">
                         <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId() ?>">
                         <input type="hidden" name="pickupLocationId" value="<?php echo $_GET['pickupLocationId'] ?>">
                         <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">
