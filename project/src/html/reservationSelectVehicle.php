@@ -106,7 +106,7 @@ echo getHeader();
                 </div>
                 <div class="col">
                     <h2>
-                        <?php echo $vehicleProperties['Brand']->getPropertyValue() . ' ' . $vehicleProperties['Model']->getPropertyValue() ?>
+                        <?php echo $vehicle->Brand . ' ' . $vehicle->Model ?>
                     </h2>
                     <div>
                         Or similar <?php echo $category->getName() ?> car

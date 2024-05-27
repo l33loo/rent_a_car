@@ -173,4 +173,17 @@ class Category {
 
         return $this;
     }
+
+    /**
+     * Get a category property
+     *
+     * @return ?string
+     */ 
+    public function __get(string $propertyName): ?string
+    {
+        $properties = $this->properties;
+        if ($properties !== null && count($properties) > 0) {
+            return isset($properties[$propertyName]) ? $properties[$propertyName]->getPropertyValue() : null;
+        }
+    }
 } 
