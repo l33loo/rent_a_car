@@ -229,7 +229,7 @@ class Vehicle {
     }
 
     /**
-     * Get the the available vehicles for the island,
+     * Get the available vehicles for the island,
      * category, and reservation dates
      *
      * @return array
@@ -297,6 +297,19 @@ class Vehicle {
             return $resultsAvailableVehicles;
         } else {
             return [];
+        }
+    }
+
+    /**
+     * Get a vehicle property
+     *
+     * @return ?string
+     */ 
+    public function __get(string $propertyName): ?string
+    {
+        $properties = $this->properties;
+        if ($properties !== null && count($properties) > 0) {
+            return isset($properties[$propertyName]) ? $properties[$propertyName]->getPropertyValue() : null;
         }
     }
 }
