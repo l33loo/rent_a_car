@@ -87,21 +87,19 @@ echo getHeader();
                             $latestRevision->loadVehicle();
                             $revisionVehicle = $latestRevision->getVehicle();
                             $revisionVehicle->loadProperties();
-                            $revisionVehicleProperties = $revisionVehicle->getProperties();
                         ?>
                             <option
                                 value="<?php echo $revisionVehicle->getId() ?>"
                                 selected
                             >
-                                <?php echo $revisionVehicleProperties['Model']->getPropertyValue() . ' ' . $revisionVehicleProperties['Brand']->getPropertyValue() . ' - ' . $revisionVehicle->getPlate() ?>
+                                <?php echo $revisionVehicle->Model . ' ' . $revisionVehicle->Brand . ' - ' . $revisionVehicle->getPlate() ?>
                             </option>
                         <?php } ?>
                         <?php foreach ($availableVehicles as $vehicle) {
                             $vehicle->loadProperties();
-                            $properties = $vehicle->getProperties();
                         ?>
                             <option value="<?php echo $vehicle->getId() ?>">
-                                <?php echo $properties['Model']->getPropertyValue() . ' ' . $properties['Brand']->getPropertyValue() . ' - ' . $vehicle->getPlate() ?>
+                                <?php echo $vehicle->Model . ' ' . $vehicle->Brand . ' - ' . $vehicle->getPlate() ?>
                             </option>
                         <?php } ?>
                     </select>
