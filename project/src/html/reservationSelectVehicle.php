@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
 use RentACar\Category;
 use RentACar\Vehicle;
@@ -110,10 +111,20 @@ echo getHeader();
                 </div>
                 <div class="col-auto">
                     <div class="h3">
-                        <?php echo $category->getDailyRate() ?> Euros <small>per day</small>
+                        <?php echo convertNumToEuros($category->getDailyRate()) ?> <small>per day</small>
+                    </div>
+                    <div class="h5">
+                        <?php echo 'TOTAL: ' . convertNumToEuros(
+                            calculateTotalPrice(
+                                $category->getDailyRate(),
+                                $_GET['pickupDate'],
+                                $_GET['dropoffDate']
+                            )
+                        ) ?>
                     </div>
                     <form action="/src/html/reservationBook.php" method="get">
                         <input type="hidden" name="categoryId" value="<?php echo $categoryId ?>">
+                        <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId() ?>">
                         <input type="hidden" name="pickupLocationId" value="<?php echo $_GET['pickupLocationId'] ?>">
                         <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">
                         <input type="hidden" name="pickupTime" value="<?php echo $_GET['pickupTime'] ?>">

@@ -2,6 +2,7 @@
 namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
 use RentACar\Category;
 use RentACar\CreditCard;
@@ -354,13 +355,22 @@ class Revision {
     }
 
     /**
-     * Set the value of totalPrice
+     * Calculate and set the the value of totalPrice
      *
      * @return self
      */ 
-    public function setTotalPrice(float $totalPrice): self
+    public function calculateAndSetTotalPrice(): self
     {
-        $this->totalPrice = $totalPrice;
+        try {
+            $category = Category::find($this->category_id);
+            $this->totalPrice = calculateTotalPrice(
+                $category->getDailyRate(), 
+                $this->pickupDate, 
+                $this->dropoffDate
+            );
+        } catch(e) {
+            // TODO: error handling
+        }
 
         return $this;
     }
@@ -1106,7 +1116,9 @@ class Revision {
                 -- vehicle is already part of other bookings, but is available for this booking
                 OR (
                     revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp 
-                    AND (status.statusName != 'Cancelled' OR status.statusName != 'Void')
+                    AND status.statusName != 'Cancelled'
+                    AND status.statusName != 'Modification Declined'
+                    AND status.statusName != 'Payment Declined'
                     AND revision.dropoffDate < $pickupDate
                     AND revision.pickupDate > $dropoffDate
                 )
@@ -1349,7 +1361,9 @@ class Revision {
                 WHERE r.submittedTimestamp = latestRevision.maxSubmittedTimestamp
                 AND r.category_id=$categoryIdBefore
                 AND r.pickupDate > CURRENT_DATE()
-                AND (s.statusName != 'Cancelled' OR s.statusName != 'Void');
+                AND s.statusName != 'Cancelled'
+                AND s.statusName != 'Modification Declined'
+                AND s.statusName != 'Payment Declined';
             ");
             while($row = $stmt->fetchObject(Revision::class)) {
                 $revisions[] = $row;

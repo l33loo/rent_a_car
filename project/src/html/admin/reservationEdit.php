@@ -2,6 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
 use RentACar\Category;
 use RentACar\Customer;
@@ -40,11 +41,8 @@ try {
     $categories = Category::search([]);
     $wasPickedUp = $latestRevision->getEffectivePickupLocation() !== null;
     $wasDroppedOff = $latestRevision->getEffectiveDropoffLocation() !== null;
-    $pickupDate = \DateTime::createFromFormat('Y-m-d', $latestRevision->getPickupDate());
-    $dropoffDate = \DateTime::createFromFormat('Y-m-d', $latestRevision->getDropoffDate());
-    $days = $pickupDate->diff($dropoffDate)->days;
-    $category = $latestRevision->getCategory()->loadProperties();
-    $dailyRate = $category->getDailyRate();
+    $category = $latestRevision->getCategory();
+    $totalPrice = calculateTotalPrice($category->getDailyRate(), $latestRevision->getPickupDate(), $latestRevision->getDropoffDate());
 } catch(e) {
     // TODO: handle error
     exit;
@@ -108,7 +106,7 @@ echo getHeader();
                         <?php } ?>
                     </select>
                     <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                    <input class="btn btn-primary mt-3" type="submit" name="reservationEditVehicle" value="Assign Vehicle" <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                    <input class="btn btn-primary mt-3" type="submit" name="reservationEditVehicle" value="Assign New Vehicle" <?php echo $wasPickedUp ? 'disabled' : null ?>>
                 </form>
             </div>
         </div>
@@ -449,10 +447,7 @@ echo getHeader();
                     <div>
                         <div class="my-3 h4">
                             <div>
-                                <?php echo "$days days at " . number_format((float)($dailyRate), 2, '.', '') . '€/day' ?>
-                            </div>
-                            <div>
-                                TOTAL PRICE: <?php echo number_format((float)($dailyRate * $days), 2, '.', ''); ?>€
+                                TOTAL PRICE: <?php echo convertNumToEuros($totalPrice) ?>
                             </div>
                         </div>
                     </div>
