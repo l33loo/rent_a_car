@@ -22,6 +22,7 @@ try {
     $reservationId = $_GET['reservationId'];
     $reservation = Reservation::find($reservationId);
     $latestRevision = $reservation->findLatestRevision();
+    $latestRevision->loadCategory();
     $latestRevision->loadPickupLocation();
     $latestRevision->loadDropoffLocation();
     $latestRevision->loadStatus();
@@ -29,15 +30,15 @@ try {
     $latestRevision->loadEffectiveDropoffLocation();
     $latestRevisionId = $latestRevision->getId();
     $latestRevisionPickupLocation = $latestRevision->getPickupLocation();
-    $latestRevisionDroppoffLocation = $latestRevision->getDropoffLocation();
-    $latestRevisionDroppoffLocation->loadRelation('island');
-    $effectiveLocations = Location::fetchActiveLocations($latestRevisionDroppoffLocation->getIsland()->getId());
+    $latestRevisionDropoffLocation = $latestRevision->getDropoffLocation();
+    $latestRevisionDropoffLocation->loadRelation('island');
+    $effectiveLocations = Location::fetchActiveLocations($latestRevisionDropoffLocation->getIsland()->getId());
     $statuses = Status::search([]);
     $availableVehicles = $latestRevision->findAvailableVehicles();
     $locations = Location::fetchActiveLocations();
     $categories = Category::search([]);
     $wasPickedUp = $latestRevision->getEffectivePickupLocation() !== null;
-    $disabledFromDropoff = $latestRevision->getEffectiveDropoffLocation() !== null;
+    $wasDroppedOff = $latestRevision->getEffectiveDropoffLocation() !== null;
 } catch(e) {
     // TODO: handle error
     exit;
@@ -149,7 +150,6 @@ echo getHeader();
                                     echo date('Y-m-d', time());
                                 } ?>"
                                 <?php echo $wasPickedUp ? 'disabled' : null ?>  
-                                
                             >
                         </div>
                         <div class="col-sm-12 col-md-4">
@@ -195,10 +195,21 @@ echo getHeader();
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
                             <label for="dropoffLocation">Drop-Off Location:</label>
-                            <select id="dropoffLocation" name="dropoffLocationId" class="form-select" <?php echo $disabledFromDropoff ?>>
+                            <select
+                                id="dropoffLocation"
+                                name="dropoffLocationId"
+                                class="form-select"
+                                <?php echo (!$wasPickedUp || $wasDroppedOff) ? 'disabled' : null ?>
+                            >
                                 <option value="none">None</option>
                                 <?php foreach ($effectiveLocations as $location) : ?>
-                                    <option value="<?php echo $location->getId(); ?>">
+                                    <option value="<?php echo $location->getId(); ?>"
+                                        <?php if ($wasDroppedOff) { 
+                                            echo $location->getId() === $latestRevision->getEffectiveDropoffLocation()->getId() ? 'selected' : null;
+                                        } else {
+                                            echo $location->getId() === $latestRevisionDropoffLocation->getId() ? 'selected' : null;
+                                        }?> 
+                                    >
                                         <?php echo $location->getName(); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -206,15 +217,39 @@ echo getHeader();
                         </div>
                         <div class="col-sm-12 col-md-4">
                             <label for="dropoffDate">Drop-Off Date:</label>
-                            <input type="date" id="dropoffDate" name="dropoffDate" class="form-control" <?php echo $disabledFromDropoff ?>>
+                            <input
+                                type="date"
+                                id="dropoffDate"
+                                name="dropoffDate"
+                                class="form-control"
+                                value="<?php if ($wasDroppedOff) { 
+                                    echo $latestRevision->getEffectiveDropoffDate();
+                                } else {
+                                    echo date('Y-m-d', time());
+                                } ?>"
+                                <?php echo (!$wasPickedUp || $wasDroppedOff) ? 'disabled' : null ?>
+                            >
                         </div>
                         <div class="col-sm-12 col-md-4">
                             <label for="dropoffTime">Drop-Off Time:</label>
-                            <input type="time" id="dropoffTime" name="dropoffTime" min="09:30" max="17:30" class="form-control" <?php echo $disabledFromDropoff ?>>
+                            <input
+                                type="time"
+                                id="dropoffTime"
+                                name="dropoffTime"
+                                min="09:30"
+                                max="17:30"
+                                class="form-control"
+                                value="<?php if ($wasDroppedOff) { 
+                                    echo $latestRevision->getEffectiveDropoffTime();
+                                } else {
+                                    echo date('H:i:s', time());
+                                } ?>"
+                                <?php echo (!$wasPickedUp || $wasDroppedOff) ? 'disabled' : null ?>
+                            >
                         </div>
                         <div class="col-12">
                             <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                            <input class="btn btn-primary mt-3" type="submit" name="reservationEditEffectiveDropoff" value="Record Dropoff" <?php echo $disabledFromDropoff ?>>
+                            <input class="btn btn-primary mt-3" type="submit" name="reservationEditEffectiveDropoff" value="Record Dropoff" <?php echo (!$wasPickedUp || $wasDroppedOff) ? 'disabled' : null ?>>
                         </div>
                     </div>
                 </form>
@@ -282,9 +317,19 @@ echo getHeader();
                 <div class="row mb-3">
                     <div class="col-sm col-md-6">
                         <label for="categoryId">Vehicle category:</label>
-                        <select name="categoryId" id="category" class="form-select" disabled="<?php echo $wasPickedUp ?>">
+                        <select
+                            name="categoryId"
+                            id="category"
+                            class="form-select"
+                            <?php echo $wasPickedUp ? 'disabled' : null ?>
+                        >
                             <?php foreach ($categories as $category) { ?>
-                                <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
+                                <option
+                                    value="<?php echo $category->getId() ?>"
+                                    <?php echo $category->getId() === $latestRevision->getCategory()->getId() ? 'selected' : null ?>
+                                >
+                                    <?php echo $category->getName() ?>
+                                </option>
                             <?php } ?>
                         </select>
                     </div>
