@@ -11,27 +11,27 @@ echo getHeader();
         <div class="text-content">
             <h1 class="text-center" style="margin-top: 100px;">Login</h1>
             <?php if (!empty($_SESSION['loginError'])) { ?>
-                <h2>YOOO: <?php echo $_SESSION['loginError']; ?></h2>
+                <h2><?php echo $_SESSION['loginError']; ?></h2>
             <?php } ?>
         </div>
     </div>
-    <form action="../app/login.php" method="post">
+    <form action="/src/app/login.php" method="post">
         <div class="container mt-5 d-flex justify-content-center" style="padding-right:15px;">
             <div class="text-content">
                 <img src="/src/img/email.svg" alt="Email" style="height: 20px; width:20px; margin-bottom:3px;">
-                <span>
+                <label for="email">
                     Email:
-                </span>
-                <input type="text" style="border: none; border-bottom: 2px solid; width:212px" name="email">
+                </label>
+                <input type="text" style="border: none; border-bottom: 2px solid; width:212px" name="email" id="email">
             </div>
         </div>
         <div class="container mt-4  d-flex justify-content-center">
             <div class=" text-content">
-                <img src="../img/password.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:5px;">
-                <span>
+                <img src="/src/img/password.svg" alt="Password" style="height: 20px; width:20px; margin-bottom:5px;">
+                <label for="password">
                     Password:
-                </span>
-                <input type="text" style="border: none; border-bottom: 2px solid;" name="password">
+                </label>
+                <input type="password" style="border: none; border-bottom: 2px solid;" name="password" id="password">
             </div>
         </div>
         <div class="container d-flex justify-content-center mt-3" style="font-size: small;">
