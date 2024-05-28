@@ -93,8 +93,42 @@ class User extends Profile
      */ 
     public function setIsAdmin(bool $isAdmin): self
     {
-            $this->isAdmin = $isAdmin;
+        $this->isAdmin = $isAdmin;
 
-            return $this;
+        return $this;
+    }
+
+    /**
+     * Fetches the User's reservation revisions
+     *
+     * @return array
+     */ 
+    public function fetchCurrentRevisions(): array
+    {
+        try {
+            $userId = $this->getId();
+            $revisions = [];
+            $stmt = Revision::rawSQL(
+                "SELECT revision.* FROM revision
+                LEFT OUTER JOIN (
+                    SELECT reservation_id, max(submittedTimestamp) as maxSubmittedTimestamp
+                        FROM revision
+                        GROUP BY reservation_id
+                ) latestRevision
+                ON revision.reservation_id = latestRevision.reservation_id
+                INNER JOIN reservation res
+                ON revision.reservation_id = res.id
+                WHERE revision.submittedTimestamp = latestRevision.maxSubmittedTimestamp
+                AND res.ownerUser_id = $userId
+                ORDER BY revision.submittedTimestamp DESC;"
+            );
+            while($row = $stmt->fetchObject(Revision::class)) {
+                $revisions[] = $row;
+            }
+        } catch(e) {
+
+        }
+
+        return $revisions;
     }
 }

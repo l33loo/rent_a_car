@@ -156,5 +156,5 @@ try {
 // if (!empty($userId)) {
 //     header("Location: /src/html/userView.php?userId=$userId");
 // } else {
-//     header("Location: /src/index.php");
+//     header("Location: /");
 // }
