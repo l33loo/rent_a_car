@@ -59,7 +59,7 @@ echo getHeader();
                                 <p class="mb-0">Address</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0"><?php echo $address->getAddressToString(); ?></p>
+                                <p class="text-muted mb-0"><?php echo $address; ?></p>
                             </div>
                         </div>
                         <hr>

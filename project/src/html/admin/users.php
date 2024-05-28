@@ -97,7 +97,7 @@ echo getHeader();
                         <td><?php echo $user->getName(); ?></td>
                         <td><?php echo $user->getEmail(); ?></td>
                         <td><?php echo $user->getDateOfBirth(); ?></td>
-                        <td><?php echo $address->getAddressToString(); ?></td>
+                        <td><?php echo $address; ?></td>
                         <td><?php echo $user->getPhone(); ?></td>
                         <td><?php echo $user->getIsAdmin() ? 'Yes' : 'No'; ?></td>
                         <td class="d-flex flex-wrap justify-content-evenly">
