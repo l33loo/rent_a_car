@@ -1,18 +1,9 @@
 <?php
-
-// TODO: fix
-// include ('autoload.php');
-
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/sessionUser.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 use RentACar\User;
 
 $wrongCredsMsg = 'Wrong email or password';
-
-if (empty($_POST)) {
-    redirectToLoginPage('empty POST');
-    exit;
-}
 
 $users = User::search([
     [
@@ -36,7 +27,7 @@ if ($users[0]->checkPassword(trim($_POST['password']))) {
     if ($users[0]->getIsAdmin()) {
         header('Location: /src/html/admin/dashboard.php');
     } else {
-        header('Location: /src/index.php');
+        header('Location: /');
     }
 } else {
     redirectToLoginPage($wrongCredsMsg);
