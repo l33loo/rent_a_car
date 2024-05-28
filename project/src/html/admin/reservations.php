@@ -12,8 +12,6 @@ use RentACar\Revision;
 use RentACar\Status;
 use RentACar\User;
 
-
-
 echo getHeader();
 ?>
 
