@@ -77,7 +77,10 @@ echo getHeader();
         </div>
         <div class="row">
             <div class="col">
-                <a href="userEdit.php" class="btn btn-primary">Edit Account</a>
+                <a href="/src/html/userEdit.php" class="btn btn-primary">Edit Account</a>
+            </div>
+            <div class="col">
+                <a href="/src/html/reservations.php" class="btn btn-secondary">View Reservations</a>
             </div>
         </div>
     </div>
