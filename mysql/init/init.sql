@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS revision (
     dropoffTime TIME NOT NULL,
     totalPrice DECIMAL(6,2) NOT NULL,
     -- To be added by admin when customer picks up the car
-    vehicle_id INT UNSIGNED,
+    vehicle_id INT UNSIGNED NOT NULL,
     submittedByUser_id INT UNSIGNED,
     submittedTimestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -1222,8 +1222,8 @@ INSERT INTO revision (
     '09:30:00',
     '09:30:00',
     100.00,
-    NULL,
-    NULL,
+    1,
+    2,
     '2024-05-20 15:23:21',
     NULL,
     NULL,
@@ -1248,7 +1248,7 @@ INSERT INTO revision (
     '12:00:00',
     '10:30:00',
     350.00,
-    NULL,
+    20,
     2,
     '2024-03-20 11:06:24',
     NULL,
