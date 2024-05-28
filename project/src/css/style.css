@@ -4,3 +4,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
 }
+
+body > .container {
+  flex-grow: 1;
+}
