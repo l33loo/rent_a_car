@@ -121,7 +121,7 @@ echo getHeader();
                 </div>
                 <div class="col-auto">
                     <div class="h3">
-                        <?php echo convertNumToEuros($category->getDailyRate()) ?> <small>per day</small>
+                        <?php echo $category->getDailyRateToString() ?> <small>per day</small>
                     </div>
                     <div class="h5">
                         <?php echo 'Total: ' . convertNumToEuros(

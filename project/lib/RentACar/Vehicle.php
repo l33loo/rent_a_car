@@ -308,8 +308,10 @@ class Vehicle {
     public function __get(string $propertyName): ?string
     {
         $properties = $this->properties;
-        if ($properties !== null && count($properties) > 0) {
-            return isset($properties[$propertyName]) ? $properties[$propertyName]->getPropertyValue() : null;
+        if ($properties === null || count($properties) > 0) {
+            return null;
         }
+        
+        return isset($properties[$propertyName]) ? $properties[$propertyName]->getPropertyValue() : null;
     }
 }
