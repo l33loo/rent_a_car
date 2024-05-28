@@ -132,7 +132,7 @@ trait DBModel
         $stmt->execute($params);
     }
 
-    public static function search(array $filters, string $tableName = '', ?int $resultsLimit = null): array
+    public static function search(array $filters, string $tableName = '', ?string $orderBy = null, ?string $order = null): array
     {
         if ($tableName === '') {
             $class_parts = explode('\\', static::class);
@@ -155,8 +155,12 @@ trait DBModel
             }
         }
 
-        if (!empty($resultsLimit)) {
-            $sql .= " LIMIT $resultsLimit";
+        if (!empty($orderBy)) {
+            $sql .= " ORDER BY $orderBy";
+        }
+
+        if (!empty($order)) {
+            $sql .= " $order";
         }
 
         $connection = MyConnect::getInstance()->getConnection();

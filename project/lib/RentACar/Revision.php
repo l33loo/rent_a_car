@@ -355,6 +355,16 @@ class Revision {
     }
 
     /**
+     * Get the value of totalPrice as a string
+     * 
+     * @return string
+     */ 
+    public function getTotalPriceToString(): string
+    {
+        return convertNumToEuros($this->totalPrice);
+    }
+
+    /**
      * Calculate and set the the value of totalPrice
      *
      * @return self
@@ -444,9 +454,9 @@ class Revision {
     /**
      * Get the value of submittedByUser_id
      * 
-     * @return int
+     * @return ?int
      */ 
-    public function getSubmittedByUser_id(): int
+    public function getSubmittedByUser_id(): ?int
     {
         return $this->submittedByUser_id;
     }
@@ -598,9 +608,9 @@ class Revision {
     /**
      * Get the value of collectedByUser_id
      * 
-     * @return int
+     * @return ?int
      */ 
-    public function getCollectedByUser_id(): int
+    public function getCollectedByUser_id(): ?int
     {
         return $this->collectedByUser_id;
     }
@@ -708,9 +718,9 @@ class Revision {
     /**
      * Get the value of submittedByUser
      * 
-     * @return User
+     * @return ?User
      */ 
-    public function getSubmittedByUser(): User
+    public function getSubmittedByUser(): ?User
     {
         return $this->submittedByUser;
     }
@@ -884,9 +894,9 @@ class Revision {
     /**
      * Get the value of collectedByUser
      * 
-     * @return User
+     * @return ?User
      */ 
-    public function getCollectedByUser(): User
+    public function getCollectedByUser(): ?User
     {
         return $this->collectedByUser;
     }
@@ -987,8 +997,10 @@ class Revision {
 
     /**
      * Get the value of givenByUser
+     * 
+     * @return ?User
      */ 
-    public function getGivenByUser()
+    public function getGivenByUser(): ?User
     {
         return $this->givenByUser;
     }
@@ -1007,8 +1019,10 @@ class Revision {
 
     /**
      * Get the value of effectivePickupDate
+     * 
+     * @return ?string
      */ 
-    public function getEffectivePickupDate()
+    public function getEffectivePickupDate(): ?string
     {
         return $this->effectivePickupDate;
     }
@@ -1016,7 +1030,7 @@ class Revision {
     /**
      * Set the value of effectivePickupDate
      *
-     * @return  self
+     * @return self
      */ 
     public function setEffectivePickupDate($effectivePickupDate)
     {
@@ -1095,6 +1109,21 @@ class Revision {
     {
         try {
             $this->loadRelation('status');
+        } catch(e) {
+
+        }
+        return $this;
+    }
+
+    /**
+     * Load revision's Status
+     *
+     * @return self
+     */ 
+    public function loadCreditCard(): self
+    {
+        try {
+            $this->loadRelation('creditCard');
         } catch(e) {
 
         }
@@ -1239,6 +1268,24 @@ class Revision {
      * @return self
      */ 
     public function loadVehicle(): self
+    {
+        try {
+            if ($this->vehicle_id !== null) {
+                $this->loadRelation('vehicle');
+            }
+        } catch(e) {
+
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Load revision's Vehicle
+     *
+     * @return self
+     */ 
+    public function loadAllRelations(): self
     {
         try {
             if ($this->vehicle_id !== null) {

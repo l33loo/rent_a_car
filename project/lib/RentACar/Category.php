@@ -2,6 +2,7 @@
 namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
 use RentACar\Property;
 
@@ -155,6 +156,16 @@ class Category {
     }
 
     /**
+     * Get the value of dailyRate as a string
+     * 
+     * @return string
+     */ 
+    public function getDailyRateToString(): string
+    {
+        return convertNumToEuros($this->dailyRate);
+    }
+
+    /**
      * Get the value of dailyRate
      */ 
     public function getDailyRate(): float
@@ -182,8 +193,10 @@ class Category {
     public function __get(string $propertyName): ?string
     {
         $properties = $this->properties;
-        if ($properties !== null && count($properties) > 0) {
-            return isset($properties[$propertyName]) ? $properties[$propertyName]->getPropertyValue() : null;
+        if ($properties === null || count($properties) > 0) {
+            return null;
         }
+        
+        return isset($properties[$propertyName]) ? $properties[$propertyName]->getPropertyValue() : null;
     }
 } 

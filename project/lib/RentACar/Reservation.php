@@ -52,9 +52,9 @@ class Reservation {
     /**
      * Get the value of ownerUser
      * 
-     * @return User
+     * @return ?User
      */ 
-    public function getOwnerUser(): User
+    public function getOwnerUser(): ?User
     {
         return $this->ownerUser;
     }
@@ -97,5 +97,22 @@ class Reservation {
         }
 
         return $results[0];
+    }
+
+    /**
+     * Get all the reservation's Revisions,
+     * from newest to oldest
+     *
+     * @return array
+     */ 
+    public function findAllRevisions(): array
+    {
+        return Revision::search([
+            [
+                'column' => 'reservation_id',
+                'operator' => '=',
+                'value' => $this->id
+            ]
+        ], 'revision', 'submittedTimestamp', 'DESC');
     }
 }
