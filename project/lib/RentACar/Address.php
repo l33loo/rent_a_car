@@ -165,6 +165,10 @@ class Address {
 
     public function __toString() : string
     {
+        if ($this->country === null) {
+            $this->loadRelation('country');
+        }
+        
         $addressString = $this->doorNumber . ' ' . $this->street;
 
         if ($this->apartmentNr !== null) {
