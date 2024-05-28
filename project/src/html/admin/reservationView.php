@@ -23,36 +23,8 @@ try {
     $reservation->loadRelation('ownerUser', 'user');
     $revisions = $reservation->findAllRevisions();
     $latestRevision = array_pop($revisions);
-    $latestRevision
-        ->loadReservation()
-        ->loadCategory()
-        ->loadStatus()
-        ->loadVehicle()
-        ->loadPickupLocation()
-        ->loadDropoffLocation()
-        ->loadEffectivePickupLocation()
-        ->loadEffectiveDropoffLocation()
-        ->loadCustomer()
-        ->loadBillingAddress()
-        ->loadCreditCard()
-        ->loadRelation('submittedByUser', 'user')
-        ->loadRelation('givenByUser', 'user')
-        ->loadRelation('collectedByUser', 'user')
-        ->getCustomer()
-        ->loadRelation('user')
-        ->loadRelation('address')
-        ->getAddress()
-        ->loadRelation('country');
-    $latestRevision
-        ->getCustomer()
-        ->loadRelation('user')
-        ->getUser()
-        ->loadRelation('address')
-        ->getAddress()
-        ->loadRelation('country');
-    $latestRevision
-        ->getBillingAddress()
-        ->loadRelation('country');
+    $latestRevision->loadAllRelations();
+    $vehicle = $latestRevision->getVehicle();
 
 } catch(e) {
     // TODO: handle error
@@ -88,7 +60,7 @@ echo getHeader();
                         <td><?php echo $latestRevision->getSubmittedByUser() === null ? null : $latestRevision->getSubmittedByUser()->getName() . ' ' . '[' . $latestRevision->getSubmittedByUser()->getId() . ']' ?></td>
                         <td><?php echo $latestRevision->getStatus()->getStatusName() ?></td>
                         <td><?php echo $latestRevision->getCategory()->getName() ?></td>
-                        <td><?php echo $latestRevision->getVehicle() === null ? null : $latestRevision->getVehicle()->Brand . ' ' . $latestRevision->getVehicle()->Model ?></td>
+                        <td><?php echo $vehicle === null ? null : $vehicle->Brand . ' ' . $vehicle->Model . ' - ' . $vehicle->getPlate() ?></td>
                     </tr>
                 </tbody>
             </table>

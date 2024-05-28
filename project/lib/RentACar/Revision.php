@@ -1281,16 +1281,43 @@ class Revision {
     }
 
     /**
-     * Load revision's Vehicle
+     * Load all revision's relations
      *
      * @return self
      */ 
     public function loadAllRelations(): self
     {
         try {
-            if ($this->vehicle_id !== null) {
-                $this->loadRelation('vehicle');
-            }
+            $this
+                ->loadReservation()
+                ->loadCategory()
+                ->loadStatus()
+                ->loadVehicle()
+                ->loadPickupLocation()
+                ->loadDropoffLocation()
+                ->loadEffectivePickupLocation()
+                ->loadEffectiveDropoffLocation()
+                ->loadCustomer()
+                ->loadBillingAddress()
+                ->loadCreditCard()
+                ->loadRelation('submittedByUser', 'user')
+                ->loadRelation('givenByUser', 'user')
+                ->loadRelation('collectedByUser', 'user')
+                ->getCustomer()
+                ->loadRelation('user')
+                ->loadRelation('address')
+                ->getAddress()
+                ->loadRelation('country');
+            $this
+                ->getCustomer()
+                ->loadRelation('user')
+                ->getUser()
+                ->loadRelation('address')
+                ->getAddress()
+                ->loadRelation('country');
+            $this
+                ->getBillingAddress()
+                ->loadRelation('country');
         } catch(e) {
 
         }
