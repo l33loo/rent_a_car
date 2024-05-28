@@ -163,7 +163,7 @@ class Address {
         return $this;
     }
 
-    public function getAddressToString() : string
+    public function __toString() : string
     {
         $addressString = $this->doorNumber . ' ' . $this->street;
 

@@ -76,7 +76,7 @@ echo getHeader();
                     <tr>
                         <th><?php echo $locationId; ?></th>
                         <td><?php echo $location->getName(); ?></td>
-                        <td><?php echo $address->getAddressToString(); ?></td>
+                        <td><?php echo $address; ?></td>
                         <td><?php echo $location->getIsland()->getName(); ?></td>
                         <td class="d-flex flex-wrap justify-content-evenly">
                             <!-- <a href="locationView.php?id=<?php echo $locationId ?>" class="btn btn-primary">View</a> -->
