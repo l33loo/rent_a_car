@@ -22,8 +22,6 @@ echo getHeader();
             <h1>Manage Reservations</h1>
             <a class="btn btn-success" href="/src/html/admin/reservationNew.php">New Reservation</a>
         </div>
-    </div>
-    <div class="container">
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
