@@ -68,9 +68,8 @@ echo getHeader();
             <h1>Reservation nº <?php echo $reservation->getId() ?></h1>
             <a class="btn btn-success" href="/src/html/admin/reservationEdit.php?reservationId=<?php echo $reservation->getId() ?>">Edit Reservation</a>
         </div>
-        <?php print_r($latestRevision) ?>
-        <h2>Booking Details</h2>
-        <div class="table-responsive">
+        <h2 class="mb-4">Booking Details</h2 class="mb-4">
+        <div class="table-responsive mb-5">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -94,8 +93,8 @@ echo getHeader();
                 </tbody>
             </table>
         </div>
-        <h2>Customer</h2>
-        <div class="table-responsive">
+        <h2 class="mb-4">Customer</h2 class="mb-4">
+        <div class="table-responsive mb-5">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -124,8 +123,8 @@ echo getHeader();
                 </tbody>
             </table>
         </div>
-        <h2>User</h2>
-        <div class="table-responsive">
+        <h2 class="mb-4">User</h2 class="mb-4">
+        <div class="table-responsive mb-5">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -158,14 +157,14 @@ echo getHeader();
                 </tbody>
             </table>
         </div>
-        <h2>Payment</h2>
-        <div class="table-responsive">
+        <h2 class="mb-4">Payment</h2 class="mb-4">
+        <div class="table-responsive mb-5">
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Amount</th>
                         <th>Credit Card Number</th>
-                        <th>Credic Card Expiry</th>
+                        <th>Credit Card Expiry</th>
                         <th>CVV</th>
                         <th>Billing Address</th>
                     </tr>
@@ -173,7 +172,7 @@ echo getHeader();
                 <tbody>
                     <tr>
                         <?php $cc = $latestRevision->getCreditCard() ?>
-                        <td><?php echo $latestRevision->getTotalPrice() ?></td>
+                        <td><?php echo $latestRevision->getTotalPriceToString() ?></td>
                         <td><?php echo $cc->getCcNumber() ?></td>
                         <td><?php echo $cc->getCcExpiry() ?></td>
                         <td><?php echo $cc->getCcCVV() ?></td>
@@ -182,8 +181,8 @@ echo getHeader();
                 </tbody>
             </table>
         </div>
-        <h2>Pick-up and Drop-off</h2>
-        <div class="table-responsive">
+        <h2 class="mb-4">Pick-up and Drop-off</h2 class="mb-4">
+        <div class="table-responsive mb-5">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -211,8 +210,8 @@ echo getHeader();
                 </tbody>
             </table>
         </div>
-        <h2>Effective Pick-up and Drop-off</h2>
-        <div class="table-responsive">
+        <h2 class="mb-4">Effective Pick-up and Drop-off</h2 class="mb-4">
+        <div class="table-responsive mb-5">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -245,8 +244,8 @@ echo getHeader();
                 </tbody>
             </table>
         </div>
-        <h2>Reservation History</h2>
-        <div class="table-responsive">
+        <h2 class="mb-4">Reservation History</h2 class="mb-4">
+        <div class="table-responsive mb-5">
             <table class="table table-bordered">
                 <thead>
                     <tr>
