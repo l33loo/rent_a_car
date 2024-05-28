@@ -308,7 +308,11 @@ class Vehicle {
     public function __get(string $propertyName): ?string
     {
         $properties = $this->properties;
-        if ($properties === null || count($properties) > 0) {
+        if ($properties === null) {
+            $this->loadProperties();
+        }
+
+        if ($properties === null || count($properties) === 0) {
             return null;
         }
         
