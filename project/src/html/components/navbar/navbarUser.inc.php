@@ -23,7 +23,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="btn btn-secondary" href="/src/app/logout.php" class="nav-link">
+            <a class="btn btn-warning" href="/src/app/logout.php" class="nav-link">
                 Logout
             </a>
         </li>
