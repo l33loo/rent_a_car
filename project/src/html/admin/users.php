@@ -17,8 +17,6 @@ echo getHeader();
         <div class="text-content">
             <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Users</h1>
         </div>
-    </div>
-    <div class="container">
         <table class="table table-bordered" id="my_table_id" data-url="data/url.json" data-id-field="id"
             data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
             <thead>
