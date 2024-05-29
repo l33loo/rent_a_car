@@ -78,8 +78,8 @@ echo getHeader();
                         <td><?php echo $location->getName(); ?></td>
                         <td><?php echo $address; ?></td>
                         <td><?php echo $location->getIsland()->getName(); ?></td>
-                        <td class="d-flex flex-wrap justify-content-evenly">
-                            <!-- <a href="locationView.php?id=<?php echo $locationId ?>" class="btn btn-primary">View</a> -->
+                        <td class="d-flex flex-wrap">
+                            <!-- <a href="locationView.php?id=<?php // echo $locationId ?>" class="btn btn-primary">View</a> -->
                             <!-- <a href="" class="btn btn-secondary">Edit</a> -->
                             <form action="/src/app/admin/locationArchive.php" method="POST">
                                 <input type="submit" name="archiveLocation" class="btn btn-danger" value="Archive" />

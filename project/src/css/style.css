@@ -8,3 +8,7 @@ body {
 body > .container {
   flex-grow: 1;
 }
+
+.d-flex {
+  gap: 10px;
+}
