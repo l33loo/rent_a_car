@@ -75,13 +75,9 @@ echo getHeader();
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <a href="/src/html/userEdit.php" class="btn btn-primary">Edit Account</a>
-            </div>
-            <div class="col">
-                <a href="/src/html/reservations.php" class="btn btn-secondary">View Reservations</a>
-            </div>
+        <div class="d-flex flex-wrap">
+            <a href="/src/html/userEdit.php" class="btn btn-primary">Edit Account</a>
+            <a href="/src/html/reservations.php" class="btn btn-secondary">View Reservations</a>
         </div>
     </div>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/footer.inc.php'; ?>

@@ -17,7 +17,7 @@ echo getHeader();
 
 <body>
     <?php include 'components/navbar.inc.php'; ?>
-    <div class="container mt-5 flex-grow-1">
+    <div class="container mt-5">
         <h1 class="mb-4">Your Reservations</h1>
         <?php foreach ($revisions as $revision) {
             $vehicle = $revision->loadVehicle()->getVehicle();

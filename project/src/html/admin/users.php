@@ -17,8 +17,6 @@ echo getHeader();
         <div class="text-content">
             <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Users</h1>
         </div>
-    </div>
-    <div class="container">
         <table class="table table-bordered" id="my_table_id" data-url="data/url.json" data-id-field="id"
             data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
             <thead>
@@ -100,7 +98,7 @@ echo getHeader();
                         <td><?php echo $address; ?></td>
                         <td><?php echo $user->getPhone(); ?></td>
                         <td><?php echo $user->getIsAdmin() ? 'Yes' : 'No'; ?></td>
-                        <td class="d-flex flex-wrap justify-content-evenly">
+                        <td class="d-flex flex-wrap">
                             <a href="/src/html/admin/user.php?id=<?php echo $userId; ?>" class="btn btn-primary">View</a>
                             <a href="/src/html/admin/userEdit.php?id=<?php echo $userId; ?>" class="btn btn-secondary">Edit</a>
                             <?php if ($userIsArchived) { ?>
