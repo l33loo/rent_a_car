@@ -2,7 +2,7 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-use \RentACar\Island;
+use RentACar\Island;
 
 try {
     $islands = Island::search([]);

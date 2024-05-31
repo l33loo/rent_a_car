@@ -373,8 +373,7 @@ class Revision {
     {
         try {
             $category = Category::find($this->category_id);
-            $this->totalPrice = calculateTotalPrice(
-                $category->getDailyRate(), 
+            $this->totalPrice = $category->calculateTotalPrice( 
                 $this->pickupDate, 
                 $this->dropoffDate
             );
@@ -936,6 +935,16 @@ class Revision {
     }
 
     /**
+     * Get the value of reservation_id
+     * 
+     * @return int
+     */ 
+    public function getReservation_id(): int
+    {
+        return $this->reservation_id;
+    }
+
+    /**
      * Get the value of pickupLocation_id
      */ 
     public function getPickupLocation_id(): int
@@ -1407,5 +1416,141 @@ class Revision {
 
         }
         return $this;
+    }
+
+    /**
+     * Check if the user is allowed to update their reservation.
+     *
+     * @return bool
+     */ 
+    public function canUserUpdate(): bool
+    {
+        // echo 'canUserUpdate => $this->wasPickedUp() ';
+        // echo $this->wasPickedUp() ? "true" : "false";
+        if (empty($_SESSION['logged_id'])) {
+            return false;
+        }
+
+        if ($this->reservation === null) {
+            $this->loadReservation();
+        }
+
+        if ($_SESSION['logged_id'] != $this->reservation->getOwnerUser_id()) {
+            return false;
+        }
+
+        if ($this->status === null) {
+            $this->loadStatus();
+        }
+        $status = $this->status->getStatusName();
+        return !$this->wasPickedUp()
+            && !$this->wasNoShow()
+            && $status !== 'Cancelled'
+            && $status !== 'Payment Declined';
+    }
+
+    /**
+     * Update by user. Is only allowed if the reservation is still valid.
+     *
+     * @return self|false
+     */ 
+    public function updateByUser(): self|false
+    {
+        if (!$this->canUserUpdate()) {
+            return false;
+        }
+
+        $this->id = null;
+        $this->submittedTimestamp = date("Y-m-d H:i:s", time());
+        $this->submittedByUser_id = $_SESSION['logged_id'];
+        $this->save();
+        return $this;
+    }
+
+    /**
+     * Get the latest revision of a given reservation
+     *
+     * @return Revision
+     */ 
+    public static function findLatestRevision(int $reservationId): Revision
+    {
+        $stmt = self::rawSQL("
+            SELECT * FROM revision
+            WHERE reservation_id=$reservationId
+            ORDER BY submittedTimestamp DESC, id DESC
+            LIMIT 1;
+        ");
+
+        $results = [];
+        while($row = $stmt->fetchObject(Revision::class)) {
+            $results[] = $row;
+        }
+
+        if (count($results) !== 1) {
+            echo 'Error retrieving latest revision';
+            // TODO: error and redirect
+        }
+
+        return $results[0];
+    }
+
+    /**
+     * Calculate number of days from now until given date
+     *
+     * @return int
+     */ 
+    private function calculateDaysUntilDate(string $date): int
+    {
+        return calculateDiffDays('', $date);
+    }
+
+    /**
+     * Calculate how many days are left until pickup
+     *
+     * @return int
+     */ 
+    public function calculateDaysUntilPickup(): int
+    {
+        return $this->calculateDaysUntilDate($this->pickupDate);
+    }
+
+    /**
+     * Calculate how many days are left until dropoff
+     *
+     * @return int
+     */ 
+    public function calculateDaysUntilDropoff(): int
+    {
+        return $this->calculateDaysUntilDate($this->dropoffDate);
+    }
+
+    /**
+     * Check if the vehicle was picked up
+     *
+     * @return bool
+     */ 
+    public function wasPickedUp(): bool
+    {
+        return !empty($this->effectivePickupDate);
+    }
+
+    /**
+     * Check if the vehicle was dropped off
+     *
+     * @return bool
+     */ 
+    public function wasDroppedOff(): bool
+    {
+        return !empty($this->effectiveDropoffDate);
+    }
+
+    /**
+     * Check if the user was No Show
+     *
+     * @return bool
+     */ 
+    public function wasNoShow(): bool
+    {
+        return $this->calculateDaysUntilPickup() <= 0;
     }
 }

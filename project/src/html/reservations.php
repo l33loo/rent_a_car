@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/sessionGuest.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 
-use \RentACar\User;
+use RentACar\User;
 
 try {
     $user = User::find($_SESSION['logged_id']);
@@ -18,7 +18,7 @@ echo getHeader();
 <body>
     <?php include 'components/navbar.inc.php'; ?>
     <div class="container mt-5">
-        <h1 class="mb-4">Your Reservations</h1>
+        <h1 class="mb-4">My Reservations</h1>
         <?php foreach ($revisions as $revision) {
             $vehicle = $revision->loadVehicle()->getVehicle();
             $vehicle->loadProperties();
@@ -98,7 +98,24 @@ echo getHeader();
                             </div>
                             <div class="d-flex flex-wrap justify-content-center" style="gap:10px;">
                                 <a class="btn btn-primary ml-2" href="/src/html/reservationView.php">View</a>
-                                <a class="btn btn-secondary ml-2" href="/src/html/reservationEdit.php">Edit</a>
+                                <form action="/" method="get">
+                                    <input type="hidden" name="reservationId" value="<?php echo $revision->getReservation_id() ?>">
+                                    <input
+                                        type="submit"
+                                        value="Change"
+                                        class="btn btn-secondary"
+                                        <?php echo $revision->canUserUpdate() ? null : 'disabled' ?>
+                                    >
+                                </form>
+                                <form method="get">
+                                    <input type="hidden" name="reservationId" value="<?php echo $revision->getReservation_id() ?>">
+                                    <input
+                                        type="submit"
+                                        value="Cancel"
+                                        class="btn btn-danger"
+                                        <?php echo $revision->canUserUpdate() ? null : 'disabled' ?>
+                                    >
+                                </form>
                             </div>
                         </div>
                     </div>

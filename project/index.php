@@ -1,12 +1,16 @@
 <?php  
-require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservation.inc.php';
 
 use RentACar\Location;
+use RentACar\Reservation;
 
-session_start();
-
-$locations = Location::fetchActiveLocations();
+try {
+    $locations = Location::fetchActiveLocations();
+} catch (\Exception $e) {
+    // TODO: 
+}
 
 echo getHeader();
 ?>
@@ -66,7 +70,10 @@ echo getHeader();
                             <label for="pickup-location">Pick-Up Location:</label>
                             <select id="pickup-location" name="pickupLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
-                                    <option value="<?php echo $location->getId(); ?>">
+                                    <option
+                                        value="<?php echo $location->getId(); ?>"
+                                        <?php echo $isOwnerEditing && $revision->getPickupLocation_id() === $location->getId() ? 'selected' : null ?>
+                                    >
                                         <?php echo $location->getName(); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -76,13 +83,27 @@ echo getHeader();
                     <div class="row">
                         <div class="col">
                             <label for="pickup-date">Pick-Up Date:</label>
-                            <input type="date" id="pickup-date" name="pickupDate" class="form-control" required>
+                            <input
+                                type="date"
+                                id="pickup-date" 
+                                name="pickupDate"
+                                class="form-control"
+                                value="<?php echo $isOwnerEditing ? $revision->getPickupDate() : null ?>"
+                            >
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="pickup-time">Pick-Up Time:</label>
-                            <input type="time" id="pickup-time" name="pickupTime" min="09:30" max="17:30" class="form-control" required>
+                            <input
+                                type="time"
+                                id="pickup-time"
+                                name="pickupTime"
+                                min="09:30"
+                                max="17:30"
+                                class="form-control"
+                                value="<?php echo $isOwnerEditing ? $revision->getPickupTime() : null ?>"
+                            >
                         </div>
                     </div>
                 </div>
@@ -93,7 +114,10 @@ echo getHeader();
                             <label for="dropoff-location">Drop-Off Location:</label>
                             <select id="dropoff-location" name="dropoffLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
-                                    <option value="<?php echo $location->getId(); ?>">
+                                    <option
+                                        value="<?php echo $location->getId(); ?>"
+                                        <?php echo $isOwnerEditing && $revision->getDropoffLocation_id() === $location->getId() ? 'selected' : null ?>
+                                    >
                                         <?php echo $location->getName(); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -103,17 +127,37 @@ echo getHeader();
                     <div class="row">
                         <div class="col">
                             <label for="dropoff-date">Drop-Off Date:</label>
-                            <input type="date" id="dropoff-date" name="dropoffDate" class="form-control" required>
+                            <input
+                                type="date"
+                                id="dropoff-date"
+                                name="dropoffDate"
+                                class="form-control"
+                                value="<?php echo $isOwnerEditing ? $revision->getDropoffDate() : null ?>"
+                            >
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="dropoff-time">Drop-Off Time:</label>
-                            <input type="time" id="dropoff-time" name="dropoffTime" min="09:30:00" max="17:30:00" class="form-control" required>
+                            <input
+                                type="time"
+                                id="dropoff-time"
+                                name="dropoffTime"
+                                min="09:30:00"
+                                max="17:30:00"
+                                class="form-control"
+                                value="<?php echo $isOwnerEditing ? $revision->getDropoffTime() : null ?>"
+                            >
                         </div>
                     </div>
                 </div>
             </div>
+            <input
+                type="hidden"
+                name="reservationId"
+                value="<?php echo empty($_GET['reservationId']) ? null : $_GET['reservationId'] ?>"
+                class="btn btn-primary"
+            >
             <input type="submit" value="Submit" class="btn btn-primary">
         </form>
     </div>

@@ -72,31 +72,25 @@ class Reservation {
     }
 
     /**
+     * Load the value of ownerUser
+     *
+     * @return self
+     */ 
+    public function loadOwnerUser(): self
+    {
+        $this->loadRelation('ownerUser', 'user');
+
+        return $this;
+    }
+
+    /**
      * Get the latest revision of the reservation
      *
      * @return Revision
      */ 
     public function findLatestRevision(): Revision
     {
-        $reservationId = $this->id;
-        $stmt = Revision::rawSQL("
-            SELECT * FROM revision
-            WHERE reservation_id=$reservationId
-            ORDER BY submittedTimestamp DESC, id DESC
-            LIMIT 1;
-        ");
-
-        $results = [];
-        while($row = $stmt->fetchObject(Revision::class)) {
-            $results[] = $row;
-        }
-
-        if (count($results) !== 1) {
-            echo 'Error retrieving latest revision';
-            // TODO: error and redirect
-        }
-
-        return $results[0];
+        return Revision::findLatestRevision($this->id);
     }
 
     /**
