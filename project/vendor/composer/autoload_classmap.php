@@ -17,6 +17,7 @@ return array(
     'RentACar\\Location' => $baseDir . '/lib/RentACar/Location.php',
     'RentACar\\MyConnect' => $baseDir . '/lib/RentACar/MyConnect.php',
     'RentACar\\Profile' => $baseDir . '/lib/RentACar/Profile.php',
+    'RentACar\\PropertiesTrait' => $baseDir . '/lib/RentACar/PropertiesTrait.php',
     'RentACar\\Property' => $baseDir . '/lib/RentACar/Property.php',
     'RentACar\\Reservation' => $baseDir . '/lib/RentACar/Reservation.php',
     'RentACar\\Revision' => $baseDir . '/lib/RentACar/Revision.php',

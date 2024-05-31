@@ -18,6 +18,7 @@ class ComposerStaticInitcbd326feccfc5fb82c1812bb40b8ef07
         'RentACar\\Location' => __DIR__ . '/../..' . '/lib/RentACar/Location.php',
         'RentACar\\MyConnect' => __DIR__ . '/../..' . '/lib/RentACar/MyConnect.php',
         'RentACar\\Profile' => __DIR__ . '/../..' . '/lib/RentACar/Profile.php',
+        'RentACar\\PropertiesTrait' => __DIR__ . '/../..' . '/lib/RentACar/PropertiesTrait.php',
         'RentACar\\Property' => __DIR__ . '/../..' . '/lib/RentACar/Property.php',
         'RentACar\\Reservation' => __DIR__ . '/../..' . '/lib/RentACar/Reservation.php',
         'RentACar\\Revision' => __DIR__ . '/../..' . '/lib/RentACar/Revision.php',

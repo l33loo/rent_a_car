@@ -4,14 +4,12 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
-use RentACar\Property;
-
 class Category {
     use DBModel;
+    use PropertiesTrait;
 
     protected ?string $name = null;
     protected ?string $description = null;
-    protected ?array $properties = null;
     protected ?float $dailyRate = null;
     protected ?bool $isArchived = null;
 
@@ -95,14 +93,6 @@ class Category {
     }
 
     /**
-     * Get the value of properties
-     */ 
-    public function getProperties(): ?array
-    {
-        return $this->properties;
-    }
-
-    /**
      * Get the value of isArchived
      * 
      * @return bool
@@ -183,24 +173,5 @@ class Category {
         $this->dailyRate = $dailyRate;
 
         return $this;
-    }
-
-    /**
-     * Get a category property
-     *
-     * @return ?string
-     */ 
-    public function __get(string $propertyName): ?string
-    {
-        $properties = $this->properties;
-        if ($properties === null) {
-            $this->loadProperties();
-        }
-
-        if ($properties === null || count($properties) === 0) {
-            return null;
-        }
-        
-        return isset($properties[$propertyName]) ? $properties[$propertyName]->getPropertyValue() : null;
     }
 } 
