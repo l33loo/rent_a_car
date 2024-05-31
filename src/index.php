@@ -71,7 +71,7 @@ select {
             </div>
         </div>
     </div>
-
+  
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>Reservation</h1>
@@ -84,9 +84,9 @@ select {
                             <label for="pickup-location">1. Pick-Up Location:</label>
                             <select id="pickup-location" name="pickupLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
-                                <option value="<?php echo $location->getId(); ?>">
-                                    <?php echo $location->getName(); ?>
-                                </option>
+                                    <option value="<?php echo $location->getId(); ?>">
+                                        <?php echo $location->getName(); ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -100,8 +100,7 @@ select {
                     <div class="row">
                         <div class="col">
                             <label for="pickup-time">Pick-Up Time:</label>
-                            <input type="time" id="pickup-time" name="pickupTime" min="09:30" max="17:30"
-                                class="form-control" required>
+                            <input type="time" id="pickup-time" name="pickupTime" min="09:30" max="17:30" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -112,9 +111,9 @@ select {
                             <label for="dropoff-location">Drop-Off Location:</label>
                             <select id="dropoff-location" name="dropoffLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
-                                <option value="<?php echo $location->getId(); ?>">
-                                    <?php echo $location->getName(); ?>
-                                </option>
+                                    <option value="<?php echo $location->getId(); ?>">
+                                        <?php echo $location->getName(); ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -128,8 +127,7 @@ select {
                     <div class="row">
                         <div class="col">
                             <label for="dropoff-time">Drop-Off Time:</label>
-                            <input type="time" id="dropoff-time" name="dropoffTime" min="09:30:00" max="17:30:00"
-                                class="form-control" required>
+                            <input type="time" id="dropoff-time" name="dropoffTime" min="09:30:00" max="17:30:00" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -142,33 +140,39 @@ select {
         <h2 style="position:relative; top: -100px;">Our Fleet</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">
             <div class="col">
-                <div class="card h-100" style="filter: drop-shadow(16px 16px 20px);">
-                    <img src="./img/Economy.jpg" class="card-img-top" alt="car">
+                <div class="card h-100" style="    filter: drop-shadow(16px 16px 20px);">
+                    <img src="/img/car.jpg" class="card-img-top" alt="car">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Economic</h5>
-                        <p class="card-text">Our most economical and fuel-efficient offerings</p>
+                        <h5 class="card-title">Regular</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
+                            non
+                            urna tincidunt consectetur. Nulla facilisi.</p>
                         <button type="button" class="btn btn-outline-dark"
                             style="border-radius: 15px;">Categories</button>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
-                    <img src="./img/Electric.jpg" class="card-img-top" alt="Electric Category">
+                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
+                    <img src="/img/moto.jpg" class="card-img-top" alt="moto">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Eletric</h5>
-                        <p class="card-text">Power in a small body</p>
+                        <h5 class="card-title">Motorcycle</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
+                            non
+                            urna tincidunt consectetur. Nulla facilisi.</p>
                         <button type="button" class="btn btn-outline-dark "
                             style="border-radius: 15px;">Categories</button>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card h-100" style="filter: drop-shadow(20px 20px 20px);">
-                    <img src="./img/suv.jpg" class="card-img-top" alt="suv">
+                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
+                    <img src="/img/suv.jpg" class="card-img-top" alt="suv">
                     <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
                         <h5 class="card-title">Suv</h5>
-                        <p class="card-text">Our manual sedans
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
+                            non
+                            urna tincidunt consectetur. Nulla facilisi.
                         </p>
                         <button type="button" class="btn btn-outline-dark"
                             style="border-radius: 15px;">Categories</button>
