@@ -1,25 +1,15 @@
 <?php  
-require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservation.inc.php';
 
 use RentACar\Location;
 use RentACar\Reservation;
 
-session_start();
-
-$locations = Location::fetchActiveLocations();
-
-$ownerUserId;
-$ownerIsEditing = false;
-
-if (!empty($_GET['reservationId'])) {
-    $reservation = Reservation::find($_GET['reservationId']);
-    $ownerUserId = $reservation->getOwnerUser_id();
-}
-
-if (isset($_SESSION['logged_id']) && $_SESSION['logged_id'] === $ownerUserId ) {
-    $ownerIsEditing = true;
-    $revision = $reservation->findLatestRevision();
+try {
+    $locations = Location::fetchActiveLocations();
+} catch (\Exception $e) {
+    // TODO: 
 }
 
 echo getHeader();
@@ -82,7 +72,7 @@ echo getHeader();
                                 <?php foreach ($locations as $location) : ?>
                                     <option
                                         value="<?php echo $location->getId(); ?>"
-                                        <?php echo $ownerIsEditing && $revision->getPickupLocation_id() === $location->getId() ? 'selected' : null ?>
+                                        <?php echo $isOwnerEditing && $revision->getPickupLocation_id() === $location->getId() ? 'selected' : null ?>
                                     >
                                         <?php echo $location->getName(); ?>
                                     </option>
@@ -98,7 +88,7 @@ echo getHeader();
                                 id="pickup-date" 
                                 name="pickupDate"
                                 class="form-control"
-                                value="<?php echo $ownerIsEditing ? $revision->getPickupDate() : null ?>"
+                                value="<?php echo $isOwnerEditing ? $revision->getPickupDate() : null ?>"
                             >
                         </div>
                     </div>
@@ -112,7 +102,7 @@ echo getHeader();
                                 min="09:30"
                                 max="17:30"
                                 class="form-control"
-                                value="<?php echo $ownerIsEditing ? $revision->getPickupTime() : null ?>"
+                                value="<?php echo $isOwnerEditing ? $revision->getPickupTime() : null ?>"
                             >
                         </div>
                     </div>
@@ -126,7 +116,7 @@ echo getHeader();
                                 <?php foreach ($locations as $location) : ?>
                                     <option
                                         value="<?php echo $location->getId(); ?>"
-                                        <?php echo $ownerIsEditing && $revision->getDropoffLocation_id() === $location->getId() ? 'selected' : null ?>
+                                        <?php echo $isOwnerEditing && $revision->getDropoffLocation_id() === $location->getId() ? 'selected' : null ?>
                                     >
                                         <?php echo $location->getName(); ?>
                                     </option>
@@ -142,7 +132,7 @@ echo getHeader();
                                 id="dropoff-date"
                                 name="dropoffDate"
                                 class="form-control"
-                                value="<?php echo $ownerIsEditing ? $revision->getDropoffDate() : null ?>"
+                                value="<?php echo $isOwnerEditing ? $revision->getDropoffDate() : null ?>"
                             >
                         </div>
                     </div>
@@ -156,7 +146,7 @@ echo getHeader();
                                 min="09:30:00"
                                 max="17:30:00"
                                 class="form-control"
-                                value="<?php echo $ownerIsEditing ? $revision->getDropoffTime() : null ?>"
+                                value="<?php echo $isOwnerEditing ? $revision->getDropoffTime() : null ?>"
                             >
                         </div>
                     </div>

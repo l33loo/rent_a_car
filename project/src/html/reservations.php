@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/sessionGuest.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 
-use \RentACar\User;
+use RentACar\User;
 
 try {
     $user = User::find($_SESSION['logged_id']);
@@ -100,7 +100,21 @@ echo getHeader();
                                 <a class="btn btn-primary ml-2" href="/src/html/reservationView.php">View</a>
                                 <form action="/" method="get">
                                     <input type="hidden" name="reservationId" value="<?php echo $revision->getReservation_id() ?>">
-                                    <input type="submit" name="reservationRequestChange" value="Change" class="btn btn-secondary">
+                                    <input
+                                        type="submit"
+                                        value="Change"
+                                        class="btn btn-secondary"
+                                        <?php echo $revision->canUserUpdate() ? null : 'disabled' ?>
+                                    >
+                                </form>
+                                <form method="get">
+                                    <input type="hidden" name="reservationId" value="<?php echo $revision->getReservation_id() ?>">
+                                    <input
+                                        type="submit"
+                                        value="Cancel"
+                                        class="btn btn-danger"
+                                        <?php echo $revision->canUserUpdate() ? null : 'disabled' ?>
+                                    >
                                 </form>
                             </div>
                         </div>

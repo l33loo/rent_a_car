@@ -2,48 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
-
-use RentACar\Category;
-use RentACar\Location;
-use RentACar\Vehicle;
-
-session_start();
-
-// TODO: validate form fields
-
-try {
-    // TODO: Validate that pick-up and drop-off locations are on the same island
-
-    $dropoffLocation = Location::find($_GET['dropoffLocationId']);
-    $categories = Category::search([]);
-    $vehiclesWithCategory = [];
-    $categoriesById = [];
-
-    foreach ($categories as $category) {
-        $category->loadProperties();
-        $categoryId = $category->getId();
-        $vehicles = Vehicle::findAvailableVehicles(
-            $category->getId(),
-            $dropoffLocation->getIsland_id(),
-            $_GET['pickupDate'],
-            $_GET['dropoffDate']
-        );
-        $categoriesById[$categoryId] = $category;
-
-        foreach ($vehicles as $vehicle) {
-            $vehicle->loadProperties();
-            // TODO: replace this hacky way to eliminate duplicate models
-            // with a proper DB query
-            $vehiclesWithCategory[$vehicle->Model] = [
-                'vehicle' => $vehicle,
-                'categoryId' => $categoryId
-            ];
-        }
-    }
-
-} catch(e) {
-    // TODO: handle errors
-}
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservationSelectVehicle.inc.php';
 
 echo getHeader();
 ?>
@@ -100,7 +59,7 @@ echo getHeader();
             $category = $categoriesById[$vehicleWithCategory['categoryId']];
             $categoryProperties = $category->getProperties();
         ?>
-            <div class="row mb-3">
+            <div class="row mb-3 <?php echo $vehicleWithCategory['selected'] ? 'bg-warning-subtle' : null ?>">
                 <div class="col">
                     <img src="/src/img/car.jpg" alt="">
                 </div>
@@ -124,15 +83,20 @@ echo getHeader();
                         <?php echo $category->getDailyRateToString() ?> <small>per day</small>
                     </div>
                     <div class="h5">
-                        <?php echo 'Total: ' . convertNumToEuros(
-                            calculateTotalPrice(
-                                $category->getDailyRate(),
-                                $_GET['pickupDate'],
-                                $_GET['dropoffDate']
-                            )
-                        ) ?>
+                        <?php echo $isOwnerEditing ? 'Original Total: ' . $revision->getTotalPriceToString() : 'Total: ' . $vehicleWithCategory['totalPrice'] ?>
                     </div>
-                    <form action="/src/html/reservationBook.php" method="get">
+                    <?php if ($isOwnerEditing) { ?>
+                        <div class="h5">
+                            New Total: <?php echo $vehicleWithCategory['totalPrice'] ?>
+                        </div>
+                    <? } ?>
+                    <form
+                        action="<?php echo $isOwnerEditing ? '/src/app/reservationEdit.php' : '/src/html/reservationBook.php' ?>"
+                        method="<?php echo $isOwnerEditing ? 'post' : 'get' ?>"
+                    >
+                        <?php if($isOwnerEditing) { ?>
+                            <input type="hidden" name="sessionKey" value="<?php echo $sessionKey ?>">
+                        <?php } ?>
                         <input type="hidden" name="categoryId" value="<?php echo $category->getId() ?>">
                         <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId() ?>">
                         <input type="hidden" name="pickupLocationId" value="<?php echo $_GET['pickupLocationId'] ?>">
@@ -141,7 +105,12 @@ echo getHeader();
                         <input type="hidden" name="dropoffLocationId" value="<?php echo $_GET['dropoffLocationId'] ?>">
                         <input type="hidden" name="dropoffDate" value="<?php echo $_GET['dropoffDate'] ?>">
                         <input type="hidden" name="dropoffTime" value="<?php echo $_GET['dropoffTime'] ?>">
-                        <input type="submit" value="Book Now" class="btn btn-success" name="reservationSelectVehicle">
+                        <input
+                            type="submit"
+                            value="<?php echo $isOwnerEditing ? 'Update Reservation' : 'Book Now'  ?>"
+                            class="btn btn-success"
+                            name="reservationSelectVehicle"
+                        >
                     </form>
                 </div>
             </div>

@@ -174,4 +174,24 @@ class Category {
 
         return $this;
     }
+
+    /**
+     * Calculate the total price for given dates
+     *
+     * @return int
+     */ 
+    public function calculateTotalPrice(string $pickupDate, string $dropoffDate): int
+    {
+        return calculateTotalPrice($this->dailyRate, $pickupDate, $dropoffDate);
+    }
+
+    /**
+     * Calculate the total price in euros for given dates
+     *
+     * @return string
+     */ 
+    public function calculateTotalPriceInEuros(string $pickupDate, string $dropoffDate): string
+    {
+        return convertNumToEuros($this->calculateTotalPrice($pickupDate, $dropoffDate));
+    }
 } 

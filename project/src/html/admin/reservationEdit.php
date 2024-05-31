@@ -22,14 +22,14 @@ try {
 
     $reservationId = $_GET['reservationId'];
     $reservation = Reservation::find($reservationId);
-    $latestRevision = $reservation->findLatestRevision();
-    $latestRevision->loadCategory();
-    $latestRevision->loadPickupLocation();
-    $latestRevision->loadDropoffLocation();
-    $latestRevision->loadStatus();
-    $latestRevision->loadBillingAddress();
-    $latestRevision->loadEffectivePickupLocation();
-    $latestRevision->loadEffectiveDropoffLocation();
+    $latestRevision = $reservation->findLatestRevision()
+        ->loadCategory()
+        ->loadPickupLocation()
+        ->loadDropoffLocation()
+        ->loadStatus()
+        ->loadBillingAddress()
+        ->loadEffectivePickupLocation()
+        ->loadEffectiveDropoffLocation();
     $latestRevisionId = $latestRevision->getId();
     $latestRevisionPickupLocation = $latestRevision->getPickupLocation();
     $latestRevisionDropoffLocation = $latestRevision->getDropoffLocation();
@@ -39,10 +39,11 @@ try {
     $availableVehicles = $latestRevision->findAvailableVehicles();
     $locations = Location::fetchActiveLocations();
     $categories = Category::search([]);
-    $wasPickedUp = $latestRevision->getEffectivePickupLocation() !== null;
-    $wasDroppedOff = $latestRevision->getEffectiveDropoffLocation() !== null;
+    $wasPickedUp = $latestRevision->wasPickedUp();
+    $wasDroppedOff = $latestRevision->wasDroppedOff();
+    $wasNoShow = $latestRevision->wasNoShow();
     $category = $latestRevision->getCategory();
-    $totalPrice = calculateTotalPrice($category->getDailyRate(), $latestRevision->getPickupDate(), $latestRevision->getDropoffDate());
+    $totalPrice = $category->calculateTotalPrice($latestRevision->getPickupDate(), $latestRevision->getDropoffDate());
 } catch(e) {
     // TODO: handle error
     exit;
@@ -62,15 +63,19 @@ echo getHeader();
                     <label for="statusId" class="h4">
                         1. Reservation Status:
                     </label>
-                    <select name="statusId" id="status" class="form-select" <?php echo $wasPickedUp ? 'disabled' : null ?>>
-                        <?php foreach ($statuses as $status) { ?>
-                            <option
-                                value="<?php echo $status->getId() ?>"
-                                <?php echo $latestRevision->getStatus()->getId() === $status->getId() ? 'selected' : null ?>
-                            >
-                                <?php echo $status->getStatusName() ?>
-                            </option>
-                        <?php } ?>
+                    <select name="statusId" id="statusId" class="form-select" <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                        <?php if ($wasNoShow) { ?>
+                            <option value="4">Cancelled</option>
+                        <?php } else {
+                            foreach ($statuses as $status) { ?>
+                                <option
+                                    value="<?php echo $status->getId() ?>"
+                                    <?php echo $latestRevision->getStatus()->getId() === $status->getId() ? 'selected' : null ?>
+                                >
+                                    <?php echo $status->getStatusName() ?>
+                                </option>
+                            <?php }
+                        } ?>
                     </select>
                     <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
                     <input class="btn btn-primary mt-3" type="submit" name="reservationEditStatus" value="Update Status" <?php echo $wasPickedUp ? 'disabled' : null ?>>
@@ -81,7 +86,7 @@ echo getHeader();
                     <label for="vehicleId" class="h4">
                         2. Vehicle:
                     </label>
-                    <select name="vehicleId" id="vehicleId" class="form-select" <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                    <select name="vehicleId" id="vehicleId" class="form-select" <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>>
                         <option value="none">None</option>
                         <?php if ($latestRevision->getVehicle_id() !== null) {
                             $latestRevision->loadVehicle();
@@ -104,7 +109,7 @@ echo getHeader();
                         <?php } ?>
                     </select>
                     <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                    <input class="btn btn-primary mt-3" type="submit" name="reservationEditVehicle" value="Assign New Vehicle" <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                    <input class="btn btn-primary mt-3" type="submit" name="reservationEditVehicle" value="Assign New Vehicle" <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>>
                 </form>
             </div>
         </div>
@@ -121,7 +126,7 @@ echo getHeader();
                                 id="pickupLocationId"
                                 name="pickupLocationId"
                                 class="form-select"
-                                <?php echo $wasPickedUp ? 'disabled' : null ?>
+                                <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>
                             >
                                 <option value="none">None</option>
                                 <?php foreach ($effectiveLocations as $location) : ?>
@@ -166,7 +171,7 @@ echo getHeader();
                                 } else {
                                     echo date('H:i:s', time());
                                 } ?>"
-                                <?php echo $wasPickedUp ? 'disabled' : null ?>
+                                <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>
                             >
                         </div>
                         <div class="col-12">
@@ -174,14 +179,14 @@ echo getHeader();
                                 type="hidden"
                                 name="reservationId"
                                 value="<?php echo $reservationId ?>"
-                                <?php echo $wasPickedUp ? 'disabled' : null ?>
+                                <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>
                             >
                             <input
                                 class="btn btn-primary mt-3"
                                 type="submit"
                                 name="reservationEditEffectivePickup"
                                 value="Record Pickup"
-                                <?php echo $wasPickedUp ? 'disabled' : null ?>
+                                <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>
                             >
                         </div>
                     </div>
@@ -194,7 +199,7 @@ echo getHeader();
             </div>
             <div class="col-12">
                 <form action="/src/app/admin/reservationEdit.php" method="post">
-                    <fieldset <?php echo $wasDroppedOff ? 'disabled' : null ?>>
+                    <fieldset <?php echo ($wasDroppedOff || $wasNoShow) ? 'disabled' : null ?>>
                         <div class="row">
                             <div class="col-sm-12 col-md-4">
                                 <label for="dropoffLocation">Drop-Off Location:</label>
@@ -262,7 +267,7 @@ echo getHeader();
                 <div class="row mb-1">
                     <div class="col-md-6 col-12">
                         <h2 class="h4 mb-3">Pick-up</h2>
-                        <fieldset <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                        <fieldset <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>>
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="pickupLocation">Pick-Up Location:</label>
@@ -308,7 +313,7 @@ echo getHeader();
                     </div>
                     <div class="col-md-6 col-12">
                         <h2 class="h4 mb-3">Drop-off</h2>
-                        <fieldset <?php echo $wasDroppedOff ? 'disabled' : null ?>>
+                        <fieldset <?php echo ($wasDroppedOff || $wasNoShow) ? 'disabled' : null ?>>
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="dropoffLocation">Drop-Off Location:</label>
@@ -358,9 +363,9 @@ echo getHeader();
                         <label for="categoryId">Vehicle category:</label>
                         <select
                             name="categoryId"
-                            id="category"
+                            id="categoryId"
                             class="form-select"
-                            <?php echo $wasPickedUp ? 'disabled' : null ?>
+                            <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>
                         >
                             <?php foreach ($categories as $category) { ?>
                                 <option
@@ -380,12 +385,12 @@ echo getHeader();
                         name="reservationEditRes"
                         value="Edit Reservation"
                         class="btn btn-primary"
-                        <?php echo $wasDroppedOff ? 'disabled' : null ?>
+                        <?php echo ($wasDroppedOff || $wasNoShow) ? 'disabled' : null ?>
                     >
                 </div>
             </form>
             <form action="/src/app/admin/reservationEdit.php" method="post">
-                <fieldset class="mb-3" <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                <fieldset class="mb-3" <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>>
                     <legend>
                         <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                         Billing Address
@@ -393,35 +398,35 @@ echo getHeader();
                     <div class="row mb-4">
                         <div class="col-8">
                             <label for="street">Street</label>
-                            <input type="text" class="form-control" name="street">
+                            <input type="text" class="form-control" name="street" id="street">
                         </div>
                         <div class="col">
                             <label for="door">Door</label>
-                            <input type="text" class="form-control" name="door">
+                            <input type="text" class="form-control" name="door" id="door">
                         </div>
                         <div class="col">
                             <label for="apartment">Apartment</label>
-                            <input type="text" class="form-control" name="apartment">
+                            <input type="text" class="form-control" name="apartment" id="apartment">
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col">
                             <label for="city">City</label>
-                            <input type="text" class="form-control" name="city">
+                            <input type="text" class="form-control" name="city" id="city">
                         </div>
                         <div class="col">
                             <label for="district">District</label>
-                            <input type="text" class="form-control" name="district">
+                            <input type="text" class="form-control" name="district" id="district">
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col">
                             <label for="postalCode">Postal Code</label>
-                            <input type="text" class="form-control" name="postalCode">
+                            <input type="text" class="form-control" name="postalCode" id="postalCode">
                         </div>
                         <div class="col">
                             <label for="country">Country</label>
-                            <select class="form-select" name="countryId">
+                            <select class="form-select" name="countryId" id="country">
                                 <?php foreach($countries as $country) { ?>
                                     <option value="<?php echo $country->getId(); ?>">
                                         <?php echo $country->getName(); ?>
@@ -437,7 +442,7 @@ echo getHeader();
                 </fieldset>
             </form>
             <form action="/src/app/admin/reservationEdit.php" method="post">
-                <fieldset class="mb-3" <?php echo $wasPickedUp ? 'disabled' : null ?>>
+                <fieldset class="mb-3" <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>>
                     <legend>
                         <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
                         Payment
@@ -452,15 +457,15 @@ echo getHeader();
                     <div class="row mb-4">
                         <div class="col-12 col-md-8">
                             <label for="ccNumber">Credit Card Number</label>
-                            <input type="text" class="form-control" name="ccNumber">
+                            <input type="text" class="form-control" name="ccNumber" id="ccNumberS">
                         </div>
                         <div class="col-12 col-md">
                             <label for="ccExpiry">Expiry</label>
-                            <input type="date" class="form-control" name="ccExpiry">
+                            <input type="date" class="form-control" name="ccExpiry" id="ccExpiry">
                         </div>
                         <div class="col-12 col-md">
                             <label for="ccCVV">CVV</label>
-                            <input type="text" class="form-control" name="ccCVV">
+                            <input type="text" class="form-control" name="ccCVV" id="ccCVV">
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">

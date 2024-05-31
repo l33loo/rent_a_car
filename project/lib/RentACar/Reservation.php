@@ -72,6 +72,18 @@ class Reservation {
     }
 
     /**
+     * Load the value of ownerUser
+     *
+     * @return self
+     */ 
+    public function loadOwnerUser(): self
+    {
+        $this->loadRelation('ownerUser', 'user');
+
+        return $this;
+    }
+
+    /**
      * Get the latest revision of the reservation
      *
      * @return Revision
