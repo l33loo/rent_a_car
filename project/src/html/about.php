@@ -39,7 +39,7 @@ echo getHeader();
             <h2 class="text-center">Who we are</h2>
             <div class="container border-dark w-70 mt-5" style="border: 4px solid; border-radius:10px;">
                 <div class="text-content">
-                    <p class="text-justify" style="padding-top:15px;">The Superstart Rental Car is an Azorean company
+                    <p class="text-justify" style="padding-top:15px;">The Superstar Rent-A-Car is an Azorean company
                         established in
                         2002, with
                         its
@@ -50,7 +50,7 @@ echo getHeader();
                         our
                         customers. If you are seeking an advanced Rent a Car service, look no further and choose
                         Superstart
-                        Rental Car to drive in style through the beautiful landscapes of São Miguel.</p>
+                        Rent-A-Car to drive in style through the beautiful landscapes of São Miguel.</p>
                 </div>
             </div>
         </div>
