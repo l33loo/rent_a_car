@@ -14,7 +14,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/src/html/reservations.php">
-                Manage Reservations
+                My Reservations
             </a>
         </li>
         <li class="nav-item">

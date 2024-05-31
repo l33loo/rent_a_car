@@ -2,7 +2,7 @@
 $color = $isAdmin ? 'warning' : 'dark' ?>
 <nav class="navbar navbar-<?php echo $color ?> bg-<?php echo $color ?>">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/src/html/admin/dashboard.php">Superstar Rental Car</a>
+        <a class="navbar-brand" href="/src/html/admin/dashboard.php">Superstar Rent-A-Car</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
             aria-label="Toggle navigation">
@@ -11,7 +11,7 @@ $color = $isAdmin ? 'warning' : 'dark' ?>
         <div class="offcanvas offcanvas-end text-bg-<?php echo $color ?>" tabindex="-1" id="offcanvasDarkNavbar"
             aria-labelledby="offcanvasDarkNavbarLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Superstar Rent Car</h5>
+                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Superstar Rent-A-Car</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
