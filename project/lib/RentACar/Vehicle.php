@@ -9,6 +9,7 @@ use RentACar\Property;
 
 class Vehicle {
     use DBModel;
+    use PropertiesTrait;
 
     protected ?string $plate = null;
     protected ?bool $rentable = null;
@@ -16,7 +17,6 @@ class Vehicle {
     protected ?int $category_id = null;
     protected ?Island $island = null;
     protected ?Category $category = null;
-    protected ?array $properties = null;
     protected ?bool $isArchived = null;
 
     public function __construct(
@@ -92,52 +92,6 @@ class Vehicle {
     public function getCategory(): ?Category
     {
         return $this->category;
-    }
-
-    /**
-     * Get the value of properties
-     */ 
-    public function getProperties(): array
-    {
-        return $this->properties;
-    }
-
-      /**
-     * Set the value of properties
-     *
-     * @return self
-     */ 
-    public function setProperties($properties): self
-    {
-        $this->properties = $properties;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of properties
-     * @return self
-     */ 
-    public function loadProperties(): self
-    {
-        try {
-            $vehicleId = $this->id;
-            $stmt = self::rawSQL("
-                SELECT p.id, p.name, vp.propertyValue FROM property p
-                LEFT OUTER JOIN vehicle_property vp ON vp.property_id = p.id
-                WHERE vp.vehicle_id = $vehicleId;
-            ");
-
-            $results = [];
-            while($row = $stmt->fetchObject(Property::class)) {
-                $results[$row->getName()] = $row;
-            }
-            $this->properties = $results;
-        } catch(e) {
-            // TODO: error handling
-        }
-        
-        return $this;
     }
 
     /**
@@ -298,24 +252,5 @@ class Vehicle {
         } else {
             return [];
         }
-    }
-
-    /**
-     * Get a vehicle property
-     *
-     * @return ?string
-     */ 
-    public function __get(string $propertyName): ?string
-    {
-        $properties = $this->properties;
-        if ($properties === null) {
-            $this->loadProperties();
-        }
-
-        if ($properties === null || count($properties) === 0) {
-            return null;
-        }
-        
-        return isset($properties[$propertyName]) ? $properties[$propertyName]->getPropertyValue() : null;
     }
 }
