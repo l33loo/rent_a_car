@@ -936,6 +936,16 @@ class Revision {
     }
 
     /**
+     * Get the value of reservation_id
+     * 
+     * @return int
+     */ 
+    public function getReservation_id(): int
+    {
+        return $this->reservation_id;
+    }
+
+    /**
      * Get the value of pickupLocation_id
      */ 
     public function getPickupLocation_id(): int
