@@ -2,6 +2,14 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/RentACar/Location.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/html/reservationValidation.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/RentACar/Category.php';
+
+use RentACar\Category;
+
+echo getHeader();
+
+$categories = Category::search([]);
+$categories = array_slice($categories, 0, 4);
 
 use RentACar\Location;
 
@@ -71,7 +79,7 @@ select {
             </div>
         </div>
     </div>
-  
+
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>Reservation</h1>
@@ -84,9 +92,9 @@ select {
                             <label for="pickup-location">1. Pick-Up Location:</label>
                             <select id="pickup-location" name="pickupLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
-                                    <option value="<?php echo $location->getId(); ?>">
-                                        <?php echo $location->getName(); ?>
-                                    </option>
+                                <option value="<?php echo $location->getId(); ?>">
+                                    <?php echo $location->getName(); ?>
+                                </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -100,7 +108,8 @@ select {
                     <div class="row">
                         <div class="col">
                             <label for="pickup-time">Pick-Up Time:</label>
-                            <input type="time" id="pickup-time" name="pickupTime" min="09:30" max="17:30" class="form-control" required>
+                            <input type="time" id="pickup-time" name="pickupTime" min="09:30" max="17:30"
+                                class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -111,9 +120,9 @@ select {
                             <label for="dropoff-location">Drop-Off Location:</label>
                             <select id="dropoff-location" name="dropoffLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
-                                    <option value="<?php echo $location->getId(); ?>">
-                                        <?php echo $location->getName(); ?>
-                                    </option>
+                                <option value="<?php echo $location->getId(); ?>">
+                                    <?php echo $location->getName(); ?>
+                                </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -127,7 +136,8 @@ select {
                     <div class="row">
                         <div class="col">
                             <label for="dropoff-time">Drop-Off Time:</label>
-                            <input type="time" id="dropoff-time" name="dropoffTime" min="09:30:00" max="17:30:00" class="form-control" required>
+                            <input type="time" id="dropoff-time" name="dropoffTime" min="09:30:00" max="17:30:00"
+                                class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -137,48 +147,22 @@ select {
     </div>
 
     <div class="container">
-        <h2 style="position:relative; top: -100px;">Our Fleet</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">
+        <h2 style="position:relative; top: -80px;">Our Fleet</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px;">
+            <?php foreach ($categories as $category): ?>
             <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(16px 16px 20px);">
-                    <img src="/img/car.jpg" class="card-img-top" alt="car">
-                    <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Regular</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
-                            non
-                            urna tincidunt consectetur. Nulla facilisi.</p>
-                        <button type="button" class="btn btn-outline-dark"
-                            style="border-radius: 15px;">Categories</button>
+                <div class="card h-100">
+                    <img src="/img/<?php echo ($category->getName()); ?>.jpg" class="card-img-top"
+                        alt="<?php echo ($category->getName()); ?>">
+                    <div class="card-info">
+                        <h5><?php echo ($category->getName()); ?></h5>
+                        <p><?php echo ($category->getDescription()); ?></p>
+                        <p>Daily Rate: <?php echo number_format($category->getDailyRate(), 2); ?> €</p>
+                        <a href="/html/fleet.php" class="btn btn-primary">Other Categories</a>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="/img/moto.jpg" class="card-img-top" alt="moto">
-                    <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Motorcycle</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
-                            non
-                            urna tincidunt consectetur. Nulla facilisi.</p>
-                        <button type="button" class="btn btn-outline-dark "
-                            style="border-radius: 15px;">Categories</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="/img/suv.jpg" class="card-img-top" alt="suv">
-                    <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Suv</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
-                            non
-                            urna tincidunt consectetur. Nulla facilisi.
-                        </p>
-                        <button type="button" class="btn btn-outline-dark"
-                            style="border-radius: 15px;">Categories</button>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 
