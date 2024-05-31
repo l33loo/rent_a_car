@@ -49,7 +49,7 @@ echo getHeader();
                         high-quality vehicles from various segments, catering to the diverse needs and preferences of
                         our
                         customers. If you are seeking an advanced Rent a Car service, look no further and choose
-                        Superstart
+                        Superstar
                         Rent-A-Car to drive in style through the beautiful landscapes of São Miguel.</p>
                 </div>
             </div>
