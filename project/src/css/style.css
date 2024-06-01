@@ -52,12 +52,13 @@ body > .container {
 }
 
 .fleet .card {
-  width: 300px;
-  margin: 20px;
+  max-width: 22%;
+  min-width: 300px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  flex: 1 0 22%;
 }
 
 .fleet .card img {
@@ -84,8 +85,4 @@ body > .container {
   text-align: left;
   margin-top: 150px;
   margin-left: 170px;
-}
-
-.fleet .d-flex {
-  gap: 0;
 }

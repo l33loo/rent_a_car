@@ -3,11 +3,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservation.inc.php';
 
+use RentACar\Category;
 use RentACar\Location;
 use RentACar\Reservation;
 
 try {
     $locations = Location::fetchActiveLocations();
+    $categories = Category::search([], '', null, null, 4);
 } catch (\Exception $e) {
     // TODO: 
 }
@@ -161,53 +163,7 @@ echo getHeader();
             <input type="submit" value="Submit" class="btn btn-primary">
         </form>
     </div>
-
-    <div class="container">
-        <h2 style="position:relative; top: -100px;">Our Fleet</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4" style="position: relative; top: -30px">
-            <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(16px 16px 20px);">
-                    <img src="/src/img/car.jpg" class="card-img-top" alt="car">
-                    <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Regular</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
-                            non
-                            urna tincidunt consectetur. Nulla facilisi.</p>
-                        <button type="button" class="btn btn-outline-dark"
-                            style="border-radius: 15px;">Categories</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="/src/img/moto.jpg" class="card-img-top" alt="moto">
-                    <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Motorcycle</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
-                            non
-                            urna tincidunt consectetur. Nulla facilisi.</p>
-                        <button type="button" class="btn btn-outline-dark "
-                            style="border-radius: 15px;">Categories</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100" style="    filter: drop-shadow(20px 20px 20px);">
-                    <img src="/src/img/suv.jpg" class="card-img-top" alt="suv">
-                    <div class="card-body text-center" style="background-color: rgba(25, 135, 84, 0.7); color: white;">
-                        <h5 class="card-title">Suv</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sapien
-                            non
-                            urna tincidunt consectetur. Nulla facilisi.
-                        </p>
-                        <button type="button" class="btn btn-outline-dark"
-                            style="border-radius: 15px;">Categories</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/fleet.inc.php'; ?>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/footer.inc.php'; ?>
 </body>
 
