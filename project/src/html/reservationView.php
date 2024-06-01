@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/sessionGuest.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Customer;
@@ -15,6 +16,11 @@ try {
     
     $reservation = Reservation::find($_GET['reservationId']);
     $reservation->loadRelation('ownerUser', 'user');
+
+    if (!isSameUser($reservation->getOwnerUser()->getId())) {
+        redirectLoggedInUser('/');
+    }
+
     $revisions = $reservation->findAllRevisions();
     $latestRevision = array_pop($revisions);
     $latestRevision->loadAllRelations();
