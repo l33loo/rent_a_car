@@ -28,8 +28,8 @@ if ($users[0]->checkPassword(trim($_POST['password']))) {
         header('Location: /src/html/admin/dashboard.php');
     } else {
         $redirectPath = '/';
-        if (!empty($_SESSION['redirectPath']) && count($_SESSION['redirectPath']) > 0) {
-            $redirectPath = array_pop($_SESSION['redirectPath']);
+        if (!empty($_POST['redirectTo'])) {
+            $redirectPath = $_POST['redirectTo'];
         }
 
         header('Location: ' . $redirectPath);

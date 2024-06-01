@@ -7,6 +7,11 @@ use RentACar\Vehicle;
 
 session_start();
 
+if (!empty($_SESSION['logged_id'])) {
+    header('Location: /src/html/reservationBook.php');
+    exit;
+}
+
 // TODO: validate form fields
 
 echo getHeader();
@@ -59,10 +64,10 @@ echo getHeader();
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>3. Book</h1>
         <div class="d-flex flex-column align-items-center">
-            <div>
-                <a href="/src/html/login.php" class="btn btn-warning">Already have an account</a>
-                <?php $_SESSION['redirectPath'][] = '/src/html/reservationBook.php' ?>
-            </div>
+            <form action="/src/html/login.php" method="get">
+                <input type="hidden" name="redirectTo" value="/src/html/reservationBook.php">
+                <input type="submit" class="btn btn-warning" value="Already have an account">
+            </form>
             <div>
                 - OR -
             </div>

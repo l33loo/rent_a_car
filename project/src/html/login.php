@@ -39,6 +39,9 @@ echo getHeader();
                 </div>
             </div>
             <div class="container d-flex justify-content-center mt-4">
+                <?php if (!empty($_GET['redirectTo'])) { ?>
+                    <input type="hidden" name="redirectTo" value="<?php echo $_GET['redirectTo'] ?>">
+                <? } ?>
                 <input
                     type="submit"
                     class="btn btn-outline-success"
