@@ -1317,13 +1317,12 @@ class Revision {
                 ->loadRelation('address')
                 ->getAddress()
                 ->loadRelation('country');
-            $this
-                ->getCustomer()
-                ->loadRelation('user')
-                ->getUser()
-                ->loadRelation('address')
-                ->getAddress()
-                ->loadRelation('country');
+            $customerUser = $this->getCustomer()->getUser();
+            if ($customerUser !== null) {
+                $customerUser->loadRelation('address')
+                    ->getAddress()
+                    ->loadRelation('country');
+            }
             $this
                 ->getBillingAddress()
                 ->loadRelation('country');

@@ -99,7 +99,7 @@ echo getHeader();
                                 </div>
                             </div>
                             <div class="d-flex flex-wrap justify-content-center" style="gap:10px;">
-                                <a class="btn btn-primary ml-2" href="/src/html/reservationView.php">View</a>
+                                <a class="btn btn-primary ml-2" href="/src/html/reservationView.php?reservationId=<?php echo $revision->getReservation_id() ?>">View</a>
                                 <form action="/" method="get">
                                     <input type="hidden" name="reservationId" value="<?php echo $revision->getReservation_id() ?>">
                                     <input
