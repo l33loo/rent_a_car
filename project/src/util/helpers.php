@@ -9,9 +9,7 @@ function calculateDiffDays(string $beforeDateStr, string $afterDateStr): int
 
 function calculateTotalPrice(float $dailyRate, string $pickupDate, string $dropoffDate): float
 {
-    $pickupDateTime = \DateTime::createFromFormat('Y-m-d', $pickupDate);
-    $dropoffDateTime = \DateTime::createFromFormat('Y-m-d', $dropoffDate);
-    $days = $pickupDateTime->diff($dropoffDateTime)->days;
+    $days = calculateDiffDays($pickupDate, $dropoffDate);
 
     return (float)($dailyRate * $days);
 }

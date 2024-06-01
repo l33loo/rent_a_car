@@ -105,7 +105,7 @@ try {
     $reservation = new Reservation($userId);
     $reservation->save();
 
-    $revision = new Revision(
+    $revision = (new Revision(
         $reservation->getId(),
         // TODO: use Carbon type
         trim($_POST['pickupDate']),
@@ -150,10 +150,10 @@ try {
         null, // givenByUser
         null, // effectiveDropoffLocation
         null // collectedByUser
-    );
-    $revision->calculateAndSetTotalPrice();
-    $revision->save();
-} catch(e) {
+    ))
+        ->calculateAndSetTotalPrice()
+        ->save();
+} catch(\Exception $e) {
     // TODO: handle errors
 
     // TODO: send back to form with existing data

@@ -96,7 +96,7 @@ try {
     $reservation = new Reservation();
     $reservation->save();
 
-    $revision = new Revision(
+    $revision = (new Revision(
         $reservation->getId(),
         // TODO: use Carbon type
         trim($_POST['pickupDate']),
@@ -106,8 +106,8 @@ try {
         trim($_POST['pickupTime']),
         // TODO: use Carbon type
         trim($_POST['dropoffTime']),
+        null,
         // TODO: use Carbon type
-        100.00, // TODO: fix totalPrice
         date("Y-m-d H:i:s", time()), // submittedTimestamp
 
         $address->getId(), // Billing address
@@ -141,8 +141,9 @@ try {
         null, // givenByUser
         null, // effectiveDropoffLocation
         null // collectedByUser
-    );
-    $revision->save();
+    ))
+        ->calculateAndSetTotalPrice()
+        ->save();
 } catch(e) {
     // TODO: handle errors
 

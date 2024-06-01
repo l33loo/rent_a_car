@@ -20,6 +20,8 @@ echo getHeader();
     <div class="container mt-5">
         <h1 class="mb-4">My Reservations</h1>
         <?php foreach ($revisions as $revision) {
+            // TODO: create revision method to do this
+            $revision->loadStatus();
             $vehicle = $revision->loadVehicle()->getVehicle();
             $vehicle->loadProperties();
             $category = $revision->loadCategory()->getCategory();
@@ -33,7 +35,7 @@ echo getHeader();
                     <div class="col-md-6">
                         <div class="card-body">
                             <h2 class="card-title">
-                                <?php echo $vehicle->Brand . ' ' . $vehicle->Model ?> <small>(<?php echo $category->getName() ?>)</small>
+                                <?php echo $vehicle->Brand . ' ' . $vehicle->Model ?> <small>(<?php echo $category->getName() ?>)</small> - <?php echo $revision->getStatus()->getStatusName() ?>
                             </h2>
                             <div>
                                 <?php foreach ($categoryProperties as $categoryProperty) { ?>
