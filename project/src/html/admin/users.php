@@ -12,7 +12,7 @@ echo getHeader();
 ?>
 
 <body>
-    <?php include '../components/navbar.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
     <div class="container">
         <div class="text-content">
             <h1 style="margin-top: 150px; margin-bottom:50px;">Manage Users</h1>
@@ -99,7 +99,7 @@ echo getHeader();
                         <td><?php echo $user->getPhone(); ?></td>
                         <td><?php echo $user->getIsAdmin() ? 'Yes' : 'No'; ?></td>
                         <td class="d-flex flex-wrap">
-                            <a href="/src/html/admin/user.php?id=<?php echo $userId; ?>" class="btn btn-primary">View</a>
+                            <a href="/src/html/admin/userView.php?id=<?php echo $userId; ?>" class="btn btn-primary">View</a>
                             <a href="/src/html/admin/userEdit.php?id=<?php echo $userId; ?>" class="btn btn-secondary">Edit</a>
                             <?php if ($userIsArchived) { ?>
                                 <form action="/src/app/admin/userEdit.php" method="POST">
@@ -118,7 +118,7 @@ echo getHeader();
             </tbody>
         </table>
     </div>
-    <?php include '../components/footer.inc.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/footer.inc.php'; ?>
 </body>
 
 </html>
