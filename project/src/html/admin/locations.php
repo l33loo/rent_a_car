@@ -16,12 +16,10 @@ echo getHeader();
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
     <div class="container">
-        <div class="text-content d-flex flex-wrap align-items-center justify-content-between px-3" style="margin-top: 150px; margin-bottom:50px;">
+        <div class="text-content d-flex flex-wrap align-items-center justify-content-between px-3 mb-3" style="margin-top: 150px;">
             <h1>Manage Locations</h1>
             <a href="/src/html/admin/locationNew.php" class="btn btn-success">Add New Location</a>
         </div>
-    </div>
-    <div class="container">
         <table class="table table-bordered" id="my_table_id" data-url="data/url.json" data-id-field="id"
             data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
             <thead>
