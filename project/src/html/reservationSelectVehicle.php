@@ -91,7 +91,7 @@ echo getHeader();
                         </div>
                     <? } ?>
                     <form
-                        action="<?php echo $isOwnerEditing ? '/src/app/reservationEdit.php' : '/src/html/reservationBook.php' ?>"
+                        action="<?php echo $isOwnerEditing ? '/src/app/reservationEdit.php' : '/src/app/reservationUserOrGuest.php' ?>"
                         method="<?php echo $isOwnerEditing ? 'post' : 'get' ?>"
                     >
                         <?php if($isOwnerEditing) { ?>
