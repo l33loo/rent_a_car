@@ -12,3 +12,41 @@ body > .container {
 .d-flex {
   gap: 10px;
 }
+
+.bg-image.about {
+  position: relative;
+  background-image: url(../img/WhoweAre.png);
+  background-size: cover;
+  background-position: center;
+  height: 50vh;
+  filter: drop-shadow(20px 20px 20px);
+  top: 50px;
+}
+
+.about > .gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+}
+
+.location-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.location-list-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.location-name {
+  font-weight: bold;
+}
+
+.location-address {
+  color: #666;
+}
