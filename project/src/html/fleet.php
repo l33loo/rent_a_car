@@ -20,7 +20,7 @@ echo getHeader();
                 <div class="card-info">
                     <h2><?php echo $category->getName(); ?></h2>
                     <p><?php echo $category->getDescription(); ?></p>
-                    <p>Daily Rate: <?php echo number_format($category->getDailyRate(), 2); ?> €</p>
+                    <p>Daily Rate: <?php echo $category->getDailyRateToString() ?></p>
                     <a href="/src/html/categoryView.php?categoryId=<?php echo $category->getId(); ?>"
                         class="btn btn-primary">View Details</a>
                 </div>
