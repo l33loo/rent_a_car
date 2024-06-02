@@ -1,7 +1,10 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
+session_start();
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservation.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservationSelectVehicle.inc.php';
 
 echo getHeader();
@@ -91,20 +94,13 @@ echo getHeader();
                         </div>
                     <? } ?>
                     <form
-                        action="<?php echo $isOwnerEditing ? '/src/app/reservationEdit.php' : '/src/app/reservationUserOrGuest.php' ?>"
-                        method="<?php echo $isOwnerEditing ? 'post' : 'get' ?>"
+                        action="/src/app/reservationSelectVehicle.php"
+                        method="post"
                     >
                         <?php if($isOwnerEditing) { ?>
                             <input type="hidden" name="sessionKey" value="<?php echo $sessionKey ?>">
                         <?php } ?>
-                        <input type="hidden" name="categoryId" value="<?php echo $category->getId() ?>">
                         <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId() ?>">
-                        <input type="hidden" name="pickupLocationId" value="<?php echo $_GET['pickupLocationId'] ?>">
-                        <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">
-                        <input type="hidden" name="pickupTime" value="<?php echo $_GET['pickupTime'] ?>">
-                        <input type="hidden" name="dropoffLocationId" value="<?php echo $_GET['dropoffLocationId'] ?>">
-                        <input type="hidden" name="dropoffDate" value="<?php echo $_GET['dropoffDate'] ?>">
-                        <input type="hidden" name="dropoffTime" value="<?php echo $_GET['dropoffTime'] ?>">
                         <input
                             type="submit"
                             value="<?php echo $isOwnerEditing ? 'Update Reservation' : 'Book Now'  ?>"

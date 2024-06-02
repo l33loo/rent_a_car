@@ -49,8 +49,8 @@ trait PropertiesTrait {
                 $results[$row->getName()] = $row;
             }
             $this->properties = $results;
-        } catch(e) {
-            // TODO: error handling
+        } catch(\Exception $e) {
+            throw new \Exception('Error loading properties');
         }
         
         return $this;

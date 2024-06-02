@@ -1,16 +1,8 @@
 <?php
+session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-
-use RentACar\Category;
-use RentACar\Vehicle;
-
-session_start();
-
-// if (empty($_SESSION['logged_id'])) {
-//     header('Location: /src/html/reservationLoginOrGuest.php');
-//     exit;
-// }
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservation.inc.php';
 
 // TODO: validate form fields
 
@@ -63,21 +55,18 @@ echo getHeader();
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>3. Book</h1>
+        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['userReservationBookingPage'])) ? null : $_SESSION['errors']['userReservationBookingPage'];
+        if ($errorMsg !== null) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg;
+                unset($_SESSION['errors']['userReservationBookingPage']); ?>
+            </div>
+        <?php } ?>
         <form action="/src/app/reservationBook.php" method="post">
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formCustomer.inc.php'; ?>
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formAddress.inc.php'; ?>
             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formPayment.inc.php'; ?>
             <div class="d-flex justify-content-center">
-                <input type="hidden" name="userId" value="<?php echo empty($_SESSION['logged_id']) ? null : $_SESSION['logged_id'] ?>">
-                <input type="hidden" name="categoryId" value="<?php echo $_GET['categoryId'] ?>">
-                <input type="hidden" name="vehicleId" value="<?php echo $_GET['vehicleId'] ?>">
-                <input type="hidden" name="pickupLocationId" value="<?php echo $_GET['pickupLocationId'] ?>">
-                <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">
-                <input type="hidden" name="pickupTime" value="<?php echo $_GET['pickupTime'] ?>">
-                <input type="hidden" name="dropoffLocationId" value="<?php echo $_GET['dropoffLocationId'] ?>">
-                <input type="hidden" name="dropoffDate" value="<?php echo $_GET['dropoffDate'] ?>">
-                <input type="hidden" name="dropoffTime" value="<?php echo $_GET['dropoffTime'] ?>">
-
                 <input type="submit" value="Book Now" class="btn btn-success" name="reservationBook">
             </div>
         </form>

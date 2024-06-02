@@ -8,7 +8,7 @@ use RentACar\User;
 try {
     $user = User::find($_SESSION['logged_id']);
     $revisions = $user->fetchCurrentRevisions();
-} catch(\Exception $e) {
+} catch(Exception $e) {
     // TODO: handle error
 }
 
@@ -19,6 +19,13 @@ echo getHeader();
     <?php include 'components/navbar.inc.php'; ?>
     <div class="container mt-5">
         <h1 class="mb-4">My Reservations</h1>
+        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['userReservationsPage'])) ? null : $_SESSION['errors']['userReservationsPage'];
+        if ($errorMsg !== null) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg;
+                unset($_SESSION['errors']['userReservationsPage']); ?>
+            </div>
+        <?php } ?>
         <?php foreach ($revisions as $revision) {
             // TODO: create revision method to do this
             $revision->loadStatus();

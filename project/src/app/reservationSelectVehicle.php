@@ -1,9 +1,14 @@
 <?php
+session_start();
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
+use RentACar\Revision;
 
 try {
     if (empty($_SESSION['booking']) || empty($_SESSION['booking']['newRevision']) || empty($_SESSION['booking']['timestamp'])) {
-        throw new Exception('Missing booking info.');
+        throw new Exception('Missing booking information.');
     }
     
     if (calculateDiffMinutes($_SESSION['booking']['timestamp'], time()) > 15) {
@@ -18,6 +23,25 @@ try {
         if ($canUserUpdate !== true) {
             throw new Exception($canUserUpdate);
         }
+    }
+
+    $categoryId = $revision
+        ->setVehicle_id($_POST['vehicleId'])
+        ->loadVehicle()
+        ->getVehicle()
+        ->getCategory_id();
+
+    $revision->setCategory_id($categoryId);
+    // print_r($revision);
+    // exit;
+    $_SESSION['booking']['newRevision'] = serialize($revision);
+
+    if ($isOwnerEditing) {
+        header('Location: /src/app/reservationEdit.php');
+    } else if (empty($_SESSION['logged_id'])) {
+        header('Location: /src/html/reservationLoginOrGuest.php');
+    } else {
+        header('Location: /src/html/reservationBook.php');
     }
 } catch(Exception $e) {
     unset($_SESSION['booking']);
