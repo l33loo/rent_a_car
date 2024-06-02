@@ -7,6 +7,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 use RentACar\Category;
 use RentACar\CreditCard;
 use RentACar\Customer;
+use RentACar\FormValidatorTrait;
 use RentACar\Location;
 use RentACar\User;
 use RentACar\Vehicle;
@@ -35,8 +36,11 @@ use RentACar\Vehicle;
 // collectedByUser_id INT UNSIGNED,
 // billingAddress_id INT UNSIGNED NOT NULL,
 
-class Revision {
+class Revision
+{
     use DBModel;
+    use FormValidatorTrait;
+
     protected ?int $reservation_id = null;
     // TODO: use Carbon type
     protected ?string $pickupDate = null;
@@ -1571,5 +1575,67 @@ class Revision {
     public function wasNoShow(): bool
     {
         return $this->calculateDaysUntilPickup() <= 0;
+    }
+
+    /**
+     * Validate revision form fields.
+     * If the argument is null, all fields are required.
+     *
+     * @return array
+     */ 
+    private static function getValidationRules(): array
+    {
+        return [
+            'pickupLocationId' => [
+                'name' => 'pickupLocationId', 
+                'type' => 'integer',
+                'mustBeEqual' => [
+                    'comparedTo' => 'dropoffLocationId',
+                    'value' => 'island_id',
+                ],
+                'required' => true,
+            ],
+            'pickupDate' => [
+                'name' => 'pickupDate',
+                'type' => 'dateString',
+                'mustBeBefore' => 'dropoffDate',
+                'mustBeAfter' => [
+                    time()
+                ],
+                'required' => true,
+            ],
+            'pickupTime' => [
+                'name' => 'pickupTime',
+                'type' => 'timeString',
+                'mustBeAfter' => '09:30:00',
+                'mustBeBefore' => '17:30:00',
+                'required' => true,
+            ],
+            'dropoffLocationId' => [
+                'name' => 'dropoffLocationId',
+                'type' => 'integer',
+                'mustBeEqual' => [
+                    'comparedTo' => 'dropoffLocationId',
+                    'value' => 'island_id'
+                ],
+                'required' => true,
+            ],
+            'dropoffDate' => [
+                'name' => 'dropoffDate',
+                'type' => 'dateString',
+                'mustBeAfter' => [
+                    'dropoffDate',
+                    time()
+                ],
+                'required' => true,
+            ],
+            [
+                'name' => 'dropoffTime',
+                'type' => 'timeString',
+                'mustBeAfter' => '09:30:00',
+                'mustBeBefore' => '17:30:00',
+                'required' => true,
+            ]
+        ];
     }
 }

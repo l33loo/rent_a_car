@@ -80,9 +80,17 @@ echo getHeader();
             <div class="row">
                 <div class="col-md-6 col-12">
                     <h2>Pick-up</h2>
-                    <div class="row">
+                    <div class="row my-2">
                         <div class="col">
                             <label for="pickup-location">Pick-Up Location:</label>
+                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['pickupLocationId'])) { ?>
+                                <div class="text-danger">
+                                    <small>
+                                        <?php echo $_SESSION['errors']['pickupLocationId'];
+                                        unset($_SESSION['errors']['pickupLocationId']); ?>
+                                    </small>
+                                </div>
+                            <?php } ?>
                             <select id="pickup-location" name="pickupLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option
@@ -95,21 +103,38 @@ echo getHeader();
                             </select>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row my-2">
                         <div class="col">
                             <label for="pickup-date">Pick-Up Date:</label>
+                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['pickupDate'])) { ?>
+                                <div class="text-danger">
+                                    <small>
+                                        <?php echo $_SESSION['errors']['pickupDate'];
+                                        unset($_SESSION['errors']['pickupDate']); ?>
+                                    </small>
+                                </div>
+                            <?php } ?>
                             <input
                                 type="date"
                                 id="pickup-date" 
                                 name="pickupDate"
                                 class="form-control"
+                                min="<?php echo date("Y-m-d", time()) ?>"
                                 value="<?php echo $isOwnerEditing ? $revision->getPickupDate() : null ?>"
                             >
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row my-2">
                         <div class="col">
                             <label for="pickup-time">Pick-Up Time:</label>
+                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['pickupTime'])) { ?>
+                                <div class="text-danger">
+                                    <small>
+                                        <?php echo $_SESSION['errors']['pickupTime'];
+                                        unset($_SESSION['errors']['pickupTime']); ?>
+                                    </small>
+                                </div>
+                            <?php } ?>
                             <input
                                 type="time"
                                 id="pickup-time"
@@ -124,9 +149,17 @@ echo getHeader();
                 </div>
                 <div class="col-md-6 col-12">
                     <h2>Drop-off</h2>
-                    <div class="row">
+                    <div class="row my-2">
                         <div class="col">
                             <label for="dropoff-location">Drop-Off Location:</label>
+                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['dropoffLocationId'])) { ?>
+                                <div class="text-danger">
+                                    <small>
+                                        <?php echo $_SESSION['errors']['dropoffLocationId'];
+                                        unset($_SESSION['errors']['dropoffLocationId']); ?>
+                                    </small>
+                                </div>
+                            <?php } ?>
                             <select id="dropoff-location" name="dropoffLocationId" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option
@@ -139,21 +172,38 @@ echo getHeader();
                             </select>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row my-2">
                         <div class="col">
                             <label for="dropoff-date">Drop-Off Date:</label>
+                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['dropoffDate'])) { ?>
+                                <div class="text-danger">F
+                                    <small>
+                                        <?php echo $_SESSION['errors']['dropoffDate'];
+                                        unset($_SESSION['errors']['dropoffDate']); ?>
+                                    </small>
+                                </div>
+                            <?php } ?>
                             <input
                                 type="date"
                                 id="dropoff-date"
                                 name="dropoffDate"
                                 class="form-control"
+                                min="<?php echo date("Y-m-d", time()) ?>"
                                 value="<?php echo $isOwnerEditing ? $revision->getDropoffDate() : null ?>"
                             >
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row my-2">
                         <div class="col">
                             <label for="dropoff-time">Drop-Off Time:</label>
+                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['dropoffTime'])) { ?>
+                                <div class="text-danger">
+                                    <small>
+                                        <?php echo $_SESSION['errors']['dropoffTime'];
+                                        unset($_SESSION['errors']['dropoffTime']); ?>
+                                    </small>
+                                </div>
+                            <?php } ?>
                             <input
                                 type="time"
                                 id="dropoff-time"
@@ -173,7 +223,7 @@ echo getHeader();
                 value="<?php echo empty($_GET['reservationId']) ? null : $_GET['reservationId'] ?>"
                 class="btn btn-primary"
             >
-            <input type="submit" value="Submit" class="btn btn-primary">
+            <input type="submit" value="Submit" class="btn btn-primary my-2">
         </form>
     </div>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/fleet.inc.php'; ?>

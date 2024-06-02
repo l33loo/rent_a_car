@@ -3,7 +3,8 @@ namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-class Property {
+class Property
+{
     use DBModel;
 
     protected ?string $name = null;

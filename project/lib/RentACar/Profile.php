@@ -3,10 +3,11 @@ namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-use Carbon\Carbon;
 use RentACar\Address;
+use RentACar\FormValidatorTrait;
 
-abstract class Profile {
+abstract class Profile
+{
     use DBModel; 
 
     protected ?string $name = null;

@@ -14,6 +14,7 @@ class ComposerStaticInitcbd326feccfc5fb82c1812bb40b8ef07
         'RentACar\\CreditCard' => __DIR__ . '/../..' . '/lib/RentACar/CreditCard.php',
         'RentACar\\Customer' => __DIR__ . '/../..' . '/lib/RentACar/Customer.php',
         'RentACar\\DBModel' => __DIR__ . '/../..' . '/lib/RentACar/DBModel.php',
+        'RentACar\\FormValidatorTrait' => __DIR__ . '/../..' . '/lib/RentACar/FormValidatorTrait.php',
         'RentACar\\Island' => __DIR__ . '/../..' . '/lib/RentACar/Island.php',
         'RentACar\\Location' => __DIR__ . '/../..' . '/lib/RentACar/Location.php',
         'RentACar\\MyConnect' => __DIR__ . '/../..' . '/lib/RentACar/MyConnect.php',

@@ -4,9 +4,11 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Category;
+use RentACar\FormValidatorTrait;
 use RentACar\Island;
 
-class Vehicle {
+class Vehicle
+{
     use DBModel;
     use PropertiesTrait;
 

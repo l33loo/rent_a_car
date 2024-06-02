@@ -4,8 +4,10 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Country;
+use RentACar\FormValidatorTrait;
 
-class Address {
+class Address implements FormValidatorInterface
+{
     use DBModel;
 
     protected ?string $street = null;

@@ -5,7 +5,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 // TODO: update UML and SQL Schema to add Status
 
-class Status {
+class Status
+{
     use DBModel;
 
     protected ?string $statusName;

@@ -3,7 +3,10 @@ namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-class CreditCard {
+use RentACar\FormValidatorTrait;
+
+class CreditCard implements FormValidatorInterface
+{
     use DBModel;
 
     protected ?string $ccNumber = null;
