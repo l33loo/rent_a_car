@@ -4,7 +4,8 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
-class Category {
+class Category
+{
     use DBModel;
     use PropertiesTrait;
 

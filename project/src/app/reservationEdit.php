@@ -20,8 +20,9 @@ if (isset($_POST['changeForm'])) {
         header('Location: /?reservationId=' . $reservation->getId());
         exit;
     } catch (Exception $e) {
-        echo $e->getMessage();
-        die;
+        $_SESSION['errors']['userReservationsPage'] = $e->getMessage();
+        header('Location: /src/html/reservations.php');
+        exit;
     }
 }
 
@@ -41,10 +42,13 @@ if (isset($_POST['reservationSelectVehicle'])) {
         $revision
             ->setCategory_id($categoryId)
             ->update();
-        
+
+        unset($_SESSION['booking']);
         header('Location: /src/html/reservationView.php?reservationId=' . $revision->getReservation_id());
     } catch (Exception $e) {
-        echo $e->getMessage();
-        die;
+        unset($_SESSION['booking']);
+        $_SESSION['errors']['userReservationsPage'] = $e->getMessage();
+        header('Location: /src/html/reservations.php');
+        exit;
     }
 }

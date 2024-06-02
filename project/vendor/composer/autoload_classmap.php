@@ -13,6 +13,7 @@ return array(
     'RentACar\\CreditCard' => $baseDir . '/lib/RentACar/CreditCard.php',
     'RentACar\\Customer' => $baseDir . '/lib/RentACar/Customer.php',
     'RentACar\\DBModel' => $baseDir . '/lib/RentACar/DBModel.php',
+    'RentACar\\FormValidatorTrait' => $baseDir . '/lib/RentACar/FormValidatorTrait.php',
     'RentACar\\Island' => $baseDir . '/lib/RentACar/Island.php',
     'RentACar\\Location' => $baseDir . '/lib/RentACar/Location.php',
     'RentACar\\MyConnect' => $baseDir . '/lib/RentACar/MyConnect.php',

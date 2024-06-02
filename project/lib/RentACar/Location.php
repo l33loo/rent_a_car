@@ -3,8 +3,12 @@ namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-class Location {
+use RentACar\FormValidatorTrait;
+
+class Location
+{
     use DBModel;
+    use FormValidatorTrait;
 
     protected ?string $name = null;
     protected ?Address $address = null;

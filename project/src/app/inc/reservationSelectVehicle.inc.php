@@ -56,5 +56,7 @@ try {
         }
     }
 } catch(Exception $e) {
-    // TODO: handle errors
+    unset($_SESSION['booking']);
+    $_SESSION['errors']['indexPage'] = $e->getMessage();
+    header('Location: /');
 }

@@ -19,6 +19,11 @@ try {
         $revision = new Revision();
     }
 
+    $isFormValid = Revision::validateForm();
+    if (!$isFormValid) {
+        throw new Exception('Invalid fields.');
+    }
+
     $revision
         ->setPickupLocation_id($_POST['pickupLocationId'])
         ->loadPickupLocation()

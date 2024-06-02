@@ -204,7 +204,7 @@ trait DBModel
         return $connection->query($sql);
     }
 
-    public static function camelToSnake($camelCase): string
+    public static function camelToSnake(string $camelCase): string
     {
         $result = '';
       

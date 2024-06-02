@@ -3,12 +3,15 @@ namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-use Carbon\Carbon;
 use RentACar\Address;
+use RentACar\FormValidatorTrait;
 use RentACar\Profile;
 use RentACar\User;
 
-class Customer extends Profile {
+class Customer extends Profile
+{
+    use FormValidatorTrait;
+    
     protected ?string $driversLicense = null;
     protected ?string $taxNumber = null;
     protected ?int $user_id = null;
