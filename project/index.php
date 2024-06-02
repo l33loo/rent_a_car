@@ -1,17 +1,18 @@
-<?php  
+<?php
+session_start();
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservationIndex.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservation.inc.php';
 
 use RentACar\Category;
 use RentACar\Location;
-use RentACar\Reservation;
 
 try {
     $locations = Location::fetchActiveLocations();
     $categories = Category::search([], '', null, null, 4);
 } catch (\Exception $e) {
-    // TODO: 
+    // TODO:
 }
 
 echo getHeader();
@@ -62,11 +63,23 @@ echo getHeader();
 
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
-        <h1>Reservation</h1>
-        <form action="/src/html/reservationSelectVehicle.php" method="get">
+        <h2>1. Reservation</h2>
+        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['indexPage'])) ? null : $_SESSION['errors']['indexPage'];
+        if (!empty($errorMsg)) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg;
+                unset($_SESSION['errors']['indexPage']); ?>
+            </div>
+        <?php }
+        if (!empty($errorMsg2)) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg2 ?>
+            </div>
+        <?php } ?>
+        <form action="/src/app/reservationSelectPickupDropoff.php" method="post">
             <div class="row">
                 <div class="col-md-6 col-12">
-                    <h2>1. Pick-up</h2>
+                    <h2>Pick-up</h2>
                     <div class="row">
                         <div class="col">
                             <label for="pickup-location">Pick-Up Location:</label>

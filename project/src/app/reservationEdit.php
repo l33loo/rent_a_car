@@ -1,33 +1,50 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservation.inc.php';
+session_start();
 
-try {
-    if (empty($_POST['sessionKey'])) {
-        // TODO: error
-        header('Location: /src/html/reservations.php');
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
+use RentACar\Reservation;
+use RentACar\Revision;
+
+
+if (isset($_POST['changeForm'])) {
+    try {
+        $reservation = Reservation::find($_POST['reservationId']);
+        $revision = $reservation->findLatestRevision();
+
+        if ($revision->canUserUpdate() !== true) {
+            throw new Exception('Permission denied.');
+        }
+
+        $_SESSION['booking']['newRevision'] = serialize($revision);
+        header('Location: /?reservationId=' . $reservation->getId());
         exit;
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        die;
     }
-    
-    $sessionKey = $_POST['sessionKey'];
-    $latestRevision = unserialize($_SESSION[$sessionKey])
-        ->setStatus_id(2)
-        ->setCategory_id($_POST['categoryId'])
-        ->setVehicle_id($_POST['vehicleId'])
-        ->setPickupLocation_id($_POST['pickupLocationId'])
-        ->setPickupDate($_POST['pickupDate'])
-        ->setPickupTime($_POST['pickupTime'])
-        ->setDropoffLocation_id($_POST['dropoffLocationId'])
-        ->setDropoffDate($_POST['dropoffDate'])
-        ->setDropoffTime($_POST['dropoffTime'])
-        ->calculateAndSetTotalPrice();
-    $update = $latestRevision->updateByUser();
+}
 
-    if ($update === false) {
-        // TODO: throw error
+if (isset($_POST['reservationSelectVehicle'])) {
+    try {
+        $revision = unserialize($_SESSION['booking']['newRevision']);
+
+        if ($revision->canUserUpdate() !== true) {
+            throw new Exception('Permission denied.');
+        }
+
+        $revision
+            ->setStatus_id(2) // Modification Requested
+            ->setVehicle_id($_POST['vehicleId'])
+            ->loadVehicle();
+        $categoryId = $revision->getVehicle()->getCategory_id();
+        $revision
+            ->setCategory_id($categoryId)
+            ->update();
+        
+        header('Location: /src/html/reservationView.php?reservationId=' . $revision->getReservation_id());
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        die;
     }
-
-    unset($_SESSION[$sessionKey]);
-    header('Location: /src/html/reservations.php');
-} catch(\Exception $e) {
-
 }

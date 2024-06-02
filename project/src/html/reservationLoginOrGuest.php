@@ -1,8 +1,16 @@
 <?php
-session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservation.inc.php';
+
+use RentACar\Category;
+use RentACar\Vehicle;
+
+session_start();
+
+if (!empty($_SESSION['logged_id'])) {
+    header('Location: /src/html/reservationBook.php');
+    exit;
+}
 
 // TODO: validate form fields
 
@@ -55,21 +63,18 @@ echo getHeader();
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>3. Book</h1>
-        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['userReservationBookingPage'])) ? null : $_SESSION['errors']['userReservationBookingPage'];
-        if ($errorMsg !== null) { ?>
-            <div class="alert alert-danger">
-                <?php echo $errorMsg;
-                unset($_SESSION['errors']['userReservationBookingPage']); ?>
+        <div class="d-flex flex-column align-items-center">
+            <form action="/src/html/login.php" method="get">
+                <input type="hidden" name="redirectTo" value="/src/html/reservationBook.php">
+                <input type="submit" class="btn btn-warning" value="Already have an account">
+            </form>
+            <div>
+                - OR -
             </div>
-        <?php } ?>
-        <form action="/src/app/reservationBook.php" method="post">
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formCustomer.inc.php'; ?>
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formAddress.inc.php'; ?>
-            <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/formPayment.inc.php'; ?>
-            <div class="d-flex justify-content-center">
-                <input type="submit" value="Book Now" class="btn btn-success" name="reservationBook">
+            <div>
+                <a href="/src/html/reservationBook.php" class="btn btn-primary">Continue as Guest</a>
             </div>
-        </form>
+        </div>
     </div>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/footer.inc.php'; ?>
 </body>

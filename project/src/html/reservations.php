@@ -8,7 +8,7 @@ use RentACar\User;
 try {
     $user = User::find($_SESSION['logged_id']);
     $revisions = $user->fetchCurrentRevisions();
-} catch(\Exception $e) {
+} catch(Exception $e) {
     // TODO: handle error
 }
 
@@ -19,6 +19,13 @@ echo getHeader();
     <?php include 'components/navbar.inc.php'; ?>
     <div class="container mt-5">
         <h1 class="mb-4">My Reservations</h1>
+        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['userReservationsPage'])) ? null : $_SESSION['errors']['userReservationsPage'];
+        if ($errorMsg !== null) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg;
+                unset($_SESSION['errors']['userReservationsPage']); ?>
+            </div>
+        <?php } ?>
         <?php foreach ($revisions as $revision) {
             // TODO: create revision method to do this
             $revision->loadStatus();
@@ -100,11 +107,12 @@ echo getHeader();
                             </div>
                             <div class="d-flex flex-wrap justify-content-center" style="gap:10px;">
                                 <a class="btn btn-primary ml-2" href="/src/html/reservationView.php?reservationId=<?php echo $revision->getReservation_id() ?>">View</a>
-                                <form action="/" method="get">
+                                <form action="/src/app/reservationEdit.php" method="post">
                                     <input type="hidden" name="reservationId" value="<?php echo $revision->getReservation_id() ?>">
                                     <input
                                         type="submit"
                                         value="Change"
+                                        name="changeForm"
                                         class="btn btn-secondary"
                                         <?php echo $revision->canUserUpdate() ? null : 'disabled' ?>
                                     >

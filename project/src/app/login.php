@@ -27,7 +27,12 @@ if ($users[0]->checkPassword(trim($_POST['password']))) {
     if ($users[0]->getIsAdmin()) {
         header('Location: /src/html/admin/dashboard.php');
     } else {
-        header('Location: /');
+        $redirectPath = '/';
+        if (!empty($_POST['redirectTo'])) {
+            $redirectPath = $_POST['redirectTo'];
+        }
+
+        header('Location: ' . $redirectPath);
     }
 } else {
     redirectToLoginPage($wrongCredsMsg);

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Address;
@@ -8,31 +9,15 @@ use RentACar\Reservation;
 use RentACar\Revision;
 use RentACar\User;
 
-session_start();
-
-if (empty($_SESSION['logged_id'])) {
-    $sessionUserId = null;
-} else {
-    $sessionUserId = strval($_SESSION['logged_id']);
-}
-
-$userId = $_POST['userId'];
-if ($userId !== $sessionUserId) {
-    // TODO: error
-    echo 'Not same user ids';
-    exit;
-}
-
 // TODO: validate fields
 
+if (empty($_SESSION['logged_id'])) {
+    $userId = null;
+} else {
+    $userId = strval($_SESSION['logged_id']);
+}
+
 try {
-    // TODO: figure out how to revert changes already made when something fails
-
-    // TODO: get userId from session here, not from form?
-
-    // TODO: do we want separate Customer and Billing addresses?
-    // keep same address for now, for simplicity
-
     $address = new Address(
         trim($_POST['street']),
         trim($_POST['door']),
@@ -105,66 +90,29 @@ try {
     $reservation = new Reservation($userId);
     $reservation->save();
 
-    $revision = (new Revision(
-        $reservation->getId(),
-        // TODO: use Carbon type
-        trim($_POST['pickupDate']),
-        // TODO: use Carbon type
-        trim($_POST['dropoffDate']),
-        // TODO: use Carbon type
-        trim($_POST['pickupTime']),
-        // TODO: use Carbon type
-        trim($_POST['dropoffTime']),
-        NULL, // totalPrice - added below
-        // TODO: use Carbon type
-        date("Y-m-d H:i:s", time()), // submittedTimestamp
-
-        $address->getId(), // billingAddress_id
-        $creditCard->getId(),
-        $userId, // submittedByUser_id
-        $_POST['categoryId'],
-        $customer->getId(), // TODO:
-        1, // status_id: Confirmed
-        $_POST['pickupLocationId'],
-        $_POST['dropoffLocationId'],
-        $_POST['vehicleId'], // vehicle_id
-        null, // effectivePickupLocation_id
-        null, // givenByUser_id
-        null, // effectivePickupDate
-        null, // effectivePickupTime
-        null, // effectiveDropoffLocation_id
-        null, // collectedByUser_id
-        null, // effectiveDropoffDate
-        null, // effectiveDropoffTime
-        $reservation,
-        $address, //
-        $creditCard,
-        null, // submittedByUser
-        null, // category
-        $customer,
-        NULL, // status
-        null, // pickupLocation
-        null, // dropoffLocation
-        null, // vehicle
-        null, // effectivePickupLocation
-        null, // givenByUser
-        null, // effectiveDropoffLocation
-        null // collectedByUser
-    ))
+    $revision = unserialize($_SESSION['booking']['newRevision']);
+    $revision
+        ->setReservation_id($reservation->getId())
+        ->setSubmittedTimestamp(date("Y-m-d H:i:s", time()))
+        ->setSubmittedByUser_id($userId)
+        ->setBillingAddress_id($address->getId())
+        ->setCustomer_id($customer->getId())
+        ->setCreditCard_id($creditCard->getId())
+        ->setStatus_id(1) // Confirmed
         ->calculateAndSetTotalPrice()
         ->save();
-} catch(\Exception $e) {
-    // TODO: handle errors
-
-    // TODO: send back to form with existing data
-    echo 'error saving Revision';
-    header('Location: /src/html/RevisionBook.php');
+    
+    // TODO: Send to Reservation view, with success message
+    if (!empty($userId)) {
+        unset($_SESSION['booking']);
+        header('Location: /src/html/reservationView.php?reservationId=' . $revision->getReservation_id());
+    } else {
+        $_SESSION['booking']['newRevision'] = serialize($revision);
+        header('Location: /src/html/reservationView.php');
+    }
+} catch(Exception $e) {
+    unset($_SESSION['booking']);
+    $_SESSION['errors']['indexPage'] = 'Error saving booking: ' . $e->getMessage();
+    header('Location: /');
     exit;
-}
-
-// TODO: Send to Revision view, with success message
-if (!empty($userId)) {
-    header("Location: /src/html/userView.php?userId=$userId");
-} else {
-    header("Location: /");
 }

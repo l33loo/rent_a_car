@@ -2,7 +2,7 @@
 $color = $isAdmin ? 'warning' : 'dark' ?>
 <nav class="navbar navbar-<?php echo $color ?> bg-<?php echo $color ?>">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/src/html/admin/dashboard.php">Superstar Rent-A-Car</a>
+        <a class="navbar-brand" href="<?php echo $isAdmin ? '/src/html/admin/dashboard.php' : '/' ?>">Superstar Rent-A-Car</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
             aria-label="Toggle navigation">

@@ -1,5 +1,7 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
+session_start();
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservationSelectVehicle.inc.php';
@@ -53,6 +55,11 @@ echo getHeader();
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>2. Select a car</h1>
+        <?php if (count($vehiclesWithCategory) === 0) { ?>
+            <div>
+                There are no available vehicles for these dates.
+            </div>
+        <?php } ?>
         <?php foreach ($vehiclesWithCategory as $vehicleWithCategory) {
             $vehicle = $vehicleWithCategory['vehicle'];
             $vehicleProperties = $vehicle->getProperties();
@@ -91,20 +98,10 @@ echo getHeader();
                         </div>
                     <? } ?>
                     <form
-                        action="<?php echo $isOwnerEditing ? '/src/app/reservationEdit.php' : '/src/html/reservationBook.php' ?>"
-                        method="<?php echo $isOwnerEditing ? 'post' : 'get' ?>"
+                        action="<?php echo $isOwnerEditing ? '/src/app/reservationEdit.php' : '/src/app/reservationSelectVehicle.php' ?>"
+                        method="post"
                     >
-                        <?php if($isOwnerEditing) { ?>
-                            <input type="hidden" name="sessionKey" value="<?php echo $sessionKey ?>">
-                        <?php } ?>
-                        <input type="hidden" name="categoryId" value="<?php echo $category->getId() ?>">
                         <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId() ?>">
-                        <input type="hidden" name="pickupLocationId" value="<?php echo $_GET['pickupLocationId'] ?>">
-                        <input type="hidden" name="pickupDate" value="<?php echo $_GET['pickupDate'] ?>">
-                        <input type="hidden" name="pickupTime" value="<?php echo $_GET['pickupTime'] ?>">
-                        <input type="hidden" name="dropoffLocationId" value="<?php echo $_GET['dropoffLocationId'] ?>">
-                        <input type="hidden" name="dropoffDate" value="<?php echo $_GET['dropoffDate'] ?>">
-                        <input type="hidden" name="dropoffTime" value="<?php echo $_GET['dropoffTime'] ?>">
                         <input
                             type="submit"
                             value="<?php echo $isOwnerEditing ? 'Update Reservation' : 'Book Now'  ?>"

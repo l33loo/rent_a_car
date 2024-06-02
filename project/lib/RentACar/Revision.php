@@ -378,7 +378,7 @@ class Revision {
                 $this->dropoffDate
             );
         } catch(e) {
-            // TODO: error handling
+            throw new \Exception('Error calculating total price');
         }
 
         return $this;
@@ -465,7 +465,7 @@ class Revision {
      *
      * @return self
      */ 
-    public function setSubmittedByUser_id(int $submittedByUser_id): self
+    public function setSubmittedByUser_id(?int $submittedByUser_id): self
     {
         $this->submittedByUser_id = $submittedByUser_id;
 
@@ -937,11 +937,23 @@ class Revision {
     /**
      * Get the value of reservation_id
      * 
-     * @return int
+     * @return ?int
      */ 
-    public function getReservation_id(): int
+    public function getReservation_id(): ?int
     {
         return $this->reservation_id;
+    }
+
+    /**
+     * Set the value of reservation_id
+     * 
+     * @return self
+     */ 
+    public function setReservation_id(int $reservationId): self
+    {
+        $this->reservation_id = $reservationId;
+
+        return $this;
     }
 
     /**
@@ -1420,14 +1432,12 @@ class Revision {
     /**
      * Check if the user is allowed to update their reservation.
      *
-     * @return bool
+     * @return string|true
      */ 
-    public function canUserUpdate(): bool
+    public function canUserUpdate(): string|true
     {
-        // echo 'canUserUpdate => $this->wasPickedUp() ';
-        // echo $this->wasPickedUp() ? "true" : "false";
         if (empty($_SESSION['logged_id'])) {
-            return false;
+            return 'User not logged in';
         }
 
         if ($this->reservation === null) {
@@ -1435,17 +1445,27 @@ class Revision {
         }
 
         if ($_SESSION['logged_id'] != $this->reservation->getOwnerUser_id()) {
-            return false;
+            return 'Permission denied.';
         }
 
         if ($this->status === null) {
             $this->loadStatus();
         }
+       
+        if ($this->wasPickedUp()) {
+            return 'The booking was already honored.';
+        }
+
+        if ($this->wasNoShow()) {
+            return "It's too late to change this booking.";
+        }
+        
         $status = $this->status->getStatusName();
-        return !$this->wasPickedUp()
-            && !$this->wasNoShow()
-            && $status !== 'Cancelled'
-            && $status !== 'Payment Declined';
+        if ($status === 'Cancelled' || $status === 'Payment Declined') {
+            return 'The booking was cancelled.';
+        }
+        
+        return true;
     }
 
     /**

@@ -1,41 +1,27 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-
-use RentACar\Reservation;
-
-session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
 try {
-    $isOwnerEditing = false;
+    if (empty($_SESSION['booking']) || empty($_SESSION['booking']['newRevision'])) {
+        throw new Exception('Missing booking info.');
+    }
+    
+    if (calculateDiffMinutes($_SESSION['booking']['timestamp'], time()) > 15) {
+        throw new Exception('Booking process expired after 15 minutes.');
+    }
 
-    if (!empty($_GET['reservationId']) || !empty($_POST['reservationId'])) {
-        $reservationId = empty($_GET['reservationId']) ? $_POST['reservationId'] : $_GET['reservationId'];
-        $reservation = Reservation::find($reservationId);
-        $reservation->loadOwnerUser();
-        $ownerUserId = $reservation->getOwnerUser()->getId();
+    $revision = unserialize($_SESSION['booking']['newRevision']);
+    $isOwnerEditing = $revision->getReservation_Id() !== null;
 
-        if (!isset($_SESSION['logged_id']) || (isset($_SESSION['logged_id']) && $_SESSION['logged_id'] != $ownerUserId)) {
-            header('Location: /');
-            // TODO: ERROR
-            exit;
-        }
-
-        $isOwnerEditing = true;
-        $sessionKey = 'userReservationEditLatestRevision' . $reservationId;
-        if (!empty($_SESSION[$sessionKey])) {
-            $revision = unserialize($_SESSION[$sessionKey]);
-        } else {
-            $revision = $reservation->findLatestRevision();
-            $_SESSION[$sessionKey] = serialize($revision);
-        }
-
-        if (!$revision->canUserUpdate()) {
-            // TODO: handle error
-            unset($_SESSION[$sessionKey]);
-            header('Location: /src/html/reservations/php');
+    if ($isOwnerEditing) {
+        $canUserUpdate = $revision->canUserUpdate();
+        if ($canUserUpdate !== true) {
+            throw new Exception($canUserUpdate);
         }
     }
-    $isSessionKeySet = isset($sessionKey);
-} catch(\Exception $e) {
-    // TODO: ...
+} catch(Exception $e) {
+    unset($_SESSION['booking']);
+    $_SESSION['errors']['indexPage'] = $e->getMessage();
+    header('Location: /');
+    exit;
 }

@@ -10,7 +10,7 @@ use RentACar\Vehicle;
 try {
     // TODO: Validate that pick-up and drop-off locations are on the same island
 
-    $dropoffLocation = Location::find($_GET['dropoffLocationId']);
+    $dropoffLocation = Location::find($revision->getDropoffLocation_id());
     $categories = Category::search([]);
     $vehiclesWithCategory = [];
     $categoriesById = [];
@@ -21,8 +21,8 @@ try {
         $vehicles = Vehicle::findAvailableVehicles(
             $categoryId,
             $dropoffLocation->getIsland_id(),
-            $_GET['pickupDate'],
-            $_GET['dropoffDate']
+            $revision->getPickupDate(),
+            $revision->getDropoffDate()
         );
         $categoriesById[$categoryId] = $category;
 
@@ -33,26 +33,28 @@ try {
             $vehiclesWithCategory[$vehicle->Model] = [
                 'vehicle' => $vehicle,
                 'categoryId' => $categoryId,
-                'totalPrice' => $category->calculateTotalPriceInEuros($_GET['pickupDate'], $_GET['dropoffDate']),
+                'totalPrice' => $category->calculateTotalPriceInEuros($revision->getPickupDate(), $revision->getDropoffDate()),
                 'selected' => false
             ];
         }
 
-        if (
-            !empty($revision) &&
-            $revision->getPickupDate() === $_GET['pickupDate'] &&
-            $revision->getDropoffDate() === $_GET['dropoffDate']
-        ) {
-            $revision->loadVehicle()->loadCategory();
-            $revisionVehicle = $revision->getVehicle();
-            $vehiclesWithCategory[$revisionVehicle->Model] = [
-                'vehicle' => $revision->getVehicle(),
-                'categoryId' => $revision->getCategory()->getId(),
-                'totalPrice' => $revision->getTotalPriceToString(),
-                'selected' => true
-            ];
+        if ($revision->getReservation_id() !== null) {
+            $reservation = $revision->loadReservation()->getReservation();
+            $latestRevision = $reservation->findLatestRevision();
+
+            if ($revision->getPickupDate() === $latestRevision->getPickupDate() &&
+            $revision->getDropoffDate() === $latestRevision->getDropoffDate()) {
+                $revision->loadVehicle()->loadCategory();
+                $revisionVehicle = $revision->getVehicle();
+                $vehiclesWithCategory[$revisionVehicle->Model] = [
+                    'vehicle' => $revision->getVehicle(),
+                    'categoryId' => $revision->getCategory()->getId(),
+                    'totalPrice' => $revision->getTotalPriceToString(),
+                    'selected' => true
+                ];
+            }
         }
     }
-} catch(e) {
+} catch(Exception $e) {
     // TODO: handle errors
 }
