@@ -90,23 +90,26 @@ try {
     $reservation = new Reservation($userId);
     $reservation->save();
 
-    $revision = unserialize($_SESSION['booking']['newRevision'])
+    $revision = unserialize($_SESSION['booking']['newRevision']);
+    $revision
         ->setReservation_id($reservation->getId())
         ->setSubmittedTimestamp(date("Y-m-d H:i:s", time()))
         ->setSubmittedByUser_id($userId)
         ->setBillingAddress_id($address->getId())
         ->setCustomer_id($customer->getId())
         ->setCreditCard_id($creditCard->getId())
+        ->setStatus_id(1) // Confirmed
         ->calculateAndSetTotalPrice()
         ->save();
     
     // TODO: Send to Reservation view, with success message
     if (!empty($userId)) {
+        unset($_SESSION['booking']);
         header('Location: /src/html/reservationView.php?reservationId=' . $revision->getReservation_id());
     } else {
-        header('Location: /');
+        $_SESSION['booking']['newRevision'] = serialize($revision);
+        header('Location: /src/html/reservationView.php');
     }
-    unset($_SESSION['booking']);
 } catch(Exception $e) {
     unset($_SESSION['booking']);
     $_SESSION['errors']['indexPage'] = 'Error saving booking: ' . $e->getMessage();

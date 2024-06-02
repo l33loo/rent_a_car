@@ -9,6 +9,11 @@ try {
     $isOwnerEditing = null;
     if (!empty($_SESSION['booking']) && !empty($_SESSION['booking']['newRevision']) && !empty($_SESSION['booking']['timestamp'])) {
         $revision = unserialize($_SESSION['booking']['newRevision']);
+
+        if (empty($revision)) {
+            throw new Exception('Revision is null.');
+        }
+
         $isOwnerEditing = $revision->getReservation_Id() !== null;
 
         if ($isOwnerEditing) {

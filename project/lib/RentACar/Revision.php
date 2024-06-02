@@ -465,7 +465,7 @@ class Revision {
      *
      * @return self
      */ 
-    public function setSubmittedByUser_id(int $submittedByUser_id): self
+    public function setSubmittedByUser_id(?int $submittedByUser_id): self
     {
         $this->submittedByUser_id = $submittedByUser_id;
 
