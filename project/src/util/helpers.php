@@ -10,7 +10,10 @@ function calculateDiffMinutes(string $beforeDateStr, string $afterDateStr): int
 function calculateDiffDays(string $beforeDateStr, string $afterDateStr): int
 {
     $beforeDate = new DateTime($beforeDateStr);
+    // Remove time to just compare dates
+    $beforeDate->setTime(0, 0);
     $afterDate = new DateTime($afterDateStr);
+    $afterDate->setTime(0, 0);
     return $afterDate->diff($beforeDate)->days;
 }
 

@@ -32,13 +32,10 @@ try {
         ->getCategory_id();
 
     $revision->setCategory_id($categoryId);
-    // print_r($revision);
-    // exit;
+
     $_SESSION['booking']['newRevision'] = serialize($revision);
 
-    if ($isOwnerEditing) {
-        header('Location: /src/app/reservationEdit.php');
-    } else if (empty($_SESSION['logged_id'])) {
+    if (empty($_SESSION['logged_id'])) {
         header('Location: /src/html/reservationLoginOrGuest.php');
     } else {
         header('Location: /src/html/reservationBook.php');

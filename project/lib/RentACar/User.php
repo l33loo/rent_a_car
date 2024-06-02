@@ -131,4 +131,11 @@ class User extends Profile
 
         return $revisions;
     }
+
+    public static function isLoggedInUser(int $userId) {
+        if (empty($_SESSION['logged_id'])) {
+            return false;
+        }
+        return $_SESSION['logged_id'] == $userId;
+    }
 }

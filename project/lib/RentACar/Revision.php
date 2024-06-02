@@ -1436,8 +1436,6 @@ class Revision {
      */ 
     public function canUserUpdate(): string|true
     {
-        // echo 'canUserUpdate => $this->wasPickedUp() ';
-        // echo $this->wasPickedUp() ? "true" : "false";
         if (empty($_SESSION['logged_id'])) {
             return 'User not logged in';
         }
@@ -1447,18 +1445,23 @@ class Revision {
         }
 
         if ($_SESSION['logged_id'] != $this->reservation->getOwnerUser_id()) {
-            return 'Access denied.';
+            return 'Permission denied.';
         }
 
         if ($this->status === null) {
             $this->loadStatus();
         }
-        $status = $this->status->getStatusName();
+       
         if ($this->wasPickedUp()) {
             return 'The booking was already honored.';
         }
 
-        if ($this->wasNoShow() || $status === 'Cancelled' || $status === 'Payment Declined') {
+        if ($this->wasNoShow()) {
+            return "It's too late to change this booking.";
+        }
+        
+        $status = $this->status->getStatusName();
+        if ($status === 'Cancelled' || $status === 'Payment Declined') {
             return 'The booking was cancelled.';
         }
         

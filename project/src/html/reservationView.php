@@ -7,6 +7,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 use RentACar\Customer;
 use RentACar\Reservation;
 use RentACar\Revision;
+use RentACar\User;
 
 try {
     if (empty($_GET['reservationId']) && empty($_SESSION['booking']) && empty($_SESSION['booking']['newRevision'])) {
@@ -20,8 +21,8 @@ try {
         $reservation = Reservation::find($_GET['reservationId']);
         $reservation->loadRelation('ownerUser', 'user');
 
-        if (!isSameUser($reservation->getOwnerUser()->getId())) {
-            redirectLoggedInUser('/');
+        if (!User::isLoggedInUser($reservation->getOwnerUser()->getId())) {
+            header('Location: /');
         }
 
         $revisions = $reservation->findAllRevisions();
@@ -49,12 +50,12 @@ echo getHeader();
     <div class="container mt-5">
         <div class="d-flex flex-wrap justify-content-between align-items-center pt-5 mb-4">
             <h1>Reservation nº <?php echo $reservation->getId() ?> - <?php echo $latestRevision->getStatus()->getStatusName() ?></h1>
-            <?php if (!empty($errorMsg)) { ?>
-                <div class="alert alert-danger">
-                    <?php echo $errorMsg ?>
-                </div>
-            <?php } ?>
         </div>
+        <?php if (!empty($errorMsg)) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg ?>
+            </div>
+        <?php } ?>
         <?php if (!$hasUser) { ?>
             <div class="mb-5">
                 The booking confirmation was emailed to <?php echo $customer->getEmail() ?>.

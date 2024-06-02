@@ -6,7 +6,20 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 use RentACar\Revision;
 
 try {
-    $newRevision = (new Revision())
+    $isOwnerEditing = false;
+    if (!empty($_SESSION['booking']) && !empty($_SESSION['booking']['newRevision'])) {
+        $revision = unserialize($_SESSION['booking']['newRevision']);
+        $revision->loadReservation();
+        $reservation = $revision->getReservation();
+
+        if ($revision->canUserUpdate() !== true) {
+            throw new Exception('Permission denied.');
+        }
+    } else {
+        $revision = new Revision();
+    }
+
+    $revision
         ->setPickupLocation_id($_POST['pickupLocationId'])
         ->loadPickupLocation()
         ->setPickupDate($_POST['pickupDate'])
@@ -17,10 +30,15 @@ try {
         ->setDropoffTime($_POST['dropoffTime']);
 
     $_SESSION['booking'] = [
-        'newRevision' => serialize($newRevision),
+        'newRevision' => serialize($revision),
         'timestamp' => time(),
     ];
-    $isOwnerEditing = $newRevision->getReservation_id() !== null;
+
+    if ($revision->getReservation_id() !== null) {
+        $isOwnerEditing = true;
+    }
+
+    header('Location: /src/html/reservationSelectVehicle.php' . ($isOwnerEditing ? '?reservationId=' . $_POST['reservationId'] : null));
 } catch (Exception $e) {
     unset($_SESSION['booking']);
 
@@ -33,5 +51,3 @@ try {
     }
     exit; 
 }
-
-header('Location: /src/html/reservationSelectVehicle.php');

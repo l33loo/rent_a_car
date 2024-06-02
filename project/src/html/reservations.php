@@ -107,11 +107,12 @@ echo getHeader();
                             </div>
                             <div class="d-flex flex-wrap justify-content-center" style="gap:10px;">
                                 <a class="btn btn-primary ml-2" href="/src/html/reservationView.php?reservationId=<?php echo $revision->getReservation_id() ?>">View</a>
-                                <form action="/" method="get">
+                                <form action="/src/app/reservationEdit.php" method="post">
                                     <input type="hidden" name="reservationId" value="<?php echo $revision->getReservation_id() ?>">
                                     <input
                                         type="submit"
                                         value="Change"
+                                        name="changeForm"
                                         class="btn btn-secondary"
                                         <?php echo $revision->canUserUpdate() ? null : 'disabled' ?>
                                     >

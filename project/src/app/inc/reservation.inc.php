@@ -2,7 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 
 try {
-    if (empty($_SESSION['booking']) || empty($_SESSION['booking']['newRevision']) || empty($_SESSION['booking']['timestamp'])) {
+    if (empty($_SESSION['booking']) || empty($_SESSION['booking']['newRevision'])) {
         throw new Exception('Missing booking info.');
     }
     

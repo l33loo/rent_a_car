@@ -4,7 +4,6 @@ session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/header.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservation.inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/reservationSelectVehicle.inc.php';
 
 echo getHeader();
@@ -56,6 +55,11 @@ echo getHeader();
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>2. Select a car</h1>
+        <?php if (count($vehiclesWithCategory) === 0) { ?>
+            <div>
+                There are no available vehicles for these dates.
+            </div>
+        <?php } ?>
         <?php foreach ($vehiclesWithCategory as $vehicleWithCategory) {
             $vehicle = $vehicleWithCategory['vehicle'];
             $vehicleProperties = $vehicle->getProperties();
@@ -94,12 +98,9 @@ echo getHeader();
                         </div>
                     <? } ?>
                     <form
-                        action="/src/app/reservationSelectVehicle.php"
+                        action="<?php echo $isOwnerEditing ? '/src/app/reservationEdit.php' : '/src/app/reservationSelectVehicle.php' ?>"
                         method="post"
                     >
-                        <?php if($isOwnerEditing) { ?>
-                            <input type="hidden" name="sessionKey" value="<?php echo $sessionKey ?>">
-                        <?php } ?>
                         <input type="hidden" name="vehicleId" value="<?php echo $vehicle->getId() ?>">
                         <input
                             type="submit"

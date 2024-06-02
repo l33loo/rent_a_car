@@ -4,27 +4,22 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 use RentACar\Category;
 use RentACar\Location;
 use RentACar\Reservation;
+use RentACar\User;
 
 try {
-    $isOwnerEditing = null;
-    if (!empty($_SESSION['booking']) && !empty($_SESSION['booking']['newRevision']) && !empty($_SESSION['booking']['timestamp'])) {
-        $revision = unserialize($_SESSION['booking']['newRevision']);
+    $isOwnerEditing = false;
+    if (!empty($_GET['reservationId'])) {
+        $existingReservation = Reservation::find($_GET['reservationId']);
+        $revision = $existingReservation->findLatestRevision();
 
-        if (empty($revision)) {
-            throw new Exception('Revision is null.');
+        $canUserUpdate = $revision->canUserUpdate();
+        if ($canUserUpdate !== true) {
+            throw new Exception($canUserUpdate);
         }
-
-        $isOwnerEditing = $revision->getReservation_Id() !== null;
-
-        if ($isOwnerEditing) {
-            $canUserUpdate = $revision->canUserUpdate();
-            if ($canUserUpdate !== true) {
-                throw new Exception($canUserUpdate);
-            }
-        }
+    
+        $isOwnerEditing = true;
     }
 } catch(Exception $e) {
     unset($_SESSION['booking']);
     $errorMsg2 = $e->getMessage();
-    exit;
 }
