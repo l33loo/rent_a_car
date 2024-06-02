@@ -55,11 +55,11 @@ echo getHeader();
     <div class="container my-5 w-50"
         style="position: relative; top: -250px; background-color: rgba(189, 195, 199, 0.8); padding: 15px;border-radius: 15px;">
         <h1>3. Book</h1>
-        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['userReservationBookingPage'])) ? null : $_SESSION['errors']['userReservationBookingPage'];
+        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['userBookPage'])) ? null : $_SESSION['errors']['userBookPage'];
         if ($errorMsg !== null) { ?>
             <div class="alert alert-danger">
                 <?php echo $errorMsg;
-                unset($_SESSION['errors']['userReservationBookingPage']); ?>
+                unset($_SESSION['errors']['userBookPage']); ?>
             </div>
         <?php } ?>
         <form action="/src/app/reservationBook.php" method="post">

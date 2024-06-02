@@ -25,11 +25,11 @@ try {
     }
 
     $revision
-        ->setPickupLocation_id($_POST['pickupLocationId'])
+        ->setPickupLocation_id($_POST['pickupLocation_id'])
         ->loadPickupLocation()
         ->setPickupDate($_POST['pickupDate'])
         ->setPickupTime($_POST['pickupTime'])
-        ->setDropoffLocation_id($_POST['dropoffLocationId'])
+        ->setDropoffLocation_id($_POST['dropoffLocation_id'])
         ->loadDropoffLocation()
         ->setDropoffDate($_POST['dropoffDate'])
         ->setDropoffTime($_POST['dropoffTime']);

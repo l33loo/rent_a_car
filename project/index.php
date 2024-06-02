@@ -83,15 +83,15 @@ echo getHeader();
                     <div class="row my-2">
                         <div class="col">
                             <label for="pickup-location">Pick-Up Location:</label>
-                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['pickupLocationId'])) { ?>
+                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['pickupLocation_id'])) { ?>
                                 <div class="text-danger">
                                     <small>
-                                        <?php echo $_SESSION['errors']['pickupLocationId'];
-                                        unset($_SESSION['errors']['pickupLocationId']); ?>
+                                        <?php echo $_SESSION['errors']['pickupLocation_id'];
+                                        unset($_SESSION['errors']['pickupLocation_id']); ?>
                                     </small>
                                 </div>
                             <?php } ?>
-                            <select id="pickup-location" name="pickupLocationId" class="form-select">
+                            <select id="pickup-location" name="pickupLocation_id" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option
                                         value="<?php echo $location->getId(); ?>"
@@ -152,15 +152,15 @@ echo getHeader();
                     <div class="row my-2">
                         <div class="col">
                             <label for="dropoff-location">Drop-Off Location:</label>
-                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['dropoffLocationId'])) { ?>
+                            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['dropoffLocation_id'])) { ?>
                                 <div class="text-danger">
                                     <small>
-                                        <?php echo $_SESSION['errors']['dropoffLocationId'];
-                                        unset($_SESSION['errors']['dropoffLocationId']); ?>
+                                        <?php echo $_SESSION['errors']['dropoffLocation_id'];
+                                        unset($_SESSION['errors']['dropoffLocation_id']); ?>
                                     </small>
                                 </div>
                             <?php } ?>
-                            <select id="dropoff-location" name="dropoffLocationId" class="form-select">
+                            <select id="dropoff-location" name="dropoffLocation_id" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option
                                         value="<?php echo $location->getId(); ?>"
@@ -176,7 +176,7 @@ echo getHeader();
                         <div class="col">
                             <label for="dropoff-date">Drop-Off Date:</label>
                             <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['dropoffDate'])) { ?>
-                                <div class="text-danger">F
+                                <div class="text-danger">
                                     <small>
                                         <?php echo $_SESSION['errors']['dropoffDate'];
                                         unset($_SESSION['errors']['dropoffDate']); ?>

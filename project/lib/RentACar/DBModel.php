@@ -112,7 +112,7 @@ trait DBModel
         $result = $stmt->fetchObject(static::class);
 
         if (!$result) {
-            throw new \Exception('Erro a obter registo. Número de registos diferente de 1');
+            throw new \Exception('Error retrieving row. Number of results not equal to 1.');
         }
 
         return $result;

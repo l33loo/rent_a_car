@@ -9,6 +9,14 @@
             <label for="name">
                 Name:
             </label>
+            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['name'])) { ?>
+                <div class="text-danger">
+                    <small>
+                        <?php echo $_SESSION['errors']['name'];
+                        unset($_SESSION['errors']['name']); ?>
+                    </small>
+                </div>
+            <?php } ?>
             <input type="text" class="form-control" name="name">
         </div>
         <div class="col">
@@ -16,6 +24,14 @@
             <label for="email">
                 Email:
             </label>
+            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['email'])) { ?>
+                <div class="text-danger">
+                    <small>
+                        <?php echo $_SESSION['errors']['email'];
+                        unset($_SESSION['errors']['email']); ?>
+                    </small>
+                </div>
+            <?php } ?>
             <input type="email" class="form-control" name="email">
         </div>
     </div>

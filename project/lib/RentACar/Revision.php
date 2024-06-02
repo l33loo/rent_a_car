@@ -1586,19 +1586,14 @@ class Revision
     private static function getValidationRules(): array
     {
         return [
-            'pickupLocationId' => [
-                'name' => 'pickupLocationId', 
-                'type' => 'integer',
-                'mustBeEqual' => [
-                    'comparedTo' => 'dropoffLocationId',
-                    'value' => 'island_id',
-                ],
+            'pickupLocation_id' => [
+                'name' => 'pickupLocation_id', 
+                // 'type' => 'integer',
                 'required' => true,
             ],
             'pickupDate' => [
                 'name' => 'pickupDate',
                 'type' => 'dateString',
-                'mustBeBefore' => 'dropoffDate',
                 'mustBeAfter' => [
                     time()
                 ],
@@ -1607,33 +1602,31 @@ class Revision
             'pickupTime' => [
                 'name' => 'pickupTime',
                 'type' => 'timeString',
-                'mustBeAfter' => '09:30:00',
-                'mustBeBefore' => '17:30:00',
+                'min' => '09:30:00',
+                'max' => '17:30:00',
                 'required' => true,
             ],
-            'dropoffLocationId' => [
-                'name' => 'dropoffLocationId',
-                'type' => 'integer',
-                'mustBeEqual' => [
-                    'comparedTo' => 'dropoffLocationId',
-                    'value' => 'island_id'
+            'dropoffLocation_id' => [
+                'name' => 'dropoffLocation_id',
+                // 'type' => 'integer',
+                'mustBeEqualIslands' => [
+                    'class' => 'RentACar\\Location',
+                    'comparedTo' => 'pickupLocation_id',
+                    'errorMsg' => 'Pick-up must be on the same island as Drop-off.'
                 ],
                 'required' => true,
             ],
             'dropoffDate' => [
                 'name' => 'dropoffDate',
                 'type' => 'dateString',
-                'mustBeAfter' => [
-                    'dropoffDate',
-                    time()
-                ],
+                'mustBeAfter' => 'dropoffDate',
                 'required' => true,
             ],
             [
                 'name' => 'dropoffTime',
                 'type' => 'timeString',
-                'mustBeAfter' => '09:30:00',
-                'mustBeBefore' => '17:30:00',
+                'min' => '09:30:00',
+                'max' => '17:30:00',
                 'required' => true,
             ]
         ];

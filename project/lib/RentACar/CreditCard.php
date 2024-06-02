@@ -5,9 +5,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\FormValidatorTrait;
 
-class CreditCard implements FormValidatorInterface
+class CreditCard
 {
     use DBModel;
+    use FormValidatorTrait;
 
     protected ?string $ccNumber = null;
     // TODO: use Carbon

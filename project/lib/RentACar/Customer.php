@@ -166,4 +166,27 @@ class Customer extends Profile
 
         return $this;
     }
+
+    /**
+     * Set the value of user_id
+     *
+     * @return self
+     */ 
+    public static function getValidationRules(): array
+    {
+        return [
+            'name' => [
+                'name' => 'name',
+                'type' => 'string',
+                'maxLength' => 90,
+                'required' => true,
+            ],
+            'email' => [
+                'name' => 'email',
+                'type' => 'email',
+                'maxLength' => 90,
+                'required' => true,
+            ]
+        ];
+    }
 }

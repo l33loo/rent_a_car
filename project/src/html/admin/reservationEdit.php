@@ -121,10 +121,10 @@ echo getHeader();
                 <form action="/src/app/admin/reservationEdit.php" method="post">
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
-                            <label for="pickupLocationId">Pick-Up Location:</label>
+                            <label for="pickupLocation_id">Pick-Up Location:</label>
                             <select
-                                id="pickupLocationId"
-                                name="pickupLocationId"
+                                id="pickupLocation_id"
+                                name="pickupLocation_id"
                                 class="form-select"
                                 <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>
                             >
@@ -205,7 +205,7 @@ echo getHeader();
                                 <label for="dropoffLocation">Drop-Off Location:</label>
                                 <select
                                     id="dropoffLocation"
-                                    name="dropoffLocationId"
+                                    name="dropoffLocation_id"
                                     class="form-select"
                                 >
                                     <option value="none">None</option>
@@ -271,7 +271,7 @@ echo getHeader();
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="pickupLocation">Pick-Up Location:</label>
-                                    <select id="pickupLocation" name="pickupLocationId" class="form-select">
+                                    <select id="pickupLocation" name="pickupLocation_id" class="form-select">
                                         <?php foreach ($locations as $location) : ?>
                                             <option
                                                 value="<?php echo $location->getId(); ?>"
@@ -317,7 +317,7 @@ echo getHeader();
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="dropoffLocation">Drop-Off Location:</label>
-                                    <select id="dropoffLocation" name="dropoffLocationId" class="form-select">
+                                    <select id="dropoffLocation" name="dropoffLocation_id" class="form-select">
                                         <?php foreach ($locations as $location) : ?>
                                             <option
                                                 value="<?php echo $location->getId(); ?>"

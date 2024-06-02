@@ -6,9 +6,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 use RentACar\Country;
 use RentACar\FormValidatorTrait;
 
-class Address implements FormValidatorInterface
+class Address
 {
     use DBModel;
+    use FormValidatorTrait;
 
     protected ?string $street = null;
     protected ?string $doorNumber = null;
