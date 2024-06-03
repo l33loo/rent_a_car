@@ -117,32 +117,6 @@ class Category
     }
 
     /**
-     * Get the value of properties
-     * @return self
-     */ 
-    public function loadProperties(): self
-    {
-        try {
-            $categoryId = $this->id;
-            $stmt = self::rawSQL("
-                SELECT p.id, p.name, cp.propertyValue FROM property p
-                LEFT OUTER JOIN category_property cp ON cp.property_id = p.id
-                WHERE cp.category_id = $categoryId;
-            ");
-
-            $results = [];
-            while($row = $stmt->fetchObject(Property::class)) {
-                $results[$row->getName()] = $row;
-            }
-            $this->properties = $results;
-        } catch(e) {
-            // TODO: error handling
-        }
-        
-        return $this;
-    }
-
-    /**
      * Get the value of dailyRate as a string
      * 
      * @return string
