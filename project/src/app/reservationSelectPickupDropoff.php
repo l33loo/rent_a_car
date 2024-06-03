@@ -10,7 +10,6 @@ try {
     if (!empty($_SESSION['booking']) && !empty($_SESSION['booking']['newRevision'])) {
         $revision = unserialize($_SESSION['booking']['newRevision']);
         $revision->loadReservation();
-        $reservation = $revision->getReservation();
 
         if ($revision->canUserUpdate() !== true) {
             throw new Exception('Permission denied.');

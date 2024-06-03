@@ -1448,7 +1448,7 @@ class Revision
             $this->loadReservation();
         }
 
-        if ($_SESSION['logged_id'] != $this->reservation->getOwnerUser_id()) {
+        if ($this->reservation === null || $_SESSION['logged_id'] != $this->reservation->getOwnerUser_id()) {
             return 'Permission denied.';
         }
 
@@ -1593,9 +1593,7 @@ class Revision
             'pickupDate' => [
                 'name' => 'pickupDate',
                 'type' => 'dateString',
-                'mustBeAfter' => [
-                    time()
-                ],
+                'diffDays' => 1,
                 'required' => true,
             ],
             'pickupTime' => [
@@ -1618,10 +1616,10 @@ class Revision
             'dropoffDate' => [
                 'name' => 'dropoffDate',
                 'type' => 'dateString',
-                'mustBeAfter' => 'dropoffDate',
+                'mustBeAfter' => 'pickupDate',
                 'required' => true,
             ],
-            [
+            'dropoffTime' => [
                 'name' => 'dropoffTime',
                 'type' => 'timeString',
                 'min' => '09:30:00',

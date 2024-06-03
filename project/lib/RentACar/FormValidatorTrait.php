@@ -35,8 +35,10 @@ trait FormValidatorTrait
                         if (date('Y-m-d', strtotime($value)) !== $value) {
                             throw new \Exception('This field must be a valid date.');
                         }
-                        if (!empty($field['mustBeBefore'])) {
-                            $beBefore = $field['mustBeBefore'];
+                        if (!empty($field['mustBeAfter']) && !empty($_POST[$field['mustBeAfter']])) {
+                            if (calculateDiffDays($_POST[$field['mustBeAfter']], $value) > 1) {
+                                throw new \Exception($field['name'] . ' must be after ' . $field['mustBeAfter']);
+                            }
                         }
                         if (!empty($field['diffYears'])) {
                             if (calculateAge($value) < $field['diffYears']) {
