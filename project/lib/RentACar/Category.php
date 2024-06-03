@@ -116,11 +116,6 @@ class Category
         return $this;
     }
 
-    public function getObjectVars(): array
-    {
-        return get_object_vars($this);
-    }
-
     /**
      * Get the value of properties
      * @return self
