@@ -61,7 +61,7 @@ echo getHeader();
                             <td><?php echo $revision->getDropoffTime(); ?></td>
                             <td><?php echo $revision->getVehicle() === null ? null : $revision->getVehicle()->getPlate() ?></td>
                             <td><?php echo $revision->loadStatus()->getStatus()->getStatusName(); ?></td>
-                            <td>
+                            <td class="d-flex flex-wrap">
                                 <a href="/src/html/admin/reservationView.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-primary">View</a>
                                 <a href="/src/html/admin/reservationEdit.php?reservationId=<?php echo $reservationId; ?>" class="btn btn-secondary">Edit</a>
                             </td>

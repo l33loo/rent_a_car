@@ -51,12 +51,11 @@ trait FormValidatorTrait
                             }
                         }
                         break;
-                    // TODO: fix
-                    // case 'timeString':
-                    //     if (date('H:i:s', strtotime($value)) !== $value) {
-                    //         throw new \Exception('This field must be a valid time.');
-                    //     }
-                    //     break;
+                    case 'timeString':
+                        if (date('H:i', strtotime($value)) !== $value) {
+                            throw new \Exception('This field must be a valid time.');
+                        }
+                        break;
                     case 'email':
                         if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                             throw new \Exception("Email '$value' is invalid.");
@@ -81,6 +80,10 @@ trait FormValidatorTrait
 
             if (!empty($field['setLength']) && strlen($value) !== $field['setLength']) {
                 throw new \Exception('Must be ' . $field['setLength'] . ' characters long.');
+            }
+
+            if (!empty($field['mustMatch']) && !empty($_POST[$field['mustMatch']]) && trim($value) !== trim($_POST[$field['mustMatch']])) {
+                throw new \Exception('Passwords must match.');
             }
 
             return true;

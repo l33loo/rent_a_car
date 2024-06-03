@@ -208,8 +208,8 @@ echo getHeader();
                                 type="time"
                                 id="dropoff-time"
                                 name="dropoffTime"
-                                min="09:30:00"
-                                max="17:30:00"
+                                min="09:30"
+                                max="17:30"
                                 class="form-control"
                                 value="<?php echo $isOwnerEditing ? $revision->getDropoffTime() : null ?>"
                             >

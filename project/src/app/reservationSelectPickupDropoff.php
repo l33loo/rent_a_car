@@ -12,7 +12,7 @@ try {
         $revision->loadReservation();
 
         if ($revision->canUserUpdate() !== true) {
-            throw new Exception('Permission denied.');
+            throw new Exception($revision->canUserUpdate());
         }
     } else {
         $revision = new Revision();

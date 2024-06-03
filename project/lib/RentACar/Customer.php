@@ -174,30 +174,7 @@ class Customer extends Profile
      */ 
     public static function getValidationRules(): array
     {
-        return [
-            'name' => [
-                'name' => 'name',
-                'type' => 'string',
-                'maxLength' => 90,
-                'required' => true,
-            ],
-            'email' => [
-                'name' => 'email',
-                'type' => 'email',
-                'maxLength' => 90,
-                'required' => true,
-            ],
-            'phone' => [
-                'name' => 'phone',
-                'maxLength' => 25,
-                'required' => true,
-            ],
-            'dateOfBirth' => [
-                'name' => 'dateOfBirth',
-                'type' => 'dateString',
-                'diffYears' => 18,
-                'required' => true
-            ],
+        $rules = [
             'driversLicense' => [
                 'name' => 'driversLicense',
                 'maxLength' => 25,
@@ -209,5 +186,8 @@ class Customer extends Profile
                 'required' => false
             ],
         ];
+
+        $parentRules = parent::getValidationRules();
+        return array_merge($parentRules, $rules);
     }
 }

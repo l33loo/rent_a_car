@@ -114,16 +114,17 @@ echo getHeader();
                                         value="Change"
                                         name="changeForm"
                                         class="btn btn-secondary"
-                                        <?php echo $revision->canUserUpdate() ? null : 'disabled' ?>
+                                        <?php echo $revision->canUserUpdate() === true ? null : 'disabled' ?>
                                     >
                                 </form>
-                                <form method="get">
+                                <form action="/src/app/reservationEdit.php" method="post">
                                     <input type="hidden" name="reservationId" value="<?php echo $revision->getReservation_id() ?>">
                                     <input
                                         type="submit"
                                         value="Cancel"
+                                        name="reservationCancel"
                                         class="btn btn-danger"
-                                        <?php echo $revision->canUserUpdate() ? null : 'disabled' ?>
+                                        <?php echo $revision->canUserUpdate() === true ? null : 'disabled' ?>
                                     >
                                 </form>
                             </div>

@@ -1448,7 +1448,7 @@ class Revision
             $this->loadReservation();
         }
 
-        if ($this->reservation === null || $_SESSION['logged_id'] != $this->reservation->getOwnerUser_id()) {
+        if ($this->reservation !== null && $_SESSION['logged_id'] != $this->reservation->getOwnerUser_id()) {
             return 'Permission denied.';
         }
 
@@ -1524,7 +1524,7 @@ class Revision
      */ 
     private function calculateDaysUntilDate(string $date): int
     {
-        return calculateDiffDays('', $date);
+        return calculateDiffDays($date, '');
     }
 
     /**
@@ -1599,8 +1599,8 @@ class Revision
             'pickupTime' => [
                 'name' => 'pickupTime',
                 'type' => 'timeString',
-                'min' => '09:30:00',
-                'max' => '17:30:00',
+                'min' => '09:30',
+                'max' => '17:30',
                 'required' => true,
             ],
             'dropoffLocation_id' => [
@@ -1622,8 +1622,8 @@ class Revision
             'dropoffTime' => [
                 'name' => 'dropoffTime',
                 'type' => 'timeString',
-                'min' => '09:30:00',
-                'max' => '17:30:00',
+                'min' => '09:30',
+                'max' => '17:30',
                 'required' => true,
             ]
         ];

@@ -13,7 +13,7 @@ if (isset($_POST['changeForm'])) {
         $revision = $reservation->findLatestRevision();
 
         if ($revision->canUserUpdate() !== true) {
-            throw new Exception('Permission denied.');
+            throw new Exception($revision->canUserUpdate());
         }
 
         $_SESSION['booking']['newRevision'] = serialize($revision);
@@ -31,7 +31,7 @@ if (isset($_POST['reservationSelectVehicle'])) {
         $revision = unserialize($_SESSION['booking']['newRevision']);
 
         if ($revision->canUserUpdate() !== true) {
-            throw new Exception('Permission denied.');
+            throw new Exception($revision->canUserUpdate());
         }
 
         $revision
@@ -47,6 +47,27 @@ if (isset($_POST['reservationSelectVehicle'])) {
         header('Location: /src/html/reservationView.php?reservationId=' . $revision->getReservation_id());
     } catch (Exception $e) {
         unset($_SESSION['booking']);
+        $_SESSION['errors']['userReservationsPage'] = $e->getMessage();
+        header('Location: /src/html/reservations.php');
+        exit;
+    }
+}
+
+if (isset($_POST['reservationCancel'])) {
+    try {
+        $reservation = Reservation::find($_POST['reservationId']);
+        $revision = $reservation->findLatestRevision();
+
+        if ($revision->canUserUpdate() !== true) {
+            throw new Exception($revision->canUserUpdate());
+        }
+
+        $revision
+            ->setStatus_id(4) // Cancelled
+            ->update();
+
+        header('Location: /src/html/reservationView.php?reservationId=' . $revision->getReservation_id());
+    } catch (Exception $e) {
         $_SESSION['errors']['userReservationsPage'] = $e->getMessage();
         header('Location: /src/html/reservations.php');
         exit;

@@ -7,6 +7,12 @@ use RentACar\Address;
 use RentACar\User;
 
 try {
+    $isUserFormValid = User::validateForm();
+    $isAddressFormValid = Address::validateForm();
+    if (!$isUserFormValid || !$isAddressFormValid) {
+        throw new Exception('Invalid fields.');
+    }
+
     $address = new Address(
         $_POST['street'],
         $_POST['door'],
@@ -31,13 +37,11 @@ try {
     );
 
     $user->save();
-} catch(e) {
-    // TODO: error message
-    echo 'ERROR SIGNING UP :(';
-    print_r(e);
-} finally {
-    // TODO: make sure this is upon success
+
     header('Location: /src/html/login.php');
+} catch(Exception $e) {
+    $_SESSION['errors']['signupPage'] = $e->getMessage();
+    header('Location: /src/html/signup.php');
 }
 
 
