@@ -7,7 +7,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
 use RentACar\Category;
 use RentACar\CreditCard;
 use RentACar\Customer;
-use RentACar\FormValidatorTrait;
 use RentACar\Location;
 use RentACar\User;
 use RentACar\Vehicle;
