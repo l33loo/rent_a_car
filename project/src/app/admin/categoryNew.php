@@ -6,14 +6,17 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 use RentACar\Category;
 use RentACar\Property;
 
-// TODO: validate form fields
-
 try {
+    $isCategoryFormValid = Category::validateForm();
+    if (!$isCategoryFormValid) {
+        throw new Exception('Invalid fields.');
+    }
+
     $category = new Category();
     $category->setName($_POST['name']);
     $category->setDescription($_POST['description']);
     $category->setDailyRate($_POST['dailyRate']);
-    $category->setIsArchived($_POST['isArchived']);
+    $category->setIsArchived(false);
     $category->save();
     $categoryId = $category->getId();
 
@@ -38,11 +41,12 @@ try {
             INSERT INTO category_property (propertyValue, category_id, property_id)
             VALUES ('$formPropertyValue', $categoryId, $propertyId);
         ");
+
+        header('Location: /src/html/admin/categoryView.php?categoryId=' . $categoryId);
     }
-} catch(e) {
-    // TODO: error message
-    echo 'ERROR SIGNING UP :(';
-    print_r(e);
+} catch(Exception $e) {
+    $_SESSION['errors']['adminCatNewPage'] = $e->getMessage();
+    header('Location: /src/html/admin/categoryNew.php');
     exit;
 }
-header('Location: /src/html/admin/categoryView.php?categoryId=' . $categoryId);
+

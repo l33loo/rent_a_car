@@ -4,7 +4,6 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Address;
-use RentACar\FormValidatorTrait;
 use RentACar\Profile;
 use RentACar\User;
 

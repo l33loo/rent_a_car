@@ -31,6 +31,11 @@ trait FormValidatorTrait
                             throw new \Exception('This field must be an integer.');
                         }
                         break;
+                    case 'number':
+                        if (!filter_var((int)$value, FILTER_VALIDATE_INT) && !filter_var((int)$value, FILTER_VALIDATE_FLOAT)) {
+                            throw new \Exception('This field must be an integer or float.');
+                        }
+                        break;
                     case 'dateString':
                         if (date('Y-m-d', strtotime($value)) !== $value) {
                             throw new \Exception('This field must be a valid date.');

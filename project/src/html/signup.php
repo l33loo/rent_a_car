@@ -24,13 +24,13 @@ echo getHeader();
                         Name:
                     </label>
                     <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['name'])) { ?>
-                    <div class="text-danger">
-                        <small>
-                            <?php echo $_SESSION['errors']['name'];
-                            unset($_SESSION['errors']['name']); ?>
-                        </small>
-                    </div>
-                <?php } ?>
+                        <div class="text-danger">
+                            <small>
+                                <?php echo $_SESSION['errors']['name'];
+                                unset($_SESSION['errors']['name']); ?>
+                            </small>
+                        </div>
+                    <?php } ?>
                     <input type="text" class="form-control" name="name">
                 </div>
                 <div class="col">

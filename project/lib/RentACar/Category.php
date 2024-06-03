@@ -8,6 +8,7 @@ class Category
 {
     use DBModel;
     use PropertiesTrait;
+    use FormValidatorTrait;
 
     protected ?string $name = null;
     protected ?string $description = null;
@@ -194,5 +195,56 @@ class Category
     public function calculateTotalPriceInEuros(string $pickupDate, string $dropoffDate): string
     {
         return convertNumToEuros($this->calculateTotalPrice($pickupDate, $dropoffDate));
+    }
+
+    /**
+     * Get validation rules for category form fields
+     *
+     * @return array
+     */ 
+    private static function getValidationRules(): array
+    {
+        return [
+            'plate' => [
+                'name' => 'plate',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'description' => [
+                'name' => 'description',
+                'maxLength' => 90,
+                'required' => true,
+            ],
+            'dailyRate' => [
+                'name' => 'dailyRate',
+                'type' => 'number',
+                'required' => true,
+            ],
+            'property-6' => [
+                'name' => 'property-6',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'property-7' => [
+                'name' => 'property-7',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'property-8' => [
+                'name' => 'property-8',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'property-9' => [
+                'name' => 'property-9',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'property-10' => [
+                'name' => 'property-10',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+        ];
     }
 } 

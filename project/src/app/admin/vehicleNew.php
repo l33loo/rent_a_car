@@ -6,9 +6,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
 use RentACar\Property;
 use RentACar\Vehicle;
 
-// TODO: validate fields
-
 try {
+    $isVehicleFormValid = Vehicle::validateForm();
+    if (!$isVehicleFormValid) {
+        throw new Exception('Invalid fields.');
+    }
+
     $vehicle = new Vehicle(
         $_POST['plate'],
         $_POST['rentable'],
@@ -45,11 +48,11 @@ try {
             VALUES ('$formPropertyValue', $vehicleId, $propertyId); 
         ");
     }
-} catch(e) {
-// TODO: manage error
-    print_r(e);
-    header('Location: /src/html/admin/vehicleEdit.php');
+
+    header("Location: /src/html/admin/vehicleView.php?vehicleId=$vehicleId");
+} catch(Exception $e) {
+    $_SESSION['errors']['adminVehNewPage'] = $e->getMessage();
+    header('Location: /src/html/admin/vehicleNew.php');
     exit;
 }
 
-header("Location: /src/html/admin/vehicleView.php?vehicleId=$vehicleId");

@@ -3,8 +3,6 @@ namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-use RentACar\FormValidatorTrait;
-
 class CreditCard
 {
     use DBModel;

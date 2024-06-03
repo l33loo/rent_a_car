@@ -27,43 +27,59 @@ echo getHeader();
             <div class="col">
                 <div class="card mt-5 mb-4">
                     <div class="card-header">
-                        <h1 class="text-center">Edit Category</h1>
+                        <h1 class="text-center">Add New Category</h1>
                     </div>
                     <div class="card-body">
+                    <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['adminCatNewPage'])) ? null : $_SESSION['errors']['adminCatNewPage'];
+                    if (!empty($errorMsg)) { ?>
+                        <div class="alert alert-danger">
+                            <?php echo $errorMsg;
+                            unset($_SESSION['errors']['adminCatNewPage']); ?>
+                        </div>
+                    <?php } ?>
                         <form action="/src/app/admin/categoryNew.php" method="post">
                             <div class="row mb-3">
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <label for="name">
                                         Name:
                                     </label>
+                                    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['name'])) { ?>
+                                        <div class="text-danger">
+                                            <small>
+                                                <?php echo $_SESSION['errors']['name'];
+                                                unset($_SESSION['errors']['name']); ?>
+                                            </small>
+                                        </div>
+                                    <?php } ?>
                                     <input type="text" class="form-control" name="name">
                                 </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <label for="dailyRate">
-                                        Daily Rate:
-                                    </label>
-                                    <input class="form-control" type="number" step="0.01" name="dailyRate">
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <label for="isArchived">
-                                        Is Archived:
-                                    </label>
-                                    <select class="form-select" name="isArchived" id="selectIsArchived">
-                                        <option value="0">
-                                            NO
-                                        </option>
-                                        <option value="1">
-                                            YES
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col">
+                                <div class="col-md-7 col-sm-12">
                                     <label for="description">
                                         Description:
                                     </label>
+                                    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['description'])) { ?>
+                                        <div class="text-danger">
+                                            <small>
+                                                <?php echo $_SESSION['errors']['description'];
+                                                unset($_SESSION['errors']['description']); ?>
+                                            </small>
+                                        </div>
+                                    <?php } ?>
                                     <input type="text" class="form-control" name="description">
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                    <label for="dailyRate">
+                                        Daily Rate:
+                                    </label>
+                                    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['dailyRate'])) { ?>
+                                        <div class="text-danger">
+                                            <small>
+                                                <?php echo $_SESSION['errors']['dailyRate'];
+                                                unset($_SESSION['errors']['dailyRate']); ?>
+                                            </small>
+                                        </div>
+                                    <?php } ?>
+                                    <input class="form-control" type="number" step="0.01" name="dailyRate">
                                 </div>
                             </div>
                             <div class="row mb-4">
@@ -72,6 +88,14 @@ echo getHeader();
                                         <label for="property-<?php echo $property->getId(); ?>">
                                             <?php echo $property->getName(); ?>:
                                         </label>
+                                        <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['property-' . $property->getId()])) { ?>
+                                            <div class="text-danger">
+                                                <small>
+                                                    <?php echo $_SESSION['errors']['property-' . $property->getId()];
+                                                    unset($_SESSION['errors']['property-' . $property->getId()]); ?>
+                                                </small>
+                                            </div>
+                                        <?php } ?>
                                         <input type="text" class="form-control" name="property-<?php echo $property->getId(); ?>" value=<?php echo $property->getPropertyValue(); ?>>
                                     </div>
                                 <?php } ?>
