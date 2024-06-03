@@ -3,13 +3,13 @@
         <p class="display-6 mb-3">
         <div class="row align-items-center justify-content-center">
             <div class="col-md-2">
-                ADMIN FOOTER
+                Contact Technical Support
             </div>
             <div class="col-md-2">
-                ADMIN FOOTER
+                Contact HR
             </div>
             <div class="col-md-2">
-                ADMIN FOOTER
+                Access Employee Portal
             </div>
         </div>
         </p>
