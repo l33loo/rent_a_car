@@ -8,7 +8,7 @@ use RentACar\Location;
 
 trait FormValidatorTrait
 {
-    // abstract public static function getValidationRules(): array;
+    abstract public static function getValidationRules(): array;
 
     /**
      * Validate a given form field
