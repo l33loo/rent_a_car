@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS customer (
     dateOfBirth DATE NOT NULL,
     address_id INT UNSIGNED NOT NULL,
     phone VARCHAR(25) NOT NULL,
-    driversLicense VARCHAR(90) NOT NULL,
+    driversLicense VARCHAR(25) NOT NULL,
     -- TODO: do we want credit card attached to the customer?
     -- Better with user, or just the reservation
     -- creditCard_id INT UNSIGNED NOT NULL,

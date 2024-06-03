@@ -41,6 +41,14 @@
             <label for="phone">
                 Phone:
             </label>
+            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['phone'])) { ?>
+                <div class="text-danger">
+                    <small>
+                        <?php echo $_SESSION['errors']['phone'];
+                        unset($_SESSION['errors']['phone']); ?>
+                    </small>
+                </div>
+            <?php } ?>
             <input type="text" class="form-control" name="phone">
         </div>
         <div class="col">
@@ -48,6 +56,14 @@
             <label for="dateOfBirth">
                 Birthdate:
             </label>
+            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['dateOfBirth'])) { ?>
+                <div class="text-danger">
+                    <small>
+                        <?php echo $_SESSION['errors']['dateOfBirth'];
+                        unset($_SESSION['errors']['dateOfBirth']); ?>
+                    </small>
+                </div>
+            <?php } ?>
             <input type="date" class="form-control" name="dateOfBirth">
         </div>
     </div>
@@ -57,6 +73,14 @@
             <label for="driversLicense">
                 Driver's License:
             </label>
+            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['driversLicense'])) { ?>
+                <div class="text-danger">
+                    <small>
+                        <?php echo $_SESSION['errors']['driversLicense'];
+                        unset($_SESSION['errors']['driversLicense']); ?>
+                    </small>
+                </div>
+            <?php } ?>
             <input type="text" class="form-control" name="driversLicense">
         </div>
         <div class="col">
@@ -64,6 +88,14 @@
             <label for="taxNumber">
                 Tax Number (optional):
             </label>
+            <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['taxNumber'])) { ?>
+                <div class="text-danger">
+                    <small>
+                        <?php echo $_SESSION['errors']['taxNumber'];
+                        unset($_SESSION['errors']['taxNumber']); ?>
+                    </small>
+                </div>
+            <?php } ?>
             <input type="text" class="form-control" name="taxNumber">
         </div>
     </div>

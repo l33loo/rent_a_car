@@ -100,4 +100,41 @@ class CreditCard
 
         return $this;
     }
+
+    /**
+     * Get validation rules for address form fields.
+     *
+     * @return array
+     */ 
+    public static function getValidationRules(): array
+    {
+        $errorName = 'cc';
+        $errorMsg = 'Payment Declined.';
+        return [
+            'ccNumber' => [
+                'name' => 'ccNumber',
+                'type' => 'integer',
+                'setLength' => 16,
+                'error' => $errorName,
+                'errorMsg' => $errorMsg,
+                'required' => true,
+            ],
+            'ccExpiry' => [
+                'name' => 'ccExpiry',
+                'type' => 'dateString',
+                'diffDays' => 1,
+                'error' => $errorName,
+                'errorMsg' => $errorMsg,
+                'required' => true,
+            ],
+            'ccCVV' => [
+                'name' => 'ccCVV',
+                'type' => 'integer',
+                'setLength' => 3,
+                'error' => $errorName,
+                'errorMsg' => $errorMsg,
+                'required' => true,
+            ]
+        ];
+    }
 }

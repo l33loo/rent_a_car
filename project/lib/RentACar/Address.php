@@ -182,4 +182,45 @@ class Address
 
         return $addressString;
     }
+
+    /**
+     * Get validation rules for address form fields.
+     *
+     * @return array
+     */ 
+    public static function getValidationRules(): array
+    {
+        return [
+            'street' => [
+                'name' => 'street',
+                'maxLength' => 90,
+                'required' => true,
+            ],
+            'door' => [
+                'name' => 'door',
+                'maxLength' => 10,
+                'required' => true,
+            ],
+            'apartment' => [
+                'name' => 'apartment',
+                'maxLength' => 10,
+                'required' => false,
+            ],
+            'city' => [
+                'name' => 'city',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'district' => [
+                'name' => 'district',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'postalCode' => [
+                'name' => 'postalCode',
+                'maxLength' => 15,
+                'required' => true,
+            ],
+        ];
+    }
 }

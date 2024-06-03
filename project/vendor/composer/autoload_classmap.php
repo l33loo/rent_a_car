@@ -6,7 +6,19 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'DateError' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
+    'DateException' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
+    'DateInvalidOperationException' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',
+    'DateInvalidTimeZoneException' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateInvalidTimeZoneException.php',
+    'DateMalformedIntervalStringException' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateMalformedIntervalStringException.php',
+    'DateMalformedPeriodStringException' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateMalformedPeriodStringException.php',
+    'DateMalformedStringException' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateMalformedStringException.php',
+    'DateObjectError' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateObjectError.php',
+    'DateRangeError' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateRangeError.php',
+    'Override' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/Override.php',
+    'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
     'RentACar\\Address' => $baseDir . '/lib/RentACar/Address.php',
     'RentACar\\Category' => $baseDir . '/lib/RentACar/Category.php',
     'RentACar\\Country' => $baseDir . '/lib/RentACar/Country.php',
@@ -25,4 +37,8 @@ return array(
     'RentACar\\Status' => $baseDir . '/lib/RentACar/Status.php',
     'RentACar\\User' => $baseDir . '/lib/RentACar/User.php',
     'RentACar\\Vehicle' => $baseDir . '/lib/RentACar/Vehicle.php',
+    'SQLite3Exception' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
+    'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+    'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+    'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
 );

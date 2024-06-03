@@ -1578,8 +1578,7 @@ class Revision
     }
 
     /**
-     * Validate revision form fields.
-     * If the argument is null, all fields are required.
+     * Get validation rules for revision form fields
      *
      * @return array
      */ 

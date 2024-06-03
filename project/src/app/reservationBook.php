@@ -19,7 +19,9 @@ if (empty($_SESSION['logged_id'])) {
 
 try {
     $isCustomerFormValid = Customer::validateForm();
-    if (!$isCustomerFormValid) {
+    $isAddressFormValid = Address::validateForm();
+    $isCreditCardFormValid = CreditCard::validateForm();
+    if (!$isCustomerFormValid || !$isAddressFormValid || !$isCreditCardFormValid) {
         throw new Exception('Invalid fields.');
     }
 

@@ -168,9 +168,9 @@ class Customer extends Profile
     }
 
     /**
-     * Set the value of user_id
+     * Get validation rules for customer form fields.
      *
-     * @return self
+     * @return array
      */ 
     public static function getValidationRules(): array
     {
@@ -186,7 +186,28 @@ class Customer extends Profile
                 'type' => 'email',
                 'maxLength' => 90,
                 'required' => true,
-            ]
+            ],
+            'phone' => [
+                'name' => 'phone',
+                'maxLength' => 25,
+                'required' => true,
+            ],
+            'dateOfBirth' => [
+                'name' => 'dateOfBirth',
+                'type' => 'dateString',
+                'diffYears' => 18,
+                'required' => true
+            ],
+            'driversLicense' => [
+                'name' => 'driversLicense',
+                'maxLength' => 25,
+                'required' => true
+            ],
+            'taxNumber' => [
+                'name' => 'taxNumber',
+                'maxLength' => 20,
+                'required' => false
+            ],
         ];
     }
 }
