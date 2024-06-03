@@ -108,6 +108,6 @@ class Reservation
                 'operator' => '=',
                 'value' => $this->id
             ]
-        ], 'revision', 'submittedTimestamp', 'DESC');
+        ], 'revision', 'submittedTimestamp', 'ASC');
     }
 }
