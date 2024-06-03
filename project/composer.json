@@ -3,5 +3,8 @@
     "classmap": [
       "lib"
     ]
+  },
+  "require": {
+    "nesbot/carbon": "^3.4"
   }
 }

@@ -140,4 +140,27 @@ class User extends Profile
         }
         return $_SESSION['logged_id'] == $userId;
     }
+
+    /**
+     * Get validation rules for customer form fields.
+     *
+     * @return array
+     */ 
+    public static function getValidationRules(): array
+    {
+        $rules = [
+            'password' => [
+                'name' => 'password',
+                'mustMatch' => 'confirmPassword',
+                'required' => true
+            ],
+            'confirmPassword' => [
+                'name' => 'confirmPassword',
+                'required' => true
+            ]
+        ];
+
+        $parentRules = parent::getValidationRules();
+        return array_merge($parentRules, $rules);
+    }
 }

@@ -18,6 +18,13 @@ if (empty($_SESSION['logged_id'])) {
 }
 
 try {
+    $isCustomerFormValid = Customer::validateForm();
+    $isAddressFormValid = Address::validateForm();
+    $isCreditCardFormValid = CreditCard::validateForm();
+    if (!$isCustomerFormValid || !$isAddressFormValid || !$isCreditCardFormValid) {
+        throw new Exception('Invalid fields.');
+    }
+
     $address = new Address(
         trim($_POST['street']),
         trim($_POST['door']),
@@ -111,8 +118,7 @@ try {
         header('Location: /src/html/reservationView.php');
     }
 } catch(Exception $e) {
-    unset($_SESSION['booking']);
-    $_SESSION['errors']['indexPage'] = 'Error saving booking: ' . $e->getMessage();
-    header('Location: /');
+    $_SESSION['errors']['userBookPage'] = $e->getMessage();
+    header('Location: /src/html/reservationBook.php');
     exit;
 }

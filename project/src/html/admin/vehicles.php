@@ -49,6 +49,13 @@ echo getHeader();
         </div>
     </div>
     <div class="container">
+        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['adminVehiclesPage'])) ? null : $_SESSION['errors']['adminVehiclesPage'];
+        if (!empty($errorMsg)) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg;
+                unset($_SESSION['errors']['adminVehiclesPage']); ?>
+            </div>
+        <?php } ?>
         <div class="accordion">
             <?php foreach ($vehiclesByCategoryForIsland as $categoryId => $data) {
                 $categoryIsOpen = isset($_GET['categoryId']) && $_GET['categoryId'] == $categoryId;

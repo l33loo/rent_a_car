@@ -4,13 +4,13 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Category;
-use RentACar\FormValidatorTrait;
 use RentACar\Island;
 
 class Vehicle
 {
     use DBModel;
     use PropertiesTrait;
+    use FormValidatorTrait;
 
     protected ?string $plate = null;
     protected ?bool $rentable = null;
@@ -253,5 +253,61 @@ class Vehicle
         } else {
             return [];
         }
+    }
+
+    /**
+     * Get validation rules for vehicle form fields
+     *
+     * @return array
+     */ 
+    private static function getValidationRules(): array
+    {
+        return [
+            'plate' => [
+                'name' => 'plate',
+                'maxLength' => 15,
+                'required' => true,
+            ],
+            'rentable' => [
+                'name' => 'rentable',
+                'type' => 'boolean',
+                'required' => true,
+            ],
+            'categoryId' => [
+                'name' => 'categoryId',
+                'type' => 'integer',
+                'required' => true,
+            ],
+            'islandId' => [
+                'name' => 'islandId',
+                'type' => 'integer',
+                'required' => true,
+            ],
+            'property-1' => [
+                'name' => 'property-1',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'property-2' => [
+                'name' => 'property-2',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'property-3' => [
+                'name' => 'property-3',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'property-4' => [
+                'name' => 'property-4',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'property-5' => [
+                'name' => 'property-5',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+        ];
     }
 }

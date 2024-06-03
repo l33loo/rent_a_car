@@ -4,11 +4,11 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Country;
-use RentACar\FormValidatorTrait;
 
-class Address implements FormValidatorInterface
+class Address
 {
     use DBModel;
+    use FormValidatorTrait;
 
     protected ?string $street = null;
     protected ?string $doorNumber = null;
@@ -180,5 +180,46 @@ class Address implements FormValidatorInterface
         $addressString .= ', ' . $this->city . ', ' . $this->district . ', ' . $this->postalCode . ', ' . $this->getCountry()->getName();
 
         return $addressString;
+    }
+
+    /**
+     * Get validation rules for address form fields.
+     *
+     * @return array
+     */ 
+    public static function getValidationRules(): array
+    {
+        return [
+            'street' => [
+                'name' => 'street',
+                'maxLength' => 90,
+                'required' => true,
+            ],
+            'door' => [
+                'name' => 'door',
+                'maxLength' => 10,
+                'required' => true,
+            ],
+            'apartment' => [
+                'name' => 'apartment',
+                'maxLength' => 10,
+                'required' => false,
+            ],
+            'city' => [
+                'name' => 'city',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'district' => [
+                'name' => 'district',
+                'maxLength' => 45,
+                'required' => true,
+            ],
+            'postalCode' => [
+                'name' => 'postalCode',
+                'maxLength' => 15,
+                'required' => true,
+            ],
+        ];
     }
 }

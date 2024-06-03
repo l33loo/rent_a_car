@@ -9,6 +9,13 @@ echo getHeader();
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/html/components/navbar.inc.php'; ?>
     <div class="container">
         <h1 class="text-center mb-5" style="margin-top: 100px;">Sign Up</h1>
+        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['signupPage'])) ? null : $_SESSION['errors']['signupPage'];
+        if (!empty($errorMsg)) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg;
+                unset($_SESSION['errors']['signupPage']); ?>
+            </div>
+        <?php } ?>
         <form action="/src/app/signup.php" method="post">
             <div class="row mb-3">
                 <div class="col">
@@ -16,6 +23,14 @@ echo getHeader();
                     <label for="name">
                         Name:
                     </label>
+                    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['name'])) { ?>
+                        <div class="text-danger">
+                            <small>
+                                <?php echo $_SESSION['errors']['name'];
+                                unset($_SESSION['errors']['name']); ?>
+                            </small>
+                        </div>
+                    <?php } ?>
                     <input type="text" class="form-control" name="name">
                 </div>
                 <div class="col">
@@ -23,6 +38,14 @@ echo getHeader();
                     <label for="email">
                         Email:
                     </label>
+                    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['email'])) { ?>
+                        <div class="text-danger">
+                            <small>
+                                <?php echo $_SESSION['errors']['email'];
+                                unset($_SESSION['errors']['email']); ?>
+                            </small>
+                        </div>
+                    <?php } ?>
                     <input type="email" class="form-control" name="email">
                 </div>
             </div>
@@ -32,6 +55,14 @@ echo getHeader();
                     <label for="password">
                         Password:
                     </label>
+                    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['password'])) { ?>
+                        <div class="text-danger">
+                            <small>
+                                <?php echo $_SESSION['errors']['password'];
+                                unset($_SESSION['errors']['password']); ?>
+                            </small>
+                        </div>
+                    <?php } ?>
                     <input type="password" class="form-control" name="password">
                 </div>
                 <div class="col">
@@ -39,6 +70,14 @@ echo getHeader();
                     <label for="confirmPassword">
                         Confirm password:
                     </label>
+                    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['confirmPassword'])) { ?>
+                        <div class="text-danger">
+                            <small>
+                                <?php echo $_SESSION['errors']['confirmPassword'];
+                                unset($_SESSION['errors']['confirmPassword']); ?>
+                            </small>
+                        </div>
+                    <?php } ?>
                     <input type="password" class="form-control" name="confirmPassword">
                 </div>
             </div>
@@ -48,6 +87,14 @@ echo getHeader();
                     <label for="phone">
                         Phone:
                     </label>
+                    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['phone'])) { ?>
+                        <div class="text-danger">
+                            <small>
+                                <?php echo $_SESSION['errors']['phone'];
+                                unset($_SESSION['errors']['phone']); ?>
+                            </small>
+                        </div>
+                    <?php } ?>
                     <input type="text" class="form-control" name="phone">
                 </div>
                 <div class="col">
@@ -55,6 +102,14 @@ echo getHeader();
                     <label for="dateOfBirth">
                         Birthdate:
                     </label>
+                    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['dateOfBirth'])) { ?>
+                        <div class="text-danger">
+                            <small>
+                                <?php echo $_SESSION['errors']['dateOfBirth'];
+                                unset($_SESSION['errors']['dateOfBirth']); ?>
+                            </small>
+                        </div>
+                    <?php } ?>
                     <input type="date" class="form-control" name="dateOfBirth">
                 </div>
             </div>

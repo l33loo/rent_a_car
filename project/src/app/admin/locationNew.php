@@ -6,10 +6,13 @@ use RentACar\Address;
 use RentACar\Island;
 use RentACar\Location;
 
-// TODO: validate fields
-
-// TODO: error handling
 try {
+    $isLocationFormValid = Location::validateForm();
+    $isAddressFormValid = Address::validateForm();
+    if (!$isLocationFormValid || !$isAddressFormValid) {
+        throw new Exception('Invalid fields.');
+    }
+
     $address = new Address(
         $_POST['street'],
         $_POST['door'],
@@ -31,10 +34,10 @@ try {
         false // isArchived
     );
     $newLocation->save();
-} catch (e) {
-    // TODO
+
+    header('Location: /src/html/admin/locations.php');
+} catch (Exception $e) {
+    $_SESSION['errors']['adminLocNewPage'] = $e->getMessage();
     header('Location: /src/html/admin/locationNew.php');
     exit;
 }
-
-header('Location: /src/html/admin/locations.php');

@@ -4,7 +4,6 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Address;
-use RentACar\FormValidatorTrait;
 use RentACar\Profile;
 use RentACar\User;
 
@@ -165,5 +164,29 @@ class Customer extends Profile
         $this->user_id = $user_id;
 
         return $this;
+    }
+
+    /**
+     * Get validation rules for customer form fields.
+     *
+     * @return array
+     */ 
+    public static function getValidationRules(): array
+    {
+        $rules = [
+            'driversLicense' => [
+                'name' => 'driversLicense',
+                'maxLength' => 25,
+                'required' => true
+            ],
+            'taxNumber' => [
+                'name' => 'taxNumber',
+                'maxLength' => 20,
+                'required' => false
+            ],
+        ];
+
+        $parentRules = parent::getValidationRules();
+        return array_merge($parentRules, $rules);
     }
 }

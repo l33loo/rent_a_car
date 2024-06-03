@@ -34,7 +34,7 @@ echo getHeader();
                     <div class="row mb-3">
                         <div class="col">
                             <label for="pickup-location">Pick-Up Location:</label>
-                            <select id="pickup-location" name="pickupLocationId" class="form-select">
+                            <select id="pickup-location" name="pickupLocation_id" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>
@@ -61,7 +61,7 @@ echo getHeader();
                     <div class="row mb-3">
                         <div class="col">
                             <label for="dropoff-location">Drop-Off Location:</label>
-                            <select id="dropoff-location" name="dropoffLocationId" class="form-select">
+                            <select id="dropoff-location" name="dropoffLocation_id" class="form-select">
                                 <?php foreach ($locations as $location) : ?>
                                     <option value="<?php echo $location->getId(); ?>">
                                         <?php echo $location->getName(); ?>

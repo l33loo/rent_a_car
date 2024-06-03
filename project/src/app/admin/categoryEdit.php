@@ -8,15 +8,19 @@ use RentACar\Property;
 use RentACar\Revision;
 use RentACar\Vehicle;
 
-if (empty($_POST['categoryId'])) {
-    // TODO: send back with error
-    exit;
-}
-
-$categoryId = $_POST['categoryId'];
-
 if (isset($_POST['categoryEdit'])) {
     try {
+        if (empty($_POST['categoryId'])) {
+            throw new Exception('No category ID.');
+        }
+
+        $categoryId = $_POST['categoryId'];
+
+        $isCategoryFormValid = Category::validateForm();
+        if (!$isCategoryFormValid) {
+            throw new Exception('Invalid fields.');
+        }
+
         $vehiclesFromCategory = Vehicle::search([
             [
                 'column' => 'category_id',
@@ -59,24 +63,30 @@ if (isset($_POST['categoryEdit'])) {
         }
 
         Revision::updateActiveRevisionsCategory($categoryId, $categoryIdAfter);
-    } catch(e) {
-        // TODO: error message
-        echo 'ERROR SIGNING UP :(';
-        print_r(e);
+
+        if ($category->getIsArchived() === true) {
+            header('Location: /src/html/admin/vehicles.php');
+        } else {
+            header('Location: /src/html/admin/categoryView.php?categoryId=' . $categoryIdAfter);
+        }
+    } catch(Exception $e) {
+        if (empty($categoryId)) {
+            $_SESSION['errors']['adminVehiclesPage'] = $e->getMessage();
+            header('Location: /src/html/admin/vehicles.php');
+        } else {
+            $_SESSION['errors']['adminCatEditPage'] = $e->getMessage();
+            header('Location: /src/html/admin/categoryEdit.php?categoryId=' . $categoryId);
+        }
         exit;
     }
-
-    if ($category->getIsArchived() === true) {
-        header('Location: /src/html/admin/vehicles.php');
-    } else {
-        header('Location: /src/html/admin/categoryView.php?categoryId=' . $categoryIdAfter);
-    }
-    
-    exit;
 }
 
 if (isset($_POST['categoryArchive'])) {
     try {
+        if (empty($_POST['categoryId'])) {
+            throw new Exception('No category ID.');
+        }
+
         $category = Category::find($categoryId);
         $category->setIsArchived(true)->save();
         $stmt = Category::rawSQL("
@@ -85,8 +95,9 @@ if (isset($_POST['categoryArchive'])) {
             WHERE category_id=$categoryId
         ");
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-    } catch(e) {
-        // TODO: handle error
+    } catch(Exception $e) {
+        $_SESSION['errors']['adminVehiclesPage'] = $e->getMessage();
+        header('Location: /src/html/admin/vehicles.php');
         exit;
     }
 }

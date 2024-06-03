@@ -4,11 +4,11 @@ namespace RentACar;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Address;
-use RentACar\FormValidatorTrait;
 
 abstract class Profile
 {
     use DBModel; 
+    use FormValidatorTrait;
 
     protected ?string $name = null;
     protected ?string $email = null;
@@ -223,5 +223,39 @@ abstract class Profile
         $this->address_id = $address_id;
 
         return $this;
+    }
+
+    /**
+     * Get validation rules for customer form fields.
+     *
+     * @return array
+     */ 
+    public static function getValidationRules(): array
+    {
+        return [
+            'name' => [
+                'name' => 'name',
+                'type' => 'string',
+                'maxLength' => 90,
+                'required' => true,
+            ],
+            'email' => [
+                'name' => 'email',
+                'type' => 'email',
+                'maxLength' => 90,
+                'required' => true,
+            ],
+            'phone' => [
+                'name' => 'phone',
+                'maxLength' => 25,
+                'required' => true,
+            ],
+            'dateOfBirth' => [
+                'name' => 'dateOfBirth',
+                'type' => 'dateString',
+                'diffYears' => 18,
+                'required' => true
+            ],
+        ];
     }
 }

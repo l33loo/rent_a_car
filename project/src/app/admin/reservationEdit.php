@@ -45,7 +45,7 @@ if (isset($_POST['reservationEditVehicle'])) {
 
 if (isset($_POST['reservationEditEffectivePickup'])) {
     try {
-        $latestRevision->setEffectivePickupLocation_id($_POST['pickupLocationId']);
+        $latestRevision->setEffectivePickupLocation_id($_POST['pickupLocation_id']);
         $latestRevision->setEffectivePickupDate($_POST['pickupDate']);
         $latestRevision->setEffectivePickupTime($_POST['pickupTime']);
         $latestRevision->update();
@@ -56,7 +56,7 @@ if (isset($_POST['reservationEditEffectivePickup'])) {
 
 if (isset($_POST['reservationEditEffectiveDropoff'])) {
     try {
-        $latestRevision->setEffectiveDropoffLocation_id($_POST['dropoffLocationId']);
+        $latestRevision->setEffectiveDropoffLocation_id($_POST['dropoffLocation_id']);
         $latestRevision->setEffectiveDropoffDate($_POST['dropoffDate']);
         $latestRevision->setEffectiveDropoffTime($_POST['dropoffTime']);
         $latestRevision->update();
@@ -67,10 +67,10 @@ if (isset($_POST['reservationEditEffectiveDropoff'])) {
 
 if (isset($_POST['reservationEditRes'])) {
     try {
-        $latestRevision->setPickupLocation_id($_POST['pickupLocationId']);
+        $latestRevision->setPickupLocation_id($_POST['pickupLocation_id']);
         $latestRevision->setPickupDate($_POST['pickupDate']);
         $latestRevision->setPickupTime($_POST['pickupTime']);
-        $latestRevision->setDropoffLocation_id($_POST['dropoffLocationId']);
+        $latestRevision->setDropoffLocation_id($_POST['dropoffLocation_id']);
         $latestRevision->setDropoffDate($_POST['dropoffDate']);
         $latestRevision->setDropoffTime($_POST['dropoffTime']);
         $latestRevision->setCategory_id($_POST['categoryId']);

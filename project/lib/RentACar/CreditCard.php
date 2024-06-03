@@ -3,11 +3,10 @@ namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-use RentACar\FormValidatorTrait;
-
-class CreditCard implements FormValidatorInterface
+class CreditCard
 {
     use DBModel;
+    use FormValidatorTrait;
 
     protected ?string $ccNumber = null;
     // TODO: use Carbon
@@ -98,5 +97,42 @@ class CreditCard implements FormValidatorInterface
         $this->ccCVV = $ccCVV;
 
         return $this;
+    }
+
+    /**
+     * Get validation rules for address form fields.
+     *
+     * @return array
+     */ 
+    public static function getValidationRules(): array
+    {
+        $errorName = 'cc';
+        $errorMsg = 'Payment Declined.';
+        return [
+            'ccNumber' => [
+                'name' => 'ccNumber',
+                'type' => 'integer',
+                'setLength' => 16,
+                'error' => $errorName,
+                'errorMsg' => $errorMsg,
+                'required' => true,
+            ],
+            'ccExpiry' => [
+                'name' => 'ccExpiry',
+                'type' => 'dateString',
+                'diffDays' => 1,
+                'error' => $errorName,
+                'errorMsg' => $errorMsg,
+                'required' => true,
+            ],
+            'ccCVV' => [
+                'name' => 'ccCVV',
+                'type' => 'integer',
+                'setLength' => 3,
+                'error' => $errorName,
+                'errorMsg' => $errorMsg,
+                'required' => true,
+            ]
+        ];
     }
 }

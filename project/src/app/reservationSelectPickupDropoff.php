@@ -10,10 +10,9 @@ try {
     if (!empty($_SESSION['booking']) && !empty($_SESSION['booking']['newRevision'])) {
         $revision = unserialize($_SESSION['booking']['newRevision']);
         $revision->loadReservation();
-        $reservation = $revision->getReservation();
 
         if ($revision->canUserUpdate() !== true) {
-            throw new Exception('Permission denied.');
+            throw new Exception($revision->canUserUpdate());
         }
     } else {
         $revision = new Revision();
@@ -25,11 +24,11 @@ try {
     }
 
     $revision
-        ->setPickupLocation_id($_POST['pickupLocationId'])
+        ->setPickupLocation_id($_POST['pickupLocation_id'])
         ->loadPickupLocation()
         ->setPickupDate($_POST['pickupDate'])
         ->setPickupTime($_POST['pickupTime'])
-        ->setDropoffLocation_id($_POST['dropoffLocationId'])
+        ->setDropoffLocation_id($_POST['dropoffLocation_id'])
         ->loadDropoffLocation()
         ->setDropoffDate($_POST['dropoffDate'])
         ->setDropoffTime($_POST['dropoffTime']);

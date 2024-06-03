@@ -3,8 +3,6 @@ namespace RentACar;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-use RentACar\FormValidatorTrait;
-
 class Location
 {
     use DBModel;
@@ -210,5 +208,26 @@ class Location
         }
 
         return $activeLocations;
+    }
+
+    /**
+     * Get validation rules for location form fields
+     *
+     * @return array
+     */ 
+    private static function getValidationRules(): array
+    {
+        return [
+            'name' => [
+                'name' => 'name',
+                'maxLength' => 90,
+                'required' => true,
+            ],
+            'islandId' => [
+                'name' => 'islandId',
+                'type' => 'integer',
+                'required' => true,
+            ],
+        ];
     }
 }

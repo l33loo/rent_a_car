@@ -3,6 +3,14 @@
         <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
         Payment
     </legend>
+    <?php if (!empty($_SESSION['errors']) && !empty($_SESSION['errors']['cc'])) { ?>
+                <div class="text-danger">
+                    <small>
+                        <?php echo $_SESSION['errors']['cc'];
+                        unset($_SESSION['errors']['cc']); ?>
+                    </small>
+                </div>
+            <?php } ?>
     <div class="row mb-4">
         <div class="col-12 col-md-8">
             <label for="ccNumber">Credit Card Number</label>
