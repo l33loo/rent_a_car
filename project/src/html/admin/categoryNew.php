@@ -13,7 +13,7 @@ try {
             'value' => 6
         ]
     ]);
-} catch(e) {
+} catch(Exception $e) {
     // TODO: handle error
 }
 

@@ -56,11 +56,11 @@ trait FormValidatorTrait
                             }
                         }
                         break;
-                    case 'timeString':
-                        if (date('H:i', strtotime($value)) !== $value) {
-                            throw new \Exception('This field must be a valid time.');
-                        }
-                        break;
+                    // case 'timeString':
+                    //     if (date('H:i', strtotime($value)) !== $value) {
+                    //         throw new \Exception('This field must be a valid time.');
+                    //     }
+                    //     break;
                     case 'email':
                         if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                             throw new \Exception("Email '$value' is invalid.");

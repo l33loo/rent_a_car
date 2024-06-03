@@ -1,53 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/src/html/components/header.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/session.inc.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/util/helpers.php';
-
-use RentACar\Category;
-use RentACar\Customer;
-use RentACar\Island;
-use RentACar\Location;
-use RentACar\Reservation;
-use RentACar\Revision;
-use RentACar\Status;
-use RentACar\User;
-
-try {
-    if (empty($_GET['reservationId'])) {
-        //TODO: error
-        echo 'No reservation id';
-        exit;
-    }
-
-    $reservationId = $_GET['reservationId'];
-    $reservation = Reservation::find($reservationId);
-    $latestRevision = $reservation->findLatestRevision()
-        ->loadCategory()
-        ->loadPickupLocation()
-        ->loadDropoffLocation()
-        ->loadStatus()
-        ->loadBillingAddress()
-        ->loadEffectivePickupLocation()
-        ->loadEffectiveDropoffLocation();
-    $latestRevisionId = $latestRevision->getId();
-    $latestRevisionPickupLocation = $latestRevision->getPickupLocation();
-    $latestRevisionDropoffLocation = $latestRevision->getDropoffLocation();
-    $latestRevisionDropoffLocation->loadRelation('island');
-    $effectiveLocations = Location::fetchActiveLocations($latestRevisionDropoffLocation->getIsland()->getId());
-    $statuses = Status::search([]);
-    $availableVehicles = $latestRevision->findAvailableVehicles();
-    $locations = Location::fetchActiveLocations();
-    $categories = Category::search([]);
-    $wasPickedUp = $latestRevision->wasPickedUp();
-    $wasDroppedOff = $latestRevision->wasDroppedOff();
-    $wasNoShow = $latestRevision->wasNoShow();
-    $category = $latestRevision->getCategory();
-    $totalPrice = $category->calculateTotalPrice($latestRevision->getPickupDate(), $latestRevision->getDropoffDate());
-} catch(e) {
-    // TODO: handle error
-    exit;
-}
+require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/admin/inc/reservationEdit.inc.php';
 
 echo getHeader();
 ?>
@@ -142,7 +96,6 @@ echo getHeader();
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                
                         </div>
                         <div class="col-sm-12 col-md-4">
                             <label for="pickupDate">Pick-Up Date:</label>
@@ -169,7 +122,7 @@ echo getHeader();
                                 value="<?php if ($wasPickedUp) { 
                                     echo $latestRevision->getEffectivePickupTime();
                                 } else {
-                                    echo date('H:i:s', time());
+                                    echo date('H:i', time());
                                 } ?>"
                                 <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>
                             >
@@ -248,7 +201,7 @@ echo getHeader();
                                     value="<?php if ($wasDroppedOff) { 
                                         echo $latestRevision->getEffectiveDropoffTime();
                                     } else {
-                                        echo date('H:i:s', time());
+                                        echo date('H:i', time());
                                     } ?>"
                                 >
                             </div>
@@ -388,91 +341,6 @@ echo getHeader();
                         <?php echo ($wasDroppedOff || $wasNoShow) ? 'disabled' : null ?>
                     >
                 </div>
-            </form>
-            <form action="/src/app/admin/reservationEdit.php" method="post">
-                <fieldset class="mb-3" <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>>
-                    <legend>
-                        <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
-                        Billing Address
-                    </legend>
-                    <div class="row mb-4">
-                        <div class="col-8">
-                            <label for="street">Street</label>
-                            <input type="text" class="form-control" name="street" id="street">
-                        </div>
-                        <div class="col">
-                            <label for="door">Door</label>
-                            <input type="text" class="form-control" name="door" id="door">
-                        </div>
-                        <div class="col">
-                            <label for="apartment">Apartment</label>
-                            <input type="text" class="form-control" name="apartment" id="apartment">
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <label for="city">City</label>
-                            <input type="text" class="form-control" name="city" id="city">
-                        </div>
-                        <div class="col">
-                            <label for="district">District</label>
-                            <input type="text" class="form-control" name="district" id="district">
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <label for="postalCode">Postal Code</label>
-                            <input type="text" class="form-control" name="postalCode" id="postalCode">
-                        </div>
-                        <div class="col">
-                            <label for="country">Country</label>
-                            <select class="form-select" name="countryId" id="country">
-                                <?php foreach($countries as $country) { ?>
-                                    <option value="<?php echo $country->getId(); ?>">
-                                        <?php echo $country->getName(); ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                        <input type="submit" name="reservationEditBillingAddress" value="Update Billing Address" class="btn btn-primary">
-                    </div>
-                </fieldset>
-            </form>
-            <form action="/src/app/admin/reservationEdit.php" method="post">
-                <fieldset class="mb-3" <?php echo ($wasPickedUp || $wasNoShow) ? 'disabled' : null ?>>
-                    <legend>
-                        <img src="/src/img/email.svg" alt="" style="height: 20px; width:20px; margin-bottom:5px;">
-                        Payment
-                    </legend>
-                    <div>
-                        <div class="my-3 h4">
-                            <div>
-                                TOTAL PRICE: <?php echo convertNumToEuros($totalPrice) ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-12 col-md-8">
-                            <label for="ccNumber">Credit Card Number</label>
-                            <input type="text" class="form-control" name="ccNumber" id="ccNumberS">
-                        </div>
-                        <div class="col-12 col-md">
-                            <label for="ccExpiry">Expiry</label>
-                            <input type="date" class="form-control" name="ccExpiry" id="ccExpiry">
-                        </div>
-                        <div class="col-12 col-md">
-                            <label for="ccCVV">CVV</label>
-                            <input type="text" class="form-control" name="ccCVV" id="ccCVV">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <input type="hidden" name="reservationId" value="<?php echo $reservationId ?>">
-                        <input type="submit" name="reservationEditPayment" value="Edit Payment" class="btn btn-primary">
-                    </div>
-                </fieldset>
             </form>
         </div>
     </div>

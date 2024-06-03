@@ -6,15 +6,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 use RentACar\Category;
 use RentACar\Property;
 
-if (empty($_GET['categoryId'])) {
-    // TODO: error
-} else {
-    try {
-        $category = Category::find($_GET['categoryId']);
-        $category->loadProperties();
-    } catch(e) {
-        // TODO:
+try {
+    if (empty($_GET['categoryId'])) {
+        throw new Exception('No category Id.');
     }
+
+    $category = Category::find($_GET['categoryId']);
+    $category->loadProperties();
+} catch(Exception $e) {
+    $errorMsg2 = $e->getMessage();
 }
 
 echo getHeader();
@@ -30,13 +30,18 @@ echo getHeader();
                         <h1 class="text-center">Edit Category - <?php echo $category->getName() ?></h1>
                     </div>
                     <div class="card-body">
-                    <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['adminCatEditPage'])) ? null : $_SESSION['errors']['adminCatEditPage'];
-                    if (!empty($errorMsg)) { ?>
-                        <div class="alert alert-danger">
-                            <?php echo $errorMsg;
-                            unset($_SESSION['errors']['adminCatEditPage']); ?>
-                        </div>
-                    <?php } ?>
+                        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['adminCatEditPage'])) ? null : $_SESSION['errors']['adminCatEditPage'];
+                        if (!empty($errorMsg)) { ?>
+                            <div class="alert alert-danger">
+                                <?php echo $errorMsg;
+                                unset($_SESSION['errors']['adminCatEditPage']); ?>
+                            </div>
+                        <?php } ?>
+                        <?php if (!empty($errorMsg2)) { ?>
+                            <div class="alert alert-danger">
+                                <?php echo $errorMsg2 ?>
+                            </div>
+                        <?php } ?>
                         <form action="/src/app/admin/categoryEdit.php" method="post">
                             <div class="row mb-3">
                                 <div class="col-md-4 col-sm-12">

@@ -60,7 +60,7 @@ if (isset($_POST['userEditAddress'])) {
         exit;
     } finally {
         // TODO: make sure this is upon success
-        header('Location: /src/html/admin/user.php?id=' . $userId);
+        header('Location: /src/html/admin/userView.php?id=' . $userId);
     }
 }
 

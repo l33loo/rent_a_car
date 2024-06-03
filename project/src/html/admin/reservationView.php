@@ -14,9 +14,7 @@ use RentACar\User;
 
 try {
     if (empty($_GET['reservationId'])) {
-        // TODO: handle error
-        echo 'no reservationId';
-        exit;
+        throw new Exception('No category ID.');
     }
     
     $reservation = Reservation::find($_GET['reservationId']);
@@ -26,8 +24,9 @@ try {
     $latestRevision->loadAllRelations();
     $vehicle = $latestRevision->getVehicle();
 
-} catch(e) {
-    // TODO: handle error
+} catch(Exception $e) {
+    $_SESSION['errors']['adminReservationsPage'] = $e->getMessage();
+    header('Location: /src/html/admin/reservations.php');
 }
 
 echo getHeader();
@@ -123,7 +122,7 @@ echo getHeader();
                             <td><?php echo $user->getPhone() ?></td>
                             <td><?php echo $user->getIsAdmin() ? 'YES' : 'NO' ?></td>
                             <td><?php echo $user->getIsArchived() ? 'YES' : 'NO' ?></td>
-                            <td><a class="btn btn-primary" href="/src/html/admin/userView?userId=<?php echo $user->getId() ?>">View</a></td>
+                            <td><a class="btn btn-primary" href="/src/html/admin/userView.php?userId=<?php echo $user->getId() ?>">View</a></td>
                         <?php } ?>
                     </tr>
                 </tbody>

@@ -13,7 +13,6 @@ if (empty($_GET['vehicleId'])) {
 } else {
     try {
         $vehicle = Vehicle::find($_GET['vehicleId']);
-        print_r($vehicle);
         $vehicle->loadRelation('island');
         $vehicle->loadRelation('category');
         $vehicle->loadProperties();

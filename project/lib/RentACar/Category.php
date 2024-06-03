@@ -205,8 +205,8 @@ class Category
     private static function getValidationRules(): array
     {
         return [
-            'plate' => [
-                'name' => 'plate',
+            'name' => [
+                'name' => 'name',
                 'maxLength' => 45,
                 'required' => true,
             ],
