@@ -230,7 +230,7 @@ echo getHeader();
                         <th>Dropoff Time</th>
                         <th>Vehicle</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <!-- <th>Actions</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -254,9 +254,9 @@ echo getHeader();
                             <td><?php echo $revision->getDropoffTime(); ?></td>
                             <td><?php echo $vehicle->Brand . ' ' . $vehicle->Model . ' ' . $vehicle->getPlate() ?></td>
                             <td><?php echo $revision->getStatus()->getStatusName(); ?></td>
-                            <td>
+                            <!-- <td>
                                 <a href="/src/html/admin/reservationView.php?reservationId=<?php echo $reservation->getId(); ?>" class="btn btn-primary">View</a>
-                            </td>
+                            </td> -->
                         </tr>
                     <?php } ?>
                 </tbody>
