@@ -18,13 +18,6 @@ if (empty($_SESSION['logged_id'])) {
 // TODO: validate fields
 
 try {
-    // TODO: figure out how to revert changes already made when something fails
-
-    // TODO: get userId from session here, not from form?
-
-    // TODO: do we want separate Customer and Billing addresses?
-    // keep same address for now, for simplicity
-
     $address = new Address(
         trim($_POST['street']),
         trim($_POST['door']),
@@ -146,16 +139,7 @@ try {
         ->save();
 } catch(e) {
     // TODO: handle errors
-
-    // TODO: send back to form with existing data
-    echo 'error saving Revision';
     header('Location: /src/html/reservations.php');
     exit;
 }
 
-// // TODO: Send to Revision view, with success message
-// if (!empty($userId)) {
-//     header("Location: /src/html/userView.php?userId=$userId");
-// } else {
-//     header("Location: /");
-// }

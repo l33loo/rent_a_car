@@ -5,12 +5,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/src/app/inc/sessionGuest.inc.php';
 
 use RentACar\User;
 
-if (!isset($_GET['id'])) {
+if (!isset($_GET['userId'])) {
     echo "<p>User ID not provided.</p>";
     exit;
 }
 
-$userId = $_GET['id'];
+$userId = $_GET['userId'];
 $user = User::find($userId);
 
 if (!$user) {

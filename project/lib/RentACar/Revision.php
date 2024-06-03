@@ -11,30 +11,6 @@ use RentACar\Location;
 use RentACar\User;
 use RentACar\Vehicle;
 
-// id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-// category_id INT UNSIGNED NOT NULL,
-// customer_id INT UNSIGNED NOT NULL,
-// status_id INT UNSIGNED NOT NULL,
-// pickupLocation_id INT UNSIGNED NOT NULL,
-// dropoffLocation_id INT UNSIGNED NOT NULL,
-// pickupDate DATE NOT NULL,
-// dropoffDate DATE NOT NULL,
-// pickupTime TIME NOT NULL,
-// dropoffTime TIME NOT NULL,
-// -- To be added by admin when customer picks up the car
-// vehicle_id INT UNSIGNED,
-// submittedByUser_id INT UNSIGNED NOT NULL,
-// submittedTimestamp TIMESTAMP,
-// -- To be added by admin when customer returns the car
-// effectiveDropoffDate DATE,
-// -- To be added by admin when customer returns the car
-// effectiveDropoffTime TIME,
-// -- To be added by admin when customer returns the car
-// effectiveDropoffLocation_id INT UNSIGNED,
-// -- To be added by admin when customer returns the car
-// collectedByUser_id INT UNSIGNED,
-// billingAddress_id INT UNSIGNED NOT NULL,
-
 class Revision
 {
     use DBModel;

@@ -7,8 +7,11 @@ use RentACar\Address;
 use RentACar\Island;
 use RentACar\Location;
 
-// TODO try catch + errors
-$locations = Location::fetchActiveLocations();
+try {
+    $locations = Location::fetchActiveLocations();
+} catch(Exception $e) {
+    $errorMsg = $e->getMessage();
+}
 
 echo getHeader();
 ?>
@@ -20,6 +23,11 @@ echo getHeader();
             <h1>Manage Locations</h1>
             <a href="/src/html/admin/locationNew.php" class="btn btn-success">Add New Location</a>
         </div>
+        <?php if (!empty($errorMsg)) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg ?>
+            </div>
+        <?php } ?>
         <table class="table table-bordered" id="my_table_id" data-url="data/url.json" data-id-field="id"
             data-editable-emptytext="Default empty text." data-editable-url="/my/editable/update/path">
             <thead>

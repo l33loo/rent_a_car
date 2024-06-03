@@ -268,15 +268,15 @@ class Vehicle
                 'maxLength' => 15,
                 'required' => true,
             ],
-            'rentable' => [
-                'name' => 'rentable',
-                'type' => 'boolean',
-                'required' => true,
-            ],
+            // 'rentable' => [
+            //     'name' => 'rentable',
+            //     'type' => 'boolean',
+            //     'required' => true,
+            // ],
             'categoryId' => [
                 'name' => 'categoryId',
-                'type' => 'integer',
-                'required' => true,
+                // 'type' => 'integer',
+                'required' => false,
             ],
             'islandId' => [
                 'name' => 'islandId',

@@ -5,16 +5,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use RentACar\Category;
 
-if (empty($_GET['categoryId'])) {
-    // TODO: error
-    exit;
-}
-
 try {
+    if (empty($_GET['categoryId'])) {
+        throw new Exception('No category ID.');
+    }
     $category = Category::find($_GET['categoryId']);
     $category->loadProperties();
-} catch (e) {
-    // TODO: manage error and redirect
+} catch (Exception $e) {
+    $_SESSION['errors']['adminVehiclesPage'] = $e->getMessage();
+    header('Location: /src/html/admin/vehicles.php');
 }
 
 echo getHeader();

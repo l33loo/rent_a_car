@@ -22,6 +22,13 @@ echo getHeader();
             <h1>Manage Reservations</h1>
             <a class="btn btn-success" href="/src/html/admin/reservationNew.php">New Reservation</a>
         </div>
+        <?php $errorMsg = (empty($_SESSION['errors']) || empty($_SESSION['errors']['adminReservationsPage'])) ? null : $_SESSION['errors']['adminReservationsPage'];
+        if ($errorMsg !== null) { ?>
+            <div class="alert alert-danger">
+                <?php echo $errorMsg;
+                unset($_SESSION['errors']['adminReservationsPage']); ?>
+            </div>
+        <?php } ?>
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>

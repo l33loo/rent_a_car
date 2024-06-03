@@ -37,7 +37,7 @@ function calculateAge(string $dobStr): int
 
 function calculateTotalPrice(float $dailyRate, string $pickupDate, string $dropoffDate): float
 {
-    $days = calculateDiffDays($pickupDate, $dropoffDate);
+    $days = calculateDiffDays($dropoffDate, $pickupDate);
 
     return (float)($dailyRate * $days);
 }
